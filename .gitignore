@@ -37,3 +37,5 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+input/data-original/casen20.dta
+input/data-original/censo17.Rdata

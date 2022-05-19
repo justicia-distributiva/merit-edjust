@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+
+  <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABZVBMVEUAAAAdPlkcPlkbPlodPVkbO1kbPFcdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPlkdPln///+ifs4iAAAAdXRSTlMAAAAAAAAABCpZgZWZmpuhsrgdi7vv939KTE1PUlqiwSCpfR6HsBBFgwtnAhK0gBEaXgcy4Ldda/zRJuUNr6gMd/qmDsoiw6cVb6QUGbUXAxMcCgWgv0PVPsIl1vBOSUiRrRYIlv79+fv15JCPfHRzeIiCZjST6WECAAAAAWJLR0R2MWPJQQAAAAlwSFlzAABcRQAAXEUBuS1iLAAAAAd0SU1FB+QGAQEGMAe8nOwAAADrSURBVBjTJY75P0JREMXn2NWrLK1XIZH2aLEXl56ykwqPspN9ff+/e6/5ac75nPmeISL09vVbrJqm2eyOgUEChoadLrfH62Mj/sDoGGE8OBGaNKfCIBGejlDUGosjkTRTceEgPUOzWgZANudikBmi/Bw6BGh+YXFJLGKWmTpeKZjFVRVxr8koEODrG8rIlRIQWt8sV9Apja3tHQHd3Svs/yPoQJYcFvNH6CJU9WPpIVyr64rUODlV2nZmqCdgnDPqRtp+4WFNn7d16b+6viHc3t0/PHLO2/zp2WGIxsrL69v7x2fq6/vnN4OeP6dLIlhQnl/oAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIwLTA2LTAxVDAxOjA2OjQ4KzAyOjAw8gzdpAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMC0wNi0wMVQwMTowNjo0OCswMjowMINRZRgAAABXelRYdFJhdyBwcm9maWxlIHR5cGUgaXB0YwAAeJzj8gwIcVYoKMpPy8xJ5VIAAyMLLmMLEyMTS5MUAxMgRIA0w2QDI7NUIMvY1MjEzMQcxAfLgEigSi4A6hcRdPJCNZUAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+  <title>Data Frame Summary</title>
+  <style type="text/css">img {
+  background-color: transparent;
+  border: 0;
+}
+
+.st-table td,
+.st-table th {
+  padding: 8px;
+}
+
+.st-table > thead > tr {
+   background-color: #eeeeee;
+}
+
+.st-cross-table td {
+  text-align: center;
+}
+
+.st-descr-table td {
+  text-align: right;
+}
+
+table.st-table th {
+  text-align: center;
+}
+
+table.st-table > thead > tr {
+   background-color: #eeeeee;
+}
+
+table.st-table td span {
+  display: block;
+}
+
+table.st-table > tfoot > tr > td {
+  border:none;
+}
+
+.st-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 15px;
+}
+
+.st-multiline {
+  white-space: pre;
+}
+
+.st-table {
+    width: auto;
+    table-layout: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+}
+
+.st-table > thead > tr > th,
+.st-table > tbody > tr > th,
+.st-table > tfoot > tr > th,
+.st-table > thead > tr > td,
+.st-table > tbody > tr > td,
+.st-table > tfoot > tr > td {
+  vertical-align: middle;
+}
+
+.st-table-bordered {
+  border: 1px solid #bbbbbb;
+}
+
+.st-table-bordered > thead > tr > th,
+.st-table-bordered > tbody > tr > th,
+.st-table-bordered > thead > tr > td,
+.st-table-bordered > tbody > tr > td {
+  border: 1px solid #cccccc;
+}
+
+.st-table-bordered > thead > tr > th,
+.st-table-bordered > thead > tr > td,
+.st-table thead > tr > th {
+  border-bottom: none;
+}
+
+.st-freq-table > thead > tr > th,
+.st-freq-table > tbody > tr > th,
+.st-freq-table > tfoot > tr > th,
+.st-freq-table > thead > tr > td,
+.st-freq-table > tbody > tr > td,
+.st-freq-table > tfoot > tr > td,
+.st-freq-table-nomiss > thead > tr > th,
+.st-freq-table-nomiss > tbody > tr > th,
+.st-freq-table-nomiss > tfoot > tr > th,
+.st-freq-table-nomiss > thead > tr > td,
+.st-freq-table-nomiss > tbody > tr > td,
+.st-freq-table-nomiss > tfoot > tr > td,
+.st-cross-table > thead > tr > th,
+.st-cross-table > tbody > tr > th,
+.st-cross-table > tfoot > tr > th,
+.st-cross-table > thead > tr > td,
+.st-cross-table > tbody > tr > td,
+.st-cross-table > tfoot > tr > td {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.st-table-bordered > thead > tr > th,
+.st-table-bordered > tbody > tr > th,
+.st-table-bordered > thead > tr > td,
+.st-table-bordered > tbody > tr > td {
+  border: 1px solid #cccccc;
+}
+
+.st-table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+.st-table-striped > tbody > tr:nth-of-type(even) {
+  background-color: #f9f9f9;
+}
+
+.st-descr-table > thead > tr > th,
+.st-descr-table > tbody > tr > th,
+.st-descr-table > thead > tr > td,
+.st-descr-table > tbody > tr > td {
+  padding-left: 24px;
+  padding-right: 24px;
+  word-wrap: break-word;
+}
+
+.st-freq-table,
+.st-freq-table-nomiss,
+.st-cross-table {
+  border: medium none;
+}
+
+.st-freq-table > thead > tr:nth-child(1) > th:nth-child(1),
+.st-cross-table > thead > tr:nth-child(1) > th:nth-child(1),
+.st-cross-table > thead > tr:nth-child(1) > th:nth-child(3) {
+  border: none;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.st-protect-top-border {
+  border-top: 1px solid #cccccc !important;
+}
+
+.st-ws-char {
+  display: inline;
+  color: #999999;
+  letter-spacing: 0.2em;
+}
+
+/* Optional classes */
+.st-small {
+  font-size: 13px;
+}
+
+.st-small td,
+.st-small th {
+  padding: 8px;
+}
+
+.st-small > thead > tr > th,
+.st-small > tbody > tr > th,
+.st-small > thead > tr > td,
+.st-small > tbody > tr > td {
+  padding-left: 12px;
+  padding-right: 12px;
+}</style>
+  <style type="text/css">/* Whole document: */
+body{
+  font-family: Times New Roman;
+  font-size: 25pt;
+}
+/* Headers */
+h1,h2,h3,h4,h5,h6{
+  font-size: 24pt;
+}</style>
+</head>
+<body>
+<div class="container st-container"><table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
+  <colgroup>
+    <col style="width:700px"/>
+    <col style="width:10px"/>
+    <col style="width:10px"/>
+    <col style="width:10px"/>
+    <col style="width:10px"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th align="center" class="st-protect-top-border"><strong>Label</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Stats / Values</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Freqs (% of Valid)</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Graph</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Valid</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">Degree of sympathy for [PER/HAI/VEN]
+living in Chile</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 3 (1.1)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 3 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1782</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">12.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">2441</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">17.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">4778</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">33.7%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">4030</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">28.4%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1145</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">8.1%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAD8AAAB9BAMAAADn4aaLAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAHBJREFUWMPt00EOgCAMRFGOIDew5QZ6/7sZEySQWGehLS7mr98CkmlK/0hbeWypoOy1jYAgBMBNZqvvgPbJ0y/OCAj8Adzk+9lDoFbr3S/6CAh8ANzkrLsQ67qvCAj8ANxk2F2IDUp7NgFBCICbnN0BmLGQEgnPxYYAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDUtMTlUMTY6MzQ6NDYtMDQ6MDBV2VAPAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA1LTE5VDE2OjM0OjQ2LTA0OjAwJIToswAAAABJRU5ErkJggg=="></td>
+      <td align="center">14176
+(92.6%)</td>
+    </tr>
+    <tr>
+      <td align="left">Degree of similarity between Chileans
+and [PER/HAI/VEN].</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 2.3 (1.2)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 2 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">4593</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">31.4%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">3701</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">25.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">3730</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">25.5%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1927</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">13.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">662</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">4.5%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADwAAAB9BAMAAAAM1h2IAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAGFJREFUSMft0sEJwCAMRmFXyAjVDez+u/UiUmjSoBUi5f3X75AcXkqxy8Yal1NdheFhdloTY0tYOXvcWPkchufYaY3O4V/wHp2r3D+vMPyRndbE2LLOX7g8fobhSXZai9oFQ4qA368K/qMAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDUtMTlUMTY6MzQ6NDYtMDQ6MDBV2VAPAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA1LTE5VDE2OjM0OjQ2LTA0OjAwJIToswAAAABJRU5ErkJggg=="></td>
+      <td align="center">14613
+(95.5%)</td>
+    </tr>
+    <tr>
+      <td align="left">Interaction anxiety with [PER/HAI/VEN].</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 3.3 (0.9)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 3 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">564</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">3.8%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">2727</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">18.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">4758</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">31.7%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">6203</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">41.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">757</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">5.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEsAAAB9BAMAAAAYQ4NpAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAHJJREFUWMPt1rENgDAMRNGMgDdAzgbJ/rvRBAkUdLoGsKP79Svi4qSUEjt3N9A2WO1NTGxtRm7BcO8wvwUuvdTExBZk5BYM98VOp1c+XjrfLCaWn5FbCLXT0Y4vPRMTy8/ILfy2U4LVDr/4YmL5GbmFqB2yuL0v/lCKvwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMFXZUA8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDUtMTlUMTY6MzQ6NDYtMDQ6MDAkhOizAAAAAElFTkSuQmCC"></td>
+      <td align="center">15009
+(98.1%)</td>
+    </tr>
+    <tr>
+      <td align="left">Degree of agreement: My family values
+my friends [PER/HAI/VEN].</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 3.3 (0.9)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 3 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">591</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">4.4%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1295</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">9.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">5590</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">41.4%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">5087</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">37.7%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">941</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">7.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEsAAAB9BAMAAAAYQ4NpAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAHFJREFUWMPt1LERwCAIhWFHCBsEHMH9d4u52OQiSuNJuPfXX0PxSMl3IsKkdzSWSwEDi82MW6Bxa5g88YTVS+/AwOIy4xZo3NKdap3vS7XAwP7PjFtwt1P+fKRuYGAhmHEL+3bKU5bbSWBgYZlxC167ACAEvWuWgQ8uAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA1LTE5VDE2OjM0OjQ2LTA0OjAwVdlQDwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMCSE6LMAAAAASUVORK5CYII="></td>
+      <td align="center">13504
+(88.2%)</td>
+    </tr>
+    <tr>
+      <td align="left">Degree of agreement: My friends value
+my friends [PER/HAI/VEN].</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 3.3 (0.9)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 3 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">570</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">4.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1338</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">10.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">5623</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">42.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">5034</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">37.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">836</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">6.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEsAAAB9BAMAAAAYQ4NpAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAG9JREFUWMPt1LENwCAMRFFGiDcAZwPYf7cIiSZKDNegONb9+jUuzin5TlWL2B2Dna2RkcVm4BZk3h6mo/WlvUpGFpaBW5B5e3dqlO+XWpGR/Z+BW3C30/L4SK+RkYVg4Ba+2+ma9UsrGVlkBm7BaxfHgr1NSHRLhQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMFXZUA8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDUtMTlUMTY6MzQ6NDYtMDQ6MDAkhOizAAAAAElFTkSuQmCC"></td>
+      <td align="center">13401
+(87.6%)</td>
+    </tr>
+    <tr>
+      <td align="left">Degree of agreement: Chile loses its
+identity with the arrival of
+[PER/HAI/VEN].</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 2.9 (1.2)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 3 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1413</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">9.4%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">5555</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">37.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">2241</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">14.9%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">4662</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">31.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1147</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">7.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEQAAAB9BAMAAADpSNjkAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAG5JREFUWMPt1bEJwDAMRFGvoBHkbODsv1vASeGAIq4I1hX369cIzrg1rvqdW9BDjnMmIsJFgO1a0q+kJ70vihoiImUE2G7FO/IPslwkIsJDgO1a0o7/yOOL1kREagmw3c3vKCXzoiEiQkaA7bJ0AQafnq7vs1MaAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA1LTE5VDE2OjM0OjQ2LTA0OjAwVdlQDwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMCSE6LMAAAAASUVORK5CYII="></td>
+      <td align="center">15018
+(98.1%)</td>
+    </tr>
+    <tr>
+      <td align="left">Degree of agreement: With the arrival
+of [PER/HAI/VEN] unemployment rises.</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 3.2 (1.2)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 4 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">999</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">6.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">4241</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">28.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1874</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">12.5%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">6105</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">40.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1832</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">12.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEkAAAB9BAMAAAActlNUAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAHJJREFUWMPt1LsNwCAMhGFGiDeIYYTsv1seilIAsa4hxtH99dcgnUlp3vKZykvLrcp2REX1G4XtXsxGqNxLa3W9sY6KKqzCdu94j2qp0ryLiiqywnYvZkPvsdtq/TlPVFTRFLZ7x3v87GeiovJX2O5nbAdjzLWmOlMCogAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMFXZUA8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDUtMTlUMTY6MzQ6NDYtMDQ6MDAkhOizAAAAAElFTkSuQmCC"></td>
+      <td align="center">15051
+(98.3%)</td>
+    </tr>
+    <tr>
+      <td align="left">Degree of agreement: [PER/HAI/VEN] keep
+their customs</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 3.8 (0.9)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 4 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">271</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">1.8%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1373</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">9.1%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">2061</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">13.7%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">9049</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">60.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">2338</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">15.5%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAGYAAAB9BAMAAACi4AsJAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAHdJREFUWMPt1rsNgDAMRdGswAgxG4T9d0MRCCFR+FMQ2bq3zmlcPKW1eknf7N1mx2AwJU1kDxzidyNXvrsds4HBYIqZyB7YHq8x8tSdd5thMJhKJrIH+sN1Rjx97qY3MBhMGhPZgyz7ZjWvu+mfXwwGk8ZE9qBSJyBfIW95UlwrAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA1LTE5VDE2OjM0OjQ2LTA0OjAwVdlQDwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMCSE6LMAAAAASUVORK5CYII="></td>
+      <td align="center">15092
+(98.6%)</td>
+    </tr>
+    <tr>
+      <td align="left">Degree of agreement: [PER/HAI/VEN]
+adopt Chilean customs</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 3.8 (0.8)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 4 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">246</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">1.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1253</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">8.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">2312</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">15.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">9337</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">61.8%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1965</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">13.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAGkAAAB9BAMAAABT61CEAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAHpJREFUWMPt1bENgDAMBdGMABuA2QD23w0RoQiJAtuNhX1X5xW4+LSWN1lnQ9OtNhQKVVj5dsNiYpT0tB83bnhcoVComsq3G8rngUoeWW/Y21EoVDXl243vl9FKTC3vGypCoVC5lG83/rSHFjVuqPijoFCobMq3Gxk7AXQUMefnqxITAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA1LTE5VDE2OjM0OjQ2LTA0OjAwVdlQDwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMCSE6LMAAAAASUVORK5CYII="></td>
+      <td align="center">15113
+(98.7%)</td>
+    </tr>
+    <tr>
+      <td align="left">Degree of agreement: [PER/HAI/VEN] have
+Chilean friends</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 4 (0.7)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 4 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">138</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">0.9%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">366</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">2.4%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1824</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">12.1%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">9631</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">63.7%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">3154</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">20.9%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAGwAAAB9BAMAAAC1wpvAAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAHJJREFUWMPt1rENwCAMRFFWyAgxG5D9d0vjIqIJZyJZsf6veQUUJ1qrnR1aMBgM9iETVQ4z8XLO+oDBYLAHC26JhtJ20jsl1i8PBoPBNrZk7XAyM7H5JdcaMBisOAtuyS93cpFNL/n6T4fBYMVZcEuqdgPCkzoDG/rVxgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMFXZUA8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDUtMTlUMTY6MzQ6NDYtMDQ6MDAkhOizAAAAAElFTkSuQmCC"></td>
+      <td align="center">15113
+(98.7%)</td>
+    </tr>
+    <tr>
+      <td align="left">Education</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. Primary</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. High school</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. Vocational</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. Universitary</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">3395</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">22.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">6501</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">42.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2491</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">16.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2907</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">19.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEwAAABmBAMAAACTjmpIAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIu9PuXtQAAAGNJREFUSMft1bsJACAMRVFXyAjqBrr/bjYWRggJgr/wbn0ahachvF2aI15nufIKGJg3ZtwCKW1hSUk46XxwMLDvmXELV3a6MOcos/FCwMBcMuMWSOnAtxslxh8uMDCHzLiFV2utaozCZaDBhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNS0xOVQxNjozNDo0Ni0wNDowMFXZUA8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDUtMTlUMTY6MzQ6NDYtMDQ6MDAkhOizAAAAAElFTkSuQmCC"></td>
+      <td align="center">15294
+(99.9%)</td>
+    </tr>
+    <tr>
+      <td align="left">Education in years</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 11.5 (4)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">0 &le; 12 &le; 19.1</td></tr></table></td>
+      <td align="left" style="vertical-align:middle">10 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADgAAADzBAMAAAAhh8haAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAKhJREFUWMPt18ENgCAUA1BX+CMAG+D+u3kQE4FSjQE80F7fwU9SfnDb/ok3FKHwPdoP6K8gDPuZKFwcaU1owQZhGsdBTEcRLo+0JgbTb6Vmny1uWT6wUPi+Q9+rSdHDVNPeEoXCDGmHxvW2jaF4zwiFAGmHDKbfvnVw2hShsI20Q7R937H+DyymjUIhr4nBzNm3rnWU6pIJF0RaE4MZ3FtHMAiFzzWZnQMOExUPTKa0rgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNS0xOVQxNjozNDo0Ny0wNDowMPOuW7sAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDUtMTlUMTY6MzQ6NDctMDQ6MDCC8+MHAAAAAElFTkSuQmCC"></td>
+      <td align="center">15294
+(99.9%)</td>
+    </tr>
+    <tr>
+      <td align="left">Household income per capita</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 449950.3 (18457318)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">0 &le; 166666.7 &le; 2e+09</td></tr></table></td>
+      <td align="left" style="vertical-align:middle">735 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAEZJREFUaN7tzEERABAQAMCroAINXP9uPCQ4XmY3wEZQ0bd27WQjc8pkMplMJpPJZDKZTCaTyWQymUwmk8lkMpnsz6w/EVQsgF4Nqahzk7UAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDUtMTlUMTY6MzQ6NDctMDQ6MDDzrlu7AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA1LTE5VDE2OjM0OjQ3LTA0OjAwgvPjBwAAAABJRU5ErkJggg=="></td>
+      <td align="center">11796
+(77.1%)</td>
+    </tr>
+    <tr>
+      <td align="left">Houshold income quintile per capita</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. Q1</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. Q2</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. Q3</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. Q4</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">5. Q5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2361</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">20.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2361</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">20.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2359</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">20.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2358</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">20.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2357</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">20.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACsAAAB9BAMAAADJpIcZAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAADpJREFUSMdjYKAtUEIFClBhZWMUMCo8FIRxxKUgKhAgS3g0nQwf4dF0Mio8mk5GhUfTyajwIEgntAIAJKtDw7DgUbEAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDUtMTlUMTY6MzQ6NDctMDQ6MDDzrlu7AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA1LTE5VDE2OjM0OjQ3LTA0OjAwgvPjBwAAAABJRU5ErkJggg=="></td>
+      <td align="center">11796
+(77.1%)</td>
+    </tr>
+    <tr>
+      <td align="left">Houshold income quintile per capita
+(NA)</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. Q1</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. Q2</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. Q3</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. Q4</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">5. Q5</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">6. QNA</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2361</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">15.4%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2361</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">15.4%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2359</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">15.4%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2358</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">15.4%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2357</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">15.4%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">3509</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">22.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAC8AAACVBAMAAAA6WL6MAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAE1JREFUSMdjYKAPUEICgiAgAJVQNoYDo1GJYSWBM84F0QH5EqPpauRJjKarUYnRdDUqMVQkRtPVqMRwSFdgoIDpKggYlRguEjjjnNYAAKMbbmZSA31hAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA1LTE5VDE2OjM0OjQ3LTA0OjAw865buwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNS0xOVQxNjozNDo0Ny0wNDowMILz4wcAAAAASUVORK5CYII="></td>
+      <td align="center">15305
+(100.0%)</td>
+    </tr>
+    <tr>
+      <td align="left">Subjective Social Status: individual</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 4.4 (1.6)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">0 &le; 5 &le; 10</td></tr></table></td>
+      <td align="left" style="vertical-align:middle">11 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAJtJREFUaN7t2GkKgCAQhmGvYDfIbtDc/24xIBXJZC5Ey/v9E+FhXFDUOVITf54hhODzuYiJzGBgYGBgYGBgYGBgYOWYPk3GbpiIgIGBgYGBfRHbLswe2KqAgd2MhcyvdBE2ZQoEA3s/lhz+TdhRAXscZp6RNZhZ4IZZG6wc08oNxcTS0UZM+0uxtMAfYDqD7VhcB23tVrM9jtRkASYMUhucAIKxAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA1LTE5VDE2OjM0OjQ3LTA0OjAw865buwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNS0xOVQxNjozNDo0Ny0wNDowMILz4wcAAAAASUVORK5CYII="></td>
+      <td align="center">15201
+(99.3%)</td>
+    </tr>
+    <tr>
+      <td align="left">Subjective Social Status: inmigrants</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 3 (1.8)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">0 &le; 3 &le; 10</td></tr></table></td>
+      <td align="left" style="vertical-align:middle">11 distinct values</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAI9JREFUaN7t10EKgCAQQFGvYDfIbpD3v1uQ02JAylEJy/837h6DUalzVJNXhdTqjWWxLZ6BgYGBgc2EyZ+kDyYKGBjYKJh+wxsxrYD9EDPfLe4w84BgYGBgE2Hywe2DpWUHAwMDAwMDA/sMVnAYKsfi84Bgr2FL9tmaMVGyc5oxvYyOXTvYiOkdFCx0yVFNB+pjJcZWtBRYAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA1LTE5VDE2OjM0OjQ3LTA0OjAw865buwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNS0xOVQxNjozNDo0Ny0wNDowMILz4wcAAAAASUVORK5CYII="></td>
+      <td align="center">5903
+(38.6%)</td>
+    </tr>
+    <tr>
+      <td align="left">Nationality</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 1.1 (0.6)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 1 &le; 8</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">6512</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">97.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">68</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">1.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">10</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">0.1%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">20</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">0.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">5</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">0.1%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">6</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">15</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">0.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">7</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">1</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">0.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">8</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">42</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">0.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJ8AAADEBAMAAABzfO7nAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAIdJREFUaN7t2jEVgDAQRMFIAAdckIB/bzQ4YIvcy3wB026zYyjRTHV94P2EAgKBQGA3ML4pZ6qjDTiBQCAQCFwVTHmNwAICgUAgMASmvJ3BAgKBQCAwBKa8ncECAoFAIDAEprydwQICgUAgMASmvEZgAYFAIBC4KpjyGoHrf+eAQCAQuC2of70gK2Z7btIFbAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNS0xOVQxNjozNDo0Ny0wNDowMPOuW7sAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDUtMTlUMTY6MzQ6NDctMDQ6MDCC8+MHAAAAAElFTkSuQmCC"></td>
+      <td align="center">6673
+(43.6%)</td>
+    </tr>
+    <tr>
+      <td align="left">Known: Immigrants</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 1.4 (0.9)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1 &le; 1 &le; 5</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">1</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">9162</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">73.2%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">2</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">2009</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">16.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">3</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">747</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">6.0%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">4</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">390</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">3.1%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 2px 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">211</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">1.7%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAHoAAAB9BAMAAACfcmpvAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAHxJREFUWMPt1UEKgDAQQ9FewSNob1Dvf7eiiBTcOBmUQH/2bzFZZEqZN5uWS9ddSUOj0egPdW7XFi0GejxmDeuxczQajfbQuV17D9z0ebCsj84bGo1GW+ncrsWhiw59r4eukc+JRqPRv+jcrinUQ2tn352j0Wi0nc7t2ozpO6lwhEQDKEAAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDUtMTlUMTY6MzQ6NDctMDQ6MDDzrlu7AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA1LTE5VDE2OjM0OjQ3LTA0OjAwgvPjBwAAAABJRU5ErkJggg=="></td>
+      <td align="center">12519
+(81.8%)</td>
+    </tr>
+    <tr>
+      <td align="left">Political identification</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. Left</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. Center</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. Right</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. Does not identify</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">3275</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">21.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">3893</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">25.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2443</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">16.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">5422</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">36.1%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEMAAABmBAMAAABihTHFAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAGlJREFUSMft1MENwCAIhWFHkA2KjtD9d+vFmpZKgokWDu8/fxcSIKVYFRFTLzdSz3cgICGIYXdJby0p31gQOdFjKBAQP2LY3d/uaPLUeEzqYFoQEHdi2F3S23dHokN/HncgIH7EsLtRugB0OnOKeyvg0gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wNS0xOVQxNjozNDo0Ny0wNDowMPOuW7sAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDUtMTlUMTY6MzQ6NDctMDQ6MDCC8+MHAAAAAElFTkSuQmCC"></td>
+      <td align="center">15033
+(98.2%)</td>
+    </tr>
+    <tr>
+      <td align="left">Age groups</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. 18-29</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. 30-49</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. 50-64</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. 65 or more</td></tr></table></td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2263</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">14.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">5807</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">37.9%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">4745</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">31.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2490</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">16.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEUAAABmBAMAAABvm0GCAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gUTDCIvg/ynIwAAAGFJREFUSMft1MENABAQRFEl0IGlBP335iIIIZsQ5jD//C6SWcbgFVrihmwxMdVoaKCNZs9u020TNvn5XVM0NEhGs+eX93Vwg7L4W/poaOCMZs+/7ksWJo6PoaEBNZo9I5UB9Qt5yNF1r+AAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDUtMTlUMTY6MzQ6NDctMDQ6MDDzrlu7AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA1LTE5VDE2OjM0OjQ3LTA0OjAwgvPjBwAAAABJRU5ErkJggg=="></td>
+      <td align="center">15305
+(100.0%)</td>
+    </tr>
+  </tbody>
+</table></div>
+</body>
+</html>

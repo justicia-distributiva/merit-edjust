@@ -1,0 +1,692 @@
+---
+title: "Preparación de datos"
+date: "`r format(Sys.time(), '%A %d %B %Y %X')`"
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: no
+      number_sections: yes
+    code_folding: hide
+    number_sections: yes
+editor_options:
+  chunk_output_type: console
+---
+
+# Setup
+
+```{r setup}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+options(scipen=9999) # desactivar notacion cientifica
+remove(list = ls()) #limpieza del entorno de trabajo
+```
+
+```{css, echo=FALSE}
+# /* expandir el espacio del documento*/
+body .main-container {
+      max-width: 1600px !important;
+      width: 1600px !important;
+    }
+#/* expandir width de la TOC*/
+div.tocify {
+    width: 22% !important;
+    max-width: 331px !important;
+    max-height: 102% !important;
+}
+```
+
+
+# Download data
+```{r download data, eval=FALSE, include=FALSE}
+#download and save data
+
+file.exists(here::here("input/data-original/elsoc_long.Rdata"))
+
+load(url("https://dataverse.harvard.edu/api/access/datafile/6160173")) #ELSOC
+save(elsoc_long_2016_2021,file = here::here("input/data-original/elsoc_long.Rdata"))
+cit17<- read.table(url("https://dataverse.harvard.edu/api/access/datafile/5216836"), 
+                   header = T, sep = "\t", fill = TRUE)
+save(cit17,file = here::here("input/data-original/cit17.Rdata"))
+cit18<- read.table(url("https://dataverse.harvard.edu/api/access/datafile/5216941"), 
+                   header = T, sep = "\t", fill = TRUE)
+save(cit18,file = here::here("input/data-original/cit18.Rdata"))
+cit19<- read.table(url("https://dataverse.harvard.edu/api/access/datafile/5216990"), 
+                   header = T, sep = "\t", fill = TRUE)
+save(cit19,file = here::here("input/data-original/cit19.Rdata"))
+
+# Chilean CENSUS data (2017)____________________________________________________
+download.file(url = "https://github.com/jciturras/data-chile/raw/main/data/censo-2017/censo-2017.RData",
+              destfile = here::here("input/data-original/censo17.Rdata"))
+
+# Chilean Socioeconomic Household Survey (CASEN)_______________________________
+
+# Year 2017_______________________________________________
+download.file(url = "https://github.com/jciturras/data-chile/raw/main/data/casen-2017/casen2017.RData",
+              destfile = here::here("input/data-original/casen17.Rdata"))
+# Year 2020_______________________________________________
+# Download the original data from:
+# http://observatorio.ministeriodesarrollosocial.gob.cl/storage/docs/casen/2020/Casen_en_Pandemia_2020_STATA.dta.zip 
+# note: we changed the original name of the file -> casen20.dta 
+casen20 <- 
+  haven::read_dta(file = here::here("input/data-original/casen20.dta"))
+# save the original data in R format 
+save(casen20,file = here::here("input/data-original/casen20.Rdata"))
+```
+
+## Individual data
+
+```{r}
+remove(list = ls()) # clean workspace
+# .rs.restartR() #restart R session
+if (!require("pacman")) install.packages("pacman") # install pacman
+# load libraries
+pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
+load(here::here("input/data-original/elsoc_long.Rdata"))
+
+elsoc_long_2016_2021[elsoc_long_2016_2021 ==-999] <- NA
+elsoc_long_2016_2021[elsoc_long_2016_2021 ==-888] <- NA
+elsoc_long_2016_2021[elsoc_long_2016_2021 ==-777] <- NA
+elsoc_long_2016_2021[elsoc_long_2016_2021 ==-666] <- NA
+
+# Attitudes toward inmigrants__________________________________________________
+elsoc_long_2016_2021 <- 
+elsoc_long_2016_2021 %>% 
+  #create new variables
+  mutate(in_simpat=r09,
+         in_simili=r10,
+         in_ansied=r11,
+         in_valfam=r12_01,
+         in_valami=r12_02,
+         in_amsimb=r12_03,
+         in_amreal=r12_04,
+         in_acpier=r12_05,
+         in_acadop=r12_06,
+         in_amigcl=r12_07) %>% 
+  sjlabelled::drop_labels(., drop.na = FALSE)
+  
+#
+sjmisc::frq(elsoc_long_2016_2021$in_simpat)
+elsoc_long_2016_2021$in_simpat <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_simpat, 
+                      label = "Degree of sympathy for [PER/HAI/VEN] living in Chile") 
+elsoc_long_2016_2021$in_simpat <-
+sjlabelled::set_labels(x = elsoc_long_2016_2021$in_simpat,
+                       labels = c("Very little or not at all", "A little",
+                                  "Somewhat","Quite a lot","A lot"))  
+sjmisc::frq(elsoc_long_2016_2021$in_simpat)
+
+#
+sjmisc::frq(elsoc_long_2016_2021$in_simili)
+elsoc_long_2016_2021$in_simili <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_simili, 
+                      label = "Degree of similarity between Chileans and [PER/HAI/VEN].") 
+elsoc_long_2016_2021$in_simili <-
+sjlabelled::set_labels(x = elsoc_long_2016_2021$in_simili,
+                       labels = c("Not similar", "Slightly similar", "Somewhat similar",
+                                  "Quite similar", "Very similar"))
+sjmisc::frq(elsoc_long_2016_2021$in_simili)
+
+#
+sjmisc::frq(elsoc_long_2016_2021$in_ansied)
+elsoc_long_2016_2021$in_ansied <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_ansied, 
+                      label = "Interaction anxiety with [PER/HAI/VEN].") 
+elsoc_long_2016_2021$in_ansied <-
+sjlabelled::set_labels(x = elsoc_long_2016_2021$in_ansied,
+                       labels = c("Very uncomfortable", "Uncomfortable", 
+                                  "Neither comfortable nor uncomfortable",
+                                  "Comfortable", "Very comfortable"))
+sjmisc::frq(elsoc_long_2016_2021$in_ansied)
+
+
+for (i in c("in_valfam","in_valami","in_amsimb","in_amreal",
+            "in_acpier","in_acadop","in_amigcl")) {
+elsoc_long_2016_2021[[i]] <-
+sjlabelled::set_labels(x = elsoc_long_2016_2021[[i]],
+                       labels = c("Strongly disagree","Disagree",
+                                  "Neither disagree nor agree",
+                                  "Agree", "Strongly agree"))
+}
+
+sjmisc::frq(elsoc_long_2016_2021$in_valfam)
+elsoc_long_2016_2021$in_valfam <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_valfam, 
+                      label = "Degree of agreement: My family values my friends [PER/HAI/VEN].") 
+sjmisc::frq(elsoc_long_2016_2021$in_valfam)
+
+
+sjmisc::frq(elsoc_long_2016_2021$in_valami)
+elsoc_long_2016_2021$in_valami <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_valami, 
+                      label = "Degree of agreement: My friends value my friends [PER/HAI/VEN].") 
+sjmisc::frq(elsoc_long_2016_2021$in_valami)
+
+
+sjmisc::frq(elsoc_long_2016_2021$in_amsimb)
+elsoc_long_2016_2021$in_amsimb <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_amsimb, 
+                      label = "Degree of agreement: Chile loses its identity with the arrival of [PER/HAI/VEN].") 
+sjmisc::frq(elsoc_long_2016_2021$in_amsimb)
+
+sjmisc::frq(elsoc_long_2016_2021$in_amreal)
+elsoc_long_2016_2021$in_amreal <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_amreal, 
+                      label = "Degree of agreement: With the arrival of [PER/HAI/VEN] unemployment rises.") 
+sjmisc::frq(elsoc_long_2016_2021$in_amreal)
+
+sjmisc::frq(elsoc_long_2016_2021$in_acpier)
+elsoc_long_2016_2021$in_acpier <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_acpier, 
+                      label = "Degree of agreement: [PER/HAI/VEN] keep their customs") 
+sjmisc::frq(elsoc_long_2016_2021$in_acpier)
+
+sjmisc::frq(elsoc_long_2016_2021$in_acadop)
+elsoc_long_2016_2021$in_acadop <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_acadop, 
+                      label = "Degree of agreement: [PER/HAI/VEN] adopt Chilean customs") 
+sjmisc::frq(elsoc_long_2016_2021$in_acadop)
+
+sjmisc::frq(elsoc_long_2016_2021$in_amigcl)
+elsoc_long_2016_2021$in_amigcl <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$in_amigcl, 
+                      label = "Degree of agreement: [PER/HAI/VEN] have Chilean friends") 
+sjmisc::frq(elsoc_long_2016_2021$in_amigcl)
+
+# Socioeconomic_________________________________________________________________
+
+# Education_______________________________________
+elsoc_long_2016_2021$educ <- 
+  car::recode(elsoc_long_2016_2021$m01,
+              "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4; c(-888,-999)=NA")
+elsoc_long_2016_2021$educ <-
+  factor(elsoc_long_2016_2021$educ,
+         labels = c("Primary","High school","Vocational","Universitary"))
+
+elsoc_long_2016_2021$educ <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$educ,
+                      label = "Education")
+sjmisc::frq(elsoc_long_2016_2021$educ)
+
+#Recoding of education to years based on casen 2017.
+elsoc_long_2016_2021$educ_n<- as.numeric(
+  car::recode(elsoc_long_2016_2021$m01, 
+              "1=0;2=4.3;3=7.5;4=9.8;5=12.02;6=13.9;
+               7=14.8;8=14.9;9=16.9;10=19.07;c(-888,-999)=NA", 
+              as.numeric = T))
+
+elsoc_long_2016_2021$educ_n <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$educ_n,
+                      label = "Education in years")
+
+class(elsoc_long_2016_2021$educ_n)
+sjmisc::frq(elsoc_long_2016_2021$educ_n)
+
+# Household income_________________________________________
+
+#Impute midpoint of income ranges
+elsoc_long_2016_2021$m30_rec <-
+as.numeric(car::recode(elsoc_long_2016_2021$m30,
+           "1=110000;2=251000;3=305000;4=355000;5=400000;
+            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+            19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
+#Recode DK/DA of Income to NA
+elsoc_long_2016_2021$m29_rec <-
+  as.numeric(car::recode(elsoc_long_2016_2021$m29,"c(-888,-999)=NA"))
+
+#replace NA of income with new imputed variable
+elsoc_long_2016_2021$m29_imp <- 
+  ifelse(test = !is.na(elsoc_long_2016_2021$m29_rec),
+         yes =  elsoc_long_2016_2021$m29_rec,
+         no =  elsoc_long_2016_2021$m30_rec)
+
+# deflate at each year's prices
+elsoc_long_2016_2021$deflactor <-
+  with(elsoc_long_2016_2021, case_when(
+    ola == 2016 ~ 113.88 / 123.82,
+    ola == 2017 ~ 116.46 / 123.82,
+    ola == 2018 ~ 119.45 / 123.82,
+    ola == 2019 ~ 123.82 / 123.82
+  ))
+
+# N Household:
+elsoc_long_2016_2021 <-
+  elsoc_long_2016_2021 %>%
+  mutate(n_hogar =
+           dplyr::case_when(ola == 1 ~ nhogar1,
+                            ola == 2 ~ m46_nhogar,
+                            ola == 3 ~ m54,
+                            ola == 4 ~ m54))
+sjmisc::frq(elsoc_long_2016_2021$n_hogar)
+
+#Recode DK/DA to NA
+elsoc_long_2016_2021$n_hogar_r<-
+  car::recode(elsoc_long_2016_2021$n_hogar,"c(-888,-999)=NA")
+
+# Per capita household income:
+elsoc_long_2016_2021$ing_pc <- 
+  (elsoc_long_2016_2021$m29_imp/elsoc_long_2016_2021$n_hogar_r)
+
+elsoc_long_2016_2021$ing_pc <-
+sjlabelled::set_label(x = elsoc_long_2016_2021$ing_pc,
+                      label = "Household income per capita")  
+
+sjmisc::descr(elsoc_long_2016_2021$ing_pc)
+
+# Compute income quintiles
+elsoc_long_2016_2021 <- elsoc_long_2016_2021 %>% 
+  group_by(ola) %>% 
+  mutate(quintil = ntile(-desc(ing_pc), 5)) %>% 
+  ungroup()
+
+elsoc_long_2016_2021$quintil <- 
+  factor(elsoc_long_2016_2021$quintil,
+         levels = c(1, 2, 3, 4, 5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
+
+elsoc_long_2016_2021$quintil <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$quintil,
+                      label = "Houshold income quintile per capita")  
+
+sjmisc::frq(elsoc_long_2016_2021$quintil)
+
+#include new quintile category with missing cases
+elsoc_long_2016_2021$quintil1<-
+  car::recode(elsoc_long_2016_2021$quintil, 
+              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
+
+elsoc_long_2016_2021$quintil1 <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$quintil1,
+                      label = "Houshold income quintile per capita (NA)") 
+sjmisc::frq(elsoc_long_2016_2021$quintil1)
+#Age Ranges
+elsoc_long_2016_2021$edad <- 
+  factor(car::recode(elsoc_long_2016_2021$m0_edad, 
+                     "18:29=1;30:49=2;50:64=3;65:150=4"),
+         labels = c('18-29', '30-49', '50-64', '65 or more'))
+elsoc_long_2016_2021$edad <-
+  sjlabelled::set_label(elsoc_long_2016_2021$edad, 
+                        label = c("Age groups")) 
+# Other controls______________________________________________________________
+# Subjective social status: individual ____________________________
+
+elsoc_long_2016_2021$ess <- 
+as.numeric(elsoc_long_2016_2021$d01_01)
+
+sjmisc::frq(elsoc_long_2016_2021$ess)
+elsoc_long_2016_2021$ess <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$ess,
+                      label = "Subjective Social Status: individual")
+
+sjmisc::frq(elsoc_long_2016_2021$ess)
+# sjPlot::plot_frq(elsoc_long_2016_2021$ess)
+# Subjective social status: migrants (w04 and w05)____________________________
+elsoc_long_2016_2021$ess_inm <- 
+as.numeric(elsoc_long_2016_2021$d01_04)
+
+sjmisc::frq(elsoc_long_2016_2021$ess_inm)
+elsoc_long_2016_2021$ess_inm <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$ess_inm,
+                      label = "Subjective Social Status: inmigrants")
+
+sjmisc::frq(elsoc_long_2016_2021$ess_inm)
+# sjPlot::plot_frq(elsoc_long_2016_2021$ess_inm)
+
+# Nationality of the interviewee____________________________
+
+elsoc_long_2016_2021$nation <- 
+elsoc_long_2016_2021$m45
+sjmisc::frq(elsoc_long_2016_2021$nation)
+
+elsoc_long_2016_2021$nation <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$nation, 
+                      label = "Nationality") 
+elsoc_long_2016_2021$nation <-
+sjlabelled::set_labels(x = elsoc_long_2016_2021$nation,
+                       labels = c("Chilean","Peruvian","Argentina","Colombian",
+                                  "Bolivian", "Haitian","Spanish","Other"))
+sjmisc::frq(elsoc_long_2016_2021$nation)
+
+# Known: Immigrant [PER/HAI/VEN]____________________________
+
+# sjmisc::find_var(elsoc_long_2016_2021,"Conocidos")
+sjmisc::frq(elsoc_long_2016_2021$r05_01)
+elsoc_long_2016_2021$know_inm <- 
+elsoc_long_2016_2021$r05_01
+
+elsoc_long_2016_2021$know_inm <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$know_inm, 
+                      label = "Known: Immigrants") 
+elsoc_long_2016_2021$know_inm <-
+sjlabelled::set_labels(x = elsoc_long_2016_2021$know_inm,
+                       labels = c("None","Few","Some","Quite a few","Many"))
+
+# Political position ____________________________
+elsoc_long_2016_2021$pos_id <-
+factor(
+  car::recode(
+    elsoc_long_2016_2021$c15,
+    "c(11,12,-888,-999)='Does not identify';c(0,1,2,3,4)='Left';
+     c(5)='Center';c(6,7,8,9,10)='Right'"
+  ),
+  levels = c('Left', 'Center', 'Right', 'Does not identify')
+)
+
+elsoc_long_2016_2021$pos_id <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$pos_id, 
+                      label = "Political identification") 
+
+sjmisc::frq(elsoc_long_2016_2021$pos_id)
+
+
+# Select data______________________________________________________________
+
+df_study1 <- 
+elsoc_long_2016_2021 %>% 
+  select(idencuesta,ola,region,region_cod,comuna,comuna_cod,
+         starts_with("in_"),
+         educ,educ_n,ing_pc,quintil,quintil1,
+         ess,ess_inm,
+         nation,know_inm,pos_id,edad)
+
+# sjPlot::view_df(df_study1,show.frq = T,show.values = T,show.na = T)
+
+# save data
+save(df_study1,file = here::here("input/data-proc/study_1.RData"))
+
+# save codebook
+sjPlot::view_df(df_study1,
+        show.frq = T, 
+        show.prc = T, 
+        show.na = T,
+        file = here::here("output/df_study1.html"))
+```
+
+
+## Contextual data
+
+Notas de Trabajo de campo:
+
+* CENSO 2017, día 19 de abril de 2017. (pegar a 2016)
+* CASEN 2017, 2 Noviembre 2017 – 4 Febrero 2018. (pegar a 2017)
+* CASEN 2020, 31 de octubre 2020 – 04 de febrero 2021. (pegar a 2020)
+
+* Faltarían datos 2019 para algunas comunas 
+
+* Crear variable de cambio en la tasa de migrantes a nivel comunal 
+  * Censo 2017 - CASEN 2020
+  
+  
+![](https://radiografia-cambio-social-2016-2021.netlify.app/reporte-elsoc_files/figure-html/amen1-wave-1.png)  
+  
+```{r}
+remove(list = ls()) # clean workspace
+# .rs.restartR() #restart R session
+if (!require("pacman")) install.packages("pacman") # install pacman
+# load libraries
+pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
+load(here::here("input/data-original/cit17.Rdata"))
+load(here::here("input/data-original/cit18.Rdata"))
+load(here::here("input/data-original/cit19.Rdata"))
+load(here::here("input/data-original/casen17.Rdata"))
+load(here::here("input/data-original/casen20.Rdata"))
+load(here::here("input/data-original/censo17.Rdata"))
+load(here::here("input/data-original/elsoc_long.Rdata"))
+
+df_ine <- 
+readxl::read_excel("input/data-original/data_comunas_ine_dem.xlsx")
+df_ine$comuna_lc <- tolower(df_ine$comuna)
+
+df_pro_ine <- 
+readxl::read_excel("input/data-original/estimaciones-y-proyecciones-2002-2035-comunas.xlsx")
+names(df_pro_ine)
+df_proye <- 
+df_pro_ine %>% 
+  select(comuna_cod=Comuna,comuna_nom=`Nombre Comuna`,
+         "sexo"=Sexo_1_Hombre_2_Mujer,
+         "edad"=Edad,
+         pob_17=`Poblacion 2017`,
+         pob_18=`Poblacion 2018`,
+         pob_19=`Poblacion 2019`,
+         pob_20=`Poblacion 2020`)
+names(df_proye)
+
+# calculate population proyections 
+df_proye_comunas <- 
+df_proye %>% 
+  group_by(comuna_cod, comuna_nom) %>% 
+  summarise(pob_17=sum(pob_17),
+            pob_18=sum(pob_18),
+            pob_19=sum(pob_19),
+            pob_20=sum(pob_20))
+
+df_proye_comunas <-
+df_proye_comunas %>% 
+  mutate(pob_total_17=sum(df_proye_comunas$pob_17),
+         pob_total_18=sum(df_proye_comunas$pob_18),
+         pob_total_19=sum(df_proye_comunas$pob_19),
+         pob_total_20=sum(df_proye_comunas$pob_20))
+names(df_proye_comunas)
+# ELSOC long data ____________________________________________________________
+df_elsoc <- 
+elsoc_long_2016_2021 %>% 
+  select(comuna,comuna_cod) %>%
+  mutate(comuna_lc=tolower(comuna)) %>% 
+  group_by(comuna,comuna_lc,comuna_cod) %>% 
+  summarise(n_elsoc=n())
+
+df_a <- full_join(df_elsoc,df_ine, by = "comuna_lc", suffix = c("_elsoc","_ine"))
+summary(df_a)
+
+# ELSOC CIT - territorial data _________________________________________________
+df_17 <- 
+cit17 %>% 
+  select(idencuesta,inmigrante:centroam)
+
+df_18 <- 
+cit18 %>% 
+  select(idencuesta,inmigrante:centroam)
+
+df_19 <- 
+cit19 %>% 
+  select(idencuesta,inmigrante:centroam)
+df_19[df_19==-995] <- NA
+
+# create data set
+df_cit_a <- 
+elsoc_long_2016_2021 %>% 
+  select(comuna,comuna_cod,idencuesta) %>% 
+  left_join(x = .,y = df_19, by ="idencuesta") %>% 
+  select(-idencuesta)
+#check for duplicates
+df_cit_b <- 
+  df_cit_a %>% distinct() %>% arrange(comuna_cod, inmigrante)
+
+#generate final dataset
+df_cit <- 
+  df_cit_b %>% 
+  group_by(comuna, comuna_cod) %>% 
+  summarise(inm_cit17=sum(inmigrante,na.rm = T))
+  
+sjmisc::frq(df_cit$inm_cit17)
+
+# CASEN nationality ___________________________________________________________
+# 2017_________________________________________________________
+df_17 <- 
+casen2017 %>% 
+  select(comuna,starts_with("r1b"), starts_with("exp"))
+# sjmisc::frq(df_17$r1b)
+
+#dummy for inmigrant 
+df_17$r1b[df_17$r1b==9] <- NA
+# sjmisc::frq(df_17$r1b)
+df_17$inm <- ifelse(test = (df_17$r1b==3),yes = 1,no = 0)
+# sjmisc::frq(df_17$inm)
+
+# calculate the mean of the dummy by comuna
+df_17_comuna <- 
+df_17 %>% 
+  mutate(comuna_n_17 =sjlabelled::as_character(comuna)) %>% 
+  group_by(comuna_n_17, "comuna_cod"=comuna) %>% 
+  summarise(
+    inm_2017_cas = mean(inm,na.rm=T)*100, #non weigthed
+    inm_2017_cas_w = questionr::wtd.mean(inm,weights = expc)*100 #weigthed
+    ) %>% 
+  arrange(comuna_cod)
+
+summary(df_17_comuna$inm_2017_cas)  #check
+summary(df_17_comuna$inm_2017_cas_w)#check
+# 2020_________________________________________________________
+df_20 <- 
+casen20 %>% 
+  select(comuna,
+         starts_with("r1b"),starts_with("exp"))
+
+#dummy for inmigrant 
+df_20$r1b[df_20$r1b==9] <- NA
+# sjmisc::frq(df_20$r1b)
+df_20$inm <- ifelse(test = (df_20$r1b==3),yes = 1,no = 0)
+# sjmisc::frq(df_20$inm)
+
+# calculate the mean of the dummy by comuna
+df_20_comuna <- 
+df_20 %>% 
+  mutate(comuna_n_20 =sjlabelled::as_character(comuna)) %>% 
+  group_by(comuna_n_20, "comuna_cod"=comuna) %>% 
+  summarise(
+    inm_2020_cas = mean(inm,na.rm=T)*100, #non weigthed
+    inm_2020_cas_w = questionr::wtd.mean(inm,weights = expc)*100 #weigthed
+    ) %>% 
+  arrange(comuna_cod)
+
+summary(df_20_comuna$inm_2020_cas)  #check
+summary(df_20_comuna$inm_2020_cas_w)#check
+
+df_b <- full_join(df_a, df_17_comuna, by = "comuna_cod")
+df_c <- full_join(df_b, df_20_comuna, by = "comuna_cod")
+
+# CENSUS Data_________________________________________________________________
+df_censo <- 
+censo2017 %>% 
+  select(P12, COMUNA)
+# sjmisc::frq(df_censo$P12)
+# (0-997)
+# 998 No aplica
+# 999 Missing
+# create dummy for inmigrant
+df_censo$inm_censo17 <- car::recode(df_censo$P12,recodes = "1:2=0;3:8=1;98:99=NA")
+# sjmisc::frq(df_censo$inm_censo17)
+
+# create % of inmigrant by comuna__________________________
+
+df_inm_comunas <- 
+df_censo %>% 
+  group_by(comuna_cod=COMUNA,) %>% 
+  summarise(inm_propcenso17 = mean(inm_censo17, na.rm=T)*100,
+            inm_totcenso17=sum(inm_censo17, na.rm=T))
+
+#Merge with CENSUS data (2017)
+df_d <- left_join(df_c, df_inm_comunas,  by = "comuna_cod")
+
+#Merge with Population proyection data (2017 - 2020)
+df_e <- left_join(df_d,df_proye_comunas, by = "comuna_cod")
+
+#Merge CIT data for 2019 (Census)
+df_f <- left_join(df_e,df_cit, by = "comuna_cod")
+
+
+#Calculate proportion of inmigrant based on proyections and CIT data
+df_f <- 
+df_f %>% 
+  mutate(inm_dem_proye18=(n_2018/pob_18)*100,
+         inm_dem_proye19=(n_2019/pob_19)*100,
+         inm_dem_proye20=(n_2020/pob_20)*100,
+         #CIT data / total pop by comune 2017 CENSUS
+         inm_cit_proye17=(inm_cit17/inm_totcenso17)*100)
+
+# Select and organize variables________________________________________________
+df_study1_comunas <- 
+df_f %>%
+  mutate(comuna=sjlabelled::as_character(comuna_cod)) %>% 
+  dplyr::select(comuna,
+                comuna_cod,
+                inm_prop_cas17_w=inm_2017_cas_w,
+                inm_tota_cen17=inm_totcenso17,
+                inm_prop_cen17=inm_propcenso17,
+                inm_tota_cit17=inm_cit17,
+                inm_prop_citproy17=inm_cit_proye17,
+                inm_prop_demproy18=inm_dem_proye18,
+                inm_prop_demproy19=inm_dem_proye19,
+                inm_prop_demproy20=inm_dem_proye20,
+                inm_prop_cas20_w=inm_2020_cas_w) %>% 
+  mutate(dif_inm = inm_prop_cas20_w-inm_prop_cas17_w)
+df_study1_comunas$comuna_lc <- NULL
+# names(df_study1_comunas)
+
+# Label data____________________________________________________________________
+sjlabelled::set_label(df_study1_comunas) <- 
+c("Comuna",
+  "Codigo Comuna",
+  "Proporcion de poblacion inmigrante  (ponderado) - CASEN 2017 - Comunal",
+  "Número de poblacion inmigrante - CENSO 2017 - Comunal",
+  "Proporcion de poblacion inmigrante - CENSO 2017 - Comunal",
+  "Número de poblacion inmigrante - CIT 2017 - Comunal (usando zona censal)",
+  "Proporcion de poblacion inmigrante (CIT / DEM)- CIT 2017 y INE/DEM 2017 - Comunal",
+  "Proporcion de poblacion inmigrante proyectada -  INE/DEM 2018 - Comunal",
+  "Proporcion de poblacion inmigrante proyectada -  INE/DEM 2019 - Comunal",
+  "Proporcion de poblacion inmigrante proyectada -  INE/DEM 2020 - Comunal",
+  "Proporcion de poblacion inmigrante (ponderado) - CASEN 2020 - Comunal",
+  "Cambio en la proporción de población inmigrante entre 2017 y 2020 - CASEN")
+
+# save data____________________________________________________________________
+save(df_study1_comunas,file = here::here("input/data-proc/study_1_comunas.RData"))
+
+# save codebook
+sjPlot::view_df(df_study1_comunas,
+        show.frq = T, 
+        show.prc = T, 
+        show.na = T,
+        file = here::here("output/df_study1_comunas.html"))
+```
+
+# Merge individual & contextual 
+
+```{r}
+remove(list = ls()) # clean workspace
+# .rs.restartR() #restart R session
+if (!require("pacman")) install.packages("pacman") # install pacman
+# load libraries
+pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
+
+load(file = here::here("input/data-proc/study_1.RData"))
+load(file = here::here("input/data-proc/study_1_comunas.RData"))
+
+df_study1_ind_comunas <- 
+ dplyr::left_join(x = df_study1,
+                  y = df_study1_comunas, 
+                  by = "comuna_cod") %>% 
+ dplyr::select(idencuesta:edad,
+               inm_prop_cas17_w,
+               inm_prop_cas20_w,
+               dif_inm) %>% 
+ dplyr::rename(comuna=comuna.x)  
+
+
+# save data____________________________________________________________________
+save(df_study1_ind_comunas,file = here::here("input/data-proc/df_study1_ind_comunas.RData"))
+
+# save codebook
+sjPlot::view_df(df_study1_ind_comunas,
+        show.frq = T, 
+        show.prc = T, 
+        show.na = T,
+        file = here::here("output/df_study1_ind_comunas.html"))
+```
+
+
+
