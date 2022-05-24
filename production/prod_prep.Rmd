@@ -235,6 +235,14 @@ as.numeric(car::recode(elsoc_long_2016_2021$m30,
             6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
             13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
             19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
+
+#Impute midpoint of income ranges (2021)
+elsoc_long_2016_2021$m30b_rec <-
+as.numeric(car::recode(elsoc_long_2016_2021$m30b,
+           "1=125000;2=300000;3=400000;4=575000;5=70000;NA=NA;c(-888,-999)=NA"))
+
+sjmisc::frq(elsoc_long_2016_2021$m30b_rec)
+
 #Recode DK/DA of Income to NA
 elsoc_long_2016_2021$m29_rec <-
   as.numeric(car::recode(elsoc_long_2016_2021$m29,"c(-888,-999)=NA"))
@@ -244,6 +252,13 @@ elsoc_long_2016_2021$m29_imp <-
   ifelse(test = !is.na(elsoc_long_2016_2021$m29_rec),
          yes =  elsoc_long_2016_2021$m29_rec,
          no =  elsoc_long_2016_2021$m30_rec)
+summary(elsoc_long_2016_2021$m29_imp)
+
+elsoc_long_2016_2021$m29_imp <- 
+  ifelse(test = is.na(elsoc_long_2016_2021$m29_imp),
+         yes =  elsoc_long_2016_2021$m30b_rec,
+         no =  elsoc_long_2016_2021$m29_imp)
+summary(elsoc_long_2016_2021$m29_imp)
 
 # deflate at each year's prices
 elsoc_long_2016_2021$deflactor <-
@@ -261,7 +276,8 @@ elsoc_long_2016_2021 <-
            dplyr::case_when(ola == 1 ~ nhogar1,
                             ola == 2 ~ m46_nhogar,
                             ola == 3 ~ m54,
-                            ola == 4 ~ m54))
+                            ola == 4 ~ m54,
+                            ola == 5 ~ m54))
 sjmisc::frq(elsoc_long_2016_2021$n_hogar)
 
 #Recode DK/DA to NA
@@ -291,7 +307,7 @@ elsoc_long_2016_2021$quintil <-
 
 elsoc_long_2016_2021$quintil <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$quintil,
-                      label = "Houshold income quintile per capita")  
+                      label = "Household income quintile per capita")  
 
 sjmisc::frq(elsoc_long_2016_2021$quintil)
 
@@ -302,7 +318,7 @@ elsoc_long_2016_2021$quintil1<-
 
 elsoc_long_2016_2021$quintil1 <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$quintil1,
-                      label = "Houshold income quintile per capita (NA)") 
+                      label = "Household income quintile per capita (NA)") 
 sjmisc::frq(elsoc_long_2016_2021$quintil1)
 #Age Ranges
 elsoc_long_2016_2021$edad <- 
@@ -365,6 +381,22 @@ sjlabelled::set_label(x = elsoc_long_2016_2021$know_inm,
 elsoc_long_2016_2021$know_inm <-
 sjlabelled::set_labels(x = elsoc_long_2016_2021$know_inm,
                        labels = c("None","Few","Some","Quite a few","Many"))
+sjmisc::frq(elsoc_long_2016_2021$know_inm)
+
+# Level of contact: Migrant friends_________________________
+sjmisc::frq(elsoc_long_2016_2021$r05_02)
+elsoc_long_2016_2021$frien_inm <- 
+elsoc_long_2016_2021$r05_02
+
+elsoc_long_2016_2021$frien_inm <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$frien_inm, 
+                      label = "Level of contact: Inmigrant friends") 
+
+elsoc_long_2016_2021$frien_inm <-
+sjlabelled::set_labels(x = elsoc_long_2016_2021$frien_inm,
+                       labels = c("None","Few","Some","Quite a few","Many"))
+sjmisc::frq(elsoc_long_2016_2021$frien_inm)
+
 
 # Political position ____________________________
 elsoc_long_2016_2021$pos_id <-
@@ -384,27 +416,180 @@ sjlabelled::set_label(x = elsoc_long_2016_2021$pos_id,
 sjmisc::frq(elsoc_long_2016_2021$pos_id)
 
 
-# Select data______________________________________________________________
+# CONTACT_______________________________________________________________
+
+# NATION to wave 1 (original)___________________
+df_nation <- elsoc_long_2016_2021 %>%  
+  select(idencuesta,nation_fix=nation,ola,muestra) %>% 
+  filter(ola %in% c(1,3)) %>% #keep wave 1 and 3 
+  group_by(idencuesta) %>% 
+  summarise(nation_fix=max(nation_fix,na.rm = F)) #keep the maximum value 
+sjmisc::frq(df_nation$nation_fix) # 2 NA
+
+elsoc <- elsoc_long_2016_2021 #dummy dataset _________________________________
+
+# merge the data with fixed variable:
+elsoc <- left_join(x = elsoc,y = df_nation,by ="idencuesta") 
+# sjmisc::frq(elsoc$nation_fix)  
+
+table(elsoc$nation==elsoc$nation_fix) #how many cases are different ?
+elsoc$check_nation <- ifelse(elsoc$nation==elsoc$nation_fix,
+                             yes = "IGUALES",
+                             no = "DISTINTOS")
+# sjmisc::frq(elsoc$check_nation) #18 cases
+
+# edit, if value is different from original variable, set the value of wave 1
+elsoc$nation_t1 <- if_else(condition = elsoc$check_nation=="DISTINTOS",
+                           true = elsoc$nation,
+                           false = elsoc$nation_fix,
+                           missing = elsoc$nation_fix)
+
+table(elsoc$nation==elsoc$nation_t1)
+sjmisc::frq(elsoc$nation_t1)
+elsoc$nation <- NULL; elsoc$nation_fix <- NULL; elsoc$check_nation <- NULL
+
+elsoc$nation_t1 <- set_label(elsoc$nation_t1, label = "Nationality")
+
+# KNOW inmigrants _____________________________
+sjPlot::tab_xtab(elsoc$know_inm,
+                 elsoc$ola,show.cell.prc = T,show.na = T)
+sjmisc::frq(elsoc$know_inm)
+elsoc$know_inm_bi <- car::recode(elsoc$know_inm,
+                                                "1=0;2:5=1")
+sjmisc::frq(elsoc$know_inm_bi)
+
+know_inm_bi <- 
+elsoc %>% group_by(idencuesta) %>%
+  summarize(
+            know_inm_t1t4 = know_inm_bi[ola==4] - know_inm_bi[ola==1]
+            )
+
+elsoc <- left_join(x = elsoc,y = know_inm_bi, by = "idencuesta")
+elsoc$know_inm_t1t4 <- set_label(elsoc$know_inm_t1t4,
+                                  label = "Know immigrants (diff. t4 - t1)")
+# sjmisc::frq(elsoc$know_inm_t1t4)
+# sjPlot::tab_xtab(elsoc$know_inm_t1t4,elsoc$ola)
+
+
+# FRIENDS inmigrants _____________________________
+sjPlot::tab_xtab(elsoc$frien_inm,
+                 elsoc$ola,show.cell.prc = T,show.na = T)
+sjmisc::frq(elsoc$frien_inm)
+elsoc$frien_inm_bi <- car::recode(elsoc$frien_inm,
+                                                "1=0;2:5=1")
+sjmisc::frq(elsoc$frien_inm_bi)
+
+frien_inm_bi <- 
+elsoc %>% group_by(idencuesta) %>%
+  summarize(
+            frien_inm_t1t4 = frien_inm_bi[ola==4] - frien_inm_bi[ola==1]
+            )
+
+elsoc <- left_join(x = elsoc,y = frien_inm_bi, by = "idencuesta")
+
+elsoc$frien_inm_t1t4 <- set_label(elsoc$frien_inm_t1t4,
+                                  label = "Have immigrant friends (diff. t4 - t1)")
+# sjmisc::frq(elsoc$frien_inm_bi)
+# sjmisc::frq(elsoc$frien_inm_t1t4)
+# sjPlot::tab_xtab(elsoc$frien_inm_t1t4,elsoc$ola)
+
+# Select variables______________________________________________________________
+elsoc_long_2016_2021<- elsoc
 
 df_study1 <- 
 elsoc_long_2016_2021 %>% 
   select(idencuesta,ola,region,region_cod,comuna,comuna_cod,
+         muestra,
+         cuestion_mig,
          starts_with("in_"),
          educ,educ_n,ing_pc,quintil,quintil1,
-         ess,ess_inm,
-         nation,know_inm,pos_id,edad)
+         ess,
+         # ess_inm,
+         nation_t1,
+         know_inm,
+         know_inm_bi,
+         know_inm_t1t4,
+         frien_inm,
+         frien_inm_bi,
+         frien_inm_t1t4,
+         pos_id,
+         edad)  %>% 
+  filter(muestra == 1) #keep original sample (vs refresh)
+
+# sjmisc::frq(df_study1$ola)
+sjPlot::tab_xtab(df_study1$muestra,df_study1$ola)
+
+df_study1_2 <- 
+elsoc_long_2016_2021 %>% 
+  select(idencuesta,ola,region,region_cod,comuna,comuna_cod,
+         muestra,
+         cuestion_mig,
+         starts_with("in_"),
+         educ,
+         educ_n,
+         ing_pc,
+         quintil,
+         quintil1,
+         ess,
+         nation_t1,
+         know_inm_t1t4,
+         frien_inm_t1t4,
+         pos_id,
+         edad
+         ) %>% 
+  filter(muestra == 1) %>% #keep original sample (vs refresh)
+  na.omit()
+
+sjPlot::view_df(df_study1_2,show.frq = T,show.values = T,show.na = T,show.prc = T)
+sjPlot::tab_xtab(var.row = df_study1_2$muestra,
+                 var.col = df_study1_2$ola)
+
+# sjmisc::frq(df_study1_2$ola)
+# sjmisc::frq(df_study1_2$muestra)
+# sjmisc::frq(df_study1_2$cuestion_mig)
+# sjmisc::frq(df_study1_2$idencuesta,show.na = F) %>% data.frame() %>% View()
+
+# Dataset fixed at t5_________________________________________________________
+# keep idencuesta for the t5
+id <- distinct(df_study1_2 %>% select(idencuesta,ola) %>% filter(ola==5))
+# filter data by the idencuesta of t5
+df_study1_3 <- 
+  df_study1_2 %>%  filter(idencuesta %in% id$idencuesta)
+
+# sjmisc::frq(df_study1_2$comuna)
+# sjPlot::view_df(df_study1_3,show.frq = T,show.values = T,show.na = T,show.prc = T)
+# 
+# sjPlot::tab_xtab(var.row = df_study1_3$cuestion_mig,
+#                  var.col = df_study1_3$ola)
+# 
+# sjPlot::tab_xtab(var.row = df_study1_3$muestra,
+#                  var.col = df_study1_3$ola)
 
 # sjPlot::view_df(df_study1,show.frq = T,show.values = T,show.na = T)
 
-# save data
+# SAVE DATA____________________________________________________________________
 save(df_study1,file = here::here("input/data-proc/study_1.RData"))
+save(df_study1_2,file = here::here("input/data-proc/study_1_2.RData"))
+save(df_study1_3,file = here::here("input/data-proc/study_1_3.RData"))
 
-# save codebook
+# # save codebook
 sjPlot::view_df(df_study1,
-        show.frq = T, 
-        show.prc = T, 
+        show.frq = T,
+        show.prc = T,
         show.na = T,
         file = here::here("output/df_study1.html"))
+
+sjPlot::view_df(df_study1_2,
+        show.frq = T,
+        show.prc = T,
+        show.na = T,
+        file = here::here("output/df_study1_2.html"))
+
+sjPlot::view_df(df_study1_3,
+        show.frq = T,
+        show.prc = T,
+        show.na = T,
+        file = here::here("output/df_study1_3.html"))
 ```
 
 
@@ -664,6 +849,8 @@ if (!require("pacman")) install.packages("pacman") # install pacman
 pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
 
 load(file = here::here("input/data-proc/study_1.RData"))
+load(file = here::here("input/data-proc/study_1_2.RData"))
+load(file = here::here("input/data-proc/study_1_3.RData"))
 load(file = here::here("input/data-proc/study_1_comunas.RData"))
 
 df_study1_ind_comunas <- 
@@ -676,9 +863,35 @@ df_study1_ind_comunas <-
                dif_inm) %>% 
  dplyr::rename(comuna=comuna.x)  
 
+df_study1_2_ind_comunas <- 
+ dplyr::left_join(x = df_study1_2,
+                  y = df_study1_comunas, 
+                  by = "comuna_cod") %>% 
+ dplyr::select(idencuesta:edad,
+               inm_prop_cas17_w,
+               inm_prop_cas20_w,
+               dif_inm) %>% 
+ dplyr::rename(comuna=comuna.x) 
+
+
+df_study1_3_ind_comunas <- 
+ dplyr::left_join(x = df_study1_3,
+                  y = df_study1_comunas, 
+                  by = "comuna_cod") %>% 
+ dplyr::select(idencuesta:edad,
+               inm_prop_cas17_w,
+               inm_prop_cas20_w,
+               dif_inm) %>% 
+ dplyr::rename(comuna=comuna.x) 
+
 
 # save data____________________________________________________________________
-save(df_study1_ind_comunas,file = here::here("input/data-proc/df_study1_ind_comunas.RData"))
+save(df_study1_ind_comunas,
+     file = here::here("input/data-proc/df_study1_ind_comunas.RData"))
+save(df_study1_2_ind_comunas,
+     file = here::here("input/data-proc/df_study1_2_ind_comunas.RData"))
+save(df_study1_3_ind_comunas,
+     file = here::here("input/data-proc/df_study1_3_ind_comunas.RData"))
 
 # save codebook
 sjPlot::view_df(df_study1_ind_comunas,
@@ -686,6 +899,18 @@ sjPlot::view_df(df_study1_ind_comunas,
         show.prc = T, 
         show.na = T,
         file = here::here("output/df_study1_ind_comunas.html"))
+
+sjPlot::view_df(df_study1_2_ind_comunas,
+        show.frq = T, 
+        show.prc = T, 
+        show.na = T,
+        file = here::here("output/df_study1_2_ind_comunas.html"))
+
+sjPlot::view_df(df_study1_3_ind_comunas,
+        show.frq = T, 
+        show.prc = T, 
+        show.na = T,
+        file = here::here("output/df_study1_3_ind_comunas.html"))
 ```
 
 
