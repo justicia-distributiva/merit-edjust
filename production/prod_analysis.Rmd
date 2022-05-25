@@ -50,16 +50,13 @@ rm(list=ls())
 if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
 pacman::p_load(dplyr,       # Manipulacion de datos
-               car,         # recodificar variables
-               sjlabelled,  # etiquetado de variables
-               sjmisc,      # descriptivos y frecuencias
-               sjPlot,      # tablas, plots y descriptivos
                knitr,
                kableExtra,
-               summarytools,
-               lavaan
+               summarytools
                )
-load(file = here::here("input/data-proc/study_1.RData"))
+load(file = here::here("input/data-proc/df_study1_long.RData"))
+load(file = here::here("input/data-proc/df_study1_long_t5.RData"))
+
 
 # Css
 st_css()
@@ -71,7 +68,7 @@ st_options(lang = "en",
            )
 
 # Df variables nivel 1
-df<- dfSummary(df_study1 %>% select(in_simpat:edad),
+df<- dfSummary(df_study1_long %>% select(in_simpat:edad),
                plain.ascii = FALSE,
                style = "grid",
                tmp.img.dir = "/tmp",
@@ -91,9 +88,44 @@ view(df,
 webshot::webshot(url =here::here("output/tables/desc01.html"),
         file =here::here("output/tables/desc01.png")) # Remover archivo HTML
 print(df, method = "render")
+
+# Df variables nivel __________________________________________________________
+df<- dfSummary(df_study1_long_t5 %>% select(in_simpat:edad),
+               plain.ascii = FALSE,
+               style = "grid",
+               tmp.img.dir = "/tmp",
+               graph.magnif = TRUE,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = F,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               col.widths = c(700,10,10,10,10)
+               )
+df$Variable <- NULL # delete variable column
+view(df,
+     file = here::here("output/tables/desc02.html")
+     ) # Ver tabla en un archivo HTML
+webshot::webshot(url =here::here("output/tables/desc02.html"),
+        file =here::here("output/tables/desc02.png")) # Remover archivo HTML
+print(df, method = "render")
 ```
 
 
+```{r}
+rm(list=ls())
+if (!require("pacman")) install.packages("pacman") # instalar pacman
+                            # cargar librerias
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               lme4
+               )
+load(file = here::here("input/data-proc/df_study1_long.RData"))
+load(file = here::here("input/data-proc/df_study1_long_t5.RData"))
+```
 
 
 
