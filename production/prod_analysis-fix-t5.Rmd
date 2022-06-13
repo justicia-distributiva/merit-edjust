@@ -56,7 +56,7 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                kableExtra,
                summarytools
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # Css
 st_css()
@@ -90,7 +90,7 @@ st_options(lang = "en",
 # # print(df, method = "render")
 
 # Df variables nivel 1 __________________________________________________________
-df_study1 <- df_study1_long_comunas %>% select(in_simpat:edad,
+df_study1 <- df_study_long_t5_comunas %>% select(in_simpat:edad,
                                                  inm_prop_cas17_w,
                                                  inm_prop_cas20_w,dif_inm) 
 lab_study1 <- sjlabelled::get_label(df_study1) 
@@ -132,11 +132,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                summarytools,
                lavaan
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # Full sample_______________________________________________________________________
 mat_full<- 
-df_study1_long_comunas %>%
+df_study_long_t5_comunas %>%
   # filter(ola==1) %>%
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
@@ -172,7 +172,7 @@ corrplot::corrplot(cor_full,
 
 # Wave 1_______________________________________________________________________
 mat_1<- 
-df_study1_long_comunas %>%
+df_study_long_t5_comunas %>%
   filter(ola==1) %>%
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
@@ -208,7 +208,7 @@ corrplot::corrplot(cor_1,
 
 # Wave 2_______________________________________________________________________
 mat_2<-   
-df_study1_long_comunas %>%
+df_study_long_t5_comunas %>%
   filter(ola==2) %>% 
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
@@ -245,7 +245,7 @@ corrplot::corrplot(cor_2,
 
 # Wave 3_______________________________________________________________________
 mat_3 <- 
-df_study1_long_comunas %>%
+df_study_long_t5_comunas %>%
   filter(ola==3) %>% 
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
@@ -281,7 +281,7 @@ corrplot::corrplot(cor_3,
 
 # Wave 4_______________________________________________________________________
 mat_4 <- 
-df_study1_long_comunas %>%
+df_study_long_t5_comunas %>%
   filter(ola==4) %>% 
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
@@ -319,7 +319,7 @@ corrplot::corrplot(cor_4,
 
 # Wave 5_______________________________________________________________________
 mat_5 <- 
-df_study1_long_comunas %>%
+df_study_long_t5_comunas %>%
   filter(ola==5) %>% 
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
@@ -369,11 +369,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -416,11 +416,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -463,11 +463,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -510,11 +510,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -557,11 +557,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -605,11 +605,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -653,11 +653,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -702,11 +702,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -751,11 +751,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -799,11 +799,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -846,11 +846,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
@@ -894,11 +894,11 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                lme4,
                texreg
                )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
 # generate analytical sample
 df_study1 <- 
-  df_study1_long_comunas %>%
+  df_study_long_t5_comunas %>%
   select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
   mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,

@@ -207,6 +207,9 @@ elsoc_long_2016_2021$educ <-
   factor(elsoc_long_2016_2021$educ,
          labels = c("Primary","High school","Vocational","Universitary"))
 
+#reverse education, reference level is the highest level
+elsoc_long_2016_2021$educ <- forcats::fct_rev(elsoc_long_2016_2021$educ)
+
 elsoc_long_2016_2021$educ <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$educ,
                       label = "Education")
@@ -305,6 +308,9 @@ elsoc_long_2016_2021$quintil <-
          levels = c(1, 2, 3, 4, 5),
          labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
 
+#reverse quintile, reference level is the highest quintile
+elsoc_long_2016_2021$quintil <- forcats::fct_rev(elsoc_long_2016_2021$quintil)
+
 elsoc_long_2016_2021$quintil <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$quintil,
                       label = "Household income quintile per capita")  
@@ -316,10 +322,14 @@ elsoc_long_2016_2021$quintil1<-
   car::recode(elsoc_long_2016_2021$quintil, 
               "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
 
+elsoc_long_2016_2021$quintil1 <- factor(elsoc_long_2016_2021$quintil1, c("Q5","Q4","Q3","Q2","Q1","QNA"))
+
 elsoc_long_2016_2021$quintil1 <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$quintil1,
                       label = "Household income quintile per capita (NA)") 
 sjmisc::frq(elsoc_long_2016_2021$quintil1)
+
+
 #Age Ranges
 elsoc_long_2016_2021$edad <- 
   factor(car::recode(elsoc_long_2016_2021$m0_edad, 
@@ -333,11 +343,14 @@ elsoc_long_2016_2021$edad <-
 
 elsoc_long_2016_2021$ess <- 
 as.numeric(elsoc_long_2016_2021$d01_01)
-
 sjmisc::frq(elsoc_long_2016_2021$ess)
+elsoc_long_2016_2021$ess <- sjmisc::rec(elsoc_long_2016_2021$ess,rec = "rev")
+sjmisc::frq(elsoc_long_2016_2021$ess)
+
 elsoc_long_2016_2021$ess <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$ess,
-                      label = "Subjective Social Status: individual")
+                      label = "Subjective Social Status: individual (reverse)")
+
 
 sjmisc::frq(elsoc_long_2016_2021$ess)
 # sjPlot::plot_frq(elsoc_long_2016_2021$ess)
@@ -456,7 +469,6 @@ sjmisc::frq(elsoc$nation_t1)
 
 elsoc$nation <- NULL; elsoc$nation_fix <- NULL; elsoc$check_nation <- NULL
 
-elsoc$nation_t1 <- set_label(elsoc$nation_t1, label = "Nationality")
 elsoc$nation_t1 <- set_labels(elsoc$nation_t1,
                               labels =c("Chilean","Peruvian",
                                         "Argentina","Colombian",
@@ -466,6 +478,7 @@ elsoc$nation_t1 <- factor(elsoc$nation_t1,
                           labels = c("Chilean","Peruvian",
                                      "Argentina","Colombian",
                                      "Bolivian", "Haitian","Spanish","Other"))
+elsoc$nation_t1 <- set_label(elsoc$nation_t1, label = "Nationality")
 sjmisc::frq(elsoc$nation_t1)
 # KNOW inmigrants _____________________________
 sjPlot::tab_xtab(elsoc$know_inm,
@@ -484,11 +497,14 @@ elsoc %>% group_by(idencuesta) %>%
 
 elsoc <- left_join(x = elsoc,y = know_inm_bi, by = "idencuesta")
 sjmisc::frq(elsoc$know_inm_t1t4)
+
+elsoc$know_inm_t1t4 <- factor(elsoc$know_inm_t1t4,levels = c(-1,0,1),
+                              labels = c("No longer know","Still know","Now know"))
+
 elsoc$know_inm_t1t4 <- set_label(elsoc$know_inm_t1t4,
                                   label = "Know immigrants (diff. t4 - t1)")
-# sjmisc::frq(elsoc$know_inm_t1t4)
+sjmisc::frq(elsoc$know_inm_t1t4)
 # sjPlot::tab_xtab(elsoc$know_inm_t1t4,elsoc$ola)
-
 
 # FRIENDS inmigrants _____________________________
 sjPlot::tab_xtab(elsoc$frien_inm,
@@ -516,7 +532,11 @@ summary(elsoc$frien_inm_t1t4)
 elsoc$frien_inm_t1t4 <- if_else(condition = is.na(elsoc$frien_inm_t1t4),
                                 true = elsoc$frien_inm_bi_t1,
                                 false = elsoc$frien_inm_t1t4)
-summary(elsoc$frien_inm_t1t4)
+sjmisc::frq(elsoc$frien_inm_t1t4)
+
+elsoc$frien_inm_t1t4 <- factor(elsoc$frien_inm_t1t4,
+                               levels = c(-1,0,1),
+                               labels = c("No longer have","Still have","Now have"))
 
 elsoc$frien_inm_t1t4 <- 
   set_label(elsoc$frien_inm_t1t4,
@@ -813,14 +833,35 @@ sjmisc::frq(df_cit$inm_cit17)
 # 2017_________________________________________________________
 df_17 <- 
 casen2017 %>% 
-  select(comuna,starts_with("r1b"), starts_with("exp"))
-# sjmisc::frq(df_17$r1b)
+  select(comuna,starts_with("r1"), starts_with("exp"))
+sjmisc::frq(df_17$r1a)
+sjmisc::frq(df_17$r1a_cod)
+sjmisc::frq(df_17$r1b)
+sjmisc::frq(df_17$r1b_p_cod)
+
+# Latam & caribean 401:588
+# recent migrant groups (2020) 
+  # Venezuela: 513
+  # Peru: 509
+  # Haiti: 413
+  # Colombia: 505
+  # Bolivia: 502
+
+# Al igual que la tendencia reflejada en las estimaciones de 2018 y 2019, la mayoría (poco más de 79% del total) de las personas extranjeras residentes en el país al 31 de diciembre de 2020 proviene de Venezuela (30,7%), Perú (16,3%), Haití (12,5%), Colombia (11,4%) y Bolivia (8,5%). 
 
 #dummy for inmigrant 
-df_17$r1b[df_17$r1b==9] <- NA
+df_17$pais <- 
+car::recode(df_17$r1b_p_cod,
+            recodes = "c(513,509,413,505,502)=1;c(888,999)=NA;else=0",
+            as.factor = T)
+sjmisc::frq(df_17$pais)
+
+# df_17$r1b[df_17$r1b==9] <- NA
 # sjmisc::frq(df_17$r1b)
-df_17$inm <- ifelse(test = (df_17$r1b==3),yes = 1,no = 0)
-# sjmisc::frq(df_17$inm)
+
+df_17$inm <- ifelse(test = (df_17$pais==1),yes = 1,no = 0)
+
+sjmisc::frq(df_17$inm)
 
 # calculate the mean of the dummy by comuna
 df_17_comuna <- 
@@ -839,12 +880,20 @@ summary(df_17_comuna$inm_2017_cas_w)#check
 df_20 <- 
 casen20 %>% 
   select(comuna,
-         starts_with("r1b"),starts_with("exp"))
+         starts_with("r1"),starts_with("exp"))
 
+sjmisc::frq(df_20$r1b_p_cod)
 #dummy for inmigrant 
-df_20$r1b[df_20$r1b==9] <- NA
+df_20$pais <- 
+car::recode(df_20$r1b_p_cod,
+            recodes = "c(513,509,413,505,502)=1;c(888,999)=NA;else=0",
+            as.factor = T)
+sjmisc::frq(df_20$pais)
+
+
+# df_20$r1b[df_20$r1b==9] <- NA
 # sjmisc::frq(df_20$r1b)
-df_20$inm <- ifelse(test = (df_20$r1b==3),yes = 1,no = 0)
+df_20$inm <- ifelse(test = (df_20$pais==1),yes = 1,no = 0)
 # sjmisc::frq(df_20$inm)
 
 # calculate the mean of the dummy by comuna
@@ -926,16 +975,16 @@ df_study1_comunas$comuna_lc <- NULL
 sjlabelled::set_label(df_study1_comunas) <- 
 c("Comuna",
   "Codigo Comuna",
-  "Proporcion de poblacion inmigrante  (ponderado) - CASEN 2017 - Comunal",
-  "Número de poblacion inmigrante - CENSO 2017 - Comunal",
-  "Proporcion de poblacion inmigrante - CENSO 2017 - Comunal",
-  "Número de poblacion inmigrante - CIT 2017 - Comunal (usando zona censal)",
-  "Proporcion de poblacion inmigrante (CIT / DEM)- CIT 2017 y INE/DEM 2017 - Comunal",
-  "Proporcion de poblacion inmigrante proyectada -  INE/DEM 2018 - Comunal",
-  "Proporcion de poblacion inmigrante proyectada -  INE/DEM 2019 - Comunal",
-  "Proporcion de poblacion inmigrante proyectada -  INE/DEM 2020 - Comunal",
-  "Proporcion de poblacion inmigrante (ponderado) - CASEN 2020 - Comunal",
-  "Cambio en la proporción de población inmigrante entre 2017 y 2020 - CASEN")
+  "Proportion of immigrant population (weighted) - CASEN 2017 - Municipality",
+  "Number of immigrant population - CENSUS 2017 - Municipality",
+  "Proportion of immigrant population - CENSUS 2017 - Municipality",
+  "Number of immigrant population - CIT 2017 - Municipality (using census tract)",
+  "Proportion of immigrant population (CIT / DEM)- CIT 2017 and INE/DEM 2017 - Communal",
+  "Proportion of projected immigrant population - INE/DEM 2018 - Communal",
+  "Proportion of projected immigrant population -  INE/DEM 2019 - Comunal",
+  "Proportion of projected immigrant population -  INE/DEM 2020 - Comunal",
+  "Proportion of immigrant population (weighted) - CASEN 2020 - Municipality",
+  "Change in the proportion of the immigrant population between 2017 and 2020 - CASEN")
 
 # save data____________________________________________________________________
 save(df_study1_comunas,file = here::here("input/data-proc/study_1_comunas.RData"))
