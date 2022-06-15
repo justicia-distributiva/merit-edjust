@@ -113,7 +113,7 @@ elsoc_long_2016_2021 %>%
 sjmisc::frq(elsoc_long_2016_2021$in_simpat)
 elsoc_long_2016_2021$in_simpat <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_simpat, 
-                      label = "Degree of sympathy for [PER/HAI/VEN] living in Chile") 
+                      label = "Sympathy for [PER/HAI/VEN] living in Chile") 
 elsoc_long_2016_2021$in_simpat <-
 sjlabelled::set_labels(x = elsoc_long_2016_2021$in_simpat,
                        labels = c("Very little or not at all", "A little",
@@ -124,7 +124,7 @@ sjmisc::frq(elsoc_long_2016_2021$in_simpat)
 sjmisc::frq(elsoc_long_2016_2021$in_simili)
 elsoc_long_2016_2021$in_simili <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_simili, 
-                      label = "Degree of similarity between Chileans and [PER/HAI/VEN].") 
+                      label = "Similarity between Chileans and [PER/HAI/VEN]") 
 elsoc_long_2016_2021$in_simili <-
 sjlabelled::set_labels(x = elsoc_long_2016_2021$in_simili,
                        labels = c("Not similar", "Slightly similar", "Somewhat similar",
@@ -156,46 +156,66 @@ sjlabelled::set_labels(x = elsoc_long_2016_2021[[i]],
 sjmisc::frq(elsoc_long_2016_2021$in_valfam)
 elsoc_long_2016_2021$in_valfam <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_valfam, 
-                      label = "Degree of agreement: My family values my friends [PER/HAI/VEN].") 
+                      label = "Family value of immigrant friends [PER/HAI/VEN]") 
 sjmisc::frq(elsoc_long_2016_2021$in_valfam)
 
 
 sjmisc::frq(elsoc_long_2016_2021$in_valami)
 elsoc_long_2016_2021$in_valami <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_valami, 
-                      label = "Degree of agreement: My friends value my friends [PER/HAI/VEN].") 
+                      label = "Friends value of immigrant friends [PER/HAI/VEN]") 
 sjmisc::frq(elsoc_long_2016_2021$in_valami)
 
 
 sjmisc::frq(elsoc_long_2016_2021$in_amsimb)
 elsoc_long_2016_2021$in_amsimb <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_amsimb, 
-                      label = "Degree of agreement: Chile loses its identity with the arrival of [PER/HAI/VEN].") 
+                      label = "Loose of identity because of immigrants") 
 sjmisc::frq(elsoc_long_2016_2021$in_amsimb)
 
 sjmisc::frq(elsoc_long_2016_2021$in_amreal)
 elsoc_long_2016_2021$in_amreal <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_amreal, 
-                      label = "Degree of agreement: With the arrival of [PER/HAI/VEN] unemployment rises.") 
+                      label = "Unemployment increases") 
 sjmisc::frq(elsoc_long_2016_2021$in_amreal)
 
 sjmisc::frq(elsoc_long_2016_2021$in_acpier)
 elsoc_long_2016_2021$in_acpier <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_acpier, 
-                      label = "Degree of agreement: [PER/HAI/VEN] keep their customs") 
+                      label = "Immigrant keeping their customs") 
 sjmisc::frq(elsoc_long_2016_2021$in_acpier)
 
 sjmisc::frq(elsoc_long_2016_2021$in_acadop)
 elsoc_long_2016_2021$in_acadop <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_acadop, 
-                      label = "Degree of agreement: [PER/HAI/VEN] adopt Chilean customs") 
+                      label = "Adoption of Chilean customs") 
 sjmisc::frq(elsoc_long_2016_2021$in_acadop)
 
 sjmisc::frq(elsoc_long_2016_2021$in_amigcl)
 elsoc_long_2016_2021$in_amigcl <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_amigcl, 
-                      label = "Degree of agreement: [PER/HAI/VEN] have Chilean friends") 
+                      label = "Immigrants [PER/HAI/VEN] have Chilean friends") 
 sjmisc::frq(elsoc_long_2016_2021$in_amigcl)
+
+
+# Average variables___________________________________________________________
+
+elsoc_long_2016_2021 <- elsoc_long_2016_2021 %>% 
+  mutate(conviviality=as.numeric((in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5),
+         identity= as.numeric((in_simili+in_amsimb+in_acpier+in_acadop)/4),
+         threat = as.numeric(in_amreal))
+
+sjmisc::frq(elsoc_long_2016_2021$conviviality)
+elsoc_long_2016_2021$conviviality <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$conviviality, 
+                      label = "Conviviality")
+sjmisc::frq(elsoc_long_2016_2021$conviviality)
+
+sjmisc::frq(elsoc_long_2016_2021$identity)
+elsoc_long_2016_2021$identity <- 
+sjlabelled::set_label(x = elsoc_long_2016_2021$identity, 
+                      label = "Identity")
+sjmisc::frq(elsoc_long_2016_2021$identity)
 
 # Socioeconomic_________________________________________________________________
 
@@ -555,6 +575,8 @@ elsoc_long_2016_2021 %>%
          muestra,
          cuestion_mig,
          starts_with("in_"),
+         conviviality,
+         identity,
          educ,educyear,
          # ing_pc,
          # quintil,
@@ -654,6 +676,7 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                                  "^in_simpat_","^in_simili_","^in_ansied_","^in_valfam_",
                                  "^in_valami_","^in_amsimb_","^in_amreal_","^in_acpier_",
                                  "^in_acadop_","^in_amigcl_",
+                                 "^conviviality","^identity",
                                  "^educ_","^educyear_","^quintil1_","^ess_","^nation_t1_",
                                  "^know_inm_t1t4_","^frien_inm_t1t4_","^pos_id_",
                                  "^edad_"
@@ -662,6 +685,7 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                              "in_simpat","in_simili","in_ansied","in_valfam",
                              "in_valami","in_amsimb","in_amreal",
                              "in_acpier","in_acadop","in_amigcl",
+                             "conviviality","identity",
                              "educ","educyear","quintil1","ess","nation_t1",
                              "know_inm_t1t4","frien_inm_t1t4","pos_id",
                              "edad"),

@@ -1,5 +1,5 @@
 ---
-title: "Preparación de datos"
+title: "Analysis"
 date: "`r format(Sys.time(), '%A %d %B %Y %X')`"
 output:
   html_document:
@@ -32,8 +32,8 @@ remove(list = ls()) #limpieza del entorno de trabajo
 ```{css, echo=FALSE}
 # /* expandir el espacio del documento*/
 body .main-container {
-      max-width: 1600px !important;
-      width: 1600px !important;
+      max-width: 2000px !important;
+      width: 2000px !important;
     }
 #/* expandir width de la TOC*/
 div.tocify {
@@ -57,7 +57,6 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                summarytools
                )
 load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
-
 # Css
 st_css()
 st_options(lang = "en",
@@ -67,32 +66,14 @@ st_options(lang = "en",
            dfSummary.custom.1 = NA
            )  
 
-# Df variables nivel 1
-# df<- dfSummary(df_study1_long %>% select(in_simpat:edad),
-#                plain.ascii = FALSE,
-#                style = "grid",
-#                tmp.img.dir = "/tmp",
-#                graph.magnif = TRUE,
-#                headings = F,  # encabezado
-#                varnumbers = F, # num variable
-#                labels.col = T, # etiquetas
-#                na.col = F,    # missing
-#                graph.col = T, # plot
-#                valid.col = T, # n valido
-#                col.widths = c(700,10,10,10,10)
-#                )
-# df$Variable <- NULL # delete variable column
-# view(df,
-#      file = here::here("output/tables/desc01.html")
-#      ) # Ver tabla en un archivo HTML
-# webshot::webshot(url =here::here("output/tables/desc01.html"),
-#         file =here::here("output/tables/desc01.png")) # Remover archivo HTML
-# # print(df, method = "render")
-
 # Df variables nivel 1 __________________________________________________________
-df_study1 <- df_study_long_t5_comunas %>% select(in_simpat:edad,
-                                                 inm_prop_cas17_w,
-                                                 inm_prop_cas20_w,dif_inm) 
+df_study1 <- 
+  df_study_long_t5_comunas %>% 
+  select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) 
 lab_study1 <- sjlabelled::get_label(df_study1) 
 df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
 
@@ -111,10 +92,10 @@ df<- dfSummary(x = df_study1,
                )
 # df$Variable <- NULL # delete variable column
 view(df,
-     file = here::here("output/tables/desc02.html")
+     file = here::here("output/tables/desc01.html")
      ) # Ver tabla en un archivo HTML
-webshot::webshot(url =here::here("output/tables/desc02.html"),
-        file =here::here("output/tables/desc02.png")) # Remover archivo HTML
+webshot::webshot(url =here::here("output/tables/desc01.html"),
+        file =here::here("output/tables/desc01.png")) # Remover archivo HTML
 # print(df, method = "render")
 ```
 
@@ -356,9 +337,7 @@ corrplot::corrplot(cor_5,
 
 # Models
 
-## A. Anxiety
-
-```{r anxiety}
+```{r, results='asis'}
 rm(list=ls())
 if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
@@ -374,557 +353,119 @@ load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 # generate analytical sample
 df_study1 <- 
   df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  select(idencuesta,ola,comuna,cuestion_mig,
+         in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
   na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-
-# A. Anxiety (in_ansied)
-anx.null <- lmer(formula(paste0("in_ansied~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-anx1 <- lmer(formula(paste0("in_ansied~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-anx2.ed <- lmer(formula(paste0("in_ansied~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-anx2.in <- lmer(formula(paste0("in_ansied~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-anx3 <- lmer(formula(paste0("in_ansied~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-anx4.kno <- lmer(formula(paste0("in_ansied~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-anx4.fri <- lmer(formula(paste0("in_ansied~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(anx1,anx2.ed,anx2.in,anx3,anx4.fri,anx4.kno),
-          omit.coef = omit)
-```
-
-## B. Simpathy
-
-```{r simpathy}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-
-# B. Simpathy (in_simpat)
-simp.null <- lmer(formula(paste0("in_simpat~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-simp1 <- lmer(formula(paste0("in_simpat~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simp2.ed <- lmer(formula(paste0("in_simpat~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simp2.in <- lmer(formula(paste0("in_simpat~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simp3 <- lmer(formula(paste0("in_simpat~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simp4.kno <- lmer(formula(paste0("in_simpat~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simp4.fri <- lmer(formula(paste0("in_simpat~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(simp1,simp2.ed,simp2.in,simp3,simp4.fri,simp4.kno),
-          omit.coef = omit)
-```
-
-## C. Family value migrant friends
-
-```{r family-value}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-
-# C. Family value migrant friends (in_simpat)
-valfam.null <- lmer(formula(paste0("in_valfam~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-valfam1 <- lmer(formula(paste0("in_valfam~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valfam2.ed <- lmer(formula(paste0("in_valfam~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valfam2.in <- lmer(formula(paste0("in_valfam~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valfam3 <- lmer(formula(paste0("in_valfam~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valfam4.kno <- lmer(formula(paste0("in_valfam~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valfam4.fri <- lmer(formula(paste0("in_valfam~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(valfam1,valfam2.ed,valfam2.in,valfam3,valfam4.fri,valfam4.kno),
-          omit.coef = omit)
-```
-
-## D. Friend value migrant friends
-
-```{r friends-value}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-
-# D. Friend value migrant friends(in_simpat)
-valami.null <- lmer(formula(paste0("in_valami~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-valami1 <- lmer(formula(paste0("in_valami~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valami2.ed <- lmer(formula(paste0("in_valami~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valami2.in <- lmer(formula(paste0("in_valami~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valami3 <- lmer(formula(paste0("in_valami~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valami4.kno <- lmer(formula(paste0("in_valami~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-valami4.fri <- lmer(formula(paste0("in_valami~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(valami1,valami2.ed,valami2.in,valami3,valami4.fri,valami4.kno),
-          omit.coef = omit)
-```
-
-## E. Immigrants have Chilean friends 
-
-```{r imig-clfriends}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-
-# E. Immigrants have Chilean friends 
-amicl.null <- lmer(formula(paste0("in_amigcl~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-
-amicl1 <- lmer(formula(paste0("in_amigcl~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-amicl2.ed <- lmer(formula(paste0("in_amigcl~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-amicl2.in <- lmer(formula(paste0("in_amigcl~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-amicl3 <- lmer(formula(paste0("in_amigcl~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-amicl4.kno <- lmer(formula(paste0("in_amigcl~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-amicl4.fri <- lmer(formula(paste0("in_amigcl~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(amicl1,amicl2.ed,amicl2.in,amicl3,amicl4.fri,amicl4.kno),
-          omit.coef = omit)
-```
-
-## Conviviality (average)
-
-```{r conviviality}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
+  mutate(
+    # conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
+         # identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
+         ola_f = ola,
+         ola=as.numeric(ola),
+         -in_amreal
          )
 
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
+# Hypothesis___________________________________________________________________
+h1.cat <- "ola_f+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
 
-# E. Immigrants have Chilean friends 
-conv.null <- lmer(formula(paste0("conviviality~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-conv1 <- lmer(formula(paste0("conviviality~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-conv2.ed <- lmer(formula(paste0("conviviality~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-conv2.in <- lmer(formula(paste0("conviviality~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-conv3 <- lmer(formula(paste0("conviviality~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-conv4.kno <- lmer(formula(paste0("conviviality~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-conv4.fri <- lmer(formula(paste0("conviviality~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+hipotesis <- c(h1.cat,h1,h2.educ,h2.incom,h3,h4.know,h4.friend)
+# Set the independent variables (IVs)
+ivs<- df_study1 %>% select(starts_with("in_"),"conviviality","identity") %>% names()
 
+# Create the object for each model
+models <- list()
+for (i in ivs) {
+models[[i]] <- paste0(i,"~",hipotesis,"+(1|idencuesta)+(1|comuna)")  
+}
+
+# Estimate the multilevel models
+fits <- list()
+for (i in ivs) {
+  for (z in models[[i]][1:length(hipotesis)]) {
+    fits[[z]] <- lme4::lmer(formula = z, data = df_study1)
+  }
+}
+fit1 <- fits
+# change model names within list
+names(fit1) <- paste0(rep(ivs,each=length(hipotesis)),1:length(hipotesis))
+
+
+# Tables_______________________________________________________________________
 omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(conv1,conv2.ed,conv2.in,conv3,conv4.fri,conv4.kno),
-          omit.coef = omit)
-```
+reorderc <- c(1:4,19,5:18,20:31) # the depends on the number of coeficients (!)
+# detail for subsections:
+# https://stackoverflow.com/questions/69338331/r-markdown-create-section-headers-in-r-and-print-r-output-in-same-section
 
-## F. Similarity 
+cat(paste0("\n## ","A. Anxiety","\n"))
 
-```{r similarity}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+knitreg(l = fit1[names(fit1)[grepl("in_ansied", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
+cat(paste0("\n## ","B. Simpathy ","\n"))
 
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
+knitreg(l = fit1[names(fit1)[grepl("in_simpat", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-# F. Similarity  
-simi.null <- lmer(formula(paste0("in_simili~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
+cat(paste0("\n## ","C. Family value migrant friends","\n"))
 
-simi1 <- lmer(formula(paste0("in_simili~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simi2.ed <- lmer(formula(paste0("in_simili~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simi2.in <- lmer(formula(paste0("in_simili~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simi3 <- lmer(formula(paste0("in_simili~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simi4.kno <- lmer(formula(paste0("in_simili~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-simi4.fri <- lmer(formula(paste0("in_simili~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+knitreg(l = fit1[names(fit1)[grepl("in_valfam", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(simi1,simi2.ed,simi2.in,simi3,simi4.fri,simi4.kno),
-          omit.coef = omit)
-```
+cat(paste0("\n## ","D. Friend value migrant friends","\n"))
 
-## G. Loose identity
+knitreg(l = fit1[names(fit1)[grepl("in_valami", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-```{r loose-id}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+cat(paste0("\n## ","E. Immigrants have Chilean friends","\n"))
 
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
+knitreg(l = fit1[names(fit1)[grepl("in_amigcl", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
+cat(paste0("\n## ","Conviviality (average)","\n"))
 
-## G. Loose identity
-loos.null <- lmer(formula(paste0("in_amsimb~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
+knitreg(l = fit1[names(fit1)[grepl("conviviality", names(fit1),"\n")]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-loos1 <- lmer(formula(paste0("in_amsimb~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-loos2.ed <- lmer(formula(paste0("in_amsimb~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-loos2.in <- lmer(formula(paste0("in_amsimb~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-loos3 <- lmer(formula(paste0("in_amsimb~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-loos4.kno <- lmer(formula(paste0("in_amsimb~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-loos4.fri <- lmer(formula(paste0("in_amsimb~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+#______________________________________________________________________________
 
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(loos1,loos2.ed,loos2.in,loos3,loos4.fri,loos4.kno),
-          omit.coef = omit)
-```
+cat(paste0("\n## ","F. Similarity","\n"))
 
-## H. Immigrants keep customs
+knitreg(l = fit1[names(fit1)[grepl("in_simili", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-```{r keep-custom}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+cat(paste0("\n## ","G. Loose identity","\n"))
 
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola))
+knitreg(l = fit1[names(fit1)[grepl("in_amsimb", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
+cat(paste0("\n## ","H. Immigrants keep customs","\n"))
 
-# H. Immigrants keep customs  
-keep.null <- lmer(formula(paste0("in_acpier~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
+knitreg(l = fit1[names(fit1)[grepl("in_acpier", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-keep1 <- lmer(formula(paste0("in_acpier~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-keep2.ed <- lmer(formula(paste0("in_acpier~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-keep2.in <- lmer(formula(paste0("in_acpier~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-keep3 <- lmer(formula(paste0("in_acpier~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-keep4.kno <- lmer(formula(paste0("in_acpier~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-keep4.fri <- lmer(formula(paste0("in_acpier~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+cat(paste0("\n## ","I. Adopt chilean customs","\n"))
 
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(keep1,keep2.ed,keep2.in,keep3,keep4.fri,keep4.kno),
-          omit.coef = omit)
-```
+knitreg(l = fit1[names(fit1)[grepl("in_acadop", names(fit1))]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-## I. Adopt chilean customs
 
-```{r}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+cat(paste0("\n## ","Identity (average)","\n"))
 
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola))
+knitreg(l = fit1[names(fit1)[grepl("identity", names(fit1),"\n")]],
+        omit.coef = omit,reorder.coef = reorderc)
 
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
+#______________________________________________________________________________
+cat(paste0("\n## ","J. Unemployment increases (Threat)","\n"))
 
-# I. Adpot chilean customs
-adopt.null <- lmer(formula(paste0("in_acpier~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-adopt1 <- lmer(formula(paste0("in_acpier~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-adopt2.ed <- lmer(formula(paste0("in_acpier~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-adopt2.in <- lmer(formula(paste0("in_acpier~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-adopt3 <- lmer(formula(paste0("in_acpier~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-adopt4.kno <- lmer(formula(paste0("in_acpier~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-adopt4.fri <- lmer(formula(paste0("in_acpier~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(adopt1,adopt2.ed,adopt2.in,adopt3,adopt4.fri,adopt4.kno),
-          omit.coef = omit)
-```
-
-## Identity (average)
-
-```{r identity}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
-
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-
-# Identity
-ident.null <- lmer(formula(paste0("identity~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-ident1 <- lmer(formula(paste0("identity~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-ident2.ed <- lmer(formula(paste0("identity~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-ident2.in <- lmer(formula(paste0("identity~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-ident3 <- lmer(formula(paste0("identity~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-ident4.kno <- lmer(formula(paste0("identity~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-ident4.fri <- lmer(formula(paste0("identity~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(ident1,ident2.ed,ident2.in,ident3,ident4.fri,ident4.kno),
-          omit.coef = omit)
-```
-
-## J. Unemployment increases
-
-```{r threat}
-rm(list=ls())
-if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg
-               )
-load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t5_comunas %>%
-  select(idencuesta,ola,comuna,cuestion_mig,in_simpat:edad,inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
-  na.omit() %>% 
-  mutate(conviviality=(in_ansied+in_simpat+in_valfam+in_valami+in_amigcl)/5,
-         identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
-         threat = as.numeric(in_amreal),
-         ola=as.numeric(ola)
-         )
-
-# Hipotesis
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+dif_inm+nation_t1+cuestion_mig"
-
-# J. Unemployment increases
-threat.null <- lmer(formula(paste0("threat~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
-threat1 <- lmer(formula(paste0("threat~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-threat2.ed <- lmer(formula(paste0("threat~",h2.educ,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-threat2.in <- lmer(formula(paste0("threat~",h2.incom,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-threat3 <- lmer(formula(paste0("threat~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-threat4.kno <- lmer(formula(paste0("threat~",h4.know,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-threat4.fri <- lmer(formula(paste0("threat~",h4.friend,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
-omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::knitreg(list(threat1,threat2.ed,threat2.in,threat3,threat4.fri,threat4.kno),
-          omit.coef = omit)
+knitreg(l = fit1[names(fit1)[grepl("in_amreal", names(fit1),"\n")]],
+        omit.coef = omit,reorder.coef = reorderc)
 ```
