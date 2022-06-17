@@ -67,7 +67,7 @@ st_options(lang = "en",
            dfSummary.custom.1 = NA
            )  
 
-# Df variables nivel 1 __________________________________________________________
+# Descriptive table __________________________________________________________
 df_study1 <- 
   df_study_long_t5_comunas %>% 
   select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
@@ -76,24 +76,14 @@ df_study1 <-
          in_amreal,
          educ,quintil1:edad,
          inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) 
-
+# extract variable labels
 lab_study1 <- sjlabelled::get_label(df_study1) 
-
-df_study1$in_ansied <- factor(df_study1$in_ansied,1:5,get_labels(df_study1$in_ansied))
-df_study1$in_simpat <- factor(df_study1$in_simpat,1:5,get_labels(df_study1$in_simpat))
-df_study1$in_valfam <- factor(df_study1$in_valfam,1:5,get_labels(df_study1$in_valfam))
-df_study1$in_valami <- factor(df_study1$in_valami,1:5,get_labels(df_study1$in_valami))
-df_study1$in_amigcl <- factor(df_study1$in_amigcl,1:5,get_labels(df_study1$in_amigcl))
-
-df_study1$in_simili <- factor(df_study1$in_simili,1:5,get_labels(df_study1$in_simili))
-df_study1$in_amsimb <- factor(df_study1$in_amsimb,1:5,get_labels(df_study1$in_amsimb))
-df_study1$in_acpier <- factor(df_study1$in_acpier,1:5,get_labels(df_study1$in_acpier))
-df_study1$in_acadop <- factor(df_study1$in_acadop,1:5,get_labels(df_study1$in_acadop))
-
-df_study1$in_amreal <- factor(df_study1$in_amreal,1:5,get_labels(df_study1$in_amreal))
-
+# convert items to factor
+for (i in names(select(df_study1,starts_with("in_")))) {
+  df_study1[[i]] <- factor(df_study1[[i]],1:5,get_labels(df_study1[[i]]))
+}
+# set variable labels
 df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
-
 
 df<- dfSummary(x = df_study1,
                plain.ascii = FALSE,
@@ -355,7 +345,7 @@ corrplot::corrplot(cor_5,
 
 # Models
 
-```{r, results='asis'}
+```{r, results='asis',fig.dim=c(10,6)}
 rm(list=ls())
 if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
@@ -364,7 +354,8 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                kableExtra,
                summarytools,
                lme4,
-               texreg
+               texreg,
+               sjPlot
                )
 load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
@@ -453,7 +444,17 @@ cat(paste0("\n## ","Conviviality (average)","\n"))
 knitreg(l = fit1[names(fit1)[grepl("conviviality", names(fit1),"\n")]],
         omit.coef = omit,reorder.coef = reorderc)
 
+plot_model(model = fit1$conviviality3,
+           type = "int")
+
+plot_model(model = fit1$conviviality6,
+           type = "int")
+
+plot_model(model = fit1$conviviality7,
+           type = "int")
+
 #______________________________________________________________________________
+
 
 cat(paste0("\n## ","F. Similarity","\n"))
 
@@ -475,15 +476,24 @@ cat(paste0("\n## ","I. Adopt chilean customs","\n"))
 knitreg(l = fit1[names(fit1)[grepl("in_acadop", names(fit1))]],
         omit.coef = omit,reorder.coef = reorderc)
 
-
 cat(paste0("\n## ","Identity (average)","\n"))
 
 knitreg(l = fit1[names(fit1)[grepl("identity", names(fit1),"\n")]],
         omit.coef = omit,reorder.coef = reorderc)
 
 #______________________________________________________________________________
+
 cat(paste0("\n## ","J. Unemployment increases (Threat)","\n"))
 
 knitreg(l = fit1[names(fit1)[grepl("in_amreal", names(fit1),"\n")]],
-        omit.coef = omit,reorder.coef = reorderc)
+        omit.coef = omit,reorder.coef = reorderc) 
+
+plot_model(model = fit1$in_amreal3,
+           type = "int") 
+
+plot_model(model = fit1$in_amreal5,
+           type = "int")
+
+plot_model(model = fit1$in_amreal6,
+           type = "int")
 ```
