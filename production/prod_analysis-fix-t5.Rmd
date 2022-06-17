@@ -54,7 +54,8 @@ if (!require("pacman")) install.packages("pacman") # instalar pacman
 pacman::p_load(dplyr,       # Manipulacion de datos
                knitr,
                kableExtra,
-               summarytools
+               summarytools,
+               sjlabelled
                )
 load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 # Css
@@ -72,10 +73,27 @@ df_study1 <-
   select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
          in_simili,in_amsimb,in_acpier,in_acadop,
          conviviality, identity,
-         in_amreal,educ,quintil1:edad,
+         in_amreal,
+         educ,quintil1:edad,
          inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) 
+
 lab_study1 <- sjlabelled::get_label(df_study1) 
+
+df_study1$in_ansied <- factor(df_study1$in_ansied,1:5,get_labels(df_study1$in_ansied))
+df_study1$in_simpat <- factor(df_study1$in_simpat,1:5,get_labels(df_study1$in_simpat))
+df_study1$in_valfam <- factor(df_study1$in_valfam,1:5,get_labels(df_study1$in_valfam))
+df_study1$in_valami <- factor(df_study1$in_valami,1:5,get_labels(df_study1$in_valami))
+df_study1$in_amigcl <- factor(df_study1$in_amigcl,1:5,get_labels(df_study1$in_amigcl))
+
+df_study1$in_simili <- factor(df_study1$in_simili,1:5,get_labels(df_study1$in_simili))
+df_study1$in_amsimb <- factor(df_study1$in_amsimb,1:5,get_labels(df_study1$in_amsimb))
+df_study1$in_acpier <- factor(df_study1$in_acpier,1:5,get_labels(df_study1$in_acpier))
+df_study1$in_acadop <- factor(df_study1$in_acadop,1:5,get_labels(df_study1$in_acadop))
+
+df_study1$in_amreal <- factor(df_study1$in_amreal,1:5,get_labels(df_study1$in_amreal))
+
 df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
+
 
 df<- dfSummary(x = df_study1,
                plain.ascii = FALSE,
