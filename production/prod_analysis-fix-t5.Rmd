@@ -345,7 +345,8 @@ corrplot::corrplot(cor_5,
 
 # Models
 
-```{r, results='asis',fig.dim=c(10,6)}
+## Education categorical {-}
+```{r average-educ, results='asis',fig.dim=c(10,6)}
 rm(list=ls())
 if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
@@ -355,9 +356,13 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                summarytools,
                lme4,
                texreg,
-               sjPlot
+               sjPlot,
+               ggplot2
                )
 load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+
+old <- theme_set(theme_bw());theme_set(old)
+theme_replace(legend.position="bottom")
 
 # generate analytical sample
 df_study1 <- 
@@ -374,6 +379,7 @@ df_study1 <-
          # identity= (in_simili+in_amsimb+in_acpier+in_acadop)/4,
          ola_f = ola,
          ola=as.numeric(ola),
+         primary = car::recode(educ,recodes = "'Primary'=1;else=0",as.factor = T),
          -in_amreal
          )
 
@@ -385,8 +391,13 @@ h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+
 h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
 h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
 h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h.ed.know.time <- "ola*educ*know_inm_t1t4+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h.ed.fri.time <- "ola*educ*frien_inm_t1t4+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
 
-hipotesis <- c(h1.cat,h1,h2.educ,h2.incom,h3,h4.know,h4.friend)
+hipotesis <- c(h1.cat,h1,h2.educ,h2.incom,h3,h4.know,h4.friend
+               # h.ed.know.time,
+               # h.ed.fri.time
+               )
 # Set the independent variables (IVs)
 ivs<- df_study1 %>% select(starts_with("in_"),"conviviality","identity") %>% names()
 
@@ -407,18 +418,244 @@ fit1 <- fits
 # change model names within list
 names(fit1) <- paste0(rep(ivs,each=length(hipotesis)),1:length(hipotesis))
 
-
 # Tables_______________________________________________________________________
 omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-reorderc <- c(1:4,19,5:18,20:31) # the depends on the number of coeficients (!)
+reorderc <- c(1:4,21,5:20,22:35) # the depends on the number of coeficients (!)
 # detail for subsections:
 # https://stackoverflow.com/questions/69338331/r-markdown-create-section-headers-in-r-and-print-r-output-in-same-section
+
+
+cat(paste0("\n## ","Conviviality (avg)","\n"))
+
+knitreg(l = fit1[names(fit1)[grepl("conviviality", names(fit1),"\n")]],
+        omit.coef = omit,
+        reorder.coef = reorderc
+        )
+
+plot_model(model = fit1$conviviality3,
+           type = "int")
+
+plot_model(model = fit1$conviviality6,
+           type = "int")
+
+plot_model(model = fit1$conviviality7,
+           type = "int")
+
+cat(paste0("\n ","<br>","\n"))
+
+cat(paste0("\n## ","Identity (avg)","\n"))
+
+knitreg(l = fit1[names(fit1)[grepl("identity", names(fit1),"\n")]],
+        omit.coef = omit,reorder.coef = reorderc)
+
+
+cat(paste0("\n## ","J. Unemployment increases (Threat)","\n"))  
+
+knitreg(l = fit1[names(fit1)[grepl("in_amreal", names(fit1),"\n")]],
+        omit.coef = omit,reorder.coef = reorderc) 
+
+plot_model(model = fit1$in_amreal3,
+           type = "int") 
+
+plot_model(model = fit1$in_amreal5,
+           type = "int")
+
+plot_model(model = fit1$in_amreal6,
+           type = "int")
+```
+
+## Education dummy {-}
+
+```{r average-primary, fig.dim=c(10,6), results='asis'}
+rm(list=ls())
+if (!require("pacman")) install.packages("pacman") # instalar pacman
+                            # cargar librerias
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               lme4,
+               texreg,
+               sjPlot
+               )
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+
+old <- theme_set(theme_bw());theme_set(old)
+theme_replace(legend.position="bottom")
+
+# generate analytical sample
+df_study1 <- 
+  df_study_long_t5_comunas %>%
+  select(idencuesta,ola,comuna,cuestion_mig,
+         in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  na.omit() %>% 
+  mutate(
+         ola_f = ola,
+         ola=as.numeric(ola),
+         primary = car::recode(educ,recodes = "'Primary'=1;else=0",as.factor = T),
+         -in_amreal
+         )
+
+# Hypothesis___________________________________________________________________
+h1.cat <- "ola_f+primary+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h1 <- "ola+primary+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h2.primary <- "ola*primary+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h2.incom <- "ola+primary+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h3 <- "ola*dif_inm+primary+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h4.know <- "ola+dif_inm+primary+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h4.friend <- "ola+dif_inm+primary+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h.ed.know.time <- "ola*primary*know_inm_t1t4+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h.ed.fri.time <- "ola*primary*frien_inm_t1t4+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+hipotesis <- c(h1.cat,h1,h2.primary,h2.incom,h3,h4.know,h4.friend,
+               h.ed.know.time,
+               h.ed.fri.time
+               )
+# Set the independent variables (IVs)
+ivs<- df_study1 %>% select("in_amreal","conviviality","identity") %>% names()
+
+# Create the object for each model
+models <- list()
+for (i in ivs) {
+models[[i]] <- paste0(i,"~",hipotesis,"+(1|idencuesta)+(1|comuna)")  
+}
+
+# Estimate the multilevel models
+fits <- list()
+for (i in ivs) {
+  for (z in models[[i]][1:length(hipotesis)]) {
+    fits[[z]] <- lme4::lmer(formula = z, data = df_study1)
+  }
+}
+fit1 <- fits
+# change model names within list
+names(fit1) <- paste0(rep(ivs,each=length(hipotesis)),1:length(hipotesis))
+
+# Tables_______________________________________________________________________
+omit <- 
+  paste0(
+    "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
+    )
+reorderc <- c(1:4,19,5:18,20:43) # the depends on the number of coeficients (!)
+# detail for subsections:
+# https://stackoverflow.com/questions/69338331/r-markdown-create-section-headers-in-r-and-print-r-output-in-same-section
+
+cat(paste0("\n## ","Conviviality (avg)","\n"))
+
+knitreg(l = fit1[names(fit1)[grepl("conviviality", names(fit1),"\n")]],
+        omit.coef = omit,
+        single.row = F,
+        reorder.coef = reorderc
+        )
+
+cat(paste0("\n## ","Identity (avg)","\n"))
+
+knitreg(l = fit1[names(fit1)[grepl("identity", names(fit1),"\n")]],
+        omit.coef = omit,
+        reorder.coef = reorderc
+        )
+
+
+cat(paste0("\n## ","Unemployment increases (Threat)","\n"))
+
+knitreg(l = fit1[names(fit1)[grepl("in_amreal", names(fit1),"\n")]],
+        omit.coef = omit,
+        reorder.coef = reorderc
+        ) 
+```
+
+```{r by-item, fig.dim=c(10,6), results='asis'}
+rm(list=ls())
+if (!require("pacman")) install.packages("pacman") # instalar pacman
+                            # cargar librerias
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               lme4,
+               texreg,
+               sjPlot
+               )
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+
+old <- theme_set(theme_bw());theme_set(old)
+theme_replace(legend.position="bottom")
+
+# generate analytical sample
+df_study1 <- 
+  df_study_long_t5_comunas %>%
+  select(idencuesta,ola,comuna,cuestion_mig,
+         in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  na.omit() %>% 
+  mutate(
+         ola_f = ola,
+         ola=as.numeric(ola),
+         primary = car::recode(educ,recodes = "'Primary'=1;else=0",as.factor = T),
+         -in_amreal
+         )
+
+# Hypothesis___________________________________________________________________
+h1.cat <- "ola_f+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h.ed.know.time <- "ola*educ*know_inm_t1t4+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+h.ed.fri.time <- "ola*educ*frien_inm_t1t4+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+hipotesis <- c(h1.cat,h1,h2.educ,h2.incom,h3,h4.know,h4.friend
+               # h.ed.know.time,
+               # h.ed.fri.time
+               )
+# Set the independent variables (IVs)
+ivs<- df_study1 %>% select(
+  starts_with("in_")
+  # "conviviality",
+  # "identity"
+  ) %>% names()
+
+# Create the object for each model
+models <- list()
+for (i in ivs) {
+models[[i]] <- paste0(i,"~",hipotesis,"+(1|idencuesta)+(1|comuna)")  
+}
+
+# Estimate the multilevel models
+fits <- list()
+for (i in ivs) {
+  for (z in models[[i]][1:length(hipotesis)]) {
+    fits[[z]] <- lme4::lmer(formula = z, data = df_study1)
+  }
+}
+fit1 <- fits
+# change model names within list
+names(fit1) <- paste0(rep(ivs,each=length(hipotesis)),1:length(hipotesis))
+
+# Tables_______________________________________________________________________
+omit <- 
+  paste0(
+    "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
+    )
+reorderc <- c(1:4,21,5:20,22:35) # the depends on the number of coeficients (!)
+# detail for subsections:
+# https://stackoverflow.com/questions/69338331/r-markdown-create-section-headers-in-r-and-print-r-output-in-same-section
+
+
+cat(paste0("\n# ","Annexes","\n"))
 
 cat(paste0("\n## ","A. Anxiety","\n"))
 
 knitreg(l = fit1[names(fit1)[grepl("in_ansied", names(fit1))]],
-        omit.coef = omit,reorder.coef = reorderc)
-
+        omit.coef = omit,reorder.coef = reorderc
+        )
 cat(paste0("\n## ","B. Simpathy ","\n"))
 
 knitreg(l = fit1[names(fit1)[grepl("in_simpat", names(fit1))]],
@@ -439,22 +676,7 @@ cat(paste0("\n## ","E. Immigrants have Chilean friends","\n"))
 knitreg(l = fit1[names(fit1)[grepl("in_amigcl", names(fit1))]],
         omit.coef = omit,reorder.coef = reorderc)
 
-cat(paste0("\n## ","Conviviality (average)","\n"))
-
-knitreg(l = fit1[names(fit1)[grepl("conviviality", names(fit1),"\n")]],
-        omit.coef = omit,reorder.coef = reorderc)
-
-plot_model(model = fit1$conviviality3,
-           type = "int")
-
-plot_model(model = fit1$conviviality6,
-           type = "int")
-
-plot_model(model = fit1$conviviality7,
-           type = "int")
-
 #______________________________________________________________________________
-
 
 cat(paste0("\n## ","F. Similarity","\n"))
 
@@ -475,25 +697,5 @@ cat(paste0("\n## ","I. Adopt chilean customs","\n"))
 
 knitreg(l = fit1[names(fit1)[grepl("in_acadop", names(fit1))]],
         omit.coef = omit,reorder.coef = reorderc)
-
-cat(paste0("\n## ","Identity (average)","\n"))
-
-knitreg(l = fit1[names(fit1)[grepl("identity", names(fit1),"\n")]],
-        omit.coef = omit,reorder.coef = reorderc)
-
-#______________________________________________________________________________
-
-cat(paste0("\n## ","J. Unemployment increases (Threat)","\n"))
-
-knitreg(l = fit1[names(fit1)[grepl("in_amreal", names(fit1),"\n")]],
-        omit.coef = omit,reorder.coef = reorderc) 
-
-plot_model(model = fit1$in_amreal3,
-           type = "int") 
-
-plot_model(model = fit1$in_amreal5,
-           type = "int")
-
-plot_model(model = fit1$in_amreal6,
-           type = "int")
 ```
+

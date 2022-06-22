@@ -512,17 +512,25 @@ know_inm_bi <-
 elsoc %>% group_by(idencuesta) %>%
   summarize(know_inm_bi_t4=know_inm_bi[ola==4],
             know_inm_bi_t1=know_inm_bi[ola==1],
-            know_inm_t1t4 = know_inm_bi[ola==4] - know_inm_bi[ola==1]
+            # know_inm_t1t4 = know_inm_bi[ola==4] - know_inm_bi[ola==1],
+            know_inm_t1t4 = paste0(know_inm_bi[ola==1],know_inm_bi[ola==4])
             )
+sjmisc::frq(know_inm_bi$know_inm_t1t4)
+know_inm_bi$know_inm_t1t4 <- 
+  car::recode(know_inm_bi$know_inm_t1t4,
+              recodes = "c('0NA','NA0','00')='Stable, do not know';c('1NA','NA1','11')='Stable, know';'01'='Now know';'10'='No longer know'",as.factor = T)
+
+know_inm_bi$know_inm_t1t4 <- 
+  factor(know_inm_bi$know_inm_t1t4,
+         levels = c("Stable, do not know","Stable, know","Now know","No longer know"))
+sjmisc::frq(know_inm_bi$know_inm_t1t4)
 
 elsoc <- left_join(x = elsoc,y = know_inm_bi, by = "idencuesta")
 sjmisc::frq(elsoc$know_inm_t1t4)
 
-elsoc$know_inm_t1t4 <- factor(elsoc$know_inm_t1t4,levels = c(-1,0,1),
-                              labels = c("No longer know","Still know","Now know"))
-
 elsoc$know_inm_t1t4 <- set_label(elsoc$know_inm_t1t4,
                                   label = "Know immigrants (diff. t4 - t1)")
+
 sjmisc::frq(elsoc$know_inm_t1t4)
 # sjPlot::tab_xtab(elsoc$know_inm_t1t4,elsoc$ola)
 
@@ -538,33 +546,50 @@ frien_inm_bi <-
 elsoc %>% group_by(idencuesta) %>%
   summarize(frien_inm_bi_t4=frien_inm_bi[ola==4],
             frien_inm_bi_t1=frien_inm_bi[ola==1],
-            frien_inm_t1t4 = frien_inm_bi[ola==4] - frien_inm_bi[ola==1]
+            # frien_inm_t1t4 = frien_inm_bi[ola==4] - frien_inm_bi[ola==1],
+            frien_inm_t1t4 = paste0(frien_inm_bi[ola==1],frien_inm_bi[ola==4])
             )
 
+sjmisc::frq(frien_inm_bi$frien_inm_t1t4)
+frien_inm_bi$frien_inm_t1t4 <-
+  car::recode(frien_inm_bi$frien_inm_t1t4,
+              recodes = "c('0NA','NA0','00')='Stable, do not have friends';c('1NA','NA1','11')='Stable, have friends';'01'='Now have friends';'10'='No longer have friends';'NANA'=NA",as.factor = T)
+sjmisc::frq(frien_inm_bi$frien_inm_t1t4)
+
+frien_inm_bi$frien_inm_t1t4 <- 
+  factor(frien_inm_bi$frien_inm_t1t4,
+         levels = c("Stable, do not have friends","Stable, have friends",
+                    "Now have friends","No longer have friends"))
+sjmisc::frq(frien_inm_bi$frien_inm_t1t4)
+
 elsoc <- left_join(x = elsoc,y = frien_inm_bi, by = "idencuesta")
-summary(elsoc$frien_inm_t1t4)
-# if NA in difference, impute data from t4
-elsoc$frien_inm_t1t4 <- if_else(condition = is.na(elsoc$frien_inm_t1t4),
-                                true = elsoc$frien_inm_bi_t4,
-                                false = elsoc$frien_inm_t1t4 )
-summary(elsoc$frien_inm_t1t4)
-# if NA in difference, impute data from t1
-elsoc$frien_inm_t1t4 <- if_else(condition = is.na(elsoc$frien_inm_t1t4),
-                                true = elsoc$frien_inm_bi_t1,
-                                false = elsoc$frien_inm_t1t4)
+sjmisc::frq(elsoc$frien_inm_t1t4)
+# View(elsoc[c("idencuesta","frien_inm_bi_t4","frien_inm_bi_t1","frien_inm_t1t4")])
+
+# # if NA in difference, impute data from t4
+# elsoc$frien_inm_t1t4 <- if_else(condition = is.na(elsoc$frien_inm_t1t4),
+#                                 true = elsoc$frien_inm_bi_t4,
+#                                 false = elsoc$frien_inm_t1t4)
+# summary(elsoc$frien_inm_t1t4)
+# # if NA in difference, impute data from t1
+# elsoc$frien_inm_t1t4 <- if_else(condition = is.na(elsoc$frien_inm_t1t4),
+#                                 true = elsoc$frien_inm_bi_t1,
+#                                 false = elsoc$frien_inm_t1t4)
 sjmisc::frq(elsoc$frien_inm_t1t4)
 
-elsoc$frien_inm_t1t4 <- factor(elsoc$frien_inm_t1t4,
-                               levels = c(-1,0,1),
-                               labels = c("No longer have","Still have","Now have"))
+# elsoc$frien_inm_t1t4 <- factor(elsoc$frien_inm_t1t4,
+#                                levels = c(-1,0,1),
+#                                labels = c("No longer have",
+#                                           "Constant",
+#                                           "Now have"))
 
+# ref dejamos los 
 elsoc$frien_inm_t1t4 <- 
   set_label(elsoc$frien_inm_t1t4,
             label = "Have immigrant friends (diff. t4 - t1)")
 
 sjmisc::frq(elsoc$frien_inm_t1t4)
-# sjPlot::tab_xtab(elsoc$frien_inm_t1t4,elsoc$ola)
-
+sjPlot::tab_xtab(elsoc$frien_inm_bi,elsoc$know_inm_bi)
 # Select variables______________________________________________________________
 elsoc_long_2016_2021<- elsoc
 
