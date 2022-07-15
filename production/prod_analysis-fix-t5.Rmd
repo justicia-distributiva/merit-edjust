@@ -84,6 +84,7 @@ for (i in names(select(df_study1,starts_with("in_")))) {
 }
 # set variable labels
 df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
+df_study1$in_amreal <- sjlabelled::set_label(df_study1$in_amreal,label = "Threat")
 
 df<- dfSummary(x = df_study1,
                plain.ascii = FALSE,
@@ -96,7 +97,7 @@ df<- dfSummary(x = df_study1,
                na.col = F,    # missing
                graph.col = T, # plot
                valid.col = T, # n valido
-               col.widths = c(700,10,10,10,10,10)
+               # col.widths = c(700,10,10,10,10,10)
                )
 # df$Variable <- NULL # delete variable column
 view(df,
@@ -104,6 +105,75 @@ view(df,
      ) # Ver tabla en un archivo HTML
 webshot::webshot(url =here::here("output/tables/desc01.html"),
         file =here::here("output/tables/desc01.png")) # Remover archivo HTML
+# print(df, method = "render")
+
+individual <- 
+  df_study1 %>% 
+  select(conviviality, identity,
+         in_amreal,
+         educ,quintil1,ess,know_inm_t1t4,frien_inm_t1t4)
+
+df_individual<- dfSummary(x = individual,
+               plain.ascii = FALSE,
+               style = "grid",
+               tmp.img.dir = "/tmp",
+               graph.magnif = TRUE,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = F,    # missing
+               graph.col = T, # plot
+               valid.col = F,# n valido
+               # max.distinct.values = 15,
+               max.string.width = 50,
+               # col.widths = c(700,10,10,10,10)
+               )
+df_individual$Variable <- NULL # delete variable column
+df_individual <- df_individual %>% rename("Variable"=Label) 
+
+view(df_individual,
+     file = here::here("output/tables/ds_individual.html")
+     ) # Ver tabla en un archivo HTML
+webshot::webshot(url =here::here("output/tables/ds_individual.html"),
+        file =here::here("output/tables/ds_individual.png")) # Remover archivo HTML
+# print(df, method = "render")
+
+
+comunal <- 
+  df_study1 %>% 
+  select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl, #conviviality
+         in_simili,in_amsimb,in_acpier,in_acadop, #identity
+         conviviality, identity, 
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  select(inm_prop_cas17_w,inm_prop_cas20_w,dif_inm)
+
+df_municipal<- dfSummary(x = comunal,
+               plain.ascii = FALSE,
+               style = "grid",
+               tmp.img.dir = "/tmp",
+               graph.magnif = TRUE,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = F,    # missing
+               graph.col = T, # plot
+               valid.col = F,# n valido
+               # max.distinct.values = 15,
+               # max.string.width = 50,
+               # col.widths = c(700,10,10,10,10)
+               )
+
+df_municipal$Variable <- NULL # delete variable column
+df_municipal$`Freqs (% of Valid)` <- NULL # delete variable column
+df_municipal <- df_municipal %>% rename("Variable"=Label) 
+
+view(df_municipal,
+     file = here::here("output/tables/ds_municipal.html")
+     ) # Ver tabla en un archivo HTML
+webshot::webshot(url =here::here("output/tables/ds_municipal.html"),
+        file =here::here("output/tables/ds_municipal.png")) # Remover archivo HTML
 # print(df, method = "render")
 ```
 
@@ -132,6 +202,9 @@ df_study_long_t5_comunas %>%
          in_amreal # threat
          ) %>% 
   psych::mixedCor() 
+
+
+
 
 cor_full <- as.matrix(mat_full$rho)
 diag(cor_full) = NA #set diagonal values to NA
@@ -341,6 +414,47 @@ corrplot::corrplot(cor_5,
   bg = "white",
   na.label = "-",
   title = "\n Wave 5")
+```
+
+
+```{r items-alpha}
+rm(list=ls())
+if (!require("pacman")) install.packages("pacman") # instalar pacman
+                            # cargar librerias
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               sjPlot,
+               sjmisc,
+               summarytools,
+               lavaan
+               )
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+# Descriptive table __________________________________________________________
+df_study1 <- 
+  df_study_long_t5_comunas %>% 
+  select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) 
+
+df_study1 <- df_study1 %>% na.omit()
+
+alpha_convi <- 
+  df_study1 %>% 
+  select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl) 
+sjPlot::tab_corr(alpha_convi)
+sjPlot::tab_itemscale(alpha_convi)
+
+alpha_ident <- 
+  df_study1 %>% 
+  select(in_simili,in_amsimb,in_acpier,in_acadop) 
+
+sjmisc::frq(alpha_ident)
+sjPlot::tab_corr(alpha_ident)
+sjPlot::tab_itemscale(alpha_ident)
 ```
 
 # Models
