@@ -170,8 +170,13 @@ sjmisc::frq(elsoc_long_2016_2021$in_valami)
 sjmisc::frq(elsoc_long_2016_2021$in_amsimb)
 elsoc_long_2016_2021$in_amsimb <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_amsimb, 
-                      label = "Loose of identity because of immigrants") 
-sjmisc::frq(elsoc_long_2016_2021$in_amsimb)
+                      label = "Loose of identity because of immigrants")
+sjmisc::frq(elsoc_long_2016_2021$in_amsimb) 
+# Revert item
+elsoc_long_2016_2021$in_amsimb<- 
+  sjmisc::rec(elsoc_long_2016_2021$in_amsimb,rec = "rev")
+sjmisc::frq(elsoc_long_2016_2021$in_amsimb) # check reverted item
+
 
 sjmisc::frq(elsoc_long_2016_2021$in_amreal)
 elsoc_long_2016_2021$in_amreal <- 

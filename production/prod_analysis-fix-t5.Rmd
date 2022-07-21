@@ -189,7 +189,8 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                sjPlot,
                sjmisc,
                summarytools,
-               lavaan
+               lavaan,
+               psych
                )
 load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
@@ -448,9 +449,12 @@ alpha_convi <-
 sjPlot::tab_corr(alpha_convi)
 sjPlot::tab_itemscale(alpha_convi)
 
+
 alpha_ident <- 
   df_study1 %>% 
-  select(in_simili,in_amsimb,in_acpier,in_acadop) 
+  select(in_simili,
+         in_amsimb, #reverse item
+         in_acpier,in_acadop) 
 
 sjmisc::frq(alpha_ident)
 sjPlot::tab_corr(alpha_ident)
