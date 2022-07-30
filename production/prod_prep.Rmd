@@ -113,7 +113,7 @@ elsoc_long_2016_2021 %>%
 sjmisc::frq(elsoc_long_2016_2021$in_simpat)
 elsoc_long_2016_2021$in_simpat <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_simpat, 
-                      label = "Sympathy for [PER/HAI/VEN] living in Chile") 
+                      label = "Sympathy for [PER/VEN] living in Chile") 
 elsoc_long_2016_2021$in_simpat <-
 sjlabelled::set_labels(x = elsoc_long_2016_2021$in_simpat,
                        labels = c("Very little or not at all", "A little",
@@ -124,7 +124,7 @@ sjmisc::frq(elsoc_long_2016_2021$in_simpat)
 sjmisc::frq(elsoc_long_2016_2021$in_simili)
 elsoc_long_2016_2021$in_simili <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_simili, 
-                      label = "Similarity between Chileans and [PER/HAI/VEN]") 
+                      label = "Similarity between Chileans and [PER/VEN]") 
 elsoc_long_2016_2021$in_simili <-
 sjlabelled::set_labels(x = elsoc_long_2016_2021$in_simili,
                        labels = c("Not similar", "Slightly similar", "Somewhat similar",
@@ -135,7 +135,7 @@ sjmisc::frq(elsoc_long_2016_2021$in_simili)
 sjmisc::frq(elsoc_long_2016_2021$in_ansied)
 elsoc_long_2016_2021$in_ansied <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_ansied, 
-                      label = "Interaction anxiety with [PER/HAI/VEN].") 
+                      label = "Interaction anxiety with [PER/VEN].") 
 elsoc_long_2016_2021$in_ansied <-
 sjlabelled::set_labels(x = elsoc_long_2016_2021$in_ansied,
                        labels = c("Very uncomfortable", "Uncomfortable", 
@@ -156,21 +156,21 @@ sjlabelled::set_labels(x = elsoc_long_2016_2021[[i]],
 sjmisc::frq(elsoc_long_2016_2021$in_valfam)
 elsoc_long_2016_2021$in_valfam <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_valfam, 
-                      label = "Family value of immigrant friends [PER/HAI/VEN]") 
+                      label = "Family value of migrant friends [PER/VEN]") 
 sjmisc::frq(elsoc_long_2016_2021$in_valfam)
 
 
 sjmisc::frq(elsoc_long_2016_2021$in_valami)
 elsoc_long_2016_2021$in_valami <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_valami, 
-                      label = "Friends value of immigrant friends [PER/HAI/VEN]") 
+                      label = "Friends value of migrant friends [PER/VEN]") 
 sjmisc::frq(elsoc_long_2016_2021$in_valami)
 
 
 sjmisc::frq(elsoc_long_2016_2021$in_amsimb)
 elsoc_long_2016_2021$in_amsimb <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_amsimb, 
-                      label = "Loose of identity because of immigrants")
+                      label = "Loose of identity because of migrants (reverse)")
 sjmisc::frq(elsoc_long_2016_2021$in_amsimb) 
 # Revert item
 elsoc_long_2016_2021$in_amsimb<- 
@@ -187,7 +187,7 @@ sjmisc::frq(elsoc_long_2016_2021$in_amreal)
 sjmisc::frq(elsoc_long_2016_2021$in_acpier)
 elsoc_long_2016_2021$in_acpier <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_acpier, 
-                      label = "Immigrant keeping their customs") 
+                      label = "Migrant keeping their customs") 
 sjmisc::frq(elsoc_long_2016_2021$in_acpier)
 
 sjmisc::frq(elsoc_long_2016_2021$in_acadop)
@@ -199,7 +199,7 @@ sjmisc::frq(elsoc_long_2016_2021$in_acadop)
 sjmisc::frq(elsoc_long_2016_2021$in_amigcl)
 elsoc_long_2016_2021$in_amigcl <- 
 sjlabelled::set_label(x = elsoc_long_2016_2021$in_amigcl, 
-                      label = "Immigrants [PER/HAI/VEN] have Chilean friends") 
+                      label = "migrants [PER/VEN] have Chilean friends") 
 sjmisc::frq(elsoc_long_2016_2021$in_amigcl)
 
 
@@ -407,7 +407,7 @@ sjlabelled::set_labels(x = elsoc_long_2016_2021$nation,
 
 sjmisc::frq(elsoc_long_2016_2021$nation)
 
-# Known: Immigrant [PER/HAI/VEN]____________________________
+# Known: Immigrant [PER/VEN]____________________________
 
 # sjmisc::find_var(elsoc_long_2016_2021,"Conocidos")
 sjmisc::frq(elsoc_long_2016_2021$r05_01)
@@ -534,7 +534,7 @@ elsoc <- left_join(x = elsoc,y = know_inm_bi, by = "idencuesta")
 sjmisc::frq(elsoc$know_inm_t1t4)
 
 elsoc$know_inm_t1t4 <- set_label(elsoc$know_inm_t1t4,
-                                  label = "Know immigrants (diff. t4 - t1)")
+                                  label = "Know migrants (diff. t4 - t1)")
 
 sjmisc::frq(elsoc$know_inm_t1t4)
 # sjPlot::tab_xtab(elsoc$know_inm_t1t4,elsoc$ola)
@@ -591,7 +591,7 @@ sjmisc::frq(elsoc$frien_inm_t1t4)
 # ref dejamos los 
 elsoc$frien_inm_t1t4 <- 
   set_label(elsoc$frien_inm_t1t4,
-            label = "Have immigrant friends (diff. t4 - t1)")
+            label = "Have migrant friends (diff. t4 - t1)")
 
 sjmisc::frq(elsoc$frien_inm_t1t4)
 sjPlot::tab_xtab(elsoc$frien_inm_bi,elsoc$know_inm_bi)
@@ -1029,16 +1029,16 @@ df_study1_comunas$comuna_lc <- NULL
 sjlabelled::set_label(df_study1_comunas) <- 
 c("Comuna",
   "Codigo Comuna",
-  "Proportion of immigrant population (weighted) - CASEN 2017 - Municipality",
-  "Number of immigrant population - CENSUS 2017 - Municipality",
-  "Proportion of immigrant population - CENSUS 2017 - Municipality",
-  "Number of immigrant population - CIT 2017 - Municipality (using census tract)",
-  "Proportion of immigrant population (CIT / DEM)- CIT 2017 and INE/DEM 2017 - Communal",
-  "Proportion of projected immigrant population - INE/DEM 2018 - Communal",
-  "Proportion of projected immigrant population -  INE/DEM 2019 - Comunal",
-  "Proportion of projected immigrant population -  INE/DEM 2020 - Comunal",
-  "Proportion of immigrant population (weighted) - CASEN 2020 - Municipality",
-  "Change in the proportion of the immigrant population between 2017 and 2020 - CASEN")
+  "Proportion of migrant population (weighted) - CASEN 2017 - Municipality",
+  "Number of migrant population - CENSUS 2017 - Municipality",
+  "Proportion of migrant population - CENSUS 2017 - Municipality",
+  "Number of migrant population - CIT 2017 - Municipality (using census tract)",
+  "Proportion of migrant population (CIT / DEM)- CIT 2017 and INE/DEM 2017 - Communal",
+  "Proportion of projected migrant population - INE/DEM 2018 - Communal",
+  "Proportion of projected migrant population -  INE/DEM 2019 - Comunal",
+  "Proportion of projected migrant population -  INE/DEM 2020 - Comunal",
+  "Proportion of migrant population (weighted) - CASEN 2020 - Municipality",
+  "Change in the proportion of the migrant population between 2017 and 2020 - CASEN")
 
 # save data____________________________________________________________________
 save(df_study1_comunas,file = here::here("input/data-proc/study_1_comunas.RData"))

@@ -84,7 +84,7 @@ for (i in names(select(df_study1,starts_with("in_")))) {
 }
 # set variable labels
 df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
-df_study1$in_amreal <- sjlabelled::set_label(df_study1$in_amreal,label = "Threat")
+df_study1$in_amreal <- sjlabelled::set_label(df_study1$in_amreal,label = "Threat (Unemployment increases)")
 
 df<- dfSummary(x = df_study1,
                plain.ascii = FALSE,
@@ -177,6 +177,373 @@ webshot::webshot(url =here::here("output/tables/ds_municipal.html"),
 # print(df, method = "render")
 ```
 
+```{r likert}
+rm(list=ls())
+if (!require("pacman")) install.packages("pacman") # instalar pacman
+# cargar librerias
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               sjlabelled,
+               ggplot2,
+               ggrepel,
+               cowplot,
+               sjPlot,
+               ggpubr
+)
+load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+
+# Descriptive  __________________________________________________________
+df_study1 <- 
+  df_study_long_t5_comunas %>% 
+  select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm)
+
+# para modelar estaba invertido:
+#original: fraseo negativo: mayor acuerdo es "negativo" porque se pierde identidad
+#recodificado: inversion de valores 5 es "menos perdida". Es positivo.
+#ecodificado a sentido original para plot: 5 es "mayor perdida". Es negativo
+sjmisc::frq(df_study1$in_amsimb)
+sjmisc::frq(sjmisc::rec(df_study1$in_amsimb,rec = "rev"))
+df_study1$in_amsimb <- sjmisc::rec(df_study1$in_amsimb,rec = "rev")
+# extract variable labels
+lab_study1 <- sjlabelled::get_label(df_study1)
+# # convert items to factor
+# for (i in names(select(df_study1,starts_with("in_")))) {
+#   df_study1[[i]] <- factor(df_study1[[i]],1:5,get_labels(df_study1[[i]]))
+# }
+# set variable labels
+df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
+df_study1$in_amreal <- sjlabelled::set_label(df_study1$in_amreal,label = "Threat (Unemployment increases)")
+df_study1$in_amsimb <- sjlabelled::set_label(df_study1$in_amsimb,label = "Loose of identity because of migrants")
+
+df_study1 <- 
+  df_study1 %>% 
+  select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         in_amreal)
+# view_df(df_study1)
+
+# se invierten todos los items para el plot, NO SU SENTIDO  para modelamiento
+for (i in names(df_study1)) {
+  df_study1[[i]] <- sjmisc::rec(x = df_study1[[i]],rec = "rev")  
+}
+
+
+  # Declare ggplot2 features
+  ggplot2::theme_set(ggplot2::theme(panel.background = ggplot2::element_rect(fill = "gray85",
+                                                                             colour = "gray85"),
+                                    # panel.border = ggplot2::element_blank(),
+                                    axis.text.y = ggplot2::element_text(size = 13,
+                                                                        hjust = 1),
+                                    title = ggplot2::element_text(size = 18,
+                                                                  face = "bold"),
+                                    legend.text = ggplot2::element_text(size = 12),
+                                    plot.caption = ggplot2::element_text(size = 10,
+                                                                         face = "plain",
+                                                                         hjust = 1
+                                                                         )))
+#   
+  
+#Plot 1: Conviality-----------------------------------------------------------
+p1<-
+  dplyr::select(df_study1,in_ansied,in_simpat,in_valfam,in_valami,in_amigcl) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      title = c("Conviviality"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE) +
+  ggplot2::theme(legend.position = "none")
+
+#Plot 2: Identity-------------------------------------------------------------
+p2<-
+  dplyr::select(df_study1,in_simili,in_amsimb,in_acpier,in_acadop) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      title = c("Identity"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE)  +
+  ggplot2::theme(legend.position = "none")
+
+#Plot 3: Threat---------------------------------------------------------------
+p3<-
+  dplyr::select(df_study1,in_amreal) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      # title = c("Threat"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE)  +
+  ggplot2::theme(legend.position = "none")
+
+
+#Legend: Extract legend for the final plot using ggpubr
+leg<- ggpubr::as_ggplot(
+  ggpubr::get_legend(
+    dplyr::select(df_study1,in_amreal) %>%
+      sjPlot::plot_likert(geom.colors = "PuBu",
+                          catcount = 4,
+                          cat.neutral = 3) +
+      ggplot2::theme(legend.position = "bottom") +
+      ggplot2::scale_fill_manual(
+        values = c("#b3b3b3ff", "#f1eef6ff", "#bdc9e1ff","#74a9cfff","#0570b0ff"),
+        breaks=c("neutral",4,3,2,1),
+        labels=c(
+          "Neither comfortable nor uncomfortable\nSomewhat\nSomewhat similar\nNeither agree nor disagree\n",
+          "Very uncomfortable\nVery little or not at all\nNot similar\nStrongly disagree",
+          "Uncomfortable\nA little\nSlightly similar\nDisagree",
+          "Comfortable\nQuite a lot\nQuite similar\nAgree",
+          "Very comfortable\nA lot\nVery similar\nTotally agree")
+      )
+  )
+)  
+
+# plot individuales-----------------------------------------------------------
+colors<- c("#b3b3b3ff","#f1eef6ff","#bdc9e1ff","#74a9cfff","#0570b0ff")
+p_ansied<-
+  dplyr::select(df_study1,in_ansied) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      title = c("Convivality"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE) + 
+  ggplot2::theme(legend.position = "bottom") +
+  ggplot2::scale_fill_manual(
+    values = colors,
+    breaks = c("neutral", 4, 3, 2, 1),
+    labels = c(
+      "Neither comfortable nor uncomfortable",      
+      "Very uncomfortable",
+      "Uncomfortable",
+      "Comfortable",
+      "Very comfortable"
+    )
+  )
+
+
+p_simpat<-
+  dplyr::select(df_study1,in_simpat) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      # title = c("Threat"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE)  +
+  ggplot2::theme(legend.position = "bottom") +
+  ggplot2::scale_fill_manual(
+    values = colors,
+    breaks = c("neutral", 4, 3, 2, 1),
+    labels = c(
+      "Somewhat ",      
+      "Very little or not at all",
+      "A little",
+      "Quite a lot",
+      "A lot"
+    )
+  )
+
+p_convi<-
+  dplyr::select(df_study1,in_valfam,in_valami,in_amigcl) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      # title = c("Threat"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE)  +
+  ggplot2::theme(legend.position = "bottom")+
+  ggplot2::scale_fill_manual(
+    values = colors,
+    breaks = c("neutral", 4, 3, 2, 1),
+    labels = c(
+      "Disagree Neither disagree nor agree",      
+      "Strongly disagree",
+      "Disagree",
+      "Agree",
+      "Strongly agree"
+    )
+  )
+  
+# Plot individual: IDENTITY -----------------------------------------------
+p_simili<-
+  dplyr::select(df_study1,in_simili) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      title = c("Identity"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE)  +
+  ggplot2::theme(legend.position = "bottom")+
+  ggplot2::scale_fill_manual(
+    values = colors,
+    breaks = c("neutral", 4, 3, 2, 1),
+    labels = c(
+      "Somewhat similar",      
+      "Not similiar",
+      "Slightly similar",
+      "Quite similar",
+      "Very similar"
+    )
+  )  
+
+
+p_identi<-
+  dplyr::select(df_study1,in_amsimb,in_acpier,in_acadop,
+                in_amsimb:in_amreal) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      # title = c("Threat"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE)  +
+  ggplot2::theme(legend.position = "bottom")+
+  ggplot2::scale_fill_manual(
+    values = colors,
+    breaks = c("neutral", 4, 3, 2, 1),
+    labels = c(
+      "Disagree Neither disagree nor agree",      
+      "Strongly disagree",
+      "Disagree",
+      "Agree",
+      "Strongly agree"
+    )
+  )    
+
+# Plot individual: THREAT -----------------------------------------------
+p_threat<-
+    dplyr::select(df_study1,in_amreal) %>%
+  sjPlot::plot_likert(geom.colors = "PuBu",
+                      title = c("Threat"),
+                      geom.size = 0.8,
+                      # axis.labels = c("Effort", "Talent", "Rich Parents", "Contacts"),
+                      catcount = 4,
+                      cat.neutral = 3,
+                      grid.range  =  c (1.2 , 1.2),
+                      values  =  "sum.outside",
+                      reverse.colors = T,
+                      reverse.scale = F,
+                      show.n = FALSE)  +
+  ggplot2::theme(legend.position = "bottom") +
+  ggplot2::scale_fill_manual(
+    values = colors,
+    breaks = c("neutral", 4, 3, 2, 1),
+    labels = c(
+      "Disagree Neither disagree nor agree",      
+      "Strongly disagree",
+      "Disagree",
+      "Agree",
+      "Strongly agree"
+    )
+  )  
+
+# create plot-------------------------------------------------------------------
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(cowplot)
+s <- 0.35
+m <- 0.6
+l <- 0.7
+#Final plot
+likert1<-   
+  cowplot::add_sub(
+    cowplot::plot_grid(p_ansied,p_simpat,p_convi,p_simili,p_identi,p_threat, 
+                       align = "hv",
+                       axis = "a",
+                       nrow = 6, #4 plots
+                       ncol = 1, #1 column
+                       rel_heights = c(s,s,m,s,l,s) #fig size within plot
+    ),
+    label = paste0("Source: Own elaboration based on ELSOC Survey",
+                   " (n=",dim(na.omit(df_study1))[1],")"
+    ),        # Caption: source and sample size
+    size = 12,  # Caption font size
+    hjust = -0.25# Caption align
+  ) %>%
+  cowplot::ggdraw()  
+# likert1
+ggplot2::ggsave(filename = "plot_likert2.png",
+                plot = likert1,
+                path = here::here("output/images"),
+                device = "png",
+                units = "cm",
+                scale = 3.5,
+                width = 10,height = 10)
+pacman::p_load(cowplot)
+
+#Final plot
+likert1<-   
+  cowplot::add_sub(
+    cowplot::plot_grid(p_a,p_b,p_c,p_d, #plot 1,2,3 and legend (bottom)
+                       align = "hv",
+                       axis = "a",
+                       nrow = 4, #4 plots
+                       ncol = 1, #1 column
+                       rel_heights = c(0.25,0.25,0.25,0.90) #fig size within plot
+    ),
+    label = paste0("Source: Own elaboration based on ELSOC Survey",
+                   " (n=",dim(na.omit(df_study1))[1],")"
+    ),        # Caption: source and sample size
+    size = 12,  # Caption font size
+    hjust = -0.25# Caption align
+  ) %>%
+  cowplot::ggdraw()  
+likert1
+ggplot2::ggsave(filename = "plot_likert.png",
+                plot = likert1,
+                path = here::here("output/images"),
+                device = "png",
+                units = "cm",
+                scale = 3,
+                width = 10,height = 8)
+```
+
+
 ## Correlation
 
 ```{r cor-plot, fig.dim=c(10,6)}
@@ -198,26 +565,33 @@ load(file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 mat_full<- 
 df_study_long_t5_comunas %>%
   # filter(ola==1) %>%
+    select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  na.omit() %>% 
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
          in_amreal # threat
          ) %>% 
   psych::mixedCor() 
 
-
+# dim(mat_full)
 
 
 cor_full <- as.matrix(mat_full$rho)
 diag(cor_full) = NA #set diagonal values to NA
 # Set Row names of the matrix
-rownames(cor_full) <- c("A. Interaction anxiety with [PER/HAI/VEN]",
-                     "B. Sympathy for [PER/HAI/VEN] living in Chile",
-                     "C. Family value of immigrant friends [PER/HAI/VEN]",
-                     "D. Friends value of immigrant friends [PER/HAI/VEN]",
-                     "E. Immigrants [PER/HAI/VEN] have Chilean friends",
-                     "F. Similarity between Chileans and [PER/HAI/VEN]",
-                     "G. Loose of identity because of immigrants ",
-                     "H. Immigrant keeping their customs",
+rownames(cor_full) <- c("A. Interaction anxiety with [PER/VEN]",
+                     "B. Sympathy for [PER/VEN] living in Chile",
+                     "C. Family value of migrant friends [PER/VEN]",
+                     "D. Friends value of migrant friends [PER/VEN]",
+                     "E. Migrants [PER/VEN] have Chilean friends",
+                     "F. Similarity between Chileans and [PER/VEN]",
+                     "G. Loose of identity because of migrants (reverse) ",
+                     "H. Migrant keeping their customs",
                      "I. Adoption of Chilean customs",
                      "J. Unemployment increases")
 #set Column names of the matrix
@@ -233,10 +607,34 @@ corrplot::corrplot(cor_full,
   na.label = "-",
   title = "\n Full sample")
 
+
+png(file=here::here("output/images/plot_corr.png"),width=900, height=700)
+corrplot::corrplot(cor_full,
+  method = "color",
+  addCoef.col = "#000390",
+  type = "upper",
+  tl.col = "black",
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
+  na.label = "-",
+  # title = "\n Full sample"
+  )
+dev.off()
+
+
+
+
 # Wave 1_______________________________________________________________________
 mat_1<- 
 df_study_long_t5_comunas %>%
   filter(ola==1) %>%
+    select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  na.omit() %>%   
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
          in_amreal # threat
@@ -246,13 +644,13 @@ df_study_long_t5_comunas %>%
 cor_1 <- as.matrix(mat_1$rho)
 diag(cor_1) = NA #set diagonal values to NA
 # Set Row names of the matrix
-rownames(cor_1) <- c("A. Interaction anxiety with [PER/HAI/VEN]",
-                     "B. Sympathy for [PER/HAI/VEN] living in Chile",
-                     "C. Family value of immigrant friends [PER/HAI/VEN]",
-                     "D. Friends value of immigrant friends [PER/HAI/VEN]",
-                     "E. Immigrants [PER/HAI/VEN] have Chilean friends",
-                     "F. Similarity between Chileans and [PER/HAI/VEN]",
-                     "G. Loose of identity because of immigrants ",
+rownames(cor_1) <- c("A. Interaction anxiety with [PER/VEN]",
+                     "B. Sympathy for [PER/VEN] living in Chile",
+                     "C. Family value of immigrant friends [PER/VEN]",
+                     "D. Friends value of immigrant friends [PER/VEN]",
+                     "E. Immigrants [PER/VEN] have Chilean friends",
+                     "F. Similarity between Chileans and [PER/VEN]",
+                     "G. Loose of identity because of immigrants (reverse) ",
                      "H. Immigrant keeping their customs",
                      "I. Adoption of Chilean customs",
                      "J. Unemployment increases")
@@ -273,6 +671,13 @@ corrplot::corrplot(cor_1,
 mat_2<-   
 df_study_long_t5_comunas %>%
   filter(ola==2) %>% 
+    select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  na.omit() %>%   
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
          in_amreal # threat
@@ -282,13 +687,13 @@ df_study_long_t5_comunas %>%
 cor_2 <- as.matrix(mat_2$rho)
 diag(cor_2) = NA #set diagonal values to NA
 # Set Row names of the matrix
-rownames(cor_2) <- c("A. Interaction anxiety with [PER/HAI/VEN]",
-                     "B. Sympathy for [PER/HAI/VEN] living in Chile",
-                     "C. Family value of immigrant friends [PER/HAI/VEN]",
-                     "D. Friends value of immigrant friends [PER/HAI/VEN]",
-                     "E. Immigrants [PER/HAI/VEN] have Chilean friends",
-                     "F. Similarity between Chileans and [PER/HAI/VEN]",
-                     "G. Loose of identity because of immigrants ",
+rownames(cor_2) <- c("A. Interaction anxiety with [PER/VEN]",
+                     "B. Sympathy for [PER/VEN] living in Chile",
+                     "C. Family value of immigrant friends [PER/VEN]",
+                     "D. Friends value of immigrant friends [PER/VEN]",
+                     "E. Immigrants [PER/VEN] have Chilean friends",
+                     "F. Similarity between Chileans and [PER/VEN]",
+                     "G. Loose of identity because of immigrants (reverse) ",
                      "H. Immigrant keeping their customs",
                      "I. Adoption of Chilean customs",
                      "J. Unemployment increases")
@@ -310,6 +715,13 @@ corrplot::corrplot(cor_2,
 mat_3 <- 
 df_study_long_t5_comunas %>%
   filter(ola==3) %>% 
+    select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  na.omit() %>%   
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
          in_amreal # threat
@@ -319,13 +731,13 @@ df_study_long_t5_comunas %>%
 cor_3 <- as.matrix(mat_3$rho)
 diag(cor_3) = NA #set diagonal values to NA
 # Set Row names of the matrix
-rownames(cor_3) <- c("A. Interaction anxiety with [PER/HAI/VEN]",
-                     "B. Sympathy for [PER/HAI/VEN] living in Chile",
-                     "C. Family value of immigrant friends [PER/HAI/VEN]",
-                     "D. Friends value of immigrant friends [PER/HAI/VEN]",
-                     "E. Immigrants [PER/HAI/VEN] have Chilean friends",
-                     "F. Similarity between Chileans and [PER/HAI/VEN]",
-                     "G. Loose of identity because of immigrants ",
+rownames(cor_3) <- c("A. Interaction anxiety with [PER/VEN]",
+                     "B. Sympathy for [PER/VEN] living in Chile",
+                     "C. Family value of immigrant friends [PER/VEN]",
+                     "D. Friends value of immigrant friends [PER/VEN]",
+                     "E. Immigrants [PER/VEN] have Chilean friends",
+                     "F. Similarity between Chileans and [PER/VEN]",
+                     "G. Loose of identity because of immigrants (reverse) ",
                      "H. Immigrant keeping their customs",
                      "I. Adoption of Chilean customs",
                      "J. Unemployment increases")
@@ -346,6 +758,13 @@ corrplot::corrplot(cor_3,
 mat_4 <- 
 df_study_long_t5_comunas %>%
   filter(ola==4) %>% 
+    select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  na.omit() %>%   
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
          in_amreal # threat
@@ -356,13 +775,13 @@ df_study_long_t5_comunas %>%
 cor_4 <- as.matrix(mat_4$rho)
 diag(cor_4) = NA #set diagonal values to NA
 # Set Row names of the matrix
-rownames(cor_4) <- c("A. Interaction anxiety with [PER/HAI/VEN]",
-                     "B. Sympathy for [PER/HAI/VEN] living in Chile",
-                     "C. Family value of immigrant friends [PER/HAI/VEN]",
-                     "D. Friends value of immigrant friends [PER/HAI/VEN]",
-                     "E. Immigrants [PER/HAI/VEN] have Chilean friends",
-                     "F. Similarity between Chileans and [PER/HAI/VEN]",
-                     "G. Loose of identity because of immigrants ",
+rownames(cor_4) <- c("A. Interaction anxiety with [PER/VEN]",
+                     "B. Sympathy for [PER/VEN] living in Chile",
+                     "C. Family value of immigrant friends [PER/VEN]",
+                     "D. Friends value of immigrant friends [PER/VEN]",
+                     "E. Immigrants [PER/VEN] have Chilean friends",
+                     "F. Similarity between Chileans and [PER/VEN]",
+                     "G. Loose of identity because of immigrants (reverse) ",
                      "H. Immigrant keeping their customs",
                      "I. Adoption of Chilean customs",
                      "J. Unemployment increases")
@@ -384,6 +803,13 @@ corrplot::corrplot(cor_4,
 mat_5 <- 
 df_study_long_t5_comunas %>%
   filter(ola==5) %>% 
+    select(in_ansied,in_simpat,in_valfam,in_valami,in_amigcl,
+         in_simili,in_amsimb,in_acpier,in_acadop,
+         conviviality, identity,
+         in_amreal,
+         educ,quintil1:edad,
+         inm_prop_cas17_w,inm_prop_cas20_w,dif_inm) %>% 
+  na.omit() %>%   
   select(in_ansied,in_simpat,in_valfam, in_valami,in_amigcl, # conviviality
          in_simili,in_amsimb,in_acpier, in_acadop, # identity
          in_amreal # threat
@@ -393,13 +819,13 @@ df_study_long_t5_comunas %>%
 cor_5 <- as.matrix(mat_5$rho)
 diag(cor_5) = NA #set diagonal values to NA
 # Set Row names of the matrix
-rownames(cor_5) <- c("A. Interaction anxiety with [PER/HAI/VEN]",
-                     "B. Sympathy for [PER/HAI/VEN] living in Chile",
-                     "C. Family value of immigrant friends [PER/HAI/VEN]",
-                     "D. Friends value of immigrant friends [PER/HAI/VEN]",
-                     "E. Immigrants [PER/HAI/VEN] have Chilean friends",
-                     "F. Similarity between Chileans and [PER/HAI/VEN]",
-                     "G. Loose of identity because of immigrants ",
+rownames(cor_5) <- c("A. Interaction anxiety with [PER/VEN]",
+                     "B. Sympathy for [PER/VEN] living in Chile",
+                     "C. Family value of immigrant friends [PER/VEN]",
+                     "D. Friends value of immigrant friends [PER/VEN]",
+                     "E. Immigrants [PER/VEN] have Chilean friends",
+                     "F. Similarity between Chileans and [PER/VEN]",
+                     "G. Loose of identity because of immigrants (reverse) ",
                      "H. Immigrant keeping their customs",
                      "I. Adoption of Chilean customs",
                      "J. Unemployment increases")
@@ -456,7 +882,7 @@ alpha_ident <-
          in_amsimb, #reverse item
          in_acpier,in_acadop) 
 
-sjmisc::frq(alpha_ident)
+# sjmisc::frq(alpha_ident)
 sjPlot::tab_corr(alpha_ident)
 sjPlot::tab_itemscale(alpha_ident)
 ```
@@ -502,17 +928,22 @@ df_study1 <-
          )
 
 # Hypothesis___________________________________________________________________
-h1.cat <- "ola_f+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
-h1 <- "ola+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
-h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
-h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
-h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
-h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
-h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+m1.cat <- "ola_f+pos_id+edad+nation_t1+cuestion_mig"
+m2 <- "ola_f+educ+quintil1+ess+pos_id+edad+nation_t1+cuestion_mig"
+m3 <- "ola_f+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+nation_t1+cuestion_mig"
+m4 <- "ola_f+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+inm_prop_cas20_w+dif_inm+pos_id+edad+nation_t1+cuestion_mig"
+
+# h2.educ <- "ola*educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+# h2.incom <- "ola+educ+quintil1*ola+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+# h3 <- "ola*dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+# h4.know <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4*ola+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+# h4.friend <- "ola+dif_inm+educ+quintil1+ess+know_inm_t1t4+frien_inm_t1t4*ola+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
+m5 <- "educ*ola+quintil1*ola+ess+know_inm_t1t4*ola+frien_inm_t1t4*ola+pos_id+edad+inm_prop_cas20_w+dif_inm*ola+nation_t1+cuestion_mig"
+
 h.ed.know.time <- "ola*educ*know_inm_t1t4+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
 h.ed.fri.time <- "ola*educ*frien_inm_t1t4+quintil1+ess+know_inm_t1t4+frien_inm_t1t4+pos_id+edad+inm_prop_cas20_w+dif_inm+nation_t1+cuestion_mig"
 
-hipotesis <- c(h1.cat,h1,h2.educ,h2.incom,h3,h4.know,h4.friend
+hipotesis <- c(m1.cat,m2,m3,m4
                # h.ed.know.time,
                # h.ed.fri.time
                )
@@ -538,53 +969,146 @@ names(fit1) <- paste0(rep(ivs,each=length(hipotesis)),1:length(hipotesis))
 
 # Tables_______________________________________________________________________
 omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-reorderc <- c(1:4,21,5:20,22:35) # the depends on the number of coeficients (!)
+# reorderc <- c(1:4,21,5:20,22:35) # the depends on the number of coeficients (!)
 # detail for subsections:
 # https://stackoverflow.com/questions/69338331/r-markdown-create-section-headers-in-r-and-print-r-output-in-same-section
 
 
+coef_names <- c("Wave 2017 (ref: Wave 2016)","Wave 2018", "Wave 2019","Wave 2020",
+                "Technical (ref: Universitary)","High school","Primary",
+                "Quintile 4 (ref: Quintile 5)", "Quintile 3","Quintile 2","Quintile 1",
+                "Subjective Social Status",
+                "Stable, know (ref: Stable, do not know)","Now know","No longer know",
+                "Stable, have friends (ref: Stable, do not have friends)","Now have friends","No longer have friends",
+                "Propotion of migrants",
+                "Change in the proportion of migrants")
+
 cat(paste0("\n## ","Conviviality (avg)","\n"))
 
-knitreg(l = fit1[names(fit1)[grepl("conviviality", names(fit1),"\n")]],
-        omit.coef = omit,
-        reorder.coef = reorderc
+caption_conv <- "Multilevel linear regression models for Conviviality"
+htmlreg(l = fit1[names(fit1)[grepl("conviviality", names(fit1),"\n")]],
+        omit.coef = omit,single.row = T,
+        caption = caption_conv,
+        caption.above = T,
+        custom.coef.names=coef_names,
+        custom.model.names = c("Model 1","Model 2","Model 3","Model 4"),
+        file = here::here("output/tables/tab_conv.html")
+        # reorder.coef = reorderc
         )
+webshot::webshot(url = here::here("output/tables/tab_conv.html"),
+                 file = here::here("output/tables/tab_conv.png"))
 
-plot_model(model = fit1$conviviality3,
-           type = "int")
+plot_model(fit1$conviviality1,type = "pred",terms = " ola_f")
 
-plot_model(model = fit1$conviviality6,
-           type = "int")
-
-plot_model(model = fit1$conviviality7,
-           type = "int")
 
 cat(paste0("\n ","<br>","\n"))
 
 cat(paste0("\n## ","Identity (avg)","\n"))
 
-knitreg(l = fit1[names(fit1)[grepl("identity", names(fit1),"\n")]],
-        omit.coef = omit,reorder.coef = reorderc)
+caption_id <- "Multilevel linear regression models for Identity"
+htmlreg(l = fit1[names(fit1)[grepl("identity", names(fit1),"\n")]],
+        omit.coef = omit,
+        caption = caption_id,
+        caption.above = T,
+        single.row = T,
+        custom.coef.names=coef_names,
+        # reorder.coef = reorderc
+        custom.model.names = c("Model 1","Model 2","Model 3","Model 4"),
+        file = here::here("output/tables/tab_iden.html")        
+        )
+webshot::webshot(url = here::here("output/tables/tab_iden.html"),
+                 file = here::here("output/tables/tab_iden.png"))
+
+plot_model(fit1$identity1,type = "pred",terms = "ola_f")
 
 
 cat(paste0("\n## ","J. Unemployment increases (Threat)","\n"))  
 
-knitreg(l = fit1[names(fit1)[grepl("in_amreal", names(fit1),"\n")]],
-        omit.coef = omit,reorder.coef = reorderc) 
+caption_th <- "Multilevel linear regression models for Threat"
+htmlreg(l = fit1[names(fit1)[grepl("in_amreal", names(fit1),"\n")]],
+        omit.coef = omit,single.row = T,
+        caption = caption_th,
+        caption.above = T,
+        custom.coef.names=coef_names,
+        custom.model.names = c("Model 1","Model 2","Model 3","Model 4"),
+        file = here::here("output/tables/tab_thr.html")         
+        # reorder.coef = reorderc
+        ) 
+webshot::webshot(url = here::here("output/tables/tab_thr.html"),
+                 file = here::here("output/tables/tab_thr.png"))
 
-plot_model(model = fit1$in_amreal3,
-           type = "int") 
+plot_model(fit1$in_amreal1,type = "pred",terms = " ola_f")
 
-plot_model(model = fit1$in_amreal5,
-           type = "int")
 
-plot_model(model = fit1$in_amreal6,
-           type = "int")
+
+cat(paste0("\n## ","Interactions","\n"))  #------------------------------------#
+
+hipotesis_int <- c(m5
+               # h.ed.know.time,
+               # h.ed.fri.time
+               )
+
+# Create the object for each model
+models_int <- list()
+for (i in ivs) {
+models_int[[i]] <- paste0(i,"~",hipotesis_int,"+(1|idencuesta)+(1|comuna)")  
+}
+
+# Estimate the multilevel models
+fit_int <- list()
+for (i in ivs) {
+  for (z in models_int[[i]][1:length(hipotesis_int)]) {
+    fit_int[[z]] <- lme4::lmer(formula = z, data = df_study1)
+  }
+}
+
+names(fit_int) <- paste0(rep(ivs,each=length(hipotesis_int)),1:length(hipotesis_int))
+
+omit_int <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)|(ess)|(inm_prop_cas20_w)"
+coef_int <- c("Technical (ref: Universitary) ","High school","Primary","Wave",
+              "Quintile 4 (ref: Quintile 5)", "Quintile 3","Quintile 2","Quintile 1",
+              # "Subjective Social Status",
+              "Stable, know (ref: Stable, do not know)","Now know","No longer know",
+              "Stable, have friends (ref: Stable, do not have friends)","Now have friends","No longer have friends",
+              # "Propotion of migrants",
+              "Change in the proportion of migrants",
+              #----------------------------------------------------------------#
+              "Technical x Wave","High school x Wave","Primary x Wave",
+              "Quintile 4 x Wave", "Quintile 3 x Wave","Quintile 2 x Wave","Quintile 1 x Wave",
+              "Stable, know  x Wave","Now know x Wave","No longer know x Wave",
+              "Stable, have friends x Wave","Now have friends x Wave","No longer have friends x Wave",
+              "Change in the proportion of migrants  x Wave"              
+              )
+
+caption_int <- "Multilevel linear regression models with interactions"
+htmlreg(l = fit_int[c("conviviality1","identity1","in_amreal1")],
+        omit.coef = omit_int,
+        single.row = T,
+        custom.coef.names=coef_int,
+        reorder.coef = c(4,1:3,5:29),
+        groups = list(
+          # "Education (ref: Universitary)"=2:4,
+                      # "Household Income Quintile (ref: Quintile 5)"=5:8,
+                      # "Know migrant (ref: Stable, do not know)" =9:11,
+                      # "Friendship with migrants (ref: Stable, do not have friends)" =12:14,
+                      "Education x Wave" =16:18,
+                      "Quintile x Wave" =19:22,
+                      "Know migrant x Wave" =23:25,
+                      "Migrant friend x Wave" =26:28,
+                      "Migrant Propulation x Wave" =29
+                      ),
+        caption = caption_int,
+        caption.above = T,
+        custom.model.names = c("Model 1\n(Conviviality)","Model 2\n(Identity)","Model 3\n(Threat)"),
+        file = here::here("output/tables/tab_int.html")
+        )
+webshot::webshot(url = here::here("output/tables/tab_int.html"),
+                 file = here::here("output/tables/tab_int.png"))
 ```
 
 ## Education dummy {-}
 
-```{r average-primary, fig.dim=c(10,6), results='asis'}
+```{r average-primary, eval=FALSE, fig.dim=c(10,6), include=FALSE, results='asis'}
 rm(list=ls())
 if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
