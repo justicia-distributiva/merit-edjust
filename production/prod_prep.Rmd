@@ -230,7 +230,7 @@ elsoc_long_2016_2021$educ <-
               "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4; c(-888,-999)=NA")
 elsoc_long_2016_2021$educ <-
   factor(elsoc_long_2016_2021$educ,
-         labels = c("Primary","High school","Vocational","Universitary"))
+         labels = c("Primary","High school","Technical","Universitary"))
 
 #reverse education, reference level is the highest level
 elsoc_long_2016_2021$educ <- forcats::fct_rev(elsoc_long_2016_2021$educ)

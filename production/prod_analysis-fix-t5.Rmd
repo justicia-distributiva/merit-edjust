@@ -135,7 +135,7 @@ view(df_individual,
      file = here::here("output/tables/ds_individual.html")
      ) # Ver tabla en un archivo HTML
 webshot::webshot(url =here::here("output/tables/ds_individual.html"),
-        file =here::here("output/tables/ds_individual.png")) # Remover archivo HTML
+        file =here::here("output/tables/table2.jpg")) # Remover archivo HTML
 # print(df, method = "render")
 
 
@@ -173,7 +173,7 @@ view(df_municipal,
      file = here::here("output/tables/ds_municipal.html")
      ) # Ver tabla en un archivo HTML
 webshot::webshot(url =here::here("output/tables/ds_municipal.html"),
-        file =here::here("output/tables/ds_municipal.png")) # Remover archivo HTML
+        file =here::here("output/tables/table3.jpg")) # Remover archivo HTML
 # print(df, method = "render")
 ```
 
@@ -238,7 +238,7 @@ for (i in names(df_study1)) {
   # Declare ggplot2 features
   ggplot2::theme_set(ggplot2::theme(panel.background = ggplot2::element_rect(fill = "gray85",
                                                                              colour = "gray85"),
-                                    # panel.border = ggplot2::element_blank(),
+                                    panel.border = ggplot2::element_blank(),
                                     axis.text.y = ggplot2::element_text(size = 13,
                                                                         hjust = 1),
                                     title = ggplot2::element_text(size = 18,
@@ -247,7 +247,9 @@ for (i in names(df_study1)) {
                                     plot.caption = ggplot2::element_text(size = 10,
                                                                          face = "plain",
                                                                          hjust = 1
-                                                                         )))
+                                                                         )
+                                    )
+                     )
 #   
   
 #Plot 1: Conviality-----------------------------------------------------------
@@ -346,8 +348,10 @@ p_ansied<-
       "Comfortable",
       "Very comfortable"
     )
-  )
-
+  ) +
+  ggplot2::geom_label(label.padding = 1, label.r = 1,label.size = 0.1)  
+  
+p_ansied[["layers"]]
 
 p_simpat<-
   dplyr::select(df_study1,in_simpat) %>%
@@ -393,7 +397,7 @@ p_convi<-
     values = colors,
     breaks = c("neutral", 4, 3, 2, 1),
     labels = c(
-      "Disagree Neither disagree nor agree",      
+      "Neither disagree nor agree",      
       "Strongly disagree",
       "Disagree",
       "Agree",
@@ -431,7 +435,7 @@ p_simili<-
 
 p_identi<-
   dplyr::select(df_study1,in_amsimb,in_acpier,in_acadop,
-                in_amsimb:in_amreal) %>%
+                in_amsimb) %>%
   sjPlot::plot_likert(geom.colors = "PuBu",
                       # title = c("Threat"),
                       geom.size = 0.8,
@@ -448,7 +452,7 @@ p_identi<-
     values = colors,
     breaks = c("neutral", 4, 3, 2, 1),
     labels = c(
-      "Disagree Neither disagree nor agree",      
+      "Neither disagree nor agree",      
       "Strongly disagree",
       "Disagree",
       "Agree",
@@ -475,7 +479,7 @@ p_threat<-
     values = colors,
     breaks = c("neutral", 4, 3, 2, 1),
     labels = c(
-      "Disagree Neither disagree nor agree",      
+      "Neither disagree nor agree",      
       "Strongly disagree",
       "Disagree",
       "Agree",
@@ -490,27 +494,36 @@ s <- 0.35
 m <- 0.6
 l <- 0.7
 #Final plot
+title <- cowplot::ggdraw() + 
+  cowplot::draw_label(
+    "Figure 1: Frequencies for Conviviality, Identity and Threat items",
+    fontface = 'bold',
+    size = 15,
+    x = 0,
+    hjust = 0
+  ) 
+
 likert1<-   
   cowplot::add_sub(
-    cowplot::plot_grid(p_ansied,p_simpat,p_convi,p_simili,p_identi,p_threat, 
+    cowplot::plot_grid(title,p_ansied,p_simpat,p_convi,p_simili,p_identi,p_threat, 
                        align = "hv",
                        axis = "a",
                        nrow = 6, #4 plots
-                       ncol = 1, #1 column
-                       rel_heights = c(s,s,m,s,l,s) #fig size within plot
+                       ncol = 1, #1 column   
+                       rel_heights = c(0.1,s,s,m,s,m,s) #fig size within plot
     ),
     label = paste0("Source: Own elaboration based on ELSOC Survey",
                    " (n=",dim(na.omit(df_study1))[1],")"
     ),        # Caption: source and sample size
     size = 12,  # Caption font size
-    hjust = -0.25# Caption align
+    hjust = -0.25# Caption align  
   ) %>%
   cowplot::ggdraw()  
 # likert1
-ggplot2::ggsave(filename = "plot_likert2.png",
+ggplot2::ggsave(filename = "figure1.jpg",
                 plot = likert1,
                 path = here::here("output/images"),
-                device = "png",
+                device = "jpg",
                 units = "cm",
                 scale = 3.5,
                 width = 10,height = 10)
@@ -534,10 +547,10 @@ likert1<-
   ) %>%
   cowplot::ggdraw()  
 likert1
-ggplot2::ggsave(filename = "plot_likert.png",
+ggplot2::ggsave(filename = "figure1.jpg",
                 plot = likert1,
                 path = here::here("output/images"),
-                device = "png",
+                device = "jpg",
                 units = "cm",
                 scale = 3,
                 width = 10,height = 8)
@@ -608,8 +621,9 @@ corrplot::corrplot(cor_full,
   title = "\n Full sample")
 
 
-png(file=here::here("output/images/plot_corr.png"),width=900, height=700)
+png(file=here::here("output/images/figure2.jpg"),width=900, height=700)
 corrplot::corrplot(cor_full,
+  title = "\nFigure 2: Polychoric correlation matrix for Conviviality, Identity and Threat items",
   method = "color",
   addCoef.col = "#000390",
   type = "upper",
