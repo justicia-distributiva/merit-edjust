@@ -490,9 +490,9 @@ p_threat<-
 # create plot-------------------------------------------------------------------
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(cowplot)
-s <- 0.35
+s <- 0.4
 m <- 0.6
-l <- 0.7
+l <- 0.8
 #Final plot
 title <- cowplot::ggdraw() + 
   cowplot::draw_label(
@@ -508,9 +508,9 @@ likert1<-
     cowplot::plot_grid(title,p_ansied,p_simpat,p_convi,p_simili,p_identi,p_threat, 
                        align = "hv",
                        axis = "a",
-                       nrow = 6, #4 plots
+                       nrow = 7, #4 plots
                        ncol = 1, #1 column   
-                       rel_heights = c(0.1,s,s,m,s,m,s) #fig size within plot
+                       rel_heights = c(s,s,0.35,m,s,m,s) #fig size within plot
     ),
     label = paste0("Source: Own elaboration based on ELSOC Survey",
                    " (n=",dim(na.omit(df_study1))[1],")"
@@ -527,7 +527,6 @@ ggplot2::ggsave(filename = "figure1.jpg",
                 units = "cm",
                 scale = 3.5,
                 width = 10,height = 10)
-pacman::p_load(cowplot)
 
 #Final plot
 likert1<-   
