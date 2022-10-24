@@ -60,6 +60,7 @@ cit19<- read.table(url("https://dataverse.harvard.edu/api/access/datafile/521699
 save(cit19,file = here::here("input/data-original/cit19.Rdata"))
 
 # Chilean CENSUS data (2017)____________________________________________________
+ options(timeout=100*100)
 download.file(url = "https://github.com/jciturras/data-chile/raw/main/data/censo-2017/censo-2017.RData",
               destfile = here::here("input/data-original/censo17.Rdata"))
 
@@ -98,6 +99,7 @@ elsoc_long_2016_2021 <-
 elsoc_long_2016_2021 %>% 
   #create new variables
   mutate(in_simpat=r09,
+         sexo=m0_sexo,
          in_simili=r10,
          in_ansied=r11,
          in_valfam=r12_01,
@@ -603,6 +605,7 @@ elsoc_long_2016_2021 %>%
   filter(muestra == 1) %>% #keep original sample (vs refresh)
   select(idencuesta,ola,region,region_cod,comuna,comunacod=comuna_cod,
          muestra,
+         sexo,
          cuestion_mig,
          starts_with("in_"),
          conviviality,
@@ -626,13 +629,12 @@ elsoc_long_2016_2021 %>%
          edad)
 
 
-
 # Reshape long to wide
 df_study1_wide <- df_study1 %>% 
   tidyr::pivot_wider(id_cols = c("idencuesta","muestra"),
                      names_from = "ola",
                      # names_prefix = c("educ","educyear","ing_pc","quintil","quintil1"),
-                     values_from = names(select(df_study1,comuna,comunacod,cuestion_mig,in_simpat:edad))
+                     values_from = names(select(df_study1,comuna,comunacod,cuestion_mig,in_simpat:edad,sexo))
                      )
 
 # fix data to w01 values
@@ -640,6 +642,11 @@ df_study1_wide$edad_2 <-df_study1_wide$edad_1 #age
 df_study1_wide$edad_3 <-df_study1_wide$edad_1
 df_study1_wide$edad_4 <-df_study1_wide$edad_1
 df_study1_wide$edad_5 <-df_study1_wide$edad_1
+
+df_study1_wide$sexo_2 <-df_study1_wide$sexo_1 #sex
+df_study1_wide$sexo_3 <-df_study1_wide$sexo_1
+df_study1_wide$sexo_4 <-df_study1_wide$sexo_1
+df_study1_wide$sexo_5 <-df_study1_wide$sexo_1
 
 df_study1_wide$educ_2 <-df_study1_wide$educ_1 #education
 df_study1_wide$educ_3 <-df_study1_wide$educ_1
@@ -709,7 +716,7 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                                  "^conviviality","^identity",
                                  "^educ_","^educyear_","^quintil1_","^ess_","^nation_t1_",
                                  "^know_inm_t1t4_","^frien_inm_t1t4_","^pos_id_",
-                                 "^edad_"
+                                 "^edad_","^sexo_"
                                  ),
               value.name = c("comuna","comunacod","cuestion_mig",
                              "in_simpat","in_simili","in_ansied","in_valfam",
@@ -718,7 +725,7 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                              "conviviality","identity",
                              "educ","educyear","quintil1","ess","nation_t1",
                              "know_inm_t1t4","frien_inm_t1t4","pos_id",
-                             "edad"),
+                             "edad","sexo"),
               na.rm = F,value.factor = TRUE
               )
 
@@ -1068,7 +1075,7 @@ df_study1_long_comunas <-
  dplyr::left_join(x = df_study1_long,
                   y = df_study1_comunas, 
                   by = "comunacod") %>% 
- dplyr::select(idencuesta:edad,
+ dplyr::select(idencuesta:edad,sexo,
                inm_prop_cas17_w,
                inm_prop_cas20_w,
                dif_inm) %>% 
@@ -1078,7 +1085,7 @@ df_study_long_t5_comunas <-
  dplyr::left_join(x = df_study1_long_t5,
                   y = df_study1_comunas, 
                   by = "comunacod") %>% 
- dplyr::select(idencuesta:edad,
+ dplyr::select(idencuesta:edad,sexo,
                inm_prop_cas17_w,
                inm_prop_cas20_w,
                dif_inm) %>% 

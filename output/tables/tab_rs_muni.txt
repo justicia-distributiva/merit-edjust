@@ -1,0 +1,167 @@
+
+=====================================================================================================================================================
+                                                                                     Model 1
+(Conviviality)  Model 2
+(Identity)   Model 3
+(Threat)   
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+educTechnical                                                                           -0.14 (0.06) *          -0.15 (0.06) *        0.22 (0.11) *  
+educHigh school                                                                         -0.22 (0.05) ***        -0.31 (0.06) ***      0.47 (0.10) ***
+educPrimary                                                                             -0.20 (0.07) **         -0.37 (0.07) ***      0.52 (0.12) ***
+ola                                                                                      0.00 (0.01)             0.02 (0.01)         -0.08 (0.03) ** 
+quintil1Q4                                                                              -0.11 (0.06)            -0.17 (0.06) **       0.19 (0.11)    
+quintil1Q3                                                                              -0.09 (0.06)            -0.16 (0.06) **       0.10 (0.11)    
+quintil1Q2                                                                              -0.11 (0.06)            -0.12 (0.06)          0.16 (0.12)    
+quintil1Q1                                                                              -0.11 (0.06)            -0.13 (0.07) *        0.13 (0.12)    
+know_inm_t1t4Stable, know                                                                0.07 (0.07)             0.08 (0.07)         -0.11 (0.13)    
+know_inm_t1t4Now know                                                                    0.05 (0.06)             0.15 (0.07) *       -0.14 (0.12)    
+know_inm_t1t4No longer know                                                              0.13 (0.05) *           0.07 (0.06)         -0.25 (0.11) *  
+frien_inm_t1t4Stable, have friends                                                       0.23 (0.08) **          0.17 (0.08) *       -0.25 (0.15)    
+frien_inm_t1t4Now have friends                                                          -0.11 (0.07)            -0.10 (0.07)         -0.14 (0.13)    
+frien_inm_t1t4No longer have friends                                                     0.18 (0.06) **          0.05 (0.07)          0.01 (0.11)    
+dif_inm                                                                                 -0.02 (0.01)            -0.01 (0.01)         -0.02 (0.02)    
+educTechnical:ola                                                                       -0.00 (0.02)            -0.02 (0.02)          0.06 (0.03)    
+educHigh school:ola                                                                     -0.01 (0.01)            -0.03 (0.01) *        0.06 (0.02) ** 
+educPrimary:ola                                                                         -0.06 (0.02) ***        -0.06 (0.02) ***      0.10 (0.03) ***
+ola:quintil1Q4                                                                           0.01 (0.02)             0.02 (0.02)         -0.04 (0.03)    
+ola:quintil1Q3                                                                           0.01 (0.02)             0.03 (0.02) *       -0.02 (0.03)    
+ola:quintil1Q2                                                                           0.01 (0.02)             0.02 (0.02)         -0.04 (0.03)    
+ola:quintil1Q1                                                                           0.00 (0.02)             0.02 (0.02)         -0.03 (0.03)    
+ola:know_inm_t1t4Stable, know                                                           -0.00 (0.02)             0.00 (0.02)          0.01 (0.03)    
+ola:know_inm_t1t4Now know                                                                0.01 (0.02)            -0.02 (0.02)          0.03 (0.03)    
+ola:know_inm_t1t4No longer know                                                         -0.03 (0.01) *          -0.01 (0.01)          0.05 (0.03) *  
+ola:frien_inm_t1t4Stable, have friends                                                   0.01 (0.02)            -0.00 (0.02)         -0.01 (0.04)    
+ola:frien_inm_t1t4Now have friends                                                       0.06 (0.02) ***         0.03 (0.02)         -0.00 (0.03)    
+ola:frien_inm_t1t4No longer have friends                                                -0.03 (0.02)            -0.03 (0.02)          0.01 (0.03)    
+ola:dif_inm                                                                             -0.00 (0.00)            -0.00 (0.00)          0.01 (0.00) *  
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+AIC                                                                                  11536.34                11653.44             19312.88           
+BIC                                                                                  12671.23                12788.32             20447.76           
+Log Likelihood                                                                       -5600.17                -5658.72             -9488.44           
+Num. obs.                                                                             6344                    6344                 6344              
+Num. groups: idencuesta                                                               1611                    1611                 1611              
+Num. groups: comuna                                                                     93                      93                   93              
+Var: idencuesta (Intercept)                                                              0.10                    0.08                 0.30           
+Var: comuna (Intercept)                                                                  0.01                    0.05                 0.10           
+Var: comuna educTechnical                                                                0.04                    0.03                 0.02           
+Var: comuna educHigh school                                                              0.02                    0.02                 0.04           
+Var: comuna educPrimary                                                                  0.04                    0.04                 0.04           
+Var: comuna quintil1Q4                                                                   0.00                    0.01                 0.04           
+Var: comuna quintil1Q3                                                                   0.02                    0.02                 0.04           
+Var: comuna quintil1Q2                                                                   0.01                    0.02                 0.06           
+Var: comuna quintil1Q1                                                                   0.01                    0.01                 0.07           
+Var: comuna quintil1QNA                                                                  0.02                    0.03                 0.27           
+Var: comuna know_inm_t1t4Stable, know                                                    0.04                    0.07                 0.16           
+Var: comuna know_inm_t1t4Now know                                                        0.02                    0.06                 0.13           
+Var: comuna know_inm_t1t4No longer know                                                  0.01                    0.07                 0.17           
+Var: comuna frien_inm_t1t4Stable, have friends                                           0.02                    0.02                 0.04           
+Var: comuna frien_inm_t1t4Now have friends                                               0.01                    0.03                 0.11           
+Var: comuna frien_inm_t1t4No longer have friends                                         0.02                    0.07                 0.06           
+Cov: comuna (Intercept) educTechnical                                                   -0.02                   -0.01                -0.05           
+Cov: comuna (Intercept) educHigh school                                                 -0.01                   -0.02                -0.04           
+Cov: comuna (Intercept) educPrimary                                                     -0.01                   -0.02                -0.05           
+Cov: comuna (Intercept) quintil1Q4                                                       0.00                   -0.02                -0.03           
+Cov: comuna (Intercept) quintil1Q3                                                       0.00                   -0.02                -0.02           
+Cov: comuna (Intercept) quintil1Q2                                                       0.00                   -0.01                -0.03           
+Cov: comuna (Intercept) quintil1Q1                                                       0.00                   -0.01                -0.06           
+Cov: comuna (Intercept) quintil1QNA                                                     -0.01                   -0.02                -0.10           
+Cov: comuna (Intercept) know_inm_t1t4Stable, know                                       -0.02                   -0.01                -0.09           
+Cov: comuna (Intercept) know_inm_t1t4Now know                                           -0.00                   -0.02                -0.03           
+Cov: comuna (Intercept) know_inm_t1t4No longer know                                     -0.00                   -0.03                -0.05           
+Cov: comuna (Intercept) frien_inm_t1t4Stable, have friends                               0.01                   -0.01                 0.00           
+Cov: comuna (Intercept) frien_inm_t1t4Now have friends                                   0.00                   -0.00                -0.01           
+Cov: comuna (Intercept) frien_inm_t1t4No longer have friends                             0.01                    0.00                 0.04           
+Cov: comuna educTechnical educHigh school                                                0.02                    0.01                 0.02           
+Cov: comuna educTechnical educPrimary                                                    0.02                    0.02                 0.02           
+Cov: comuna educTechnical quintil1Q4                                                    -0.00                    0.00                 0.02           
+Cov: comuna educTechnical quintil1Q3                                                     0.00                    0.00                 0.01           
+Cov: comuna educTechnical quintil1Q2                                                    -0.00                    0.01                 0.02           
+Cov: comuna educTechnical quintil1Q1                                                     0.01                    0.01                 0.03           
+Cov: comuna educTechnical quintil1QNA                                                    0.01                    0.01                 0.05           
+Cov: comuna educTechnical know_inm_t1t4Stable, know                                      0.03                    0.04                 0.04           
+Cov: comuna educTechnical know_inm_t1t4Now know                                          0.00                    0.02                 0.02           
+Cov: comuna educTechnical know_inm_t1t4No longer know                                   -0.00                    0.01                 0.02           
+Cov: comuna educTechnical frien_inm_t1t4Stable, have friends                            -0.02                   -0.01                -0.00           
+Cov: comuna educTechnical frien_inm_t1t4Now have friends                                 0.01                   -0.01                 0.01           
+Cov: comuna educTechnical frien_inm_t1t4No longer have friends                          -0.02                   -0.03                -0.02           
+Cov: comuna educHigh school educPrimary                                                  0.02                    0.02                 0.04           
+Cov: comuna educHigh school quintil1Q4                                                   0.00                    0.01                 0.03           
+Cov: comuna educHigh school quintil1Q3                                                  -0.00                    0.00                -0.01           
+Cov: comuna educHigh school quintil1Q2                                                  -0.01                   -0.00                -0.00           
+Cov: comuna educHigh school quintil1Q1                                                  -0.01                   -0.00                 0.00           
+Cov: comuna educHigh school quintil1QNA                                                  0.01                    0.00                 0.03           
+Cov: comuna educHigh school know_inm_t1t4Stable, know                                    0.02                    0.01                 0.00           
+Cov: comuna educHigh school know_inm_t1t4Now know                                        0.01                   -0.00                -0.01           
+Cov: comuna educHigh school know_inm_t1t4No longer know                                  0.00                    0.00                -0.00           
+Cov: comuna educHigh school frien_inm_t1t4Stable, have friends                          -0.00                   -0.00                -0.02           
+Cov: comuna educHigh school frien_inm_t1t4Now have friends                              -0.00                    0.01                 0.01           
+Cov: comuna educHigh school frien_inm_t1t4No longer have friends                        -0.01                    0.00                 0.00           
+Cov: comuna educPrimary quintil1Q4                                                       0.01                    0.02                 0.02           
+Cov: comuna educPrimary quintil1Q3                                                      -0.00                    0.00                -0.01           
+Cov: comuna educPrimary quintil1Q2                                                      -0.01                    0.00                 0.00           
+Cov: comuna educPrimary quintil1Q1                                                      -0.01                   -0.00                 0.01           
+Cov: comuna educPrimary quintil1QNA                                                      0.00                   -0.00                 0.04           
+Cov: comuna educPrimary know_inm_t1t4Stable, know                                        0.03                    0.00                 0.02           
+Cov: comuna educPrimary know_inm_t1t4Now know                                            0.00                   -0.01                -0.00           
+Cov: comuna educPrimary know_inm_t1t4No longer know                                     -0.01                   -0.01                 0.01           
+Cov: comuna educPrimary frien_inm_t1t4Stable, have friends                              -0.01                    0.01                -0.01           
+Cov: comuna educPrimary frien_inm_t1t4Now have friends                                  -0.00                    0.01                 0.02           
+Cov: comuna educPrimary frien_inm_t1t4No longer have friends                            -0.02                    0.01                -0.01           
+Cov: comuna quintil1Q4 quintil1Q3                                                        0.01                    0.01                 0.03           
+Cov: comuna quintil1Q4 quintil1Q2                                                        0.00                    0.01                 0.01           
+Cov: comuna quintil1Q4 quintil1Q1                                                       -0.00                    0.00                 0.02           
+Cov: comuna quintil1Q4 quintil1QNA                                                       0.00                    0.00                 0.01           
+Cov: comuna quintil1Q4 know_inm_t1t4Stable, know                                        -0.00                   -0.01                 0.01           
+Cov: comuna quintil1Q4 know_inm_t1t4Now know                                             0.00                   -0.00                 0.02           
+Cov: comuna quintil1Q4 know_inm_t1t4No longer know                                      -0.00                    0.00                 0.01           
+Cov: comuna quintil1Q4 frien_inm_t1t4Stable, have friends                                0.00                    0.01                -0.00           
+Cov: comuna quintil1Q4 frien_inm_t1t4Now have friends                                   -0.00                    0.01                -0.01           
+Cov: comuna quintil1Q4 frien_inm_t1t4No longer have friends                              0.00                    0.01                 0.01           
+Cov: comuna quintil1Q3 quintil1Q2                                                        0.02                    0.01                 0.02           
+Cov: comuna quintil1Q3 quintil1Q1                                                        0.00                    0.01                 0.03           
+Cov: comuna quintil1Q3 quintil1QNA                                                       0.02                    0.02                -0.01           
+Cov: comuna quintil1Q3 know_inm_t1t4Stable, know                                        -0.00                    0.01                 0.04           
+Cov: comuna quintil1Q3 know_inm_t1t4Now know                                             0.00                    0.03                 0.04           
+Cov: comuna quintil1Q3 know_inm_t1t4No longer know                                       0.00                    0.03                 0.03           
+Cov: comuna quintil1Q3 frien_inm_t1t4Stable, have friends                                0.00                    0.00                 0.01           
+Cov: comuna quintil1Q3 frien_inm_t1t4Now have friends                                   -0.00                   -0.01                -0.05           
+Cov: comuna quintil1Q3 frien_inm_t1t4No longer have friends                              0.00                   -0.01                -0.01           
+Cov: comuna quintil1Q2 quintil1Q1                                                        0.00                    0.01                 0.05           
+Cov: comuna quintil1Q2 quintil1QNA                                                       0.01                    0.02                 0.09           
+Cov: comuna quintil1Q2 know_inm_t1t4Stable, know                                        -0.01                    0.01                 0.05           
+Cov: comuna quintil1Q2 know_inm_t1t4Now know                                             0.00                    0.01                 0.01           
+Cov: comuna quintil1Q2 know_inm_t1t4No longer know                                       0.01                    0.01                -0.00           
+Cov: comuna quintil1Q2 frien_inm_t1t4Stable, have friends                                0.00                    0.01                 0.01           
+Cov: comuna quintil1Q2 frien_inm_t1t4Now have friends                                    0.00                   -0.00                -0.02           
+Cov: comuna quintil1Q2 frien_inm_t1t4No longer have friends                              0.01                   -0.00                -0.03           
+Cov: comuna quintil1Q1 quintil1QNA                                                      -0.00                    0.01                 0.10           
+Cov: comuna quintil1Q1 know_inm_t1t4Stable, know                                         0.00                    0.01                 0.08           
+Cov: comuna quintil1Q1 know_inm_t1t4Now know                                            -0.01                    0.01                 0.02           
+Cov: comuna quintil1Q1 know_inm_t1t4No longer know                                      -0.00                    0.01                 0.03           
+Cov: comuna quintil1Q1 frien_inm_t1t4Stable, have friends                               -0.01                    0.00                 0.01           
+Cov: comuna quintil1Q1 frien_inm_t1t4Now have friends                                    0.01                   -0.01                -0.02           
+Cov: comuna quintil1Q1 frien_inm_t1t4No longer have friends                             -0.00                   -0.01                -0.04           
+Cov: comuna quintil1QNA know_inm_t1t4Stable, know                                        0.01                    0.03                 0.08           
+Cov: comuna quintil1QNA know_inm_t1t4Now know                                            0.02                    0.03                -0.06           
+Cov: comuna quintil1QNA know_inm_t1t4No longer know                                      0.01                    0.03                -0.05           
+Cov: comuna quintil1QNA frien_inm_t1t4Stable, have friends                              -0.00                    0.00                -0.02           
+Cov: comuna quintil1QNA frien_inm_t1t4Now have friends                                  -0.01                   -0.01                 0.05           
+Cov: comuna quintil1QNA frien_inm_t1t4No longer have friends                            -0.01                   -0.02                -0.05           
+Cov: comuna know_inm_t1t4Stable, know know_inm_t1t4Now know                              0.01                    0.05                 0.10           
+Cov: comuna know_inm_t1t4Stable, know know_inm_t1t4No longer know                       -0.01                    0.04                 0.13           
+Cov: comuna know_inm_t1t4Stable, know frien_inm_t1t4Stable, have friends                -0.02                   -0.02                 0.01           
+Cov: comuna know_inm_t1t4Stable, know frien_inm_t1t4Now have friends                     0.00                   -0.03                -0.04           
+Cov: comuna know_inm_t1t4Stable, know frien_inm_t1t4No longer have friends              -0.03                   -0.06                -0.09           
+Cov: comuna know_inm_t1t4Now know know_inm_t1t4No longer know                            0.01                    0.06                 0.14           
+Cov: comuna know_inm_t1t4Now know frien_inm_t1t4Stable, have friends                     0.01                   -0.01                 0.02           
+Cov: comuna know_inm_t1t4Now know frien_inm_t1t4Now have friends                        -0.01                   -0.04                -0.08           
+Cov: comuna know_inm_t1t4Now know frien_inm_t1t4No longer have friends                  -0.00                   -0.05                -0.06           
+Cov: comuna know_inm_t1t4No longer know frien_inm_t1t4Stable, have friends               0.01                   -0.01                 0.01           
+Cov: comuna know_inm_t1t4No longer know frien_inm_t1t4Now have friends                  -0.01                   -0.03                -0.07           
+Cov: comuna know_inm_t1t4No longer know frien_inm_t1t4No longer have friends             0.01                   -0.03                -0.08           
+Cov: comuna frien_inm_t1t4Stable, have friends frien_inm_t1t4Now have friends           -0.01                    0.01                 0.01           
+Cov: comuna frien_inm_t1t4Stable, have friends frien_inm_t1t4No longer have friends      0.01                    0.03                -0.00           
+Cov: comuna frien_inm_t1t4Now have friends frien_inm_t1t4No longer have friends         -0.00                    0.03                 0.03           
+Var: Residual                                                                            0.26                    0.27                 0.90           
+=====================================================================================================================================================
+*** p < 0.001; ** p < 0.01; * p < 0.05
