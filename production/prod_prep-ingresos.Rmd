@@ -1,0 +1,360 @@
+---
+title: "prod_prep_ingresos"
+date: "`r format(Sys.time(), '%A %d %B %Y %X')`"
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: no
+      number_sections: yes
+    code_folding: hide
+    number_sections: yes
+editor_options:
+  chunk_output_type: console
+---
+
+# Setup
+
+```{r setup}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+options(scipen=9999) # desactivar notacion cientifica
+remove(list = ls()) #limpieza del entorno de trabajo
+```
+
+```{css, echo=FALSE}
+# /* expandir el espacio del documento*/
+body .main-container {
+      max-width: 1600px !important;
+      width: 1600px !important;
+    }
+#/* expandir width de la TOC*/
+div.tocify {
+    width: 22% !important;
+    max-width: 331px !important;
+    max-height: 102% !important;
+}
+```
+
+
+# Download data
+```{r download data, eval=FALSE, include=FALSE}
+#download and save data
+
+file.exists(here::here("input/data-original/elsoc_wide.Rdata"))
+
+load(url("https://dataverse.harvard.edu/api/access/datafile/7245115")) #ELSOC
+save(elsoc_wide_2016_2022.2,file = here::here("input/data-original/elsoc_wide.Rdata"))
+```
+
+## Individual data
+
+```{r}
+remove(list = ls()) # clean workspace
+# .rs.restartR() #restart R session
+if (!require("pacman")) install.packages("pacman") # install pacman
+# load libraries
+pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here, summarytools)
+load(here::here("input/data-original/elsoc_wide.Rdata"))
+
+elsoc_wide_2016_2022.2[elsoc_wide_2016_2022.2 ==-999] <- NA
+elsoc_wide_2016_2022.2[elsoc_wide_2016_2022.2 ==-888] <- NA
+elsoc_wide_2016_2022.2[elsoc_wide_2016_2022.2 ==-777] <- NA
+elsoc_wide_2016_2022.2[elsoc_wide_2016_2022.2 ==-666] <- NA
+
+# ingresos__________________________________________________
+ingresos <- 
+elsoc_wide_2016_2022.2 %>% 
+  #create new variables
+  select(m30_w01,
+         m30_w02,
+         m30_w03,
+         m30_w04,
+         m30_w06,
+         m30b_w05,
+         m30b_w06,
+         m29_w01,
+         m29_w02,
+         m29_w03,
+         m29_w04,
+         m29_w05,
+         m29_w06,
+         ) %>% 
+  sjlabelled::drop_labels(., drop.na = FALSE)
+```
+
+```{r echo=FALSE}
+print(dfSummary(ingresos, headings = FALSE, graph.col = FALSE), method = "render")
+```
+
+```{r}
+# Household income_________________________________________
+
+#Impute midpoint of income ranges
+elsoc_wide_2016_2022.2$m30_rec_w01 <-
+as.numeric(car::recode(elsoc_wide_2016_2022.2$m30_w01,
+           "1=110000;2=251000;3=305000;4=355000;5=400000;
+            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+            19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m30_rec_w02 <-
+as.numeric(car::recode(elsoc_wide_2016_2022.2$m30_w02,
+           "1=110000;2=251000;3=305000;4=355000;5=400000;
+            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+            19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m30_rec_w03 <-
+as.numeric(car::recode(elsoc_wide_2016_2022.2$m30_w03,
+           "1=110000;2=251000;3=305000;4=355000;5=400000;
+            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+            19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m30_rec_w04 <-
+as.numeric(car::recode(elsoc_wide_2016_2022.2$m30_w04,
+           "1=110000;2=251000;3=305000;4=355000;5=400000;
+            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+            19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m30_rec_w06 <-
+as.numeric(car::recode(elsoc_wide_2016_2022.2$m30_w06,
+           "1=110000;2=251000;3=305000;4=355000;5=400000;
+            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+            19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
+
+#Impute midpoint of income ranges (2021)
+elsoc_wide_2016_2022.2$m30b_rec_w05 <-
+as.numeric(car::recode(elsoc_wide_2016_2022.2$m30b_w05,
+           "1=125000;2=300000;3=400000;4=575000;5=70000;NA=NA;c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m30b_rec_w06 <-
+as.numeric(car::recode(elsoc_wide_2016_2022.2$m30b_w06,
+           "1=125000;2=300000;3=400000;4=575000;5=70000;NA=NA;c(-888,-999)=NA"))
+
+sjmisc::frq(elsoc_wide_2016_2022.2$m30b_rec_w05)
+
+#Recode DK/DA of Income to NA
+elsoc_wide_2016_2022.2$m29_rec_w01 <-
+  as.numeric(car::recode(elsoc_wide_2016_2022.2$m29_w01,"c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m29_rec_w02 <-
+  as.numeric(car::recode(elsoc_wide_2016_2022.2$m29_w02,"c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m29_rec_w03 <-
+  as.numeric(car::recode(elsoc_wide_2016_2022.2$m29_w03,"c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m29_rec_w04 <-
+  as.numeric(car::recode(elsoc_wide_2016_2022.2$m29_w04,"c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m29_rec_w05 <-
+  as.numeric(car::recode(elsoc_wide_2016_2022.2$m29_w05,"c(-888,-999)=NA"))
+
+elsoc_wide_2016_2022.2$m29_rec_w06 <-
+  as.numeric(car::recode(elsoc_wide_2016_2022.2$m29_w06,"c(-888,-999)=NA"))
+
+#replace NA of income with new imputed variable
+elsoc_wide_2016_2022.2$m29_imp_w01 <- 
+  ifelse(test = !is.na(elsoc_wide_2016_2022.2$m29_rec_w01),
+         yes =  elsoc_wide_2016_2022.2$m29_rec_w01,
+         no =  elsoc_wide_2016_2022.2$m30_rec_w01)
+summary(elsoc_wide_2016_2022.2$m29_imp_w01)
+
+elsoc_wide_2016_2022.2$m29_imp_w02 <- 
+  ifelse(test = !is.na(elsoc_wide_2016_2022.2$m29_rec_w02),
+         yes =  elsoc_wide_2016_2022.2$m29_rec_w02,
+         no =  elsoc_wide_2016_2022.2$m30_rec_w02)
+summary(elsoc_wide_2016_2022.2$m29_imp_w02)
+
+elsoc_wide_2016_2022.2$m29_imp_w03 <- 
+  ifelse(test = !is.na(elsoc_wide_2016_2022.2$m29_rec_w03),
+         yes =  elsoc_wide_2016_2022.2$m29_rec_w03,
+         no =  elsoc_wide_2016_2022.2$m30_rec_w03)
+summary(elsoc_wide_2016_2022.2$m29_imp_w03)
+
+elsoc_wide_2016_2022.2$m29_imp_w04 <- 
+  ifelse(test = !is.na(elsoc_wide_2016_2022.2$m29_rec_w04),
+         yes =  elsoc_wide_2016_2022.2$m29_rec_w04,
+         no =  elsoc_wide_2016_2022.2$m30_rec_w04)
+summary(elsoc_wide_2016_2022.2$m29_imp_w04)
+
+elsoc_wide_2016_2022.2$m29_imp_w05 <- 
+  ifelse(test = !is.na(elsoc_wide_2016_2022.2$m29_rec_w05),
+         yes =  elsoc_wide_2016_2022.2$m29_rec_w05,
+         no =  elsoc_wide_2016_2022.2$m30b_rec_w05)
+summary(elsoc_wide_2016_2022.2$m29_imp_w05)
+
+elsoc_wide_2016_2022.2$m29_imp_w06 <- 
+  ifelse(test = !is.na(elsoc_wide_2016_2022.2$m29_rec_w06),
+         yes =  elsoc_wide_2016_2022.2$m29_rec_w06,
+         no =  elsoc_wide_2016_2022.2$m30_rec_w06)
+summary(elsoc_wide_2016_2022.2$m29_imp_w06)
+
+###########
+
+elsoc_wide_2016_2022.2$m29_imp_w05 <- 
+  ifelse(test = is.na(elsoc_wide_2016_2022.2$m29_imp_w05),
+         yes =  elsoc_wide_2016_2022.2$m30b_rec_w05,
+         no =  elsoc_wide_2016_2022.2$m29_imp_w05)
+summary(elsoc_wide_2016_2022.2$m29_imp_w05)
+
+elsoc_wide_2016_2022.2$m29_imp_w06 <- 
+  ifelse(test = is.na(elsoc_wide_2016_2022.2$m29_imp_w06),
+         yes =  elsoc_wide_2016_2022.2$m30b_rec_w06,
+         no =  elsoc_wide_2016_2022.2$m29_imp_w06)
+summary(elsoc_wide_2016_2022.2$m29_imp_w06)
+
+# deflate at each year's prices
+#elsoc_wide_2016_2022.2$deflactor <-
+#  with(elsoc_wide_2016_2022.2, case_when(
+#    ola == 2016 ~ 113.88 / 123.82,
+#    ola == 2017 ~ 116.46 / 123.82,
+#    ola == 2018 ~ 119.45 / 123.82,
+#    ola == 2019 ~ 123.82 / 123.82
+#  ))
+
+# Per capita household income:
+elsoc_wide_2016_2022.2$ing_pc_w01 <- 
+  (elsoc_wide_2016_2022.2$m29_imp_w01/elsoc_wide_2016_2022.2$nhogar1_w01)
+
+
+elsoc_wide_2016_2022.2$ing_pc_w02 <- 
+  (elsoc_wide_2016_2022.2$m29_imp_w02/elsoc_wide_2016_2022.2$m46_nhogar_w02)
+
+
+elsoc_wide_2016_2022.2$ing_pc_w03 <- 
+  (elsoc_wide_2016_2022.2$m29_imp_w03/elsoc_wide_2016_2022.2$m54_w03)
+
+
+elsoc_wide_2016_2022.2$ing_pc_w04 <- 
+  (elsoc_wide_2016_2022.2$m29_imp_w04/elsoc_wide_2016_2022.2$m54_w04)
+
+
+elsoc_wide_2016_2022.2$ing_pc_w05 <- 
+  (elsoc_wide_2016_2022.2$m29_imp_w05/elsoc_wide_2016_2022.2$m54_w05)
+
+
+elsoc_wide_2016_2022.2$ing_pc_w06 <- 
+  (elsoc_wide_2016_2022.2$m29_imp_w06/elsoc_wide_2016_2022.2$m54_w05)
+
+
+
+elsoc_wide_2016_2022.2$ing_pc_w01 <-
+sjlabelled::set_label(x = elsoc_wide_2016_2022.2$ing_pc_w01,
+                      label = "Household income per capita 2016")  
+
+sjmisc::descr(elsoc_wide_2016_2022.2$ing_pc_w01)
+
+# Compute income quintiles
+elsoc_wide_2016_2022.2 <- elsoc_wide_2016_2022.2 %>% 
+  mutate(quintil_w01 = ntile(-desc(ing_pc_w01), 5))
+
+elsoc_wide_2016_2022.2 <- elsoc_wide_2016_2022.2 %>% 
+  mutate(quintil_w02 = ntile(-desc(ing_pc_w02), 5))
+
+elsoc_wide_2016_2022.2 <- elsoc_wide_2016_2022.2 %>% 
+  mutate(quintil_w03 = ntile(-desc(ing_pc_w03), 5))
+
+elsoc_wide_2016_2022.2 <- elsoc_wide_2016_2022.2 %>% 
+  mutate(quintil_w04 = ntile(-desc(ing_pc_w04), 5))
+
+elsoc_wide_2016_2022.2 <- elsoc_wide_2016_2022.2 %>% 
+  mutate(quintil_w05 = ntile(-desc(ing_pc_w05), 5))
+
+elsoc_wide_2016_2022.2 <- elsoc_wide_2016_2022.2 %>% 
+  mutate(quintil_w06 = ntile(-desc(ing_pc_w06), 5))
+
+elsoc_wide_2016_2022.2$quintil_w01 <- 
+  factor(elsoc_wide_2016_2022.2$quintil_w01,
+         levels = c(1, 2, 3, 4, 5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
+
+elsoc_wide_2016_2022.2$quintil_w02 <- 
+  factor(elsoc_wide_2016_2022.2$quintil_w02,
+         levels = c(1, 2, 3, 4, 5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
+
+elsoc_wide_2016_2022.2$quintil_w03 <- 
+  factor(elsoc_wide_2016_2022.2$quintil_w03,
+         levels = c(1, 2, 3, 4, 5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
+
+elsoc_wide_2016_2022.2$quintil_w04 <- 
+  factor(elsoc_wide_2016_2022.2$quintil_w04,
+         levels = c(1, 2, 3, 4, 5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
+
+elsoc_wide_2016_2022.2$quintil_w05 <- 
+  factor(elsoc_wide_2016_2022.2$quintil_w05,
+         levels = c(1, 2, 3, 4, 5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
+
+elsoc_wide_2016_2022.2$quintil_w06 <- 
+  factor(elsoc_wide_2016_2022.2$quintil_w06,
+         levels = c(1, 2, 3, 4, 5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
+
+#reverse quintile, reference level is the highest quintile
+#elsoc_wide_2016_2022.2$quintil <- forcats::fct_rev(elsoc_wide_2016_2022.2$quintil)
+
+elsoc_wide_2016_2022.2$quintil_w01 <- 
+sjlabelled::set_label(x = elsoc_wide_2016_2022.2$quintil_w01,
+                      label = "Household income quintile per capita")  
+
+sjmisc::frq(elsoc_wide_2016_2022.2$quintil_w01)
+
+#include new quintile category with missing cases
+elsoc_wide_2016_2022.2$quintil1_w01<-
+  car::recode(elsoc_wide_2016_2022.2$quintil_w01, 
+              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
+
+#include new quintile category with missing cases
+elsoc_wide_2016_2022.2$quintil1_w02<-
+  car::recode(elsoc_wide_2016_2022.2$quintil_w02, 
+              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
+
+#include new quintile category with missing cases
+elsoc_wide_2016_2022.2$quintil1_w03<-
+  car::recode(elsoc_wide_2016_2022.2$quintil_w03, 
+              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
+
+#include new quintile category with missing cases
+elsoc_wide_2016_2022.2$quintil1_w04<-
+  car::recode(elsoc_wide_2016_2022.2$quintil_w04, 
+              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
+
+#include new quintile category with missing cases
+elsoc_wide_2016_2022.2$quintil1_w05<-
+  car::recode(elsoc_wide_2016_2022.2$quintil_w05, 
+              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
+
+#include new quintile category with missing cases
+elsoc_wide_2016_2022.2$quintil1_w06<-
+  car::recode(elsoc_wide_2016_2022.2$quintil_w06, 
+              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
+
+#elsoc_wide_2016_2022.2$quintil1 <- factor(elsoc_wide_2016_2022.2$quintil1, c("Q1","Q2","Q3","Q4","Q5","QNA"))
+
+elsoc_wide_2016_2022.2$quintil1_w01 <- 
+sjlabelled::set_label(x = elsoc_wide_2016_2022.2$quintil1_w01,
+                      label = "Household income quintile per capita (NA)") 
+sjmisc::frq(elsoc_wide_2016_2022.2$quintil1_w01)
+
+
+quintiles <- elsoc_wide_2016_2022.2 %>% select(quintil_w01, quintil_w02, quintil_w03, quintil_w04, quintil_w05, quintil_w06)
+quintiles$na_count <- rowSums(is.na(quintiles))
+round(prop.table(table(quintiles$na_count))*100,2)
+```
+
+
+```{r echo=FALSE}
+print(dfSummary(quintiles, headings = FALSE, graph.col = FALSE), method = "render")
+```
+

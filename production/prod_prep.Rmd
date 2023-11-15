@@ -100,6 +100,9 @@ elsoc_long_2016_2022.2 <-
 elsoc_long_2016_2022.2 %>% 
   #create new variables
   mutate(just_educ=d02_02,
+         just_pension=d02_01,
+         just_salud=d02_03,
+         des_perc=c18_11,
          sexo=m0_sexo,
          merit_effort=c18_09,
          merit_talent=c18_10,
@@ -114,6 +117,21 @@ sjmisc::frq(elsoc_long_2016_2022.2$just_educ)
 elsoc_long_2016_2022.2$just_educ <- 
 sjlabelled::set_label(x = elsoc_long_2016_2022.2$just_educ, 
                       label = "Education distributive justice")
+
+#
+elsoc_long_2016_2022.2$just_pension <- 
+sjlabelled::set_label(x = elsoc_long_2016_2022.2$just_pension, 
+                      label = "Pension distributive justice")
+
+#
+elsoc_long_2016_2022.2$just_salud <- 
+sjlabelled::set_label(x = elsoc_long_2016_2022.2$just_salud, 
+                      label = "Health distributive justice")
+
+#
+elsoc_long_2016_2022.2$des_perc <- 
+sjlabelled::set_label(x = elsoc_long_2016_2022.2$des_perc, 
+                      label = "Income differences are too large")
 
 #
 sjmisc::frq(elsoc_long_2016_2022.2$merit_effort)
@@ -151,7 +169,8 @@ elsoc_long_2016_2022.2$ahead_hardwork <-
 sjlabelled::set_label(x = elsoc_long_2016_2022.2$ahead_hardwork, 
                       label = "Hard work")
 
-for (i in c("just_educ","merit_effort","merit_talent",
+for (i in c("just_educ", "just_pension", "just_salud", "des_perc",
+            "merit_effort","merit_talent",
             "ahead_family","ahead_educ","ahead_ambition", "ahead_hardwork")) {
 elsoc_long_2016_2022.2[[i]] <-
 sjlabelled::set_labels(x = elsoc_long_2016_2022.2[[i]],
@@ -356,6 +375,9 @@ elsoc_long_2016_2022.2 %>%
          # cuestion_mig,
          # starts_with("in_"),
          just_educ,
+         just_pension,
+         just_salud,
+         des_perc,
          merit_effort,
          merit_talent,
          ahead_family,
@@ -456,14 +478,16 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
               id.vars = c("idencuesta","muestra"),
               variable.name = c("ola"),
               measure = patterns("^comuna_","^comunacod_",
-                                 "^just_educ_","^merit_effort_","^merit_talent_",
-                                 "^ahead_family_","^ahead_educ_","^ahead_ambition_","^ahead_hardwork_",
+                                 "^just_educ_", "^just_pension_", "^just_salud_", "^des_perc_",
+                                 "^merit_effort_","^merit_talent_",
+                                 "^ahead_family_", "^ahead_educ_", "^ahead_ambition_", "^ahead_hardwork_",
                                  "^educ_","^educyear_","^quintil1_","^ess_",
                                  "^pos_id_",
                                  "^edad_","^sexo_"
                                  ),
               value.name = c("comuna","comunacod",
-                             "just_educ","merit_effort","merit_talent",
+                             "just_educ", "just_pension","just_salud", "des_perc",
+                             "merit_effort","merit_talent",
                              "ahead_family","ahead_educ","ahead_ambition","ahead_hardwork",
                              "educ","educyear","quintil1","ess",
                              "pos_id",
@@ -473,7 +497,10 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
 
 names(df_study1_long) #check names of long dataset
 dim(df_study1_long) #check dimensions of the dataframe
-# filter the sataset for the waves 1 to 5
+# Original dataset with 6 waves
+df_study2_long <- df_study1_long
+
+# filter the dataset for the waves 1 to 4 and 6
 df_study1_long <-
 df_study1_long %>% 
   filter(ola %in% c(1,2,3,4,6)) %>% 
@@ -509,7 +536,7 @@ sjmisc::frq(df_study1_long_t6$ola)
 # SAVE DATA____________________________________________________________________
 save(df_study1_long,file = here::here("input/data-proc/df_study1_long.RData"))
 save(df_study1_long_t6,file = here::here("input/data-proc/df_study1_long_t6.RData"))
-
+save(df_study2_long,file = here::here("input/data-proc/df_study2_long.RData"))
 # save codebook
 sjPlot::view_df(df_study1_long,
         show.frq = T,
@@ -546,8 +573,8 @@ pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
 load(here::here("input/data-original/cit17.Rdata"))
 load(here::here("input/data-original/cit18.Rdata"))
 load(here::here("input/data-original/cit19.Rdata"))
-load(here::here("input/data-original/casen17.Rdata"))
-load(here::here("input/data-original/casen20.Rdata"))
+load(here::here("input/data-original/casen2017.Rdata"))
+load(here::here("input/data-original/casen2022.Rdata"))
 load(here::here("input/data-original/censo17.Rdata"))
 load(here::here("input/data-original/elsoc_long.Rdata"))
 
@@ -666,8 +693,14 @@ if (!require("pacman")) install.packages("pacman") # install pacman
 pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
 
 load(file = here::here("input/data-proc/df_study1_long.RData"))
+load(file = here::here("input/data-proc/df_study2_long.RData"))
 load(file = here::here("input/data-proc/df_study1_long_t5.RData"))
 load(file = here::here("input/data-proc/study_1_comunas.RData"))
+load(file = here::here("input/data-proc/df_gini_comunas_wide.RData"))
+load(file = here::here("input/data-proc/df_gini_comunas_long.RData"))
+df_gini_comunas_wide <-  df_gini_comunas_wide %>% dplyr::rename(comunacod=COMUNA_COD) 
+df_gini_comunas_wide$comunacod <- as.numeric(df_gini_comunas_wide$comunacod)
+
 
 df_study1_long_comunas <- 
  dplyr::left_join(x = df_study1_long,
@@ -675,7 +708,26 @@ df_study1_long_comunas <-
                   by = "comunacod") %>% 
  dplyr::select(idencuesta:edad,sexo,
                esc_cit17) %>% 
- dplyr::rename(comuna=comuna.x)  
+ dplyr::rename(comuna=comuna.x)
+
+df_study1_long_comunas <- 
+ dplyr::left_join(x = df_study1_long_comunas,
+                  y = select(df_gini_comunas_wide, comunacod,starts_with("gini")), 
+                  by = c("comunacod"))
+
+
+df_study2_long_comunas <- 
+ dplyr::left_join(x = df_study2_long,
+                  y = df_study1_comunas, 
+                  by = "comunacod") %>% 
+ dplyr::select(idencuesta:edad,sexo,
+               esc_cit17) %>% 
+ dplyr::rename(comuna=comuna.x) 
+
+df_study2_long_comunas <- 
+ dplyr::left_join(x = df_study2_long_comunas,
+                  y = select(df_gini_comunas_wide, comunacod,starts_with("gini")), 
+                  by = c("comunacod"))
 
 df_study_long_t5_comunas <- 
  dplyr::left_join(x = df_study1_long_t5,
@@ -689,6 +741,8 @@ df_study_long_t5_comunas <-
 # save data____________________________________________________________________
 save(df_study1_long_comunas,
      file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+save(df_study2_long_comunas,
+     file = here::here("input/data-proc/df_study2_long_comunas.RData"))
 save(df_study_long_t5_comunas,
      file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
 
