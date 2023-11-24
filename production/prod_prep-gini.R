@@ -141,3 +141,7 @@ df_gini_comunas_wide <-gini15 %>%
 summary(df_gini_comunas_wide)
 
 save(df_gini_comunas_wide, file = here::here("input/data-proc/df_gini_comunas_wide.RData"))
+
+
+list.files('input/data-original/simce', pattern="(*.comuna)", full.names=T,recursive = T)
+
