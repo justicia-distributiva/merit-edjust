@@ -1,6 +1,6 @@
 if (!require("pacman"))
   install.packages("pacman")
-pacman::p_load(dplyr, knitr, kableExtra, haven, acid, DescTools)
+pacman::p_load(dplyr, knitr, kableExtra, haven, acid, DescTools,collapse)
 
 cut <- read.csv(file = here::here(("input/data-original/cut.csv")))
 
@@ -17,17 +17,20 @@ df15 <-
     starts_with("ytot"),
     starts_with("yaut"),
     starts_with("ypc"),
+    educacion=e6a,
     expr,
     expc
   )
 df15 <- df15 %>% left_join(cut[, c("COMUNA", "COMUNA_15R")], by = c("comuna" =
                                                                       "COMUNA_15R"))
+df15$univ<- as.numeric(car::recode(df15$educacion,"15:17=1;else=0;99=NA",as.numeric = T))
+
 
 gini15 <-
   df15 %>%
   group_by(COMUNA) %>%
-  summarise("gini_ypch" = as.numeric(acid::weighted.gini(x = ypch, w =
-                                                           expc)$bcwGini)) %>%
+  summarise("gini_ypch" = as.numeric(acid::weighted.gini(x = ypch, w =expc)$bcwGini),
+            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE)) %>%
   mutate(year = 2015)
 
 # Casen 2017 --------------------------------------------------------------
@@ -44,17 +47,21 @@ df17 <-
     starts_with("ytot"),
     starts_with("yaut"),
     starts_with("ypc"),
+    educacion=e6a,
     expr,
     expc,
     COMUNA = comuna
   )
 
-
+df17$univ<- as.numeric(car::recode(df17$educacion,"15:17=1;else=0;99=NA",as.numeric = T))
+summary(df17$univ)
 gini17 <-
   df17 %>%
   group_by(COMUNA) %>%
   summarise("gini_ypch" = as.numeric(acid::weighted.gini(x = ypch, w =
-                                                           expc)$bcwGini)) %>%
+                                                           expc)$bcwGini),
+            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE)
+            ) %>%
   mutate(year = 2017)
 names(gini17)
 
@@ -69,6 +76,9 @@ load(file = here::here(("input/data-original/casen2022.RData")))
 
 names(casen22)
 
+sjmisc::frq(casen22$e6a)
+sjmisc::frq(casen22$e6c_completo)
+
 df22 <-
   casen22 %>%
   select(
@@ -77,19 +87,26 @@ df22 <-
     starts_with("ytot"),
     starts_with("yaut"),
     starts_with("ypc"),
+    e6a,
+    e6c_completo,
     expr,
     expc
   )
-names(df22)
 
+# Han cursado y terminado ed superior
+df22$univ<- ifelse(df22$e6a %in% c(13,14,15) & df22$e6c_completo ==1,yes = 1,no = 0)
+summary(df22$univ)
 gini22 <-
   df22 %>%
   group_by(COMUNA) %>%
   summarise("gini_ypch" = as.numeric(acid::weighted.gini(x = ypch, w =
-                                                           expc)$bcwGini)) %>%
+                                                           expc)$bcwGini),
+            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE)) %>%
   mutate(year = 2022)
 
 
+# Generar base de datos acumulada -----------------------------------------
+#  Formato long
 df_gini_comunas_long <-
   bind_rows(gini15, gini17, gini22) %>%
   rename(COMUNA_COD = COMUNA) %>%
@@ -117,7 +134,7 @@ df_gini_comunas_wide <-gini15 %>%
   full_join(gini17, by = "COMUNA", suffix = c("_2015", "_2017")) %>%
   full_join(gini22, by = "COMUNA", suffix = c("_2022", "")) %>%
   select(everything(), starts_with("gini_ypch"), -starts_with("year")) %>%
-  rename(COMUNA_COD = COMUNA, gini_ypch_2022 = gini_ypch) %>%
+  rename(COMUNA_COD = COMUNA, gini_ypch_2022 = gini_ypch,prop_univ_2022 = prop_univ) %>%
   mutate(COMUNA_NOM = sjlabelled::as_character(COMUNA_COD)) %>%
   arrange("COMUNA_COD") %>%
   left_join(cut, by = c("COMUNA_COD" = "COMUNA")) %>%
@@ -135,12 +152,15 @@ df_gini_comunas_wide <-gini15 %>%
   mutate(
     ginilag22_15 = gini_ypch_2022 - gini_ypch_2015,
     ginilag22_17 = gini_ypch_2022 - gini_ypch_2017,
-    ginilag17_15 = gini_ypch_2017 - gini_ypch_2015
+    ginilag17_15 = gini_ypch_2017 - gini_ypch_2015,
+# educacion universitaria
+    univlag22_15 = prop_univ_2022 - prop_univ_2015,
+    univlag22_17 = prop_univ_2022 - prop_univ_2017,
+    univlag17_15 = prop_univ_2017 - prop_univ_2015
   )
 
 summary(df_gini_comunas_wide)
+
+skimr::skim(df_gini_comunas_wide)
 save(df_gini_comunas_wide, file = here::here("input/data-proc/df_gini_comunas_wide.RData"))
-
-
-
 

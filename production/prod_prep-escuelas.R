@@ -227,6 +227,5 @@ df_comuna_rbd <- join4 %>% select(COMUNA,COMUNA_15R,starts_with("prom_simce"),st
 names(df_comuna_rbd)
 
 df_comuna_rbd<- df_comuna_rbd[!is.na(df_comuna_rbd$COMUNA),]
-
 save(df_comuna_rbd,file = here::here("input/data-proc/df_simce_comunas.RData"))
 
