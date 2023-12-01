@@ -128,7 +128,7 @@ df_gini_comunas_long <-
 
 #Center within cluster (comuna) GINI
 df_gini_comunas_long$gini_gc <-  MLMusingR::group_center(as.numeric(df_gini_comunas_long$gini_ypch), grp = df_gini_comunas_long$COMUNA_COD)
-save(df_gini_comunas_long, file = here::here("input/data-proc/df_gini_comunas_long.RData"))
+save(df_gini_comunas_long, file = here::here("input/data-proc/df_casen_comunas_long.RData"))
 
 df_gini_comunas_wide <-gini15 %>%
   full_join(gini17, by = "COMUNA", suffix = c("_2015", "_2017")) %>%
@@ -162,5 +162,5 @@ df_gini_comunas_wide <-gini15 %>%
 summary(df_gini_comunas_wide)
 
 skimr::skim(df_gini_comunas_wide)
-save(df_gini_comunas_wide, file = here::here("input/data-proc/df_gini_comunas_wide.RData"))
+save(df_gini_comunas_wide, file = here::here("input/data-proc/df_casen_comunas_wide.RData"))
 
