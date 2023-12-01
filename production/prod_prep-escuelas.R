@@ -53,10 +53,7 @@ df_2016_agg <-
   df_2016 %>%
   group_by(cod_com_rbd) %>%
   summarise("prom_simce_2016_comuna" = mean(prom_2016_rbd,na.rm = T),
-            "var_simce_2016_comuna" = var(prom_2016_rbd,na.rm = T),
-            "min_simce_2016_comuna" = min(prom_2016_rbd,na.rm = T),
-            "max_simce_2016_comuna" = max(prom_2016_rbd,na.rm = T),
-            "ran_simce_2016_comuna" = max(prom_2016_rbd,na.rm = T) - min(prom_2016_rbd,na.rm = T))
+            "var_simce_2016_comuna" = var(prom_2016_rbd,na.rm = T))
 
 summary(df_2016_agg)
 df_2016_agg<- left_join(df_2016_agg,cut[,c("COMUNA","COMUNA_15R")], by=c("cod_com_rbd"="COMUNA_15R"))
@@ -226,6 +223,29 @@ join4<- left_join(join3,df_2022_agg,by=c("COMUNA"="cod_com_rbd"))
 df_comuna_rbd <- join4 %>% select(COMUNA,COMUNA_15R,starts_with("prom_simce"),starts_with("var_simce"))
 names(df_comuna_rbd)
 
-df_comuna_rbd<- df_comuna_rbd[!is.na(df_comuna_rbd$COMUNA),]
-save(df_comuna_rbd,file = here::here("input/data-proc/df_simce_comunas.RData"))
+df_comuna_rbd_wide<- df_comuna_rbd[!is.na(df_comuna_rbd$COMUNA),]
+save(df_comuna_rbd_wide,file = here::here("input/data-proc/df_simce_comunas_wide.RData"))
+
+
+df_2016_agg_l<- df_2016_agg;names(df_2016_agg_l) <- c("cod_com_15","prom_simce_comuna","var_simce_comuna","cod_com_16")
+df_2016_agg_l$year <- 2016
+df_2017_agg_l<- df_2017_agg;names(df_2017_agg_l) <- c("cod_com_15","prom_simce_comuna","var_simce_comuna","cod_com_16")
+df_2017_agg_l$year <- 2017
+df_2018_agg_l<- df_2018_agg;names(df_2018_agg_l) <- c("cod_com_16","prom_simce_comuna","var_simce_comuna","cod_com_15")
+df_2018_agg_l$year <- 2018
+df_2019_agg_l<- df_2019_agg;names(df_2019_agg_l) <- c("cod_com_16","prom_simce_comuna","var_simce_comuna","cod_com_15")
+df_2019_agg_l$year <- 2019
+df_2022_agg_l<- df_2022_agg;names(df_2022_agg_l) <- c("cod_com_16","prom_simce_comuna","var_simce_comuna","cod_com_15")
+df_2022_agg_l$year <- 2022
+
+df_simce_comunas_long <-
+  bind_rows(df_2016_agg_l,
+            df_2017_agg_l,
+            df_2018_agg_l,
+            df_2019_agg_l,
+            df_2022_agg_l) %>%
+  select(cod_com_15,cod_com_16,year, everything()) %>%
+  arrange(cod_com_15)
+
+save(df_simce_comunas_long,file = here::here("input/data-proc/df_simce_comunas_long.RData"))
 
