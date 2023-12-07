@@ -1,0 +1,151 @@
+---
+title: "prod_prep_mergedata"
+date: "`r format(Sys.time(), '%A %d %B %Y %X')`"
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: no
+      number_sections: yes
+    code_folding: hide
+    number_sections: yes
+editor_options:
+  chunk_output_type: console
+---
+
+# Setup
+
+```{r setup}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+options(scipen=9999) # desactivar notacion cientifica
+remove(list = ls()) #limpieza del entorno de trabajo
+```
+
+```{css, echo=FALSE}
+# /* expandir el espacio del documento*/
+body .main-container {
+      max-width: 1600px !important;
+      width: 1600px !important;
+    }
+#/* expandir width de la TOC*/
+div.tocify {
+    width: 22% !important;
+    max-width: 331px !important;
+    max-height: 102% !important;
+}
+```
+
+# Merge individual & contextual 
+
+```{r}
+# .rs.restartR() #restart R session
+if (!require("pacman")) install.packages("pacman") # install pacman
+# load libraries
+pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
+
+load(file = here::here("input/data-proc/df_study1_long.RData"))
+load(file = here::here("input/data-proc/df_study2_long.RData"))
+load(file = here::here("input/data-proc/df_study1_long_t5.RData"))
+load(file = here::here("input/data-proc/study_1_comunas.RData"))
+load(file = here::here("input/data-proc/df_casen_comunas_wide.RData")) # contienen las variables de Gini comunal y Proporcion de Universitarios comunal.
+load(file = here::here("input/data-proc/df_casen_comunas_long.RData")) # contienen las variables de Gini comunal y Proporcion de Universitarios comunal.
+load(file = here::here("input/data-proc/df_matricula_comunas_wide.RData")) # contienen las variables de Proporción de Matrícula en establecimientos Particular Pagados
+load(file = here::here("input/data-proc/df_matricula_comunas_long.RData")) # contienen las variables de Proporción de Matrícula en establecimientos Particular Pagados
+load(file = here::here("input/data-proc/df_simce_comunas_wide.RData")) # contiene las variables de Simce a nivel comunal promedio y la varianza dentro de la comuna
+load(file = here::here("input/data-proc/df_simce_comunas_long.RData")) # contiene las variables de Simce a nivel comunal promedio y la varianza dentro de la comuna
+
+
+## Juntar Gini y prop universitarios por comuna
+
+df_gini_comunas_wide <-  df_gini_comunas_wide %>% dplyr::rename(comunacod=COMUNA_COD) 
+df_gini_comunas_wide$comunacod <- as.numeric(df_gini_comunas_wide$comunacod)
+
+
+df_study1_long_comunas <- 
+ dplyr::left_join(x = df_study1_long,
+                  y = df_study1_comunas, 
+                  by = "comunacod") %>% 
+ dplyr::select(idencuesta:edad,sexo,
+               esc_cit17) %>% 
+ dplyr::rename(comuna=comuna.x)
+
+df_study1_long_comunas <- 
+ dplyr::left_join(x = df_study1_long_comunas,
+                  y = select(df_gini_comunas_wide, comunacod,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag")), 
+                  by = c("comunacod"))
+
+
+df_study2_long_comunas <- 
+ dplyr::left_join(x = df_study2_long,
+                  y = df_study1_comunas, 
+                  by = "comunacod") %>% 
+ dplyr::select(idencuesta:edad,sexo,
+               esc_cit17) %>% 
+ dplyr::rename(comuna=comuna.x) 
+
+df_study2_long_comunas <- 
+ dplyr::left_join(x = df_study2_long_comunas,
+                  y = select(df_gini_comunas_wide, comunacod,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag")), 
+                  by = c("comunacod"))
+
+df_study_long_t5_comunas <- 
+ dplyr::left_join(x = df_study1_long_t5,
+                  y = df_study1_comunas, 
+                  by = "comunacod") %>% 
+ dplyr::select(idencuesta:edad,sexo,
+               esc_cit17) %>% 
+ dplyr::rename(comuna=comuna.x) 
+
+
+## Juntar matricula privada por comuna
+
+df_study1_long_comunas <- 
+ dplyr::left_join(x = df_study1_long_comunas,
+                  y = select(df_matricula_comunas_wide, comunacod=cod_com_rbd_16,starts_with("total_mat_pagado"), starts_with("prop_pagado"), pagadolag22_16), 
+                  by = c("comunacod"))
+
+df_study2_long_comunas <- 
+ dplyr::left_join(x = df_study2_long_comunas,
+                  y = select(df_matricula_comunas_wide, comunacod=cod_com_rbd_16,starts_with("total_mat_pagado"), starts_with("prop_pagado"), pagadolag22_16),
+                  by = c("comunacod"))
+
+
+## Juntar promedio simce y sd por comuna
+
+df_study1_long_comunas <- 
+ dplyr::left_join(x = df_study1_long_comunas,
+                  y = select(df_comuna_rbd_wide, comunacod=COMUNA,starts_with("prom_simce"), starts_with("var_simce")), 
+                  by = c("comunacod"))
+
+df_study2_long_comunas <- 
+ dplyr::left_join(x = df_study2_long_comunas,
+                  y = select(df_comuna_rbd_wide, comunacod=COMUNA,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag")), 
+                  by = c("comunacod"))
+
+
+# save data____________________________________________________________________
+save(df_study1_long_comunas,
+     file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+save(df_study2_long_comunas,
+     file = here::here("input/data-proc/df_study2_long_comunas.RData"))
+save(df_study_long_t5_comunas,
+     file = here::here("input/data-proc/df_study_t5_ind_comunas.RData"))
+
+# save codebook
+sjPlot::view_df(df_study1_long_comunas,
+        show.frq = T, 
+        show.prc = T, 
+        show.na = T,
+        file = here::here("output/df_study1_long_comunas.html"))
+
+sjPlot::view_df(df_study_long_t5_comunas,
+        show.frq = T, 
+        show.prc = T, 
+        show.na = T,
+        file = here::here("output/df_study_long_t5_comunas.html"))
+```

@@ -168,5 +168,5 @@ df_matricula_comunas_long<-
   select(cod_com_rbd_15,cod_com_rbd_16,year,everything()) %>%
   arrange(cod_com_rbd_15)
 
-save(df_matricula_comunas_wide, file = here::here("input/data-proc/df_matricula_comunas_long.RData"))
+save(df_matricula_comunas_long, file = here::here("input/data-proc/df_matricula_comunas_long.RData"))
 
