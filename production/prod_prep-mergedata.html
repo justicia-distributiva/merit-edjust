@@ -1566,7 +1566,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">prod_prep_mergedata</h1>
-<h4 class="date">viernes 08 diciembre 2023 2:31:56</h4>
+<h4 class="date">lunes 11 diciembre 2023 9:19:04</h4>
 
 </div>
 
@@ -1634,6 +1634,7 @@ df_study1_long_comunas &lt;- df_study1_long_comunas %&gt;% mutate(year= case_whe
                                                                             ola==4~2022,
                                                                             ola==6~2022))
 
+
 df_study1_long_comunas &lt;- 
  dplyr::left_join(x = df_study1_long_comunas,
                   y = select(df_gini_comunas_long, comunacod=COMUNA_COD,year, starts_with(&quot;gini&quot;),prop_univ), 
@@ -1653,6 +1654,17 @@ df_study2_long_comunas &lt;-
  dplyr::select(idencuesta:edad,sexo,
                esc_cit17) %&gt;% 
  dplyr::rename(comuna=comuna.x) 
+
+df_study2_long_comunas &lt;- df_study2_long_comunas %&gt;% mutate(year= case_when(ola==1~2017,
+                                                                            ola==2~2017,
+                                                                            ola==3~2017,
+                                                                            ola==4~2022,
+                                                                            ola==6~2022))
+
+df_study2_long_comunas &lt;- 
+ dplyr::left_join(x = df_study2_long_comunas,
+                  y = select(df_gini_comunas_long, comunacod=COMUNA_COD,year, starts_with(&quot;gini&quot;),prop_univ), 
+                  by = c(&quot;comunacod&quot;, &quot;year&quot;))
 
 df_study2_long_comunas &lt;- 
  dplyr::left_join(x = df_study2_long_comunas,
@@ -1676,6 +1688,13 @@ df_study1_long_comunas &lt;- df_study1_long_comunas %&gt;% mutate(year= case_whe
                                                                             ola==4~2019,
                                                                             ola==6~2022))
 
+df_study2_long_comunas &lt;- df_study2_long_comunas %&gt;% mutate(year= case_when(ola==1~2016,
+                                                                            ola==2~2017,
+                                                                            ola==3~2018,
+                                                                            ola==4~2019,
+                                                                            ola==5~2021,
+                                                                            ola==6~2022))
+
 df_study1_long_comunas &lt;- 
  dplyr::left_join(x = df_study1_long_comunas,
                   y = select(df_matricula_comunas_long, comunacod=cod_com_rbd_15,year, total_mat_pagado,prop_pagado), 
@@ -1685,6 +1704,11 @@ df_study1_long_comunas &lt;-
  dplyr::left_join(x = df_study1_long_comunas,
                   y = select(df_matricula_comunas_wide, comunacod=cod_com_rbd_16,starts_with(&quot;total_mat_pagado&quot;), starts_with(&quot;prop_pagado&quot;), pagadolag22_16), 
                   by = c(&quot;comunacod&quot;))
+
+df_study2_long_comunas &lt;- 
+ dplyr::left_join(x = df_study2_long_comunas,
+                  y = select(df_matricula_comunas_long, comunacod=cod_com_rbd_15,year, total_mat_pagado,prop_pagado), 
+                  by = c(&quot;comunacod&quot;, &quot;year&quot;))
 
 df_study2_long_comunas &lt;- 
  dplyr::left_join(x = df_study2_long_comunas,
@@ -1703,6 +1727,11 @@ df_study1_long_comunas &lt;-
  dplyr::left_join(x = df_study1_long_comunas,
                   y = select(df_comuna_rbd_wide, comunacod=COMUNA,starts_with(&quot;prom_simce&quot;), starts_with(&quot;var_simce&quot;)), 
                   by = c(&quot;comunacod&quot;))
+
+df_study2_long_comunas &lt;- 
+ dplyr::left_join(x = df_study2_long_comunas,
+                  y = select(df_simce_comunas_long, comunacod=cod_com_15,year, prom_simce_comuna,var_simce_comuna), 
+                  by = c(&quot;comunacod&quot;, &quot;year&quot;))
 
 df_study2_long_comunas &lt;- 
  dplyr::left_join(x = df_study2_long_comunas,

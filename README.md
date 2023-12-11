@@ -7,4 +7,4 @@ Julio Iturra, Bremen International Graduate School of Social Sciences - [github]
 Kevin Carrasco, Center for Social Conflict and Cohesion Studies - [github](https://github.com/kevin-carrasco)
 
 
-
+Análisis: [https://justicia-distributiva.github.io/merit-edjust/production/prod_analysis.html#3_Models](https://justicia-distributiva.github.io/merit-edjust/production/prod_analysis.html#3_Models)
