@@ -74,6 +74,18 @@ df_study1_long_comunas <-
                esc_cit17) %>% 
  dplyr::rename(comuna=comuna.x)
 
+df_study1_long_comunas <- df_study1_long_comunas %>% mutate(year= case_when(ola==1~2017,
+                                                                            ola==2~2017,
+                                                                            ola==3~2017,
+                                                                            ola==4~2022,
+                                                                            ola==6~2022))
+
+df_study1_long_comunas <- 
+ dplyr::left_join(x = df_study1_long_comunas,
+                  y = select(df_gini_comunas_long, comunacod=COMUNA_COD,year, starts_with("gini"),prop_univ), 
+                  by = c("comunacod", "year"))
+
+
 df_study1_long_comunas <- 
  dplyr::left_join(x = df_study1_long_comunas,
                   y = select(df_gini_comunas_wide, comunacod,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag")), 
@@ -104,6 +116,17 @@ df_study_long_t5_comunas <-
 
 ## Juntar matricula privada por comuna
 
+df_study1_long_comunas <- df_study1_long_comunas %>% mutate(year= case_when(ola==1~2016,
+                                                                            ola==2~2017,
+                                                                            ola==3~2018,
+                                                                            ola==4~2019,
+                                                                            ola==6~2022))
+
+df_study1_long_comunas <- 
+ dplyr::left_join(x = df_study1_long_comunas,
+                  y = select(df_matricula_comunas_long, comunacod=cod_com_rbd_15,year, total_mat_pagado,prop_pagado), 
+                  by = c("comunacod", "year"))
+
 df_study1_long_comunas <- 
  dplyr::left_join(x = df_study1_long_comunas,
                   y = select(df_matricula_comunas_wide, comunacod=cod_com_rbd_16,starts_with("total_mat_pagado"), starts_with("prop_pagado"), pagadolag22_16), 
@@ -116,6 +139,11 @@ df_study2_long_comunas <-
 
 
 ## Juntar promedio simce y sd por comuna
+
+df_study1_long_comunas <- 
+ dplyr::left_join(x = df_study1_long_comunas,
+                  y = select(df_simce_comunas_long, comunacod=cod_com_15,year, prom_simce_comuna,var_simce_comuna), 
+                  by = c("comunacod", "year"))
 
 df_study1_long_comunas <- 
  dplyr::left_join(x = df_study1_long_comunas,

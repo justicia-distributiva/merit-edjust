@@ -49,7 +49,6 @@ div.tocify {
 ## Univariate
 
 ```{r tab-desc, results="asis", warning=FALSE}
-rm(list=ls())
 if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
 pacman::p_load(dplyr,       # Manipulacion de datos
@@ -356,7 +355,7 @@ load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
 # generate analytical sample
 df_study1 <- 
   df_study1_long_comunas %>%
-  select(idencuesta,ola,comuna,just_educ:merit_talent, ahead_family:sexo, ginilag22_17, gini_ypch_2022) %>% 
+  select(idencuesta,ola,comuna,just_educ:merit_talent, ahead_family:sexo, ginilag22_17, gini_ypch_2022, gini_ypch, prop_univ, gini_gc, prop_pagado, total_mat_pagado, var_simce_comuna, prom_simce_comuna) %>% 
   na.omit() %>% 
   mutate(ola=as.factor(ola),
          sexo=as.factor(sexo)
@@ -365,8 +364,9 @@ df_study1 <-
 h1 <- "ola"
 h2 <- "ola+merit_effort+merit_talent"
 h3 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork"
-h4 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork+ginilag22_17+gini_ypch_2022"
-h5 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork+ginilag22_17+gini_ypch_2022+educ+quintil1+ess+pos_id+edad+sexo"
+h4 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork+gini_ypch+gini_gc"
+h5 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork+gini_ypch+gini_gc+prop_pagado+total_mat_pagado+var_simce_comuna+prom_simce_comuna"
+h6 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork+gini_ypch+gini_gc+prop_pagado+total_mat_pagado+var_simce_comuna+prom_simce_comuna+educ+quintil1+ess+pos_id+edad+sexo"
 
 # A. Education distributive justice
 educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
@@ -375,9 +375,10 @@ educ2 <- lmer(formula(paste0("just_educ~",h2,"+(1|idencuesta)+(1|comuna)")),data
 educ3 <- lmer(formula(paste0("just_educ~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 educ4 <- lmer(formula(paste0("just_educ~",h4,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 educ5 <- lmer(formula(paste0("just_educ~",h5,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 
 #omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::htmlreg(list(educ.null, educ1, educ2, educ3, educ4, educ5),
+texreg::htmlreg(list(educ.null, educ1, educ2, educ3, educ4, educ5, educ6),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05", 
                 custom.coef.names = c("Intercepto",
                                       "ola 2017 <br> <i>(Ref. ola 2016)</i>",
@@ -390,8 +391,12 @@ texreg::htmlreg(list(educ.null, educ1, educ2, educ3, educ4, educ5),
                                       "Goahead: educacion",
                                       "Goahead: ambicion",
                                       "Goahead: trabajo duro",
-                                      "Cambio gini 2022-2017",
                                       "Gini comunal 2022",
+                                      "Cambio gini 2022-2017",
+                                      "Proporción matrícula privada",
+                                      "Total matrícula privada",
+                                      "Varianza Simce comuna",
+                                      "Promedio Simce comuna",
                                       "Ed. media <br> <i>(Ref. Ed. básica)</i>",
                                       "Ed. técnica",
                                       "Ed. universitaria",
@@ -413,9 +418,66 @@ texreg::htmlreg(list(educ.null, educ1, educ2, educ3, educ4, educ5),
           )
 ```
 
+## Contextual analysis
+
+```{r distribution-educ-context}
+#rm(list=ls())
+#if (!require("pacman")) install.packages("pacman") # instalar pacman
+                            # cargar librerias
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               lme4,
+               texreg
+               )
+load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
+
+# generate analytical sample
+df_study1 <- 
+  df_study1_long_comunas %>%
+  select(idencuesta,ola,comuna,just_educ:merit_talent, ahead_family:sexo, ginilag22_17, gini_ypch_2022, gini_ypch, prop_univ, gini_gc, prop_pagado, total_mat_pagado, var_simce_comuna, prom_simce_comuna) %>% 
+  na.omit() %>% 
+  mutate(ola=as.factor(ola),
+         sexo=as.factor(sexo)
+         )
+# Hipotesis
+h1 <- "gini_ypch"
+h2 <- "gini_gc"
+h3 <- "prop_pagado"
+h4 <- "total_mat_pagado"
+h5 <- "var_simce_comuna"
+h6 <- "prom_simce_comuna"
+h7 <- "gini_ypch+gini_gc+prop_pagado+total_mat_pagado+var_simce_comuna+prom_simce_comuna"
+
+# A. Education distributive justice
+educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
+educ1 <- lmer(formula(paste0("just_educ~",h1,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ2 <- lmer(formula(paste0("just_educ~",h2,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ3 <- lmer(formula(paste0("just_educ~",h3,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ4 <- lmer(formula(paste0("just_educ~",h4,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ5 <- lmer(formula(paste0("just_educ~",h5,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ7 <- lmer(formula(paste0("just_educ~",h7,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+
+#omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
+texreg::htmlreg(list(educ.null, educ1, educ2, educ3, educ4, educ5, educ6),
+                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05", 
+                custom.coef.names = c("Intercepto",
+                                      "Gini comunal 2022",
+                                      "Cambio gini 2022-2017",
+                                      "Proporción matrícula privada",
+                                      "Total matrícula privada",
+                                      "Varianza Simce comuna",
+                                      "Promedio Simce comuna"
+                              )
+          #omit.coef = omit
+          )
+```
+
 ## B. Pension distribution justice
 
-```{r distribution-pension}
+```{r distribution-pension, eval=FALSE}
 #rm(list=ls())
 #if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
@@ -484,7 +546,7 @@ texreg::htmlreg(list(pension.null, pension1, pension2, pension3, pension4, pensi
 
 ## C. Health distribution justice
 
-```{r distribution-health}
+```{r distribution-health, eval=FALSE}
 #rm(list=ls())
 #if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
@@ -553,7 +615,7 @@ texreg::htmlreg(list(salud.null, salud1, salud2, salud3, salud4, salud5),
 
 ## D. Income differences are too large
 
-```{r inequality}
+```{r inequality, eval=FALSE}
 #rm(list=ls())
 #if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
