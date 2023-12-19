@@ -355,7 +355,7 @@ load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
 # generate analytical sample
 df_study1 <- 
   df_study1_long_comunas %>%
-  select(idencuesta,ola,comuna,just_educ:merit_talent, ahead_family:sexo, ginilag22_17, gini_ypch_2022, gini_ypch, prop_univ, gini_gc, prop_pagado, total_mat_pagado, var_simce_comuna, prom_simce_comuna) %>% 
+  select(idencuesta,ola,comuna,just_educ:merit_talent, ahead_family:sexo, ginilag22_17, gini_ypch_2022, gini_ypch, prop_univ, gini_gc, prop_pagado, total_mat_pagado, var_simce_comuna, prom_simce_comuna, univlag22_17) %>% 
   na.omit() %>% 
   mutate(ola=as.factor(ola),
          sexo=as.factor(sexo)
@@ -363,10 +363,12 @@ df_study1 <-
 # Hipotesis
 h1 <- "ola"
 h2 <- "ola+merit_effort+merit_talent"
-h3 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork"
-h4 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork+gini_ypch+gini_gc"
-h5 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork+gini_ypch+gini_gc+prop_pagado+total_mat_pagado+var_simce_comuna+prom_simce_comuna"
-h6 <- "ola+merit_effort+merit_talent+ahead_family+ahead_educ+ahead_ambition+ahead_hardwork+gini_ypch+gini_gc+prop_pagado+total_mat_pagado+var_simce_comuna+prom_simce_comuna+educ+quintil1+ess+pos_id+edad+sexo"
+h3 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo"
+h4 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17"
+h5 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+prop_univ"
+h6 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+univlag22_17"
+h7 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+prop_univ+univlag22_17"
+h8 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+var_simce_comuna+prom_simce_comuna"
 
 # A. Education distributive justice
 educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)+(1|comuna)")),data = df_study1)
@@ -376,46 +378,49 @@ educ3 <- lmer(formula(paste0("just_educ~",h3,"+(1|idencuesta)+(1|comuna)")),data
 educ4 <- lmer(formula(paste0("just_educ~",h4,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 educ5 <- lmer(formula(paste0("just_educ~",h5,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-
+educ7 <- lmer(formula(paste0("just_educ~",h7,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ8 <- lmer(formula(paste0("just_educ~",h8,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 #omit <- "(pos_id)|(edad)|(cuestion_mig)|(nation_t1)|(quintil1QNA)|(Intercept)"
-texreg::htmlreg(list(educ.null, educ1, educ2, educ3, educ4, educ5, educ6),
+texreg::knitreg(list(educ1, educ2, educ3, educ4, educ5, educ6, educ7,educ8),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05", 
-                custom.coef.names = c("Intercepto",
-                                      "ola 2017 <br> <i>(Ref. ola 2016)</i>",
-                                      "ola 2018",
-                                      "ola 2019",
-                                      "ola 2022",
-                                      "Merito: esfuerzo",
-                                      "Merito: Inteligencia",
-                                      "Goahead: Familia",
-                                      "Goahead: educacion",
-                                      "Goahead: ambicion",
-                                      "Goahead: trabajo duro",
-                                      "Gini comunal",
-                                      "Cambio gini 2022-2017",
-                                      "Proporción matrícula privada",
-                                      "Total matrícula privada",
-                                      "Varianza Simce comuna",
-                                      "Promedio Simce comuna",
-                                      "Ed. media <br> <i>(Ref. Ed. básica)</i>",
-                                      "Ed. técnica",
-                                      "Ed. universitaria",
-                                      "Quintil 2 <br> <i>(Ref. Quintil 1)</i>",
-                                      "Quintil 3",
-                                      "Quintil 4",
-                                      "Quintil 5",
-                                      "Quintil NA",
-                                      "Estatus social subjetivo",
-                                      "Pos. política: Centro <br> <i>(Ref. izquierda)</i>",
-                                      "Pos. política: Derecha",
-                                      "Pos. política: No se identifica",
-                                      "Edad 30-49 <br> <i>(Ref. 18-29)</i>",
-                                      "Edad 50-64",
-                                      "Edad 65 o más",
-                                      "Mujer <br> <i>(Ref. Hombre)</i>"
+#                custom.coef.names = c("Intercepto",
+#                                      "ola 2017 <br> <i>(Ref. ola 2016)</i>",
+#                                      "ola 2018",
+#                                      "ola 2019",
+##                                      "ola 2022",
+#                                      "Merito: esfuerzo",
+#                                      "Merito: Inteligencia",
+##                                      "Goahead: Familia",
+#                                      "Goahead: educacion",
+#                                      "Goahead: ambicion",
+#                                      "Goahead: trabajo duro",
+#                                      "Ed. media <br> <i>(Ref. Ed. básica)</i>",
+#                                      "Ed. técnica",
+#                                      "Ed. universitaria",
+#                                      "Quintil 2 <br> <i>(Ref. Quintil 1)</i>",
+#                                      "Quintil 3",
+#                                      "Quintil 4",
+#                                      "Quintil 5",
+#                                      "Quintil NA",
+#                                      "Estatus social subjetivo",
+#                                      "Pos. política: Centro <br> <i>(Ref. izquierda)</i>",
+#                                      "Pos. política: Derecha",
+#                                      "Pos. política: No se identifica",
+#                                      "Edad 30-49 <br> <i>(Ref. 18-29)</i>",
+#                                      "Edad 50-64",
+#                                      "Edad 65 o más",
+#                                      "Mujer <br> <i>(Ref. Hombre)</i>",
+#                                      "Gini comunal",
+#                                      "Cambio gini 2022-2017",
+#                                      "Proporción educ universitaria",
+#                                      "Proporción matrícula privada",
+#                                      "Total matrícula privada",
+#                                      "Varianza Simce comuna",
+#                                      "Promedio Simce comuna"
+                                    
                               )
           #omit.coef = omit
-          )
+
 ```
 
 ## Contextual analysis
