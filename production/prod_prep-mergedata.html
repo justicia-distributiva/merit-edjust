@@ -1566,7 +1566,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">prod_prep_mergedata</h1>
-<h4 class="date">lunes 11 diciembre 2023 9:19:04</h4>
+<h4 class="date">jueves 04 enero 2024 1:04:53</h4>
 
 </div>
 
@@ -1738,8 +1738,23 @@ df_study2_long_comunas &lt;-
                   y = select(df_comuna_rbd_wide, comunacod=COMUNA,starts_with(&quot;gini&quot;), starts_with(&quot;prop_univ&quot;), starts_with(&quot;univlag&quot;)), 
                   by = c(&quot;comunacod&quot;))
 
-
-# save data____________________________________________________________________
+## Rescale simce
+summary(df_study1_long_comunas$prom_simce_comuna)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   217.8   243.4   249.5   249.4   254.1   300.8     224</code></pre>
+<pre class="r"><code>summary(df_study1_long_comunas$var_simce_comuna)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   60.25  532.82  633.97  633.05  716.13 3748.34     224</code></pre>
+<pre class="r"><code>df_study1_long_comunas$prom_simce_comuna_rescaled &lt;- df_study1_long_comunas$prom_simce_comuna / 10
+df_study1_long_comunas$var_simce_comuna_rescaled &lt;- df_study1_long_comunas$var_simce_comuna / 100
+# Verificar el rescalado
+summary(df_study1_long_comunas$prom_simce_comuna_rescaled)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   21.78   24.34   24.95   24.94   25.41   30.08     224</code></pre>
+<pre class="r"><code>summary(df_study1_long_comunas$var_simce_comuna_rescaled)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##  0.6025  5.3282  6.3397  6.3305  7.1613 37.4834     224</code></pre>
+<pre class="r"><code># save data____________________________________________________________________
 save(df_study1_long_comunas,
      file = here::here(&quot;input/data-proc/df_study1_long_comunas.RData&quot;))
 save(df_study2_long_comunas,
@@ -3183,6 +3198,46 @@ var_simce_2022_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 60.2-1140.3</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+65
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+prom_simce_comuna_rescaled
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+224 (1.39%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 21.8-30.1</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+66
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+var_simce_comuna_rescaled
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+224 (1.39%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.6-37.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>

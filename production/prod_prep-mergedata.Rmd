@@ -184,7 +184,15 @@ df_study2_long_comunas <-
                   y = select(df_comuna_rbd_wide, comunacod=COMUNA,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag")), 
                   by = c("comunacod"))
 
+## Rescale simce
+summary(df_study1_long_comunas$prom_simce_comuna)
+summary(df_study1_long_comunas$var_simce_comuna)
 
+df_study1_long_comunas$prom_simce_comuna_rescaled <- df_study1_long_comunas$prom_simce_comuna / 10
+df_study1_long_comunas$var_simce_comuna_rescaled <- df_study1_long_comunas$var_simce_comuna / 100
+# Verificar el rescalado
+summary(df_study1_long_comunas$prom_simce_comuna_rescaled)
+summary(df_study1_long_comunas$var_simce_comuna_rescaled)
 # save data____________________________________________________________________
 save(df_study1_long_comunas,
      file = here::here("input/data-proc/df_study1_long_comunas.RData"))
