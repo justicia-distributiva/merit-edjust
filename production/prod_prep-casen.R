@@ -127,7 +127,9 @@ df_gini_comunas_long <-
     year,
     everything(),
     -X
-  )
+  ) %>%
+  mutate(loginc_mean=inc_mean)
+summary(df_gini_comunas_long)
 
 #Center within cluster (comuna) GINI
 df_gini_comunas_long$gini_gc <-  MLMusingR::group_center(as.numeric(df_gini_comunas_long$gini_ypch), grp = df_gini_comunas_long$COMUNA_COD)
