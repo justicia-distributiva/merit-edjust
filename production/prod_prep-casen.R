@@ -161,10 +161,12 @@ df_gini_comunas_wide <-gini15 %>%
     univlag22_17 = prop_univ_2022 - prop_univ_2017,
     univlag17_15 = prop_univ_2017 - prop_univ_2015,
 # income comunal
-incomelag22_15 = inc_mean_2022 - inc_mean_2015,
-incomelag22_17 = inc_mean_2022 - inc_mean_2017,
-incomelag17_15 = inc_mean_2017 - inc_mean_2015
-)
+  incomelag22_15 = inc_mean_2022 - inc_mean_2015,
+  incomelag22_17 = inc_mean_2022 - inc_mean_2017,
+  incomelag17_15 = inc_mean_2017 - inc_mean_2015,
+  logincomelag22_15 = log(inc_mean_2022) - log(inc_mean_2015),
+  logincomelag22_17 = log(inc_mean_2022) - log(inc_mean_2017),
+  logincomelag17_15 = log(inc_mean_2017) - log(inc_mean_2015))
 
 summary(df_gini_comunas_wide)
 
