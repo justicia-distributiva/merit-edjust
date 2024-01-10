@@ -30,7 +30,8 @@ gini15 <-
   df15 %>%
   group_by(COMUNA) %>%
   summarise("gini_ypch" = as.numeric(acid::weighted.gini(x = ypch, w =expc)$bcwGini),
-            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE)) %>%
+            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE),
+            "inc_mean"= mean(ypch,na.rm = T)) %>%
   mutate(year = 2015)
 
 # Casen 2017 --------------------------------------------------------------
@@ -60,7 +61,8 @@ gini17 <-
   group_by(COMUNA) %>%
   summarise("gini_ypch" = as.numeric(acid::weighted.gini(x = ypch, w =
                                                            expc)$bcwGini),
-            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE)
+            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE),
+            "inc_mean"= mean(ypch,na.rm = T)
             ) %>%
   mutate(year = 2017)
 names(gini17)
@@ -101,7 +103,8 @@ gini22 <-
   group_by(COMUNA) %>%
   summarise("gini_ypch" = as.numeric(acid::weighted.gini(x = ypch, w =
                                                            expc)$bcwGini),
-            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE)) %>%
+            "prop_univ"= collapse::fmean(x = univ,w=expc,na.rm=TRUE),
+            "inc_mean"= mean(ypch,na.rm = T)) %>%
   mutate(year = 2022)
 
 
@@ -134,7 +137,7 @@ df_gini_comunas_wide <-gini15 %>%
   full_join(gini17, by = "COMUNA", suffix = c("_2015", "_2017")) %>%
   full_join(gini22, by = "COMUNA", suffix = c("_2022", "")) %>%
   select(everything(), starts_with("gini_ypch"), -starts_with("year")) %>%
-  rename(COMUNA_COD = COMUNA, gini_ypch_2022 = gini_ypch,prop_univ_2022 = prop_univ) %>%
+  rename(COMUNA_COD = COMUNA, gini_ypch_2022 = gini_ypch,prop_univ_2022 = prop_univ, inc_mean_2022 = inc_mean) %>%
   mutate(COMUNA_NOM = sjlabelled::as_character(COMUNA_COD)) %>%
   arrange("COMUNA_COD") %>%
   left_join(cut, by = c("COMUNA_COD" = "COMUNA")) %>%
@@ -156,8 +159,12 @@ df_gini_comunas_wide <-gini15 %>%
 # educacion universitaria
     univlag22_15 = prop_univ_2022 - prop_univ_2015,
     univlag22_17 = prop_univ_2022 - prop_univ_2017,
-    univlag17_15 = prop_univ_2017 - prop_univ_2015
-  )
+    univlag17_15 = prop_univ_2017 - prop_univ_2015,
+# income comunal
+incomelag22_15 = inc_mean_2022 - inc_mean_2015,
+incomelag22_17 = inc_mean_2022 - inc_mean_2017,
+incomelag17_15 = inc_mean_2017 - inc_mean_2015
+)
 
 summary(df_gini_comunas_wide)
 
