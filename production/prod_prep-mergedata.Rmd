@@ -83,13 +83,13 @@ df_study1_long_comunas <- df_study1_long_comunas %>% mutate(year= case_when(ola=
 
 df_study1_long_comunas <- 
  dplyr::left_join(x = df_study1_long_comunas,
-                  y = select(df_gini_comunas_long, comunacod=COMUNA_COD,year, starts_with("gini"),prop_univ), 
+                  y = select(df_gini_comunas_long, comunacod=COMUNA_COD,year, starts_with("gini"), prop_univ, starts_with("inc"), starts_with("log")), 
                   by = c("comunacod", "year"))
 
 
 df_study1_long_comunas <- 
  dplyr::left_join(x = df_study1_long_comunas,
-                  y = select(df_gini_comunas_wide, comunacod,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag")), 
+                  y = select(df_gini_comunas_wide, comunacod,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag"), starts_with("inc"), starts_with("log")), 
                   by = c("comunacod"))
 
 

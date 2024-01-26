@@ -1566,7 +1566,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">prod_prep_mergedata</h1>
-<h4 class="date">jueves 04 enero 2024 1:04:53</h4>
+<h4 class="date">miércoles 10 enero 2024 18:22:22</h4>
 
 </div>
 
@@ -1637,13 +1637,13 @@ df_study1_long_comunas &lt;- df_study1_long_comunas %&gt;% mutate(year= case_whe
 
 df_study1_long_comunas &lt;- 
  dplyr::left_join(x = df_study1_long_comunas,
-                  y = select(df_gini_comunas_long, comunacod=COMUNA_COD,year, starts_with(&quot;gini&quot;),prop_univ), 
+                  y = select(df_gini_comunas_long, comunacod=COMUNA_COD,year, starts_with(&quot;gini&quot;), prop_univ, starts_with(&quot;inc&quot;), starts_with(&quot;log&quot;)), 
                   by = c(&quot;comunacod&quot;, &quot;year&quot;))
 
 
 df_study1_long_comunas &lt;- 
  dplyr::left_join(x = df_study1_long_comunas,
-                  y = select(df_gini_comunas_wide, comunacod,starts_with(&quot;gini&quot;), starts_with(&quot;prop_univ&quot;), starts_with(&quot;univlag&quot;)), 
+                  y = select(df_gini_comunas_wide, comunacod,starts_with(&quot;gini&quot;), starts_with(&quot;prop_univ&quot;), starts_with(&quot;univlag&quot;), starts_with(&quot;inc&quot;), starts_with(&quot;log&quot;)), 
                   by = c(&quot;comunacod&quot;))
 
 
@@ -2469,6 +2469,46 @@ prop_univ
 28
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+inc_mean
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 164801.3-2057423.4</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+29
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+loginc_mean
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 164801.3-2057423.4</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+30
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 gini_ypch_2015
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
@@ -2486,7 +2526,7 @@ gini_ypch_2015
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-29
+31
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 gini_ypch_2017
@@ -2506,7 +2546,7 @@ gini_ypch_2017
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-30
+32
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 gini_ypch_2022
@@ -2526,7 +2566,7 @@ gini_ypch_2022
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-31
+33
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ginilag22_15
@@ -2546,7 +2586,7 @@ ginilag22_15
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-32
+34
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ginilag22_17
@@ -2566,7 +2606,7 @@ ginilag22_17
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-33
+35
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ginilag17_15
@@ -2586,7 +2626,7 @@ ginilag17_15
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-34
+36
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 prop_univ_2015
@@ -2606,7 +2646,7 @@ prop_univ_2015
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-35
+37
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 prop_univ_2017
@@ -2626,7 +2666,7 @@ prop_univ_2017
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-36
+38
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 prop_univ_2022
@@ -2646,7 +2686,7 @@ prop_univ_2022
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-37
+39
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 univlag22_15
@@ -2666,7 +2706,7 @@ univlag22_15
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-38
+40
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 univlag22_17
@@ -2686,7 +2726,7 @@ univlag22_17
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-39
+41
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 univlag17_15
@@ -2706,50 +2746,10 @@ univlag17_15
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-40
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-total_mat_pagado
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-225 (1.39%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-30201</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-41
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_pagado
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-225 (1.39%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.9</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 42
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-total_mat_pagado_16
+inc_mean_2015
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2757,7 +2757,7 @@ total_mat_pagado_16
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-29821</em>
+<em>range: 161005.0-1190740.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2769,7 +2769,7 @@ total_mat_pagado_16
 43
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado_17
+inc_mean_2017
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2777,7 +2777,7 @@ total_mat_pagado_17
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-29801</em>
+<em>range: 164801.3-1570949.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2789,7 +2789,7 @@ total_mat_pagado_17
 44
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-total_mat_pagado_18
+inc_mean_2022
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2797,7 +2797,7 @@ total_mat_pagado_18
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-29699</em>
+<em>range: 265373.7-2057423.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2809,7 +2809,7 @@ total_mat_pagado_18
 45
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado_19
+incomelag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2817,7 +2817,7 @@ total_mat_pagado_19
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-30201</em>
+<em>range: 60548.7-866682.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2829,7 +2829,7 @@ total_mat_pagado_19
 46
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-total_mat_pagado_22
+incomelag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2837,7 +2837,7 @@ total_mat_pagado_22
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-30053</em>
+<em>range: -21397.6-547309.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2849,7 +2849,7 @@ total_mat_pagado_22
 47
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_pagado_16
+incomelag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2857,7 +2857,7 @@ prop_pagado_16
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.8</em>
+<em>range: -302241.0-380208.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2869,7 +2869,7 @@ prop_pagado_16
 48
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado_17
+logincomelag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2877,7 +2877,7 @@ prop_pagado_17
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.8</em>
+<em>range: 0.2-0.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2889,7 +2889,7 @@ prop_pagado_17
 49
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_pagado_18
+logincomelag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2897,7 +2897,7 @@ prop_pagado_18
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.8</em>
+<em>range: -0.1-0.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2909,7 +2909,7 @@ prop_pagado_18
 50
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado_19
+logincomelag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2917,7 +2917,7 @@ prop_pagado_19
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.9</em>
+<em>range: -0.4-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2929,7 +2929,167 @@ prop_pagado_19
 51
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_pagado_22
+total_mat_pagado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+225 (1.39%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 0-30201</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+52
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prop_pagado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+225 (1.39%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-0.9</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+53
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+total_mat_pagado_16
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 0-29821</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+54
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+total_mat_pagado_17
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0-29801</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+55
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+total_mat_pagado_18
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 0-29699</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+56
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+total_mat_pagado_19
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0-30201</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+57
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+total_mat_pagado_22
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 0-30053</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+58
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prop_pagado_16
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-0.8</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+59
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+prop_pagado_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2946,170 +3106,10 @@ prop_pagado_22
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-52
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-pagadolag22_16
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.0-0.1</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-53
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-224 (1.39%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 217.8-300.8</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-54
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-224 (1.39%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 60.2-3748.3</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-55
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_2016_comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 227.1-300.0</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-56
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_2017_comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 217.8-300.8</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-57
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_2018_comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 228.4-297.7</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-58
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_2019_comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 228.0-290.4</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-59
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_2022_comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 233.1-299.5</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 60
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_2016_comuna
+prop_pagado_18
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3117,7 +3117,7 @@ var_simce_2016_comuna
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 253.7-2469.5</em>
+<em>range: 0.0-0.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3129,7 +3129,7 @@ var_simce_2016_comuna
 61
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_2017_comuna
+prop_pagado_19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3137,7 +3137,7 @@ var_simce_2017_comuna
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 130.0-3748.3</em>
+<em>range: 0.0-0.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3149,7 +3149,7 @@ var_simce_2017_comuna
 62
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_2018_comuna
+prop_pagado_22
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3157,7 +3157,7 @@ var_simce_2018_comuna
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 220.8-1144.5</em>
+<em>range: 0.0-0.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3169,7 +3169,7 @@ var_simce_2018_comuna
 63
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_2019_comuna
+pagadolag22_16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3177,7 +3177,7 @@ var_simce_2019_comuna
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 169.7-1292.3</em>
+<em>range: -0.0-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3189,15 +3189,15 @@ var_simce_2019_comuna
 64
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_2022_comuna
+prom_simce_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
+224 (1.39%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 60.2-1140.3</em>
+<em>range: 217.8-300.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3209,7 +3209,7 @@ var_simce_2022_comuna
 65
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_comuna_rescaled
+var_simce_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3217,7 +3217,7 @@ prom_simce_comuna_rescaled
 224 (1.39%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 21.8-30.1</em>
+<em>range: 60.2-3748.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3229,7 +3229,207 @@ prom_simce_comuna_rescaled
 66
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_comuna_rescaled
+prom_simce_2016_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 227.1-300.0</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+67
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+prom_simce_2017_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 217.8-300.8</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+68
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prom_simce_2018_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 228.4-297.7</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+69
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+prom_simce_2019_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 228.0-290.4</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+70
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prom_simce_2022_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 233.1-299.5</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+71
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+var_simce_2016_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 253.7-2469.5</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+72
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+var_simce_2017_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 130.0-3748.3</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+73
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+var_simce_2018_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 220.8-1144.5</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+74
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+var_simce_2019_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 169.7-1292.3</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+75
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+var_simce_2022_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 60.2-1140.3</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+76
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prom_simce_comuna_rescaled
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3237,11 +3437,31 @@ var_simce_comuna_rescaled
 224 (1.39%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 21.8-30.1</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+77
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+var_simce_comuna_rescaled
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+224 (1.39%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 0.6-37.5</em>
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 </tr>
 </table>

@@ -459,7 +459,7 @@ load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
 # generate analytical sample
 df_study1 <- 
   df_study1_long_comunas %>%
-  select(idencuesta,ola,comuna,just_educ:merit_talent, ahead_family:sexo, ginilag22_17, gini_ypch_2022, gini_ypch, prop_univ, gini_gc, prop_pagado, pagadlag22_16=pagadolag22_16, total_mat_pagado, var_simce_comuna_rescaled, prom_simce_comuna_rescaled, univlag22_17) %>% 
+  select(idencuesta,ola,comuna,just_educ:merit_talent, ahead_family:sexo, ginilag22_17, gini_ypch_2022, gini_ypch, prop_univ, gini_gc, prop_pagado, pagadlag22_16=pagadolag22_16, total_mat_pagado, var_simce_comuna_rescaled, prom_simce_comuna_rescaled, univlag22_17, loginc_mean, logincomelag22_17) %>% 
   na.omit() %>% 
   mutate(ola=as.factor(ola),
          sexo=as.factor(sexo)
@@ -477,8 +477,9 @@ h8 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ah
 h9 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+prop_pagado+pagadlag22_16"
 h10 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+prom_simce_comuna_rescaled+var_simce_comuna_rescaled"
 h11 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled"
+h12 <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+loginc_mean+logincomelag22_17"
 
-hfull <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled"
+hfull <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled+loginc_mean+logincomelag22_17"
 
 
 
@@ -495,7 +496,8 @@ educ8 <- lmer(formula(paste0("just_educ~",h8,"+(1|idencuesta)+(1|comuna)")),data
 educ9 <- lmer(formula(paste0("just_educ~",h9,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 educ10 <- lmer(formula(paste0("just_educ~",h10,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 educ11 <- lmer(formula(paste0("just_educ~",h11,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
-educ12 <- lmer(formula(paste0("just_educ~",hfull,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ12 <- lmer(formula(paste0("just_educ~",h12,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
+educ13 <- lmer(formula(paste0("just_educ~",hfull,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 
 # Table 1: individual
 
@@ -540,7 +542,7 @@ webshot2::webshot(url ="output/tables/table1-individuales.html" ,file ="output/t
 ```{r}
 # table 2: contextuales
 omit <- "(ola)|(merit_effort)|(merit_talent)|(ahead_hardwork)|(ahead_educ)|(ahead_ambition)|(ahead_family)|(educ)|(quintil1)|(ess)|(pos_id)|(edad)|(sexo)|(Intercept)"
-texreg::htmlreg(list(educ6, educ7,educ8,educ9,educ10,educ11,educ12),
+texreg::htmlreg(list(educ6, educ7,educ8,educ9,educ10,educ11,educ12,educ13),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05", 
                 omit.coef = omit,
                 custom.coef.names = c(
@@ -551,10 +553,11 @@ texreg::htmlreg(list(educ6, educ7,educ8,educ9,educ10,educ11,educ12),
                                       "Proporción matrícula privada",
                                       "Cambio matrícula privada 2022-2016",
                                       "Promedio Simce comuna",
-                                      "Varianza Simce comuna"),
+                                      "Varianza Simce comuna",
+                                      "Ingreso comunal",
+                                      "Cambio ingreso comunal 2022-2017"),
                 file = "output/tables/table2-contextual.html")
           #omit.coef = omit
-
 
 webshot2::webshot(url ="output/tables/table2-contextual.html" ,file ="output/tables/table2-contextual.png")
 
@@ -581,13 +584,13 @@ df_study1 <-
   df_study1_long_comunas %>%
   select(idencuesta,ola,comuna,just_educ:merit_talent, ahead_family:sexo, ginilag22_17, gini_ypch_2022, gini_ypch, prop_univ, gini_gc, prop_pagado, pagadlag22_16=pagadolag22_16, total_mat_pagado, var_simce_comuna_rescaled, prom_simce_comuna_rescaled, univlag22_17) %>% 
   na.omit() %>% 
-  mutate(ola=as.numeric(ola),
+  mutate(ola=as.factor(ola),
          sexo=as.factor(sexo)
          )
 # Hipotesis
 h1b <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled"
 h2b <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled+ola*merit_effort"
-h3b <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled+ola*merit_talent"
+h3b <- "merit_effort+merit_talent+ola+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled+merit_talent*ola"
 h4b <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled+ola*ahead_hardwork"
 h5b <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled+ola*ahead_educ"
 h6b <- "ola+merit_effort+merit_talent+ahead_hardwork+ahead_educ+ahead_ambition+ahead_family+educ+quintil1+ess+pos_id+edad+sexo+gini_ypch+ginilag22_17+prop_univ+univlag22_17+prop_pagado+pagadlag22_16+prom_simce_comuna_rescaled+var_simce_comuna_rescaled+ola*ahead_ambition"
@@ -604,10 +607,13 @@ educ6 <- lmer(formula(paste0("just_educ~",h6b,"+(1|idencuesta)+(1|comuna)")),dat
 educ7 <- lmer(formula(paste0("just_educ~",h7b,"+(1|idencuesta)+(1|comuna)")),data = df_study1)
 
 # table 3: interacciones
-texreg::htmlreg(list(educ1, educ2,educ3,educ4,educ5,educ6,educ7),
+texreg::knitreg(list(educ1, educ2,educ3,educ4,educ5,educ6,educ7),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05", 
                 custom.coef.names = c("Intercepto",
-                                      "ola",
+                                      "2017",
+                                      "2018",
+                                      "2019",
+                                      "2022",
                                       "Merito: esfuerzo",
                                       "Merito: Inteligencia",
                                       "Goahead: trabajo duro",
@@ -649,6 +655,13 @@ texreg::htmlreg(list(educ1, educ2,educ3,educ4,educ5,educ6,educ7),
 
 
 webshot2::webshot(url ="output/tables/table3-interac.html" ,file ="output/tables/table3-interac.png")
+
+
+## graph interact
+#sjPlot::plot_model(educ2, type = "int", mdrt.values = "meansd")
+#predit<-interplot::interplot(m = educ2,var1 = "merit_effort",var2 = "ola",point = T)
+#predit$data[c(1,2,4,6,8),]
+#predit$data[c(1,2,4,6,8),] %>% ggplot2::ggplot() %>%
 ```
 
 ## B. Pension distribution justice
