@@ -371,6 +371,7 @@ elsoc_long_2016_2022.2 %>%
   filter(muestra == 1) %>% #keep original sample (vs refresh)
   select(idencuesta,ola,region,region_cod,comuna,comunacod=comuna_cod,
          muestra,
+         ponderador_long_total, segmento, estrato,
          sexo,
          # cuestion_mig,
          # starts_with("in_"),
@@ -408,7 +409,7 @@ df_study1_wide <- df_study1 %>%
   tidyr::pivot_wider(id_cols = c("idencuesta","muestra"),
                      names_from = "ola",
                      # names_prefix = c("educ","educyear","ing_pc","quintil","quintil1"),
-                     values_from = names(select(df_study1,comuna,comunacod,just_educ:edad,sexo))
+                     values_from = names(select(df_study1,comuna,comunacod,ponderador_long_total,segmento, estrato, just_educ:edad,sexo))
                      )
 
 # fix data to w01 values
@@ -477,7 +478,7 @@ pacman::p_load(datasets,data.table)
 df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
               id.vars = c("idencuesta","muestra"),
               variable.name = c("ola"),
-              measure = patterns("^comuna_","^comunacod_",
+              measure = patterns("^comuna_","^comunacod_","^ponderador_long_total", "^segmento", "^estrato",
                                  "^just_educ_", "^just_pension_", "^just_salud_", "^des_perc_",
                                  "^merit_effort_","^merit_talent_",
                                  "^ahead_family_", "^ahead_educ_", "^ahead_ambition_", "^ahead_hardwork_",
@@ -485,7 +486,7 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                                  "^pos_id_",
                                  "^edad_","^sexo_"
                                  ),
-              value.name = c("comuna","comunacod",
+              value.name = c("comuna","comunacod","ponderador_long_total","segmento","estrato",
                              "just_educ", "just_pension","just_salud", "des_perc",
                              "merit_effort","merit_talent",
                              "ahead_family","ahead_educ","ahead_ambition","ahead_hardwork",
@@ -575,7 +576,7 @@ load(here::here("input/data-original/cit18.Rdata"))
 load(here::here("input/data-original/cit19.Rdata"))
 load(here::here("input/data-original/casen2017.Rdata"))
 load(here::here("input/data-original/casen2022.Rdata"))
-load(here::here("input/data-original/censo17.Rdata"))
+#load(here::here("input/data-original/censo17.Rdata"))
 load(here::here("input/data-original/elsoc_long.Rdata"))
 
 df_ine <- 
@@ -643,6 +644,37 @@ elsoc_long_2016_2022.2 %>%
   select(comuna,comuna_cod,idencuesta) %>% 
   left_join(x = .,y = df_19, by ="idencuesta") %>% 
   select(-idencuesta)
+
+df_cit_a <- df_cit_a %>%
+  mutate(comuna = ifelse(test = comuna=="Ñunoa",
+                         yes = "Nhunhoa",
+                         no =  comuna))
+
+df_cit_a <- df_cit_a %>%
+  mutate(comuna = ifelse(test = comuna=="Vicuna",
+                         yes = "Vicunha",
+                         no =  comuna))
+
+df_cit_a <- df_cit_a %>%
+  mutate(comuna = ifelse(test = comuna=="Vina del mar",
+                         yes = "Vinha del mar",
+                         no =  comuna))
+
+df_cit_a <- df_cit_a %>%
+  mutate(comuna = ifelse(test = comuna=="Donihue",
+                         yes = "Donhihue",
+                         no =  comuna))
+
+df_cit_a <- df_cit_a %>%
+  mutate(comuna = ifelse(test = comuna=="Penaflor",
+                         yes = "Penhaflor",
+                         no =  comuna))
+df_cit_a <- df_cit_a %>%
+  mutate(comuna = ifelse(test = comuna=="Penalolen",
+                         yes = "Penhalolen",
+                         no =  comuna))
+
+
 #check for duplicates
 df_cit_b <- 
   df_cit_a %>% distinct() %>% arrange(comuna_cod, escolaridad)

@@ -1566,7 +1566,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">Preparación de datos</h1>
-<h4 class="date">miércoles 15 noviembre 2023 0:39:35</h4>
+<h4 class="date">jueves 07 marzo 2024 23:48:59</h4>
 
 </div>
 
@@ -2166,6 +2166,7 @@ elsoc_long_2016_2022.2 %&gt;%
   filter(muestra == 1) %&gt;% #keep original sample (vs refresh)
   select(idencuesta,ola,region,region_cod,comuna,comunacod=comuna_cod,
          muestra,
+         ponderador_long_total, segmento, estrato,
          sexo,
          # cuestion_mig,
          # starts_with(&quot;in_&quot;),
@@ -2203,7 +2204,7 @@ df_study1_wide &lt;- df_study1 %&gt;%
   tidyr::pivot_wider(id_cols = c(&quot;idencuesta&quot;,&quot;muestra&quot;),
                      names_from = &quot;ola&quot;,
                      # names_prefix = c(&quot;educ&quot;,&quot;educyear&quot;,&quot;ing_pc&quot;,&quot;quintil&quot;,&quot;quintil1&quot;),
-                     values_from = names(select(df_study1,comuna,comunacod,just_educ:edad,sexo))
+                     values_from = names(select(df_study1,comuna,comunacod,ponderador_long_total,segmento, estrato, just_educ:edad,sexo))
                      )
 
 # fix data to w01 values
@@ -2262,10 +2263,10 @@ df_study1_wide$comunacod_5 &lt;-df_study1_wide$comunacod_1
 df_study1_wide$comunacod_6 &lt;-df_study1_wide$comunacod_1
 
 dim(df_study1_wide)</code></pre>
-<pre><code>## [1] 2928  116</code></pre>
+<pre><code>## [1] 2928  134</code></pre>
 <pre class="r"><code>sjPlot::view_df(df_study1_wide,
                 show.frq = T,show.values = T,show.na = T,show.prc = T, show.type = T)</code></pre>
-<pre><code>## just_educ_5 [19], just_pension_5 [25], just_salud_5 [31]</code></pre>
+<pre><code>## just_educ_5 [37], just_pension_5 [43], just_salud_5 [49]</code></pre>
 <table style="border-collapse:collapse; border:none;">
 <caption>
 Data frame: df_study1_wide
@@ -2675,6 +2676,474 @@ Comuna (Codigo)
 15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+ponderador_long_total_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ponderador longitudinal (2016-2022). Muestra<br>completa
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 0.0-6.7</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+16
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+ponderador_long_total_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Ponderador longitudinal (2016-2022). Muestra<br>completa
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+455 (15.54%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-7.7</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+17
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+ponderador_long_total_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ponderador longitudinal (2016-2022). Muestra<br>completa
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+699 (23.87%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 0.0-9.1</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+18
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+ponderador_long_total_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Ponderador longitudinal (2016-2022). Muestra<br>completa
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+775 (26.47%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-11.9</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+19
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+ponderador_long_total_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ponderador longitudinal (2016-2022). Muestra<br>completa
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1189 (40.61%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 0.0-13.7</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+ponderador_long_total_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Ponderador longitudinal (2016-2022). Muestra<br>completa
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-14.9</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+21
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+segmento_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Segmento
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 110101-1420411</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+22
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+segmento_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Segmento
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+455 (15.54%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 110101-1420411</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+segmento_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Segmento
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+699 (23.87%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 110101-1420411</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+segmento_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Segmento
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+775 (26.47%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 110101-1420411</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+25
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+segmento_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Segmento
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1189 (40.61%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 110101-1420411</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+26
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+segmento_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Segmento
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 110101-1420411</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+27
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+estrato_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Estrato muestral
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+720<br>375<br>391<br>408<br>567<br>466
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+24.60<br>12.81<br>13.36<br>13.94<br>19.37<br>15.92
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+28
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+estrato_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Estrato muestral
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+455 (15.54%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5<br>6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+597<br>314<br>335<br>363<br>457<br>407
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24.14<br>12.70<br>13.55<br>14.68<br>18.48<br>16.46
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+29
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+estrato_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Estrato muestral
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+699 (23.87%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+510<br>283<br>324<br>326<br>411<br>375
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+22.88<br>12.70<br>14.54<br>14.63<br>18.44<br>16.82
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+30
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+estrato_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Estrato muestral
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+775 (26.47%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5<br>6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+498<br>272<br>306<br>313<br>404<br>360
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+23.13<br>12.63<br>14.21<br>14.54<br>18.76<br>16.72
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+31
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+estrato_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Estrato muestral
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1189 (40.61%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+409<br>214<br>256<br>254<br>317<br>289
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23.52<br>12.31<br>14.72<br>14.61<br>18.23<br>16.62
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+32
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+estrato_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Estrato muestral
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5<br>6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+404<br>207<br>242<br>257<br>303<br>315
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+23.38<br>11.98<br>14.00<br>14.87<br>17.53<br>18.23
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+33
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 just_educ_1
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
@@ -2702,7 +3171,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-16
+34
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 just_educ_2
@@ -2732,7 +3201,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-17
+35
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 just_educ_3
@@ -2762,7 +3231,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-18
+36
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 just_educ_4
@@ -2792,7 +3261,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-20
+38
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 just_educ_6
@@ -2822,7 +3291,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-21
+39
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 just_pension_1
@@ -2852,7 +3321,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-22
+40
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 just_pension_2
@@ -2882,7 +3351,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-23
+41
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 just_pension_3
@@ -2912,7 +3381,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-24
+42
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 just_pension_4
@@ -2942,7 +3411,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-26
+44
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 just_pension_6
@@ -2972,7 +3441,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-27
+45
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 just_salud_1
@@ -3002,7 +3471,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-28
+46
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 just_salud_2
@@ -3032,7 +3501,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-29
+47
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 just_salud_3
@@ -3062,7 +3531,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-30
+48
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 just_salud_4
@@ -3092,7 +3561,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-32
+50
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 just_salud_6
@@ -3122,7 +3591,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-33
+51
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 des_perc_1
@@ -3152,7 +3621,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-34
+52
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 des_perc_2
@@ -3182,7 +3651,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-35
+53
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 des_perc_3
@@ -3212,7 +3681,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-36
+54
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 des_perc_4
@@ -3242,7 +3711,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-37
+55
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 des_perc_5
@@ -3272,7 +3741,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-38
+56
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 des_perc_6
@@ -3302,7 +3771,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-39
+57
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 merit_effort_1
@@ -3332,7 +3801,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-40
+58
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 merit_effort_2
@@ -3362,7 +3831,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-41
+59
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 merit_effort_3
@@ -3392,7 +3861,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-42
+60
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 merit_effort_4
@@ -3422,7 +3891,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-43
+61
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 merit_effort_5
@@ -3452,7 +3921,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-44
+62
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 merit_effort_6
@@ -3482,7 +3951,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-45
+63
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 merit_talent_1
@@ -3512,7 +3981,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-46
+64
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 merit_talent_2
@@ -3542,7 +4011,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-47
+65
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 merit_talent_3
@@ -3572,7 +4041,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-48
+66
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 merit_talent_4
@@ -3602,7 +4071,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-49
+67
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 merit_talent_5
@@ -3632,7 +4101,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-50
+68
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 merit_talent_6
@@ -3662,7 +4131,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-51
+69
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_family_1
@@ -3692,7 +4161,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-52
+70
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_family_2
@@ -3722,7 +4191,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-53
+71
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_family_3
@@ -3752,7 +4221,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-54
+72
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_family_4
@@ -3782,7 +4251,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-55
+73
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_family_5
@@ -3812,7 +4281,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-56
+74
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_family_6
@@ -3842,7 +4311,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-57
+75
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_educ_1
@@ -3872,7 +4341,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-58
+76
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_educ_2
@@ -3902,7 +4371,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-59
+77
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_educ_3
@@ -3932,7 +4401,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-60
+78
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_educ_4
@@ -3962,7 +4431,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-61
+79
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_educ_5
@@ -3992,7 +4461,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-62
+80
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_educ_6
@@ -4022,7 +4491,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-63
+81
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_ambition_1
@@ -4052,7 +4521,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-64
+82
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_ambition_2
@@ -4082,7 +4551,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-65
+83
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_ambition_3
@@ -4112,7 +4581,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-66
+84
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_ambition_4
@@ -4142,7 +4611,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-67
+85
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_ambition_5
@@ -4172,7 +4641,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-68
+86
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_ambition_6
@@ -4202,7 +4671,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-69
+87
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_hardwork_1
@@ -4232,7 +4701,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-70
+88
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_hardwork_2
@@ -4262,7 +4731,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-71
+89
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_hardwork_3
@@ -4292,7 +4761,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-72
+90
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_hardwork_4
@@ -4322,7 +4791,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-73
+91
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ahead_hardwork_5
@@ -4352,7 +4821,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-74
+92
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ahead_hardwork_6
@@ -4382,7 +4851,7 @@ agree<br>Agree<br>Strongly agree
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-75
+93
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educ_1
@@ -4410,7 +4879,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-76
+94
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educ_2
@@ -4438,7 +4907,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-77
+95
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educ_3
@@ -4466,7 +4935,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-78
+96
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educ_4
@@ -4494,7 +4963,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-79
+97
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educ_5
@@ -4522,7 +4991,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-80
+98
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educ_6
@@ -4550,7 +5019,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-81
+99
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educyear_1
@@ -4574,7 +5043,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-82
+100
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educyear_2
@@ -4598,7 +5067,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-83
+101
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educyear_3
@@ -4622,7 +5091,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-84
+102
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educyear_4
@@ -4646,7 +5115,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-85
+103
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educyear_5
@@ -4670,7 +5139,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-86
+104
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educyear_6
@@ -4694,7 +5163,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-87
+105
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 quintil1_1
@@ -4722,7 +5191,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-88
+106
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 quintil1_2
@@ -4750,7 +5219,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-89
+107
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 quintil1_3
@@ -4778,7 +5247,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-90
+108
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 quintil1_4
@@ -4806,7 +5275,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-91
+109
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 quintil1_5
@@ -4834,7 +5303,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-92
+110
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 quintil1_6
@@ -4862,7 +5331,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-93
+111
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ess_1
@@ -4886,7 +5355,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-94
+112
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ess_2
@@ -4910,7 +5379,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-95
+113
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ess_3
@@ -4934,7 +5403,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-96
+114
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ess_4
@@ -4958,7 +5427,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-97
+115
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ess_5
@@ -4982,7 +5451,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-98
+116
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 ess_6
@@ -5006,7 +5475,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-99
+117
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 pos_id_1
@@ -5034,7 +5503,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-100
+118
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id_2
@@ -5062,7 +5531,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-101
+119
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 pos_id_3
@@ -5090,7 +5559,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-102
+120
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id_4
@@ -5118,7 +5587,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-103
+121
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 pos_id_5
@@ -5146,7 +5615,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-104
+122
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id_6
@@ -5174,7 +5643,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-105
+123
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad_1
@@ -5202,7 +5671,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-106
+124
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 edad_2
@@ -5230,7 +5699,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-107
+125
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad_3
@@ -5258,7 +5727,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-108
+126
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 edad_4
@@ -5286,7 +5755,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-109
+127
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad_5
@@ -5314,7 +5783,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-110
+128
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 edad_6
@@ -5342,7 +5811,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-111
+129
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 sexo_1
@@ -5371,7 +5840,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-112
+130
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo_2
@@ -5400,7 +5869,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-113
+131
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 sexo_3
@@ -5429,7 +5898,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-114
+132
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo_4
@@ -5458,7 +5927,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-115
+133
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 sexo_5
@@ -5487,7 +5956,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-116
+134
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo_6
@@ -5520,7 +5989,7 @@ pacman::p_load(datasets,data.table)
 df_study1_long &lt;- data.table::melt.data.table(data.table::setDT(df_study1_wide),
               id.vars = c(&quot;idencuesta&quot;,&quot;muestra&quot;),
               variable.name = c(&quot;ola&quot;),
-              measure = patterns(&quot;^comuna_&quot;,&quot;^comunacod_&quot;,
+              measure = patterns(&quot;^comuna_&quot;,&quot;^comunacod_&quot;,&quot;^ponderador_long_total&quot;, &quot;^segmento&quot;, &quot;^estrato&quot;,
                                  &quot;^just_educ_&quot;, &quot;^just_pension_&quot;, &quot;^just_salud_&quot;, &quot;^des_perc_&quot;,
                                  &quot;^merit_effort_&quot;,&quot;^merit_talent_&quot;,
                                  &quot;^ahead_family_&quot;, &quot;^ahead_educ_&quot;, &quot;^ahead_ambition_&quot;, &quot;^ahead_hardwork_&quot;,
@@ -5528,7 +5997,7 @@ df_study1_long &lt;- data.table::melt.data.table(data.table::setDT(df_study1_wid
                                  &quot;^pos_id_&quot;,
                                  &quot;^edad_&quot;,&quot;^sexo_&quot;
                                  ),
-              value.name = c(&quot;comuna&quot;,&quot;comunacod&quot;,
+              value.name = c(&quot;comuna&quot;,&quot;comunacod&quot;,&quot;ponderador_long_total&quot;,&quot;segmento&quot;,&quot;estrato&quot;,
                              &quot;just_educ&quot;, &quot;just_pension&quot;,&quot;just_salud&quot;, &quot;des_perc&quot;,
                              &quot;merit_effort&quot;,&quot;merit_talent&quot;,
                              &quot;ahead_family&quot;,&quot;ahead_educ&quot;,&quot;ahead_ambition&quot;,&quot;ahead_hardwork&quot;,
@@ -5539,14 +6008,17 @@ df_study1_long &lt;- data.table::melt.data.table(data.table::setDT(df_study1_wid
               )
 
 names(df_study1_long) #check names of long dataset</code></pre>
-<pre><code>##  [1] &quot;idencuesta&quot;     &quot;muestra&quot;        &quot;ola&quot;            &quot;comuna&quot;        
-##  [5] &quot;comunacod&quot;      &quot;just_educ&quot;      &quot;just_pension&quot;   &quot;just_salud&quot;    
-##  [9] &quot;des_perc&quot;       &quot;merit_effort&quot;   &quot;merit_talent&quot;   &quot;ahead_family&quot;  
-## [13] &quot;ahead_educ&quot;     &quot;ahead_ambition&quot; &quot;ahead_hardwork&quot; &quot;educ&quot;          
-## [17] &quot;educyear&quot;       &quot;quintil1&quot;       &quot;ess&quot;            &quot;pos_id&quot;        
-## [21] &quot;edad&quot;           &quot;sexo&quot;</code></pre>
+<pre><code>##  [1] &quot;idencuesta&quot;            &quot;muestra&quot;               &quot;ola&quot;                  
+##  [4] &quot;comuna&quot;                &quot;comunacod&quot;             &quot;ponderador_long_total&quot;
+##  [7] &quot;segmento&quot;              &quot;estrato&quot;               &quot;just_educ&quot;            
+## [10] &quot;just_pension&quot;          &quot;just_salud&quot;            &quot;des_perc&quot;             
+## [13] &quot;merit_effort&quot;          &quot;merit_talent&quot;          &quot;ahead_family&quot;         
+## [16] &quot;ahead_educ&quot;            &quot;ahead_ambition&quot;        &quot;ahead_hardwork&quot;       
+## [19] &quot;educ&quot;                  &quot;educyear&quot;              &quot;quintil1&quot;             
+## [22] &quot;ess&quot;                   &quot;pos_id&quot;                &quot;edad&quot;                 
+## [25] &quot;sexo&quot;</code></pre>
 <pre class="r"><code>dim(df_study1_long) #check dimensions of the dataframe</code></pre>
-<pre><code>## [1] 17568    22</code></pre>
+<pre><code>## [1] 17568    25</code></pre>
 <pre class="r"><code># Original dataset with 6 waves
 df_study2_long &lt;- df_study1_long
 
@@ -5556,7 +6028,7 @@ df_study1_long %&gt;%
   filter(ola %in% c(1,2,3,4,6)) %&gt;% 
   mutate(ola=factor(ola,levels = 1:6,labels = 1:6))
 dim(df_study1_long) #check, now is OK</code></pre>
-<pre><code>## [1] 14640    22</code></pre>
+<pre><code>## [1] 14640    25</code></pre>
 <pre class="r"><code>df_study1_long &lt;- 
 set_label(x = df_study1_long,
           label = get_label(select(df_study1,names(df_study1_long))))
@@ -5737,29 +6209,23 @@ Comuna (Codigo)
 6
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-just_educ
+ponderador_long_total
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education distributive justice
+Ponderador longitudinal (2016-2022). Muestra<br>completa
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3155 (21.55%)
+3130 (21.38%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-14.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4143<br>5703<br>616<br>878<br>145
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-36.07<br>49.66<br>5.36<br>7.64<br>1.26
 </td>
 </tr>
 <tr>
@@ -5767,29 +6233,23 @@ agree<br>Agree<br>Strongly agree
 7
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-just_pension
+segmento
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Pension distributive justice
+Segmento
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3165 (21.62%)
+3130 (21.38%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 110101-1420411</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3285<br>5053<br>998<br>1872<br>267
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-28.63<br>44.03<br>8.70<br>16.31<br>2.33
 </td>
 </tr>
 <tr>
@@ -5797,29 +6257,29 @@ agree<br>Agree<br>Strongly agree
 8
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-just_salud
+estrato
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Health distributive justice
+Estrato muestral
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3152 (21.53%)
+3130 (21.38%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
+1<br>2<br>3<br>4<br>5<br>6
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4451<br>5496<br>543<br>831<br>167
+2729<br>1451<br>1598<br>1667<br>2142<br>1923
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-38.74<br>47.84<br>4.73<br>7.23<br>1.45
+23.71<br>12.61<br>13.88<br>14.48<br>18.61<br>16.71
 </td>
 </tr>
 <tr>
@@ -5827,16 +6287,16 @@ agree<br>Agree<br>Strongly agree
 9
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-des_perc
+just_educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Income differences are too large
+Education distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3183 (21.74%)
+3155 (21.55%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -5846,10 +6306,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-202<br>506<br>452<br>4574<br>5723
+4143<br>5703<br>616<br>878<br>145
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.76<br>4.42<br>3.95<br>39.92<br>49.95
+36.07<br>49.66<br>5.36<br>7.64<br>1.26
 </td>
 </tr>
 <tr>
@@ -5857,16 +6317,16 @@ agree<br>Agree<br>Strongly agree
 10
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-merit_effort
+just_pension
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-People are rewarded for their efforts
+Pension distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3197 (21.84%)
+3165 (21.62%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -5876,10 +6336,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1286<br>5145<br>2189<br>2487<br>336
+3285<br>5053<br>998<br>1872<br>267
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-11.24<br>44.96<br>19.13<br>21.73<br>2.94
+28.63<br>44.03<br>8.70<br>16.31<br>2.33
 </td>
 </tr>
 <tr>
@@ -5887,13 +6347,73 @@ agree<br>Agree<br>Strongly agree
 11
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-merit_talent
+just_salud
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-People are rewarded for their intelligence
+Health distributive justice
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3152 (21.53%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+4451<br>5496<br>543<br>831<br>167
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+38.74<br>47.84<br>4.73<br>7.23<br>1.45
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+12
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+des_perc
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Income differences are too large
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+3183 (21.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+202<br>506<br>452<br>4574<br>5723
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1.76<br>4.42<br>3.95<br>39.92<br>49.95
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+13
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+merit_effort
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+People are rewarded for their efforts
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 3197 (21.84%)
@@ -5906,70 +6426,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1031<br>4396<br>2488<br>3164<br>364
+1286<br>5145<br>2189<br>2487<br>336
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9.01<br>38.42<br>21.74<br>27.65<br>3.18
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-12
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ahead_family
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-numeric
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Coming from a wealthy family
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4823 (32.94%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-488<br>925<br>4409<br>3450<br>545
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4.97<br>9.42<br>44.91<br>35.14<br>5.55
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-13
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ahead_educ
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-numeric
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Having a good level of education
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3355 (22.92%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1038<br>4156<br>1674<br>3585<br>832
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9.20<br>36.83<br>14.83<br>31.77<br>7.37
+11.24<br>44.96<br>19.13<br>21.73<br>2.94
 </td>
 </tr>
 <tr>
@@ -5977,16 +6437,16 @@ agree<br>Agree<br>Strongly agree
 14
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ahead_ambition
+merit_talent
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Having ambition
+People are rewarded for their intelligence
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3327 (22.73%)
+3197 (21.84%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -5996,10 +6456,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-721<br>3191<br>1441<br>4615<br>1345
+1031<br>4396<br>2488<br>3164<br>364
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6.37<br>28.21<br>12.74<br>40.79<br>11.89
+9.01<br>38.42<br>21.74<br>27.65<br>3.18
 </td>
 </tr>
 <tr>
@@ -6007,16 +6467,16 @@ agree<br>Agree<br>Strongly agree
 15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ahead_hardwork
+ahead_family
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Hard work
+Coming from a wealthy family
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3282 (22.42%)
+4823 (32.94%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -6026,10 +6486,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-208<br>882<br>1565<br>6986<br>1717
+488<br>925<br>4409<br>3450<br>545
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.83<br>7.77<br>13.78<br>61.51<br>15.12
+4.97<br>9.42<br>44.91<br>35.14<br>5.55
 </td>
 </tr>
 <tr>
@@ -6037,27 +6497,29 @@ agree<br>Agree<br>Strongly agree
 16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-educ
+ahead_educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-categorical
+numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education
+Having a good level of education
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-15 (0.10%)
+3355 (22.92%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Primary<br>High school<br>Technical<br>Universitary
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3280<br>6255<br>2415<br>2675
+1038<br>4156<br>1674<br>3585<br>832
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22.43<br>42.77<br>16.51<br>18.29
+9.20<br>36.83<br>14.83<br>31.77<br>7.37
 </td>
 </tr>
 <tr>
@@ -6065,23 +6527,29 @@ Primary<br>High school<br>Technical<br>Universitary
 17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-educyear
+ahead_ambition
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Education in years
+Having ambition
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-15 (0.10%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-19.1</em>
+3327 (22.73%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+721<br>3191<br>1441<br>4615<br>1345
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+6.37<br>28.21<br>12.74<br>40.79<br>11.89
 </td>
 </tr>
 <tr>
@@ -6089,27 +6557,29 @@ Education in years
 18
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-quintil1
+ahead_hardwork
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-categorical
+numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Household income quintile per capita (NA)
+Hard work
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
+3282 (22.42%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2790<br>2790<br>2790<br>2785<br>2785<br>695
+208<br>882<br>1565<br>6986<br>1717
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-19.06<br>19.06<br>19.06<br>19.03<br>19.03<br>4.75
+1.83<br>7.77<br>13.78<br>61.51<br>15.12
 </td>
 </tr>
 <tr>
@@ -6117,23 +6587,27 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ess
+educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-numeric
+categorical
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Subjective Social Status: individual
+Education
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-65 (0.44%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-10</em>
+15 (0.10%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Primary<br>High school<br>Technical<br>Universitary
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3280<br>6255<br>2415<br>2675
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+22.43<br>42.77<br>16.51<br>18.29
 </td>
 </tr>
 <tr>
@@ -6141,27 +6615,23 @@ Subjective Social Status: individual
 20
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-pos_id
+educyear
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-categorical
+numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Political identification
+Education in years
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-335 (2.29%)
+15 (0.10%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-19.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Left<br>Center<br>Right<br>Does not identify
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2915<br>3020<br>2045<br>6325
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20.38<br>21.11<br>14.30<br>44.22
 </td>
 </tr>
 <tr>
@@ -6169,13 +6639,13 @@ Left<br>Center<br>Right<br>Does not identify
 21
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-edad
+quintil1
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 categorical
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Age groups
+Household income quintile per capita (NA)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 5 (0.03%)
@@ -6183,13 +6653,13 @@ Age groups
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-18-29<br>30-49<br>50-64<br>65 or more
+Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2530<br>5785<br>4195<br>2125
+2790<br>2790<br>2790<br>2785<br>2785<br>695
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-17.29<br>39.53<br>28.66<br>14.52
+19.06<br>19.06<br>19.06<br>19.03<br>19.03<br>4.75
 </td>
 </tr>
 <tr>
@@ -6197,27 +6667,107 @@ Age groups
 22
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-sexo
+ess
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 numeric
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Sexo del entrevistado
+Subjective Social Status: individual
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+65 (0.44%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0-10</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+pos_id
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+categorical
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Political identification
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+335 (2.29%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Left<br>Center<br>Right<br>Does not identify
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+2915<br>3020<br>2045<br>6325
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+20.38<br>21.11<br>14.30<br>44.22
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+edad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+categorical
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Age groups
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+18-29<br>30-49<br>50-64<br>65 or more
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+2530<br>5785<br>4195<br>2125
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+17.29<br>39.53<br>28.66<br>14.52
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+25
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+sexo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Sexo del entrevistado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 Hombre<br>Mujer
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 5815<br>8820
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 39.73<br>60.27
 </td>
 </tr>
@@ -6237,14 +6787,17 @@ df_study1_long_t6 &lt;-
   filter(idencuesta %in% ids$val)
 
 names(df_study1_long_t6)</code></pre>
-<pre><code>##  [1] &quot;idencuesta&quot;     &quot;muestra&quot;        &quot;ola&quot;            &quot;comuna&quot;        
-##  [5] &quot;comunacod&quot;      &quot;just_educ&quot;      &quot;just_pension&quot;   &quot;just_salud&quot;    
-##  [9] &quot;des_perc&quot;       &quot;merit_effort&quot;   &quot;merit_talent&quot;   &quot;ahead_family&quot;  
-## [13] &quot;ahead_educ&quot;     &quot;ahead_ambition&quot; &quot;ahead_hardwork&quot; &quot;educ&quot;          
-## [17] &quot;educyear&quot;       &quot;quintil1&quot;       &quot;ess&quot;            &quot;pos_id&quot;        
-## [21] &quot;edad&quot;           &quot;sexo&quot;</code></pre>
+<pre><code>##  [1] &quot;idencuesta&quot;            &quot;muestra&quot;               &quot;ola&quot;                  
+##  [4] &quot;comuna&quot;                &quot;comunacod&quot;             &quot;ponderador_long_total&quot;
+##  [7] &quot;segmento&quot;              &quot;estrato&quot;               &quot;just_educ&quot;            
+## [10] &quot;just_pension&quot;          &quot;just_salud&quot;            &quot;des_perc&quot;             
+## [13] &quot;merit_effort&quot;          &quot;merit_talent&quot;          &quot;ahead_family&quot;         
+## [16] &quot;ahead_educ&quot;            &quot;ahead_ambition&quot;        &quot;ahead_hardwork&quot;       
+## [19] &quot;educ&quot;                  &quot;educyear&quot;              &quot;quintil1&quot;             
+## [22] &quot;ess&quot;                   &quot;pos_id&quot;                &quot;edad&quot;                 
+## [25] &quot;sexo&quot;</code></pre>
 <pre class="r"><code>dim(df_study1_long_t6)</code></pre>
-<pre><code>## [1] 8640   22</code></pre>
+<pre><code>## [1] 8640   25</code></pre>
 <pre class="r"><code>sjmisc::frq(df_study1_long_t6$ola)</code></pre>
 <pre><code>## Identificador de ola de encuesta (x) &lt;categorical&gt; 
 ## # total N=8640 valid N=8640 mean=3.20 sd=1.72
@@ -6422,26 +6975,20 @@ Comuna (Codigo)
 6
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-just_educ
+ponderador_long_total
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education distributive justice
+Ponderador longitudinal (2016-2022). Muestra<br>completa
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3155 (21.55%)
+3130 (21.38%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-14.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4143<br>5703<br>616<br>878<br>145
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-36.07<br>49.66<br>5.36<br>7.64<br>1.26
 </td>
 </tr>
 <tr>
@@ -6449,26 +6996,20 @@ agree<br>Agree<br>Strongly agree
 7
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-just_pension
+segmento
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Pension distributive justice
+Segmento
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3165 (21.62%)
+3130 (21.38%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 110101-1420411</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3285<br>5053<br>998<br>1872<br>267
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-28.63<br>44.03<br>8.70<br>16.31<br>2.33
 </td>
 </tr>
 <tr>
@@ -6476,26 +7017,26 @@ agree<br>Agree<br>Strongly agree
 8
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-just_salud
+estrato
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Health distributive justice
+Estrato muestral
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3152 (21.53%)
+3130 (21.38%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
+1<br>2<br>3<br>4<br>5<br>6
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4451<br>5496<br>543<br>831<br>167
+2729<br>1451<br>1598<br>1667<br>2142<br>1923
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-38.74<br>47.84<br>4.73<br>7.23<br>1.45
+23.71<br>12.61<br>13.88<br>14.48<br>18.61<br>16.71
 </td>
 </tr>
 <tr>
@@ -6503,13 +7044,13 @@ agree<br>Agree<br>Strongly agree
 9
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-des_perc
+just_educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Income differences are too large
+Education distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3183 (21.74%)
+3155 (21.55%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -6519,10 +7060,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-202<br>506<br>452<br>4574<br>5723
+4143<br>5703<br>616<br>878<br>145
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.76<br>4.42<br>3.95<br>39.92<br>49.95
+36.07<br>49.66<br>5.36<br>7.64<br>1.26
 </td>
 </tr>
 <tr>
@@ -6530,13 +7071,13 @@ agree<br>Agree<br>Strongly agree
 10
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-merit_effort
+just_pension
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-People are rewarded for their efforts
+Pension distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3197 (21.84%)
+3165 (21.62%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -6546,10 +7087,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1286<br>5145<br>2189<br>2487<br>336
+3285<br>5053<br>998<br>1872<br>267
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-11.24<br>44.96<br>19.13<br>21.73<br>2.94
+28.63<br>44.03<br>8.70<br>16.31<br>2.33
 </td>
 </tr>
 <tr>
@@ -6557,10 +7098,64 @@ agree<br>Agree<br>Strongly agree
 11
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-merit_talent
+just_salud
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-People are rewarded for their intelligence
+Health distributive justice
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3152 (21.53%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+4451<br>5496<br>543<br>831<br>167
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+38.74<br>47.84<br>4.73<br>7.23<br>1.45
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+12
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+des_perc
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Income differences are too large
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+3183 (21.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+202<br>506<br>452<br>4574<br>5723
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1.76<br>4.42<br>3.95<br>39.92<br>49.95
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+13
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+merit_effort
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+People are rewarded for their efforts
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 3197 (21.84%)
@@ -6573,64 +7168,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1031<br>4396<br>2488<br>3164<br>364
+1286<br>5145<br>2189<br>2487<br>336
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9.01<br>38.42<br>21.74<br>27.65<br>3.18
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-12
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ahead_family
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Coming from a wealthy family
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4823 (32.94%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-488<br>925<br>4409<br>3450<br>545
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4.97<br>9.42<br>44.91<br>35.14<br>5.55
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-13
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ahead_educ
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Having a good level of education
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3355 (22.92%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1038<br>4156<br>1674<br>3585<br>832
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9.20<br>36.83<br>14.83<br>31.77<br>7.37
+11.24<br>44.96<br>19.13<br>21.73<br>2.94
 </td>
 </tr>
 <tr>
@@ -6638,13 +7179,13 @@ agree<br>Agree<br>Strongly agree
 14
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ahead_ambition
+merit_talent
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Having ambition
+People are rewarded for their intelligence
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3327 (22.73%)
+3197 (21.84%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -6654,10 +7195,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-721<br>3191<br>1441<br>4615<br>1345
+1031<br>4396<br>2488<br>3164<br>364
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6.37<br>28.21<br>12.74<br>40.79<br>11.89
+9.01<br>38.42<br>21.74<br>27.65<br>3.18
 </td>
 </tr>
 <tr>
@@ -6665,13 +7206,13 @@ agree<br>Agree<br>Strongly agree
 15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ahead_hardwork
+ahead_family
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Hard work
+Coming from a wealthy family
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3282 (22.42%)
+4823 (32.94%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -6681,10 +7222,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-208<br>882<br>1565<br>6986<br>1717
+488<br>925<br>4409<br>3450<br>545
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.83<br>7.77<br>13.78<br>61.51<br>15.12
+4.97<br>9.42<br>44.91<br>35.14<br>5.55
 </td>
 </tr>
 <tr>
@@ -6692,24 +7233,26 @@ agree<br>Agree<br>Strongly agree
 16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-educ
+ahead_educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education
+Having a good level of education
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-15 (0.10%)
+3355 (22.92%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Primary<br>High school<br>Technical<br>Universitary
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3280<br>6255<br>2415<br>2675
+1038<br>4156<br>1674<br>3585<br>832
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22.43<br>42.77<br>16.51<br>18.29
+9.20<br>36.83<br>14.83<br>31.77<br>7.37
 </td>
 </tr>
 <tr>
@@ -6717,20 +7260,26 @@ Primary<br>High school<br>Technical<br>Universitary
 17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-educyear
+ahead_ambition
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Education in years
+Having ambition
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-15 (0.10%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-19.1</em>
+3327 (22.73%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+721<br>3191<br>1441<br>4615<br>1345
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+6.37<br>28.21<br>12.74<br>40.79<br>11.89
 </td>
 </tr>
 <tr>
@@ -6738,24 +7287,26 @@ Education in years
 18
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-quintil1
+ahead_hardwork
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Household income quintile per capita (NA)
+Hard work
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
+3282 (22.42%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2790<br>2790<br>2790<br>2785<br>2785<br>695
+208<br>882<br>1565<br>6986<br>1717
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-19.06<br>19.06<br>19.06<br>19.03<br>19.03<br>4.75
+1.83<br>7.77<br>13.78<br>61.51<br>15.12
 </td>
 </tr>
 <tr>
@@ -6763,20 +7314,24 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ess
+educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Subjective Social Status: individual
+Education
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-65 (0.44%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-10</em>
+15 (0.10%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Primary<br>High school<br>Technical<br>Universitary
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3280<br>6255<br>2415<br>2675
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+22.43<br>42.77<br>16.51<br>18.29
 </td>
 </tr>
 <tr>
@@ -6784,24 +7339,20 @@ Subjective Social Status: individual
 20
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-pos_id
+educyear
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Political identification
+Education in years
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-335 (2.29%)
+15 (0.10%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-19.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Left<br>Center<br>Right<br>Does not identify
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2915<br>3020<br>2045<br>6325
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20.38<br>21.11<br>14.30<br>44.22
 </td>
 </tr>
 <tr>
@@ -6809,10 +7360,10 @@ Left<br>Center<br>Right<br>Does not identify
 21
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-edad
+quintil1
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Age groups
+Household income quintile per capita (NA)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 5 (0.03%)
@@ -6820,13 +7371,13 @@ Age groups
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-18-29<br>30-49<br>50-64<br>65 or more
+Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2530<br>5785<br>4195<br>2125
+2790<br>2790<br>2790<br>2785<br>2785<br>695
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-17.29<br>39.53<br>28.66<br>14.52
+19.06<br>19.06<br>19.06<br>19.03<br>19.03<br>4.75
 </td>
 </tr>
 <tr>
@@ -6834,24 +7385,95 @@ Age groups
 22
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-sexo
+ess
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Sexo del entrevistado
+Subjective Social Status: individual
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+65 (0.44%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0-10</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+pos_id
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Political identification
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+335 (2.29%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Left<br>Center<br>Right<br>Does not identify
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+2915<br>3020<br>2045<br>6325
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+20.38<br>21.11<br>14.30<br>44.22
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+edad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Age groups
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 5 (0.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+18-29<br>30-49<br>50-64<br>65 or more
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+2530<br>5785<br>4195<br>2125
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+17.29<br>39.53<br>28.66<br>14.52
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+25
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+sexo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Sexo del entrevistado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5 (0.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 Hombre<br>Mujer
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 5815<br>8820
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 39.73<br>60.27
 </td>
 </tr>
@@ -7015,26 +7637,20 @@ Comuna (Codigo)
 6
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-just_educ
+ponderador_long_total
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education distributive justice
+Ponderador longitudinal (2016-2022). Muestra<br>completa
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-336 (3.89%)
+317 (3.67%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-14.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2973<br>4157<br>438<br>631<br>105
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-35.80<br>50.06<br>5.27<br>7.60<br>1.26
 </td>
 </tr>
 <tr>
@@ -7042,26 +7658,20 @@ agree<br>Agree<br>Strongly agree
 7
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-just_pension
+segmento
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Pension distributive justice
+Segmento
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-343 (3.97%)
+317 (3.67%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 110101-1420411</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2303<br>3693<br>711<br>1400<br>190
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-27.76<br>44.51<br>8.57<br>16.87<br>2.29
 </td>
 </tr>
 <tr>
@@ -7069,26 +7679,26 @@ agree<br>Agree<br>Strongly agree
 8
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-just_salud
+estrato
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Health distributive justice
+Estrato muestral
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-333 (3.85%)
+317 (3.67%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
+1<br>2<br>3<br>4<br>5<br>6
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
+Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
+Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3203<br>3981<br>392<br>613<br>118
+1929<br>1001<br>1171<br>1244<br>1461<br>1517
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-38.56<br>47.92<br>4.72<br>7.38<br>1.42
+23.18<br>12.03<br>14.07<br>14.95<br>17.55<br>18.23
 </td>
 </tr>
 <tr>
@@ -7096,13 +7706,13 @@ agree<br>Agree<br>Strongly agree
 9
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-des_perc
+just_educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Income differences are too large
+Education distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-350 (4.05%)
+336 (3.89%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -7112,10 +7722,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-144<br>356<br>309<br>3314<br>4167
+2973<br>4157<br>438<br>631<br>105
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.74<br>4.29<br>3.73<br>39.98<br>50.27
+35.80<br>50.06<br>5.27<br>7.60<br>1.26
 </td>
 </tr>
 <tr>
@@ -7123,13 +7733,13 @@ agree<br>Agree<br>Strongly agree
 10
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-merit_effort
+just_pension
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-People are rewarded for their efforts
+Pension distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-363 (4.20%)
+343 (3.97%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -7139,10 +7749,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-911<br>3731<br>1595<br>1796<br>244
+2303<br>3693<br>711<br>1400<br>190
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-11.01<br>45.08<br>19.27<br>21.70<br>2.95
+27.76<br>44.51<br>8.57<br>16.87<br>2.29
 </td>
 </tr>
 <tr>
@@ -7150,13 +7760,13 @@ agree<br>Agree<br>Strongly agree
 11
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-merit_talent
+just_salud
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-People are rewarded for their intelligence
+Health distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-362 (4.19%)
+333 (3.85%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -7166,10 +7776,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-730<br>3179<br>1833<br>2275<br>261
+3203<br>3981<br>392<br>613<br>118
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-8.82<br>38.40<br>22.14<br>27.48<br>3.15
+38.56<br>47.92<br>4.72<br>7.38<br>1.42
 </td>
 </tr>
 <tr>
@@ -7177,13 +7787,13 @@ agree<br>Agree<br>Strongly agree
 12
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ahead_family
+des_perc
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Coming from a wealthy family
+Income differences are too large
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1508 (17.45%)
+350 (4.05%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -7193,10 +7803,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-345<br>671<br>3219<br>2503<br>394
+144<br>356<br>309<br>3314<br>4167
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4.84<br>9.41<br>45.13<br>35.10<br>5.52
+1.74<br>4.29<br>3.73<br>39.98<br>50.27
 </td>
 </tr>
 <tr>
@@ -7204,13 +7814,13 @@ agree<br>Agree<br>Strongly agree
 13
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ahead_educ
+merit_effort
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Having a good level of education
+People are rewarded for their efforts
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-470 (5.44%)
+363 (4.20%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -7220,10 +7830,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-747<br>2951<br>1178<br>2665<br>629
+911<br>3731<br>1595<br>1796<br>244
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9.14<br>36.12<br>14.42<br>32.62<br>7.70
+11.01<br>45.08<br>19.27<br>21.70<br>2.95
 </td>
 </tr>
 <tr>
@@ -7231,13 +7841,13 @@ agree<br>Agree<br>Strongly agree
 14
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ahead_ambition
+merit_talent
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Having ambition
+People are rewarded for their intelligence
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-441 (5.10%)
+362 (4.19%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -7247,10 +7857,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-528<br>2300<br>1024<br>3347<br>1000
+730<br>3179<br>1833<br>2275<br>261
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6.44<br>28.05<br>12.49<br>40.82<br>12.20
+8.82<br>38.40<br>22.14<br>27.48<br>3.15
 </td>
 </tr>
 <tr>
@@ -7258,13 +7868,13 @@ agree<br>Agree<br>Strongly agree
 15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ahead_hardwork
+ahead_family
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Hard work
+Coming from a wealthy family
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-418 (4.84%)
+1508 (17.45%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -7274,10 +7884,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-140<br>634<br>1122<br>5092<br>1234
+345<br>671<br>3219<br>2503<br>394
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.70<br>7.71<br>13.65<br>61.93<br>15.01
+4.84<br>9.41<br>45.13<br>35.10<br>5.52
 </td>
 </tr>
 <tr>
@@ -7285,24 +7895,26 @@ agree<br>Agree<br>Strongly agree
 16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-educ
+ahead_educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education
+Having a good level of education
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.06%)
+470 (5.44%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Primary<br>High school<br>Technical<br>Universitary
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2010<br>3760<br>1325<br>1540
+747<br>2951<br>1178<br>2665<br>629
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-23.28<br>43.54<br>15.34<br>17.83
+9.14<br>36.12<br>14.42<br>32.62<br>7.70
 </td>
 </tr>
 <tr>
@@ -7310,20 +7922,26 @@ Primary<br>High school<br>Technical<br>Universitary
 17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-educyear
+ahead_ambition
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Education in years
+Having ambition
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.06%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-19.1</em>
+441 (5.10%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+528<br>2300<br>1024<br>3347<br>1000
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+6.44<br>28.05<br>12.49<br>40.82<br>12.20
 </td>
 </tr>
 <tr>
@@ -7331,24 +7949,26 @@ Education in years
 18
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-quintil1
+ahead_hardwork
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Household income quintile per capita (NA)
+Hard work
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+418 (4.84%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
+Strongly disagree<br>Disagree<br>Neither disagree nor
+agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1790<br>1740<br>1710<br>1590<br>1460<br>350
+140<br>634<br>1122<br>5092<br>1234
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20.72<br>20.14<br>19.79<br>18.40<br>16.90<br>4.05
+1.70<br>7.71<br>13.65<br>61.93<br>15.01
 </td>
 </tr>
 <tr>
@@ -7356,20 +7976,24 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ess
+educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Subjective Social Status: individual
+Education
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-20 (0.23%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-10</em>
+5 (0.06%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Primary<br>High school<br>Technical<br>Universitary
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+2010<br>3760<br>1325<br>1540
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23.28<br>43.54<br>15.34<br>17.83
 </td>
 </tr>
 <tr>
@@ -7377,24 +8001,20 @@ Subjective Social Status: individual
 20
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-pos_id
+educyear
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Political identification
+Education in years
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-175 (2.03%)
+5 (0.06%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-19.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Left<br>Center<br>Right<br>Does not identify
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1740<br>1810<br>1180<br>3735
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20.56<br>21.38<br>13.94<br>44.12
 </td>
 </tr>
 <tr>
@@ -7402,10 +8022,10 @@ Left<br>Center<br>Right<br>Does not identify
 21
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-edad
+quintil1
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Age groups
+Household income quintile per capita (NA)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 0 (0.00%)
@@ -7413,13 +8033,13 @@ Age groups
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-18-29<br>30-49<br>50-64<br>65 or more
+Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1380<br>3240<br>2825<br>1195
+1790<br>1740<br>1710<br>1590<br>1460<br>350
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-15.97<br>37.50<br>32.70<br>13.83
+20.72<br>20.14<br>19.79<br>18.40<br>16.90<br>4.05
 </td>
 </tr>
 <tr>
@@ -7427,24 +8047,95 @@ Age groups
 22
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-sexo
+ess
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Sexo del entrevistado
+Subjective Social Status: individual
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+20 (0.23%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0-10</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+pos_id
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Political identification
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+175 (2.03%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Left<br>Center<br>Right<br>Does not identify
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1740<br>1810<br>1180<br>3735
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+20.56<br>21.38<br>13.94<br>44.12
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+edad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Age groups
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 0 (0.00%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+18-29<br>30-49<br>50-64<br>65 or more
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1380<br>3240<br>2825<br>1195
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+15.97<br>37.50<br>32.70<br>13.83
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+25
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+sexo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Sexo del entrevistado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+0 (0.00%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 Hombre<br>Mujer
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 3075<br>5565
 </td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 35.59<br>64.41
 </td>
 </tr>
@@ -7472,7 +8163,7 @@ load(here::here(&quot;input/data-original/cit18.Rdata&quot;))
 load(here::here(&quot;input/data-original/cit19.Rdata&quot;))
 load(here::here(&quot;input/data-original/casen2017.Rdata&quot;))
 load(here::here(&quot;input/data-original/casen2022.Rdata&quot;))
-load(here::here(&quot;input/data-original/censo17.Rdata&quot;))
+#load(here::here(&quot;input/data-original/censo17.Rdata&quot;))
 load(here::here(&quot;input/data-original/elsoc_long.Rdata&quot;))
 
 df_ine &lt;- 
@@ -7588,6 +8279,37 @@ elsoc_long_2016_2022.2 %&gt;%
   select(comuna,comuna_cod,idencuesta) %&gt;% 
   left_join(x = .,y = df_19, by =&quot;idencuesta&quot;) %&gt;% 
   select(-idencuesta)
+
+df_cit_a &lt;- df_cit_a %&gt;%
+  mutate(comuna = ifelse(test = comuna==&quot;Ñunoa&quot;,
+                         yes = &quot;Nhunhoa&quot;,
+                         no =  comuna))
+
+df_cit_a &lt;- df_cit_a %&gt;%
+  mutate(comuna = ifelse(test = comuna==&quot;Vicuna&quot;,
+                         yes = &quot;Vicunha&quot;,
+                         no =  comuna))
+
+df_cit_a &lt;- df_cit_a %&gt;%
+  mutate(comuna = ifelse(test = comuna==&quot;Vina del mar&quot;,
+                         yes = &quot;Vinha del mar&quot;,
+                         no =  comuna))
+
+df_cit_a &lt;- df_cit_a %&gt;%
+  mutate(comuna = ifelse(test = comuna==&quot;Donihue&quot;,
+                         yes = &quot;Donhihue&quot;,
+                         no =  comuna))
+
+df_cit_a &lt;- df_cit_a %&gt;%
+  mutate(comuna = ifelse(test = comuna==&quot;Penaflor&quot;,
+                         yes = &quot;Penhaflor&quot;,
+                         no =  comuna))
+df_cit_a &lt;- df_cit_a %&gt;%
+  mutate(comuna = ifelse(test = comuna==&quot;Penalolen&quot;,
+                         yes = &quot;Penhalolen&quot;,
+                         no =  comuna))
+
+
 #check for duplicates
 df_cit_b &lt;- 
   df_cit_a %&gt;% distinct() %&gt;% arrange(comuna_cod, escolaridad)
@@ -7600,163 +8322,159 @@ df_cit &lt;-
   
 sjmisc::frq(df_cit$esc_cit17)</code></pre>
 <pre><code>## x &lt;numeric&gt; 
-## # total N=165 valid N=160 mean=9.35 sd=1.16
+## # total N=159 valid N=154 mean=9.34 sd=1.16
 ## 
 ## Value | N | Raw % | Valid % | Cum. %
 ## ------------------------------------
-##  6.51 | 1 |  0.61 |    0.63 |   0.63
-##  7.39 | 1 |  0.61 |    0.63 |   1.25
-##  7.62 | 1 |  0.61 |    0.63 |   1.88
-##  7.70 | 1 |  0.61 |    0.63 |   2.50
-##  7.71 | 1 |  0.61 |    0.63 |   3.12
-##  7.78 | 1 |  0.61 |    0.63 |   3.75
-##  7.84 | 1 |  0.61 |    0.63 |   4.38
-##  7.84 | 2 |  1.21 |    1.25 |   5.62
-##  7.90 | 2 |  1.21 |    1.25 |   6.88
-##  8.09 | 1 |  0.61 |    0.63 |   7.50
-##  8.11 | 1 |  0.61 |    0.63 |   8.13
-##  8.12 | 1 |  0.61 |    0.63 |   8.75
-##  8.16 | 1 |  0.61 |    0.63 |   9.38
-##  8.19 | 1 |  0.61 |    0.63 |  10.00
-##  8.19 | 1 |  0.61 |    0.63 |  10.63
-##  8.20 | 1 |  0.61 |    0.63 |  11.25
-##  8.21 | 1 |  0.61 |    0.63 |  11.88
-##  8.23 | 1 |  0.61 |    0.63 |  12.50
-##  8.27 | 1 |  0.61 |    0.63 |  13.12
-##  8.27 | 1 |  0.61 |    0.63 |  13.75
-##  8.30 | 1 |  0.61 |    0.63 |  14.38
-##  8.32 | 2 |  1.21 |    1.25 |  15.62
-##  8.33 | 1 |  0.61 |    0.63 |  16.25
-##  8.34 | 1 |  0.61 |    0.63 |  16.88
-##  8.39 | 1 |  0.61 |    0.63 |  17.50
-##  8.39 | 1 |  0.61 |    0.63 |  18.13
-##  8.41 | 1 |  0.61 |    0.63 |  18.75
-##  8.42 | 2 |  1.21 |    1.25 |  20.00
-##  8.43 | 2 |  1.21 |    1.25 |  21.25
-##  8.46 | 1 |  0.61 |    0.63 |  21.88
-##  8.49 | 1 |  0.61 |    0.63 |  22.50
-##  8.49 | 1 |  0.61 |    0.63 |  23.13
-##  8.50 | 1 |  0.61 |    0.63 |  23.75
-##  8.51 | 1 |  0.61 |    0.63 |  24.38
-##  8.51 | 1 |  0.61 |    0.63 |  25.00
-##  8.53 | 1 |  0.61 |    0.63 |  25.63
-##  8.57 | 1 |  0.61 |    0.63 |  26.25
-##  8.60 | 1 |  0.61 |    0.63 |  26.88
-##  8.64 | 1 |  0.61 |    0.63 |  27.50
-##  8.67 | 1 |  0.61 |    0.63 |  28.12
-##  8.68 | 1 |  0.61 |    0.63 |  28.75
-##  8.68 | 1 |  0.61 |    0.63 |  29.38
-##  8.69 | 1 |  0.61 |    0.63 |  30.00
-##  8.71 | 1 |  0.61 |    0.63 |  30.62
-##  8.72 | 2 |  1.21 |    1.25 |  31.88
-##  8.74 | 1 |  0.61 |    0.63 |  32.50
-##  8.77 | 1 |  0.61 |    0.63 |  33.13
-##  8.79 | 1 |  0.61 |    0.63 |  33.75
-##  8.82 | 1 |  0.61 |    0.63 |  34.38
-##  8.85 | 1 |  0.61 |    0.63 |  35.00
-##  8.85 | 1 |  0.61 |    0.63 |  35.62
-##  8.86 | 1 |  0.61 |    0.63 |  36.25
-##  8.88 | 1 |  0.61 |    0.63 |  36.88
-##  8.89 | 1 |  0.61 |    0.63 |  37.50
-##  8.90 | 1 |  0.61 |    0.63 |  38.13
-##  8.91 | 1 |  0.61 |    0.63 |  38.75
-##  8.91 | 1 |  0.61 |    0.63 |  39.38
-##  8.92 | 1 |  0.61 |    0.63 |  40.00
-##  8.92 | 1 |  0.61 |    0.63 |  40.62
-##  8.92 | 1 |  0.61 |    0.63 |  41.25
-##  8.96 | 1 |  0.61 |    0.63 |  41.88
-##  8.96 | 1 |  0.61 |    0.63 |  42.50
-##  8.97 | 1 |  0.61 |    0.63 |  43.12
-##  8.99 | 1 |  0.61 |    0.63 |  43.75
-##  9.01 | 1 |  0.61 |    0.63 |  44.38
-##  9.01 | 1 |  0.61 |    0.63 |  45.00
-##  9.02 | 1 |  0.61 |    0.63 |  45.63
-##  9.04 | 2 |  1.21 |    1.25 |  46.88
-##  9.05 | 1 |  0.61 |    0.63 |  47.50
-##  9.06 | 1 |  0.61 |    0.63 |  48.12
-##  9.08 | 1 |  0.61 |    0.63 |  48.75
-##  9.10 | 1 |  0.61 |    0.63 |  49.38
-##  9.10 | 1 |  0.61 |    0.63 |  50.00
-##  9.10 | 1 |  0.61 |    0.63 |  50.62
-##  9.12 | 1 |  0.61 |    0.63 |  51.25
-##  9.13 | 1 |  0.61 |    0.63 |  51.88
-##  9.15 | 1 |  0.61 |    0.63 |  52.50
-##  9.16 | 1 |  0.61 |    0.63 |  53.12
-##  9.18 | 1 |  0.61 |    0.63 |  53.75
-##  9.22 | 1 |  0.61 |    0.63 |  54.38
-##  9.26 | 1 |  0.61 |    0.63 |  55.00
-##  9.32 | 1 |  0.61 |    0.63 |  55.62
-##  9.36 | 1 |  0.61 |    0.63 |  56.25
-##  9.37 | 1 |  0.61 |    0.63 |  56.88
-##  9.38 | 1 |  0.61 |    0.63 |  57.50
-##  9.39 | 1 |  0.61 |    0.63 |  58.12
-##  9.41 | 1 |  0.61 |    0.63 |  58.75
-##  9.46 | 1 |  0.61 |    0.63 |  59.38
-##  9.48 | 1 |  0.61 |    0.63 |  60.00
-##  9.49 | 2 |  1.21 |    1.25 |  61.25
-##  9.49 | 1 |  0.61 |    0.63 |  61.88
-##  9.52 | 1 |  0.61 |    0.63 |  62.50
-##  9.52 | 1 |  0.61 |    0.63 |  63.13
-##  9.53 | 1 |  0.61 |    0.63 |  63.75
-##  9.55 | 1 |  0.61 |    0.63 |  64.38
-##  9.56 | 1 |  0.61 |    0.63 |  65.00
-##  9.60 | 1 |  0.61 |    0.63 |  65.62
-##  9.60 | 1 |  0.61 |    0.63 |  66.25
-##  9.60 | 1 |  0.61 |    0.63 |  66.88
-##  9.63 | 1 |  0.61 |    0.63 |  67.50
-##  9.66 | 1 |  0.61 |    0.63 |  68.12
-##  9.68 | 1 |  0.61 |    0.63 |  68.75
-##  9.70 | 1 |  0.61 |    0.63 |  69.38
-##  9.70 | 1 |  0.61 |    0.63 |  70.00
-##  9.71 | 1 |  0.61 |    0.63 |  70.62
-##  9.71 | 1 |  0.61 |    0.63 |  71.25
-##  9.74 | 1 |  0.61 |    0.63 |  71.88
-##  9.75 | 1 |  0.61 |    0.63 |  72.50
-##  9.76 | 1 |  0.61 |    0.63 |  73.13
-##  9.79 | 1 |  0.61 |    0.63 |  73.75
-##  9.81 | 1 |  0.61 |    0.63 |  74.38
-##  9.85 | 1 |  0.61 |    0.63 |  75.00
-##  9.87 | 1 |  0.61 |    0.63 |  75.63
-##  9.91 | 1 |  0.61 |    0.63 |  76.25
-##  9.91 | 1 |  0.61 |    0.63 |  76.88
-##  9.93 | 1 |  0.61 |    0.63 |  77.50
-##  9.97 | 1 |  0.61 |    0.63 |  78.12
-##  9.97 | 1 |  0.61 |    0.63 |  78.75
-## 10.02 | 1 |  0.61 |    0.63 |  79.38
-## 10.07 | 1 |  0.61 |    0.63 |  80.00
-## 10.09 | 1 |  0.61 |    0.63 |  80.62
-## 10.12 | 1 |  0.61 |    0.63 |  81.25
-## 10.15 | 1 |  0.61 |    0.63 |  81.88
-## 10.17 | 1 |  0.61 |    0.63 |  82.50
-## 10.18 | 1 |  0.61 |    0.63 |  83.12
-## 10.20 | 1 |  0.61 |    0.63 |  83.75
-## 10.31 | 1 |  0.61 |    0.63 |  84.38
-## 10.31 | 1 |  0.61 |    0.63 |  85.00
-## 10.34 | 1 |  0.61 |    0.63 |  85.63
-## 10.37 | 1 |  0.61 |    0.63 |  86.25
-## 10.45 | 1 |  0.61 |    0.63 |  86.88
-## 10.46 | 1 |  0.61 |    0.63 |  87.50
-## 10.47 | 1 |  0.61 |    0.63 |  88.13
-## 10.51 | 1 |  0.61 |    0.63 |  88.75
-## 10.52 | 1 |  0.61 |    0.63 |  89.38
-## 10.71 | 1 |  0.61 |    0.63 |  90.00
-## 10.77 | 1 |  0.61 |    0.63 |  90.62
-## 11.01 | 1 |  0.61 |    0.63 |  91.25
-## 11.15 | 1 |  0.61 |    0.63 |  91.88
-## 11.22 | 1 |  0.61 |    0.63 |  92.50
-## 11.27 | 1 |  0.61 |    0.63 |  93.12
-## 11.29 | 1 |  0.61 |    0.63 |  93.75
-## 11.44 | 1 |  0.61 |    0.63 |  94.38
-## 11.74 | 1 |  0.61 |    0.63 |  95.00
-## 11.94 | 1 |  0.61 |    0.63 |  95.62
-## 12.47 | 1 |  0.61 |    0.63 |  96.25
-## 12.61 | 1 |  0.61 |    0.63 |  96.88
-## 12.63 | 1 |  0.61 |    0.63 |  97.50
-## 12.65 | 1 |  0.61 |    0.63 |  98.13
-## 12.74 | 1 |  0.61 |    0.63 |  98.75
-## 12.98 | 1 |  0.61 |    0.63 |  99.38
-## 13.27 | 1 |  0.61 |    0.63 | 100.00
-##  &lt;NA&gt; | 5 |  3.03 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+##  6.51 | 1 |  0.63 |    0.65 |   0.65
+##  7.39 | 1 |  0.63 |    0.65 |   1.30
+##  7.62 | 1 |  0.63 |    0.65 |   1.95
+##  7.70 | 1 |  0.63 |    0.65 |   2.60
+##  7.71 | 1 |  0.63 |    0.65 |   3.25
+##  7.78 | 1 |  0.63 |    0.65 |   3.90
+##  7.84 | 1 |  0.63 |    0.65 |   4.55
+##  7.84 | 2 |  1.26 |    1.30 |   5.84
+##  7.90 | 2 |  1.26 |    1.30 |   7.14
+##  8.09 | 1 |  0.63 |    0.65 |   7.79
+##  8.11 | 1 |  0.63 |    0.65 |   8.44
+##  8.12 | 1 |  0.63 |    0.65 |   9.09
+##  8.16 | 1 |  0.63 |    0.65 |   9.74
+##  8.19 | 1 |  0.63 |    0.65 |  10.39
+##  8.19 | 1 |  0.63 |    0.65 |  11.04
+##  8.20 | 1 |  0.63 |    0.65 |  11.69
+##  8.21 | 1 |  0.63 |    0.65 |  12.34
+##  8.23 | 1 |  0.63 |    0.65 |  12.99
+##  8.27 | 1 |  0.63 |    0.65 |  13.64
+##  8.27 | 1 |  0.63 |    0.65 |  14.29
+##  8.30 | 1 |  0.63 |    0.65 |  14.94
+##  8.32 | 2 |  1.26 |    1.30 |  16.23
+##  8.33 | 1 |  0.63 |    0.65 |  16.88
+##  8.34 | 1 |  0.63 |    0.65 |  17.53
+##  8.39 | 1 |  0.63 |    0.65 |  18.18
+##  8.39 | 1 |  0.63 |    0.65 |  18.83
+##  8.41 | 1 |  0.63 |    0.65 |  19.48
+##  8.42 | 1 |  0.63 |    0.65 |  20.13
+##  8.43 | 1 |  0.63 |    0.65 |  20.78
+##  8.46 | 1 |  0.63 |    0.65 |  21.43
+##  8.49 | 1 |  0.63 |    0.65 |  22.08
+##  8.49 | 1 |  0.63 |    0.65 |  22.73
+##  8.50 | 1 |  0.63 |    0.65 |  23.38
+##  8.51 | 1 |  0.63 |    0.65 |  24.03
+##  8.51 | 1 |  0.63 |    0.65 |  24.68
+##  8.53 | 1 |  0.63 |    0.65 |  25.32
+##  8.57 | 1 |  0.63 |    0.65 |  25.97
+##  8.60 | 1 |  0.63 |    0.65 |  26.62
+##  8.64 | 1 |  0.63 |    0.65 |  27.27
+##  8.67 | 1 |  0.63 |    0.65 |  27.92
+##  8.68 | 1 |  0.63 |    0.65 |  28.57
+##  8.68 | 1 |  0.63 |    0.65 |  29.22
+##  8.69 | 1 |  0.63 |    0.65 |  29.87
+##  8.71 | 1 |  0.63 |    0.65 |  30.52
+##  8.72 | 2 |  1.26 |    1.30 |  31.82
+##  8.74 | 1 |  0.63 |    0.65 |  32.47
+##  8.77 | 1 |  0.63 |    0.65 |  33.12
+##  8.79 | 1 |  0.63 |    0.65 |  33.77
+##  8.82 | 1 |  0.63 |    0.65 |  34.42
+##  8.85 | 1 |  0.63 |    0.65 |  35.06
+##  8.85 | 1 |  0.63 |    0.65 |  35.71
+##  8.86 | 1 |  0.63 |    0.65 |  36.36
+##  8.88 | 1 |  0.63 |    0.65 |  37.01
+##  8.89 | 1 |  0.63 |    0.65 |  37.66
+##  8.90 | 1 |  0.63 |    0.65 |  38.31
+##  8.91 | 1 |  0.63 |    0.65 |  38.96
+##  8.91 | 1 |  0.63 |    0.65 |  39.61
+##  8.92 | 1 |  0.63 |    0.65 |  40.26
+##  8.92 | 1 |  0.63 |    0.65 |  40.91
+##  8.92 | 1 |  0.63 |    0.65 |  41.56
+##  8.96 | 1 |  0.63 |    0.65 |  42.21
+##  8.96 | 1 |  0.63 |    0.65 |  42.86
+##  8.97 | 1 |  0.63 |    0.65 |  43.51
+##  8.99 | 1 |  0.63 |    0.65 |  44.16
+##  9.01 | 1 |  0.63 |    0.65 |  44.81
+##  9.01 | 1 |  0.63 |    0.65 |  45.45
+##  9.02 | 1 |  0.63 |    0.65 |  46.10
+##  9.04 | 2 |  1.26 |    1.30 |  47.40
+##  9.05 | 1 |  0.63 |    0.65 |  48.05
+##  9.06 | 1 |  0.63 |    0.65 |  48.70
+##  9.08 | 1 |  0.63 |    0.65 |  49.35
+##  9.10 | 1 |  0.63 |    0.65 |  50.00
+##  9.10 | 1 |  0.63 |    0.65 |  50.65
+##  9.12 | 1 |  0.63 |    0.65 |  51.30
+##  9.13 | 1 |  0.63 |    0.65 |  51.95
+##  9.15 | 1 |  0.63 |    0.65 |  52.60
+##  9.16 | 1 |  0.63 |    0.65 |  53.25
+##  9.18 | 1 |  0.63 |    0.65 |  53.90
+##  9.22 | 1 |  0.63 |    0.65 |  54.55
+##  9.26 | 1 |  0.63 |    0.65 |  55.19
+##  9.32 | 1 |  0.63 |    0.65 |  55.84
+##  9.36 | 1 |  0.63 |    0.65 |  56.49
+##  9.37 | 1 |  0.63 |    0.65 |  57.14
+##  9.38 | 1 |  0.63 |    0.65 |  57.79
+##  9.39 | 1 |  0.63 |    0.65 |  58.44
+##  9.41 | 1 |  0.63 |    0.65 |  59.09
+##  9.48 | 1 |  0.63 |    0.65 |  59.74
+##  9.49 | 2 |  1.26 |    1.30 |  61.04
+##  9.49 | 1 |  0.63 |    0.65 |  61.69
+##  9.52 | 1 |  0.63 |    0.65 |  62.34
+##  9.52 | 1 |  0.63 |    0.65 |  62.99
+##  9.53 | 1 |  0.63 |    0.65 |  63.64
+##  9.55 | 1 |  0.63 |    0.65 |  64.29
+##  9.56 | 1 |  0.63 |    0.65 |  64.94
+##  9.60 | 1 |  0.63 |    0.65 |  65.58
+##  9.60 | 1 |  0.63 |    0.65 |  66.23
+##  9.60 | 1 |  0.63 |    0.65 |  66.88
+##  9.63 | 1 |  0.63 |    0.65 |  67.53
+##  9.66 | 1 |  0.63 |    0.65 |  68.18
+##  9.68 | 1 |  0.63 |    0.65 |  68.83
+##  9.70 | 1 |  0.63 |    0.65 |  69.48
+##  9.70 | 1 |  0.63 |    0.65 |  70.13
+##  9.71 | 1 |  0.63 |    0.65 |  70.78
+##  9.71 | 1 |  0.63 |    0.65 |  71.43
+##  9.74 | 1 |  0.63 |    0.65 |  72.08
+##  9.75 | 1 |  0.63 |    0.65 |  72.73
+##  9.76 | 1 |  0.63 |    0.65 |  73.38
+##  9.79 | 1 |  0.63 |    0.65 |  74.03
+##  9.81 | 1 |  0.63 |    0.65 |  74.68
+##  9.85 | 1 |  0.63 |    0.65 |  75.32
+##  9.87 | 1 |  0.63 |    0.65 |  75.97
+##  9.91 | 1 |  0.63 |    0.65 |  76.62
+##  9.91 | 1 |  0.63 |    0.65 |  77.27
+##  9.93 | 1 |  0.63 |    0.65 |  77.92
+##  9.97 | 1 |  0.63 |    0.65 |  78.57
+##  9.97 | 1 |  0.63 |    0.65 |  79.22
+## 10.02 | 1 |  0.63 |    0.65 |  79.87
+## 10.07 | 1 |  0.63 |    0.65 |  80.52
+## 10.09 | 1 |  0.63 |    0.65 |  81.17
+## 10.12 | 1 |  0.63 |    0.65 |  81.82
+## 10.15 | 1 |  0.63 |    0.65 |  82.47
+## 10.17 | 1 |  0.63 |    0.65 |  83.12
+## 10.18 | 1 |  0.63 |    0.65 |  83.77
+## 10.20 | 1 |  0.63 |    0.65 |  84.42
+## 10.31 | 1 |  0.63 |    0.65 |  85.06
+## 10.31 | 1 |  0.63 |    0.65 |  85.71
+## 10.37 | 1 |  0.63 |    0.65 |  86.36
+## 10.43 | 1 |  0.63 |    0.65 |  87.01
+## 10.45 | 1 |  0.63 |    0.65 |  87.66
+## 10.46 | 1 |  0.63 |    0.65 |  88.31
+## 10.51 | 1 |  0.63 |    0.65 |  88.96
+## 10.52 | 1 |  0.63 |    0.65 |  89.61
+## 10.71 | 1 |  0.63 |    0.65 |  90.26
+## 10.77 | 1 |  0.63 |    0.65 |  90.91
+## 11.01 | 1 |  0.63 |    0.65 |  91.56
+## 11.15 | 1 |  0.63 |    0.65 |  92.21
+## 11.22 | 1 |  0.63 |    0.65 |  92.86
+## 11.27 | 1 |  0.63 |    0.65 |  93.51
+## 11.29 | 1 |  0.63 |    0.65 |  94.16
+## 11.32 | 1 |  0.63 |    0.65 |  94.81
+## 11.94 | 1 |  0.63 |    0.65 |  95.45
+## 12.47 | 1 |  0.63 |    0.65 |  96.10
+## 12.61 | 1 |  0.63 |    0.65 |  96.75
+## 12.63 | 1 |  0.63 |    0.65 |  97.40
+## 12.65 | 1 |  0.63 |    0.65 |  98.05
+## 12.74 | 1 |  0.63 |    0.65 |  98.70
+## 12.98 | 1 |  0.63 |    0.65 |  99.35
+## 13.27 | 1 |  0.63 |    0.65 | 100.00
+##  &lt;NA&gt; | 5 |  3.14 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
 <pre class="r"><code># Select and organize variables________________________________________________
 df_study1_comunas &lt;- 
 df_cit %&gt;%
@@ -7872,7 +8590,7 @@ esc_cit17
 Escolarity average - CIT 2017 - Municipality<br>(using census tract)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (3.03%)
+5 (3.14%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 6.5-13.3</em>
@@ -7884,1564 +8602,6 @@ Escolarity average - CIT 2017 - Municipality<br>(using census tract)
 </tr>
 </table>
 </div>
-</div>
-<div id="merge-individual-contextual" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Merge individual &amp;
-contextual</h1>
-<pre class="r"><code>remove(list = ls()) # clean workspace
-# .rs.restartR() #restart R session
-if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;) # install pacman
-# load libraries
-pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
-
-load(file = here::here(&quot;input/data-proc/df_study1_long.RData&quot;))
-load(file = here::here(&quot;input/data-proc/df_study2_long.RData&quot;))
-load(file = here::here(&quot;input/data-proc/df_study1_long_t5.RData&quot;))
-load(file = here::here(&quot;input/data-proc/study_1_comunas.RData&quot;))
-load(file = here::here(&quot;input/data-proc/df_gini_comunas_wide.RData&quot;))
-load(file = here::here(&quot;input/data-proc/df_gini_comunas_long.RData&quot;))
-df_gini_comunas_wide &lt;-  df_gini_comunas_wide %&gt;% dplyr::rename(comunacod=COMUNA_COD) 
-df_gini_comunas_wide$comunacod &lt;- as.numeric(df_gini_comunas_wide$comunacod)
-
-
-df_study1_long_comunas &lt;- 
- dplyr::left_join(x = df_study1_long,
-                  y = df_study1_comunas, 
-                  by = &quot;comunacod&quot;) %&gt;% 
- dplyr::select(idencuesta:edad,sexo,
-               esc_cit17) %&gt;% 
- dplyr::rename(comuna=comuna.x)
-
-df_study1_long_comunas &lt;- 
- dplyr::left_join(x = df_study1_long_comunas,
-                  y = select(df_gini_comunas_wide, comunacod,starts_with(&quot;gini&quot;)), 
-                  by = c(&quot;comunacod&quot;))
-
-
-df_study2_long_comunas &lt;- 
- dplyr::left_join(x = df_study2_long,
-                  y = df_study1_comunas, 
-                  by = &quot;comunacod&quot;) %&gt;% 
- dplyr::select(idencuesta:edad,sexo,
-               esc_cit17) %&gt;% 
- dplyr::rename(comuna=comuna.x) 
-
-df_study2_long_comunas &lt;- 
- dplyr::left_join(x = df_study2_long_comunas,
-                  y = select(df_gini_comunas_wide, comunacod,starts_with(&quot;gini&quot;)), 
-                  by = c(&quot;comunacod&quot;))
-
-df_study_long_t5_comunas &lt;- 
- dplyr::left_join(x = df_study1_long_t5,
-                  y = df_study1_comunas, 
-                  by = &quot;comunacod&quot;) %&gt;% 
- dplyr::select(idencuesta:edad,sexo,
-               esc_cit17) %&gt;% 
- dplyr::rename(comuna=comuna.x) 
-
-
-# save data____________________________________________________________________
-save(df_study1_long_comunas,
-     file = here::here(&quot;input/data-proc/df_study1_long_comunas.RData&quot;))
-save(df_study2_long_comunas,
-     file = here::here(&quot;input/data-proc/df_study2_long_comunas.RData&quot;))
-save(df_study_long_t5_comunas,
-     file = here::here(&quot;input/data-proc/df_study_t5_ind_comunas.RData&quot;))
-
-# save codebook
-sjPlot::view_df(df_study1_long_comunas,
-        show.frq = T, 
-        show.prc = T, 
-        show.na = T,
-        file = here::here(&quot;output/df_study1_long_comunas.html&quot;))</code></pre>
-<table style="border-collapse:collapse; border:none;">
-<caption>
-Data frame: df_study1_long_comunas
-</caption>
-<tr>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-ID
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Name
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Label
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-missings
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Values
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Value Labels
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Freq.
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-%
-</th>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-idencuesta
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Folio identificador de participante
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 1101011-131230214</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-muestra
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Identificador de muestra de encuesta
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Muestra Original<br>Muestra Refresco
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-16150<br>0
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-100.00<br>0.00
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ola
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Identificador de ola de encuesta
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5<br>6
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3230<br>3230<br>3230<br>3230<br>0<br>3230
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-20.00<br>20.00<br>20.00<br>20.00<br>0.00<br>20.00
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-&lt;output omitted&gt;
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-<span style="omit" title="&#39;show.string.values = TRUE&#39; to show values.">&lt;output
-omitted&gt;</span>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-<span style="omit" title="&#39;show.string.values = TRUE&#39; to show values.">&lt;output
-omitted&gt;</span>
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-comunacod
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Comuna (Codigo)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 1101-16203</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-just_educ
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education distributive justice
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3488 (21.60%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4622<br>6285<br>673<br>927<br>155
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-36.50<br>49.64<br>5.32<br>7.32<br>1.22
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-7
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-just_pension
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Pension distributive justice
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3500 (21.67%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3660<br>5558<br>1107<br>2036<br>289
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-28.93<br>43.94<br>8.75<br>16.09<br>2.28
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-8
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-just_salud
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Health distributive justice
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3484 (21.57%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4956<br>6057<br>589<br>886<br>178
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-39.13<br>47.82<br>4.65<br>7.00<br>1.41
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-des_perc
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Income differences are too large
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3520 (21.80%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-218<br>543<br>493<br>4992<br>6384
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.73<br>4.30<br>3.90<br>39.52<br>50.55
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-10
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-merit_effort
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-People are rewarded for their efforts
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3535 (21.89%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1411<br>5710<br>2426<br>2703<br>365
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-11.19<br>45.26<br>19.23<br>21.43<br>2.89
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-11
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-merit_talent
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-People are rewarded for their intelligence
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3534 (21.88%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1139<br>4876<br>2755<br>3461<br>385
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9.03<br>38.65<br>21.84<br>27.43<br>3.05
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-12
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ahead_family
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Coming from a wealthy family
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5340 (33.07%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-509<br>989<br>4944<br>3782<br>586
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4.71<br>9.15<br>45.74<br>34.99<br>5.42
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-13
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ahead_educ
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Having a good level of education
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3696 (22.89%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1157<br>4644<br>1831<br>3931<br>891
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9.29<br>37.29<br>14.70<br>31.56<br>7.15
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-14
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ahead_ambition
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Having ambition
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3671 (22.73%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-798<br>3551<br>1598<br>5075<br>1457
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6.39<br>28.46<br>12.81<br>40.67<br>11.68
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-15
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ahead_hardwork
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Hard work
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3620 (22.41%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-220<br>963<br>1693<br>7732<br>1922
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.76<br>7.69<br>13.51<br>61.71<br>15.34
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-16
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-educ
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-15 (0.09%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Primary<br>High school<br>Technical<br>Universitary
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3575<br>6910<br>2705<br>2945
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22.16<br>42.83<br>16.76<br>18.25
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-17
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-educyear
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Education in years
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-15 (0.09%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-19.1</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-18
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-quintil1
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Household income quintile per capita (NA)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3105<br>3015<br>3105<br>3095<br>3060<br>765
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-19.23<br>18.67<br>19.23<br>19.17<br>18.95<br>4.74
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-19
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ess
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Subjective Social Status: individual
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-65 (0.40%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-10</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-pos_id
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Political identification
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-350 (2.17%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Left<br>Center<br>Right<br>Does not identify
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3240<br>3280<br>2345<br>6935
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20.51<br>20.76<br>14.84<br>43.89
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-21
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-edad
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Age groups
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-18-29<br>30-49<br>50-64<br>65 or more
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2810<br>6345<br>4640<br>2350
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-17.40<br>39.30<br>28.74<br>14.56
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-sexo
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Sexo del entrevistado
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Hombre<br>Mujer
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6395<br>9750
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-39.61<br>60.39
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-23
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-esc_cit17
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Escolarity average - CIT 2017 - Municipality<br>(using census tract)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 7.8-12.7</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-24
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-gini_ypch_2015
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2625 (16.25%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.3-0.5</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-25
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-gini_ypch_2017
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.3-0.6</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-26
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-gini_ypch_2022
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.3-0.5</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-27
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ginilag22_15
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2625 (16.25%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.1</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-28
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ginilag22_17
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.3-0.2</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-29
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ginilag17_15
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2625 (16.25%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.2</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-</table>
-<pre class="r"><code>sjPlot::view_df(df_study_long_t5_comunas,
-        show.frq = T, 
-        show.prc = T, 
-        show.na = T,
-        file = here::here(&quot;output/df_study_long_t5_comunas.html&quot;))</code></pre>
-<table style="border-collapse:collapse; border:none;">
-<caption>
-Data frame: df_study_long_t5_comunas
-</caption>
-<tr>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-ID
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Name
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Label
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-missings
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Values
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Value Labels
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-Freq.
-</th>
-<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
-%
-</th>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-idencuesta
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Folio identificador de participante
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 1101011-131230214</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-muestra
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Identificador de muestra de encuesta
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Muestra Original<br>Muestra Refresco
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-9555<br>0
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-100.00<br>0.00
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ola
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Identificador de ola de encuesta
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1911<br>1911<br>1911<br>1911<br>1911
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-20.00<br>20.00<br>20.00<br>20.00<br>20.00
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Comuna
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-&lt;output omitted&gt;
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-<span style="omit" title="&#39;show.string.values = TRUE&#39; to show values.">&lt;output
-omitted&gt;</span>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-<span style="omit" title="&#39;show.string.values = TRUE&#39; to show values.">&lt;output
-omitted&gt;</span>
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-comunacod
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Comuna (Codigo)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 1101-16203</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-cuestion_mig
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Identificador de grupo migrante consultado
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-321 (3.36%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Peruanos<br>Venezolanos<br>Haitianos
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-7369<br>1865<br>0
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-79.80<br>20.20<br>0.00
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-7
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-in_simpat
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Sympathy for [PER/VEN] living in Chile
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-970 (10.15%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Very little or not at all<br>A little<br>Somewhat<br>Quite a lot<br>A
-lot
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1072<br>1440<br>2863<br>2563<br>647
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-12.49<br>16.77<br>33.35<br>29.85<br>7.54
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-8
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-in_simili
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Similarity between Chileans and [PER/VEN]
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-722 (7.56%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Not similar<br>Slightly similar<br>Somewhat similar<br>Quite
-similar<br>Very similar
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2414<br>2178<br>2459<br>1341<br>441
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-27.33<br>24.66<br>27.84<br>15.18<br>4.99
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-in_ansied
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Interaction anxiety with [PER/VEN].
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-507 (5.31%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Very uncomfortable<br>Uncomfortable<br>Neither comfortable nor
-uncomfortable<br>Comfortable<br>Very comfortable
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-294<br>1442<br>2833<br>3983<br>496
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3.25<br>15.94<br>31.31<br>44.02<br>5.48
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-10
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-in_valfam
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Family value of migrant friends [PER/VEN]
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1415 (14.81%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-350<br>793<br>3439<br>3026<br>532
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4.30<br>9.74<br>42.25<br>37.17<br>6.54
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-11
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-in_valami
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Friends value of migrant friends [PER/VEN]
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1472 (15.41%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-342<br>801<br>3450<br>3034<br>456
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4.23<br>9.91<br>42.68<br>37.54<br>5.64
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-12
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-in_amsimb
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Loose of identity because of migrants (reverse)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-475 (4.97%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly agree<br>Agree<br>Neither disagree nor
-agree<br>Disagree<br>Strongly disagree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-665<br>2741<br>1289<br>3500<br>885
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-7.32<br>30.19<br>14.20<br>38.55<br>9.75
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-13
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-in_amreal
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Unemployment increases
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-466 (4.88%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-639<br>2641<br>1115<br>3638<br>1056
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-7.03<br>29.06<br>12.27<br>40.03<br>11.62
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-14
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-in_acpier
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Migrant keeping their customs
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-440 (4.60%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-148<br>754<br>1147<br>5556<br>1510
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1.62<br>8.27<br>12.58<br>60.95<br>16.57
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-15
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-in_acadop
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Adoption of Chilean customs
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-426 (4.46%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-151<br>758<br>1409<br>5638<br>1173
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1.65<br>8.30<br>15.43<br>61.76<br>12.85
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-16
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-in_amigcl
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-migrants [PER/VEN] have Chilean friends
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-420 (4.40%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2<br>3<br>4<br>5
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Strongly disagree<br>Disagree<br>Neither disagree nor
-agree<br>Agree<br>Strongly agree
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-91<br>223<br>1106<br>5757<br>1958
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1.00<br>2.44<br>12.11<br>63.02<br>21.43
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-17
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-conviviality
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Conviviality
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1997 (20.90%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 1.0-5.0</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-18
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-identity
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Identity
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-893 (9.35%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 1.0-5.0</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-19
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-educ
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Education
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Universitary<br>Technical<br>High school<br>Primary
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1840<br>1590<br>4165<br>1960
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-19.26<br>16.64<br>43.59<br>20.51
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-educyear
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Education in years
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-19.1</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-21
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-quintil1
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Household income quintile per capita (NA)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Q5<br>Q4<br>Q3<br>Q2<br>Q1<br>QNA
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1745<br>1790<br>1935<br>1770<br>1870<br>445
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-18.26<br>18.73<br>20.25<br>18.52<br>19.57<br>4.66
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ess
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Subjective Social Status: individual (reverse)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-25 (0.26%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-10</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-23
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-nation_t1
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Nationality
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5 (0.05%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Chilean<br>Peruvian<br>Argentina<br>Colombian<br>Bolivian<br>Haitian<br>Spanish<br>Other
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-9375<br>95<br>5<br>25<br>5<br>5<br>0<br>40
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-98.17<br>0.99<br>0.05<br>0.26<br>0.05<br>0.05<br>0.00<br>0.42
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-24
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-know_inm_t1t4
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Know migrants (diff. t4 - t1)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-470 (4.92%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Stable, do not know<br>Stable, know<br>Now know<br>No longer know
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4965<br>1155<br>1210<br>1755
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-54.65<br>12.71<br>13.32<br>19.32
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-25
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-frien_inm_t1t4
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Have migrant friends (diff. t4 - t1)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-480 (5.02%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Stable, do not have friends<br>Stable, have friends<br>Now have
-friends<br>No longer have friends
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6235<br>655<br>990<br>1195
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-68.71<br>7.22<br>10.91<br>13.17
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-26
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-pos_id
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Political identification
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-170 (1.78%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Left<br>Center<br>Right<br>Does not identify
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1995<br>1925<br>1385<br>4080
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-21.26<br>20.51<br>14.76<br>43.47
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-27
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-edad
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Age groups
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-18-29<br>30-49<br>50-64<br>65 or more
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1495<br>3750<br>3005<br>1305
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-15.65<br>39.25<br>31.45<br>13.66
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-28
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-sexo
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Sexo del entrevistado
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1<br>2
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-Hombre<br>Mujer
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3425<br>6130
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-35.85<br>64.15
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-29
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-esc_cit17
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-Escolarity average - CIT 2017 - Municipality<br>(using census tract)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 7.8-12.7</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-</table>
 </div>
 
 
