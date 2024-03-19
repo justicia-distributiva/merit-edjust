@@ -59,7 +59,8 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                tidyverse,
                ggalluvial,
                survey,
-               shadowtext
+               shadowtext,
+               srvyr
                )
 load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 
@@ -96,7 +97,7 @@ st_options(lang = "en",
 
 # Df variables nivel 1 _________________________________________________________
 df_study1 <- df_study_long_t6_comunas %>% dplyr::select(ola,
-                                               just_educ, des_perc, merit_effort, merit_talent,
+                                               just_educ, des_perc, merit_talent, merit_effort,
                                                educ, quintil1:sexo)
 
 df_study1$ola <- factor(df_study1$ola,
@@ -145,7 +146,7 @@ sjlabelled::set_label(x = df_study1$merit_talent,
 lab_study1 <- sjlabelled::get_label(df_study1) 
 df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
 
-df<- dfSummary(x = dplyr::select(df_study1, ola, just_educ, des_perc, merit_effort, merit_talent, educ, quintil1, ess, pos_id, edad, sexo),
+df<- dfSummary(x = dplyr::select(df_study1, ola, just_educ, des_perc, merit_talent, merit_effort, educ, quintil1, ess, pos_id, edad, sexo),
                plain.ascii = FALSE,
                style = "grid",
                tmp.img.dir = "/tmp",
@@ -168,14 +169,17 @@ webshot::webshot(url =here::here("output/tables/desc02.html"),
 ```
 
 ```{r}
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 df_study1 <- df_study_long_t6_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
                                                just_educ, des_perc, merit_effort, merit_talent,
                                                educ, quintil1:sexo)
 df_study1 <- df_study1[complete.cases(df_study1$segmento), ]
 
 df_study1$just_educ <- factor(df_study1$just_educ,
-         labels = c("Strongly disagree", "Disagree", "Neither agree
-nor disagree", "Agree", "Strongly agree"))
+         labels = c("Strongly 
+disagree", "Disagree", "Neither agree
+nor disagree", "Agree", "Strongly 
+agree"))
 
 elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
                           strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
@@ -190,6 +194,8 @@ datos.justeduc <- data.frame((svytable(~just_educ + ola + idencuesta, elsoc_dise
 #Paso 2
 etiquetas.justeduc <- data.frame((svytable(~just_educ + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
   mutate(idencuesta = 1)
+datos.justeduc$just_educ <- factor(datos.justeduc$just_educ, levels = rev(levels(datos.justeduc$just_educ)))
+etiquetas.justeduc$just_educ <- factor(etiquetas.justeduc$just_educ, levels = rev(levels(etiquetas.justeduc$just_educ)))
 ```
 
 ```{r alluvial}
@@ -200,18 +206,20 @@ alluvial_justeduc <- ggplot(datos.justeduc, aes(x = ola, fill = just_educ, strat
     scale_y_continuous(labels = scales::percent) + 
     ylab(label = NULL) +
     xlab(label = NULL) + 
-    theme(legend.position = 'top',
+    theme(#legend.position = 'top',
           legend.title = element_blank(),
           plot.caption = element_text(hjust = 0)) +
-    scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
+    scale_fill_manual(values = colors) +
     geom_shadowtext(data = etiquetas.justeduc, 
-              aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
+              aes(label = ifelse(porcentaje > 0 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
               size = 4,
               color = rep('white'),
               bg.colour='grey30')+
   scale_x_discrete(labels = c(2016, 2017, 2018, 2019, 2022))
+
+
 
 alluvial_justeduc
 
@@ -225,7 +233,7 @@ df_study1 <- df_study_long_t6_comunas %>% dplyr::select(idencuesta, ola, pondera
                                                just_educ, des_perc, merit_effort, merit_talent,
                                                educ, quintil1:sexo)
 merit_plot <- df_study1 %>% 
-  select(merit_talent, merit_effort, des_perc, just_educ) %>% 
+  select(merit_effort, merit_talent, des_perc, just_educ) %>% 
   sjPlot::plot_stackfrq(weight.by = df_study1$ponderador_long_total,
                         expand.grid =TRUE,
                       geom.colors = "PuBu",
@@ -233,17 +241,19 @@ merit_plot <- df_study1 %>%
                       vjust=rep(c("bottom", "top", "bottom", "top", "bottom"),4),
                       legend.labels = c("Strongly disagree", "Disagree", "Neither agree
 nor disagree", "Agree", "Strongly agree"),
-                      axis.labels = c("Merit talent", "Merit effort", "Inequality perception", "Justification of educational inequality")
+                      axis.labels = c("Merit effort", "Merit talent", "Inequality 
+perception", "Justification of 
+educational inequality")
                       ) +
   theme_light() +
   theme(legend.position="bottom", text = element_text(size = 14))
 merit_plot
 
-ggsave(merit_plot, file="output/graphs/merit_plot.png", height = 7, width = 8)
+ggsave(merit_plot, file="output/graphs/merit_plot.png", height = 6, width = 10)
 ```
 
 ```{r}
-colors<- c("#f1eef6ff","#bdc9e1ff","#b3b3b3ff","#74a9cfff","#0570b0ff")
+
 range <- c(1, 1) 
 
 p_just_educ<-
@@ -413,79 +423,166 @@ Bivariate descriptive by year
 probar ponderadores longitudinales
 
 ```{r}
-educ_effort_year = elsoc_diseno %>% filter(!is.na(merit_effort)) %>% 
-  group_by(ola, merit_effort) %>%
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
+df_study1 <- df_study_long_t6_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
+                                               just_educ, des_perc, merit_effort, merit_talent,
+                                               educ, quintil1:sexo)
+df_study1 <- df_study1[complete.cases(df_study1$segmento), ]
+
+elsoc_diseno <- as_survey_design(df_study1,
+                                 ids = segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ponderador_long_total, #ponderador longitudinal
+                          nest = TRUE
+                          )
+
+just_years_mean = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
+  group_by(ola) %>%
   summarise(education = survey_mean(just_educ, vartype = "ci", na.rm = T)) %>% 
   ungroup()
 
-educ_talent_year = elsoc_diseno %>% filter(!is.na(merit_talent)) %>% 
-  group_by(ola, merit_talent) %>%
-  summarise(education = survey_mean(just_educ, vartype = "ci", na.rm = T)) %>% 
+just_years <- just_years_mean %>% 
+  pivot_longer(cols = c("education"), 
+               names_to = "variable",
+               values_to = "value") %>% 
+  cbind(type=c("Dependent")) %>% 
+  select(ola, variable, value, type, value_upp=education_upp, value_low=education_low)
+
+ineq_years = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
+  group_by(ola) %>%
+  summarise(inequality = survey_mean(des_perc, vartype = "ci", na.rm = T),
+            ) %>% 
   ungroup()
 
-categorias_x <- c("Strongly disagree", "Disagree", "Neither agree 
-nor disagree", "Agree", "Strongly agree")
-categorias_f <- c(2016, 2017, 2018, 2019, 2022)
+ineq_years <- ineq_years %>% 
+  pivot_longer(cols = c(
+                        "inequality"), 
+               names_to = "variable",
+               values_to = "value") %>% 
+  cbind(type=c("Independent")) %>% 
+  select(ola, variable, value, type, value_upp=inequality_upp, value_low=inequality_low)
 
-effort_educ_year_plot <- educ_effort_year %>% 
-  ggplot(aes(factor(merit_effort), education, color = factor(ola), shape = factor(ola))) +
-  theme_bw(base_size = 14) +
-  geom_point(size = 4)+ 
-  ylab("Justification of inequality") +
-  xlab("Merit: effort") +
-  ylim(1, 3) +
-  scale_x_discrete(labels = categorias_x) +
-  scale_color_discrete(labels = categorias_f, name="Wave") +
-  scale_shape_discrete(labels = categorias_f, name="Wave")
+talent_years = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
+  group_by(ola) %>%
+  summarise(
+            talent = survey_mean(merit_talent, vartype = "ci", na.rm = T)) %>% 
+  ungroup()
 
-effort_educ_year_plot
+talent_years <- talent_years %>% 
+  pivot_longer(cols = c(
+                        "talent"), 
+               names_to = "variable",
+               values_to = "value") %>% 
+  cbind(type=c("Independent")) %>% 
+  select(ola, variable, value, type, value_upp=talent_upp, value_low=talent_low)
 
-talent_educ_year_plot <- educ_talent_year %>% 
-  ggplot(aes(factor(merit_talent), education, color = factor(ola), shape = factor(ola))) +
+effort_years = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
+  group_by(ola) %>%
+  summarise(
+            effort = survey_mean(merit_effort, vartype = "ci", na.rm = T)) %>% 
+  ungroup()
+
+effort_years <- effort_years %>% 
+  pivot_longer(cols = c(
+                        "effort"), 
+               names_to = "variable",
+               values_to = "value") %>% 
+  cbind(type=c("Independent")) %>% 
+  select(ola, variable, value, type, value_upp=effort_upp, value_low=effort_low)
+  
+
+vars_years <- rbind(just_years, ineq_years, talent_years, effort_years)
+
+
+categorias_x <- c(2016, 2017, 2018, 2019, 2022)
+vars_years$variable <- factor(vars_years$variable, levels = c("education", "inequality", "talent", "effort"), labels=  c("Justification
+educational
+inequality
+(dependent)", "Inequality
+perception", "Merit: Talent", "Merit: Effort"),
+ordered = TRUE)
+
+
+
+categorias_z <- c("Justification
+educational
+inequality
+(dependent)", "Inequality
+perception
+(independent)", "Merit: Talent
+(independent)", "Merit: Effort
+(independent)")
+
+## Crear el gráfico principal
+years_plot <- ggplot(vars_years, aes(ola, value, color = variable, shape = variable)) +
   theme_bw(base_size = 14) +
   geom_point(size = 4) +
-  ylab("Justification of inequality") +
-  xlab("Merit: talent") +
-  ylim(1, 3) +
+  geom_line(aes(group = variable)) +
+  geom_errorbar(aes(ymin = value_low, ymax = value_upp), width = 0.2) +
+  ylab("Mean") +
+  xlab("Wave") +
+  ylim(1, 5) +
   scale_x_discrete(labels = categorias_x) +
-  scale_color_discrete(labels = categorias_f, name="Wave") +
-  scale_shape_discrete(labels = categorias_f, name="Wave")
+  scale_color_discrete(labels = categorias_z, name = "Variable") +
+  scale_shape_manual(labels = categorias_z, name = "Variable", values = c("square", "circle", "triangle", "diamond")) +
+  theme(legend.position = "none") +  # Desactivar la leyenda por ahora
+  coord_cartesian(xlim = c(1, 6)) +  # Ampliar el eje x
+  scale_x_discrete(labels = c(2016, 2017, 2018, 2019, 2022, ""))  # Personalizar etiquetas del eje x
 
+# Obtener los datos para etiquetar las líneas
+label_data <- vars_years %>%
+  group_by(variable) %>%
+  filter(row_number() == n()) %>%
+  ungroup() %>%
+  mutate(label_x = 5.5, label_y = value)
 
-talent_educ_year_plot
+# Añadir etiquetas personalizadas
+years_plot <- years_plot +
+  geom_point(data = label_data, aes(label_x - 0.05, label_y, color = variable, shape = variable), size = 4) +  # Capa de puntos para los símbolos de forma
+  geom_text(data = label_data, aes(label_x, label_y, label = variable), color = "black", hjust = 0, nudge_x = 0.05, nudge_y = 0, size = 4)  # Etiquetas
 
-ggsave(effort_educ_year_plot, file="output/graphs/effort_educ_year.png", height = 7, width = 7)
-ggsave(talent_educ_year_plot, file="output/graphs/talent_educ_year.png", height = 7, width = 7)
+years_plot
 
+ggsave("output/graphs/years_plot.png", plot = years_plot, height = 7, width = 7, dpi = 300)
 
-educ_effort_year <- educ_effort_year %>% pivot_longer("merit_effort", 
-                              names_to="merit", 
-                              values_to="value")
-
-educ_talent_year <- educ_talent_year %>% pivot_longer("merit_talent", 
-                              names_to="merit", 
-                              values_to="value")
-
-educ_merit_year <- rbind(educ_effort_year, educ_talent_year)
-
-custom_labeller <- as_labeller(function(variable, value) {
-  return(categorias_f[value])
-})
-categorias_z <- c("Effort", "Talent")
-merit_educ_year <- educ_merit_year %>% 
-  ggplot(aes(factor(value), education)) +
-  theme_bw(base_size = 14) +
-  geom_point(aes(color=merit, shape=merit), size=3) +
-  ylab("Justification of inequality") +
-  xlab("Merit") +
-  ylim(1, 3) +
-  facet_wrap(~factor(ola), scales = "free", labeller = custom_labeller) +
-  scale_color_discrete(labels = categorias_z, name="Merit") +
-  scale_shape_discrete(labels = categorias_z, name="Merit")
-merit_educ_year
-
-ggsave(merit_educ_year, file="output/graphs/merit_educ_year.png", height = 7, width = 7)
 ```
+
+```{r}
+# Calcular cuantiles para las variables
+
+boxplot <- df_study_long_t6_comunas %>% select(just_educ, des_perc, merit_talent, merit_effort, ola) %>% as.data.frame()
+
+boxplot <- boxplot %>% 
+  pivot_longer(cols = c("just_educ", 
+                        "des_perc", 
+                        "merit_talent", 
+                        "merit_effort"), 
+               names_to = "variable",
+               values_to = "value") %>% na.omit()
+
+boxplot$variable <- factor(boxplot$variable,
+                   levels = c("just_educ", 
+                        "des_perc", 
+                        "merit_talent", 
+                        "merit_effort"),
+                   labels = c("Justification
+educational
+inequality", "Inequality
+perception", "Merit: Talent", "Merit: Effort"))
+
+boxplot_plot <- boxplot %>%
+  ggplot(aes(x = as.factor(ola), y = value, fill=variable, color=variable)) + 
+  geom_boxplot() +
+  scale_y_continuous(name = "Value", limits = c(1, 5)) +
+  scale_x_discrete(name = "Wave", labels=categorias_x) +
+  labs(fill = "Variable", color = "Variable") +
+  theme_bw() +
+  theme(axis.text.x = element_text(margin = margin(b = 15)))
+boxplot_plot
+
+ggsave(boxplot_plot, file="output/graphs/boxplot_plot.png", height = 7, width = 7)
+```
+
 
 
 ## Correlation
@@ -1110,11 +1207,11 @@ df_study1 <-
 # Hipotesis
 h0 <- "ola"
 h1 <- "ola_num+ola_2"
-h2 <- "ola_num+ola_2+des_perc"
-h3 <- "ola_num+ola_2+des_perc+merit_talent"
-h4 <- "ola_num+ola_2+des_perc+merit_talent+merit_effort"
-h5 <- "ola_num+ola_2+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo"
-
+h2 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo"
+h3 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id"
+h4 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc"
+h5 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent"
+h6 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
 
 # A. Education distributive justice
 educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
@@ -1124,12 +1221,13 @@ educ2 <- lmer(formula(paste0("just_educ~",h2,"+(1|idencuesta)")),data = df_study
 educ3 <- lmer(formula(paste0("just_educ~",h3,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 educ4 <- lmer(formula(paste0("just_educ~",h4,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 educ5 <- lmer(formula(paste0("just_educ~",h5,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 # Table 1: individual
 
 omit <- "(education)|(ess)"
-texreg::htmlreg(list(educ0, educ1, educ2, educ3, educ4, educ5),
-                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. Model 6 is controlled by educational level, and subjective social status with no significant effects.", 
+texreg::htmlreg(list(educ0, educ1, educ2, educ3, educ4, educ5, educ6),
+                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. Model 3 to 7 are controlled by educational level, and subjective social status with no significant effects.", 
                 omit.coef = omit,
                 custom.coef.names = c("Intercept",
                                       "Wave 2017 <br> <i>(Ref. Wave 2016)</i>",
@@ -1138,21 +1236,21 @@ texreg::htmlreg(list(educ0, educ1, educ2, educ3, educ4, educ5),
                                       "Wave 2022",
                                       "Wave",
                                       "Wave^2",
-                                      "Inequality perception",
-                                      "Merit: Talent",
-                                      "Merit: effort",
                                       "Quintile 2 <br> <i>(Ref. Quintile 1)</i>",
                                       "Quintile 3",
                                       "Quintile 4",
                                       "Quintile 5",
                                       "Quintile NA",
+                                      "Age 30-49 <br> <i>(Ref. 18-29)</i>",
+                                      "Age 50-64",
+                                      "Age 65 o más",
+                                      "Gender <br> <i>(Ref. Male)</i>",
                                       "Pol. pos: Center <br> <i>(Ref. Left)</i>",
                                       "Pol. pos: Right",
                                       "Pol. pos: Does not identify",
-                                      "Edad 30-49 <br> <i>(Ref. 18-29)</i>",
-                                      "Edad 50-64",
-                                      "Edad 65 o más",
-                                      "Sexo <br> <i>(Ref. Male)</i>"),
+                                      "Inequality perception",
+                                      "Merit: Talent",
+                                      "Merit: effort" ),
                 file = "output/tables/table1-individuales-pond-v2.html")
           #omit.coef = omit
 
@@ -1182,82 +1280,47 @@ df_study1 <-
   df_study_long_t6_comunas %>%
   select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent,education=educ,quintil1:sexo) %>% 
   na.omit() %>% 
-  mutate(ola = as.factor(ola),
+  mutate(ola = as.numeric(ola),
          ola_2=as.numeric(ola)^2,
-         sexo=as.factor(sexo)
+         sexo=as.factor(sexo),
+         edad=as.numeric(edad)
+         #pos_id=as.numeric(pos_id)
          )
-# Hipotesis
-h1b <- "ola+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo"
-h2b <- "ola+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*des_perc"
-h3b <- "ola+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*merit_talent"
-h4b <- "ola+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*merit_effort"
-h5b <- "ola+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*pos_id"
-h6b <- "ola+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*edad"
 
-# A. Education distributive justice
-educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ2 <- lmer(formula(paste0("just_educ~",h2b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ5 <- lmer(formula(paste0("just_educ~",h5b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ6 <- lmer(formula(paste0("just_educ~",h6b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+# Hipotesis
+h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+h2b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*des_perc"
+h3b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*merit_talent"
+h4b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*merit_effort"
+h5b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*edad"
+h6b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*sexo"
+
+# A. justification educational inequality
+educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+I(ola_2)|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ2 <- lmer(formula(paste0("just_educ~",h2b,"+(ola+I(ola_2)+des_perc|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(ola+I(ola_2)+merit_talent|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(ola+I(ola_2)+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ5 <- lmer(formula(paste0("just_educ~",h5b,"+(ola+I(ola_2)+edad|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ6 <- lmer(formula(paste0("just_educ~",h6b,"+(ola+I(ola_2)+sexo|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 # table 3: interacciones
-omit <- "(education)|(ess)|(quintil1)|(sexo)"
-texreg::htmlreg(list(educ2,educ3,educ4,educ5,educ6),
-                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. All the models are controlled by educational level, age, gender, subjective social status, political position, and income quintile",
+omit <- "(education)|(ess)|(quintil1)|(pos_id)"
+texreg::htmlreg(list(educ1,educ2,educ3,educ4,educ5,educ6),
+                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. All the models are controlled by educational level, subjective social status, political position, and income quintile",
                 omit.coef = omit,
                 custom.coef.names = c("Intercept",
-                                      "Wave 2017 <br> <i>(Ref. Wave 2016)</i>",
-                                      "Wave 2018",
-                                      "Wave 2019",
-                                      "Wave 2022",
+                                      "Wave",
+                                      "Wave^2",
+                                      "Age",
+                                      "Gender <br> <i>(Ref. Male)</i>",
                                       "Inequality perception",
                                       "Merit: Talent",
                                       "Merit: effort",
-                                      "Pol. pos: Center <br> <i>(Ref. Left)</i>",
-                                      "Pol. pos: Right",
-                                      "Pol. pos: Does not identify",
-                                      "Edad 30-49 <br> <i>(Ref. 18-29)</i>",
-                                      "Edad 50-64",
-                                      "Edad 65 o más",
-                                      "2017*inequality perception",
-                                      "2018*inequality perception",
-                                      "2019*inequality perception",
-                                      "2022*inequality perception",
-                                      "2017*merit:talent",
-                                      "2018*merit:talent",
-                                      "2019*merit:talent",
-                                      "2022*merit:talent",
-                                      "2017*merit:effort",
-                                      "2018*merit:effort",
-                                      "2019*merit:effort",
-                                      "2022*merit:effort",
-                                      "2017*Center",
-                                      "2018*Center",
-                                      "2019*Center",
-                                      "2022*Center",
-                                      "2017*Right",
-                                      "2018*Right",
-                                      "2019*Right",
-                                      "2022*Right",
-                                      "2017*Not identify",
-                                      "2018*Not identify",
-                                      "2019*Not identify",
-                                      "2022*Not identify",
-                                      "2017*age30-49 ",
-                                      "2018*age30-49 ",
-                                      "2019*age30-49 ",
-                                      "2022*age30-49 ",
-                                      "2017*age50-64 ",
-                                      "2018*age50-64 ",
-                                      "2019*age50-64 ",
-                                      "2022*age50-64 ",
-                                      "2017*age65 or more",
-                                      "2018*age65 or more",
-                                      "2019*age65 or more",
-                                      "2022*age65 or more"
+                                      "Wave^2 * Inequality perception",
+                                      "Wave^2 * Merit: talent",
+                                      "Wave^2 * Merit: effort",
+                                      "Wave^2 * Age",
+                                      "Wave^2 * Gender"
                                       ),
                 file = "output/tables/table3-interac_pond.html")
           #omit.coef = omit
@@ -1303,114 +1366,3 @@ interact_effect
 ggsave(interact_effect, file="output/graphs/interact_effect-pond.png", width = 7, height = 7)
 ```
 
-```{r distribution-educ-context}
-#rm(list=ls())
-#if (!require("pacman")) install.packages("pacman") # instalar pacman
-                            # cargar librerias
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg,
-               ggplot2
-               )
-load(file = here::here("input/data-proc/df_study1_long_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t6_comunas %>%
-  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent,education=educ,quintil1:sexo) %>% 
-  na.omit() %>% 
-  mutate(ola = as.numeric(ola),
-         ola_2=as.numeric(ola)^2,
-         sexo=as.factor(sexo)
-         )
-# Hipotesis
-h1b <- "ola+ola_2+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo"
-h2b <- "ola+ola_2+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*des_perc"
-h3b <- "ola+ola_2+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*merit_talent"
-h4b <- "ola+ola_2+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*merit_effort"
-h5b <- "ola+ola_2+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*pos_id"
-h6b <- "ola+ola_2+des_perc+merit_talent+merit_effort+education+quintil1+ess+pos_id+edad+sexo+ola*edad"
-
-# A. Education distributive justice
-educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ2 <- lmer(formula(paste0("just_educ~",h2b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ5 <- lmer(formula(paste0("just_educ~",h5b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ6 <- lmer(formula(paste0("just_educ~",h6b,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-
-# table 3: interacciones
-omit <- "(education)|(ess)|(quintil1)|(sexo)"
-texreg::htmlreg(list(educ2,educ3,educ4,educ5,educ6),
-                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. All the models are controlled by educational level, age, gender, subjective social status, political position, and income quintile",
-                omit.coef = omit,
-                custom.coef.names = c("Intercept",
-                                      "Wave",
-                                      "Wave^2",
-                                      "Inequality perception",
-                                      "Merit: Talent",
-                                      "Merit: effort",
-                                      "Pol. pos: Center <br> <i>(Ref. Left)</i>",
-                                      "Pol. pos: Right",
-                                      "Pol. pos: Does not identify",
-                                      "Edad 30-49 <br> <i>(Ref. 18-29)</i>",
-                                      "Edad 50-64",
-                                      "Edad 65 o más",
-                                      "Wave*inequality perception",
-                                      "Wave*merit:talent",
-                                      "Wave*merit:effort",
-                                      "Wave*Center",
-                                      "Wave*Right",
-                                      "Wave*Not identify",
-                                      "Wave*age30-49 ",
-                                      "Wave*age50-64 ",
-                                      "Wave*age65 or more"
-                                      ),
-                file = "output/tables/table3-interac_pond-numeric.html")
-          #omit.coef = omit
-
-
-
-webshot2::webshot(url ="output/tables/table3-interac_pond-numeric.html" ,file ="output/tables/table3-interac-pond-numeric.png")
-
-
-
-## graph interact
-#sjPlot::plot_model(educ2, type = "int", mdrt.values = "meansd")
-predict<-interplot::interplot(m = educ2,var1 = "merit_effort",var2 = "ola",point = T)
-predict_data <- predict$data[c(1, 2, 4, 6, 8), ]
-predict_data <- predict_data %>% as.data.frame()
-
-predict_data$value <- c("ola1", 
-                             "ola2",
-                             "ola3", 
-                             "ola4",
-                             "ola6")
-  
-predict_data$value <- factor(predict_data$value,
-                   levels = c("ola1", 
-                             "ola2",
-                             "ola3", 
-                             "ola4",
-                             "ola6"),
-                   labels = c("wave 1", 
-                              "wave 2",
-                              "wave 3",
-                              "wave 4",
-                              "wave 6"))
-
-interact_effect <- predict_data %>% ggplot(aes(value, coef1)) +
-  theme_bw(base_size = 14) +
-  geom_point(size = 4)+
-  geom_errorbar(aes(ymin=lb, ymax=ub),
-                  width=0.2) +
-  ylab("Coef") +
-  xlab("")
-interact_effect
-
-ggsave(interact_effect, file="output/graphs/interact_effect-pond.png", width = 7, height = 7)
-```
