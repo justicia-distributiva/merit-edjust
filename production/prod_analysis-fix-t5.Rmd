@@ -1282,57 +1282,95 @@ df_study1 <-
   na.omit() %>% 
   mutate(ola = as.numeric(ola),
          ola_2=as.numeric(ola)^2,
-         sexo=as.factor(sexo),
-         edad=as.numeric(edad)
+         sexo=as.factor(sexo)
+ #        edad=as.numeric(edad)
          #pos_id=as.numeric(pos_id)
          )
 
 # Hipotesis
 h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
-h2b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*des_perc"
+h2b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+des_perc*ola_2"
 h3b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*merit_talent"
-h4b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*merit_effort"
-h5b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*edad"
+h4b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_effort*ola_2"
+h5b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*pos_id"
 h6b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*sexo"
+h7b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*quintil1"
+h8b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*edad"
 
 # A. justification educational inequality
-educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+I(ola_2)|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ2 <- lmer(formula(paste0("just_educ~",h2b,"+(ola+I(ola_2)+des_perc|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(ola+I(ola_2)+merit_talent|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(ola+I(ola_2)+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ5 <- lmer(formula(paste0("just_educ~",h5b,"+(ola+I(ola_2)+edad|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ6 <- lmer(formula(paste0("just_educ~",h6b,"+(ola+I(ola_2)+sexo|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ2 <- lmer(formula(paste0("just_educ~",h2b,"+(ola+ola_2+des_perc|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(ola+ola_2+merit_talent|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(ola+ola_2+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ5 <- lmer(formula(paste0("just_educ~",h5b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ6 <- lmer(formula(paste0("just_educ~",h6b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ7 <- lmer(formula(paste0("just_educ~",h7b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ8 <- lmer(formula(paste0("just_educ~",h8b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 # table 3: interacciones
-omit <- "(education)|(ess)|(quintil1)|(pos_id)"
-texreg::htmlreg(list(educ1,educ2,educ3,educ4,educ5,educ6),
+omit <- "(education)|(ess)"
+texreg::htmlreg(list(educ1,educ2,educ3,educ4,educ5,educ6,educ7,educ8),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. All the models are controlled by educational level, subjective social status, political position, and income quintile",
                 omit.coef = omit,
                 custom.coef.names = c("Intercept",
                                       "Wave",
-                                      "Wave^2",
-                                      "Age",
+                                      "Wave^2", 
+                                      "Quintile 2 <br> <i>(Ref. Quintile 1)</i>",
+                                      "Quintile 3",
+                                      "Quintile 4",
+                                      "Quintile 5",
+                                      "Quintile NA",
+                                      "Age 30-49 <br> <i>(Ref. 18-29)</i>",
+                                      "Age 50-64",
+                                      "Age 65 o más",
                                       "Gender <br> <i>(Ref. Male)</i>",
+                                      "Pol. pos: Center <br> <i>(Ref. Left)</i>",
+                                      "Pol. pos: Right",
+                                      "Pol. pos: Does not identify",
                                       "Inequality perception",
                                       "Merit: Talent",
                                       "Merit: effort",
                                       "Wave^2 * Inequality perception",
                                       "Wave^2 * Merit: talent",
                                       "Wave^2 * Merit: effort",
-                                      "Wave^2 * Age",
-                                      "Wave^2 * Gender"
+                                      "Wave^2 * Center",
+                                      "Wave^2 * Right",
+                                      "Wave^2 * Does not identify",
+                                      "Wave^2 * gender",
+                                      "Wave^2 * Quintile 2",
+                                      "Wave^2 * Quintile 3",
+                                      "Wave^2 * Quintile 4",
+                                      "Wave^2 * Quintile 5",
+                                      "Wave^2 * Quintile NA",
+                                      "Wave^2 * Age 30-49",
+                                      "Wave^2 * Age 50-64",
+                                      "Wave^2 * Age 65 or more"
                                       ),
                 file = "output/tables/table3-interac_pond.html")
           #omit.coef = omit
 
 
 webshot2::webshot(url ="output/tables/table3-interac_pond.html" ,file ="output/tables/table3-interac-pond.png")
+```
 
 
+```{r }
+fit <- lmer(just_educ ~ ola + ola_2 + (ola + ola_2 | idencuesta), data = df_study1)
+df_study1$pred_inter_pend_aleatorio <- predict(fit)
 
-## graph interact
-#sjPlot::plot_model(educ2, type = "int", mdrt.values = "meansd")
-predict<-interplot::interplot(m = educ2,var1 = "merit_effort",var2 = "ola",point = T)
+# Predictions that ignore random effects:
+df_study1$fitted <- predict(fit, re.form = ~0)
+
+# Plot just fixed effects:
+plot<-df_study1 %>% 
+  ggplot(aes(y = fitted, x = ola_2)) +
+  geom_line() +
+  theme_light()
+
+ggsave(plot, file="output/graphs/fixed_effects.png")
+
+
+predict<-interplot::interplot(m = educ1,var1 = "ola",point = T)
 predict_data <- predict$data[c(1, 2, 4, 6, 8), ]
 predict_data <- predict_data %>% as.data.frame()
 
