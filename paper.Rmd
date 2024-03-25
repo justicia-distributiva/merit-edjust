@@ -362,8 +362,7 @@ educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study
 # table 3: interacciones
 omit <- "(education)|(ess)|(quintil1)|(edad)|(sexo)|(pos_id)|(des_perc)"
 texreg::texreg(list(educ6,educ3,educ1),
-                custom.note = "\\item *** p < 0.001; ** p < 0.01; * p < 0.05.
-Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, <br> political position and inequality perception",
+                custom.note = "\\item *** p < 0.001; ** p < 0.01; * p < 0.05. Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, political position, and inequality perception",
                 omit.coef = omit,
                 include.loglik = FALSE,
                 include.aic = FALSE,

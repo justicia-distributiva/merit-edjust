@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.24)  25 MAR 2024 18:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.24)  25 MAR 2024 19:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -650,7 +650,7 @@ Overfull \vbox (7.67337pt too high) has occurred while \output is active []
 
 [20{c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [21] [22] [23] [24] [25] [26] [27] [28] [29]
 
-LaTeX Warning: Float too large for page by 55.52103pt on input line 752.
+LaTeX Warning: Float too large for page by 55.52103pt on input line 751.
 
 
 Package caption Warning: Unused \captionsetup[figure] on input line \caption@opt@figure@lineno .
@@ -678,7 +678,7 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  83i,14n,93p,2823b,574s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (31 pages, 1104313 bytes).
+Output written on paper.pdf (31 pages, 1104246 bytes).
 PDF statistics:
  538 PDF objects out of 1000 (max. 8388607)
  477 compressed objects within 5 object streams
