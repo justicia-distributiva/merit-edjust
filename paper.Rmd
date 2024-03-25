@@ -1,0 +1,254 @@
+---
+title: "Changes in the justification of educational inequalities: The role of perceptions of inequality and meritocracy during the COVID pandemic"
+css: "custom.css"
+linestretch: '1.5'
+link-citations: yes
+# params:
+# lang: en-GB
+author: 
+- name: Juan Carlos Castillo
+  affiliation: Department of Sociology, Universidad de Chile
+  email: juancastillov@uchile.cl
+  number: 1
+- name: Julio Iturra
+  affiliation: Bremen International Graduate School of Social Sciences, Universität Bremen
+  number: 2
+- name: Kevin Carrasco
+  affiliation: Center for Social Conflict and Cohesion Studies
+  number: 3
+abstract: |
+  .
+  \newline
+  \newline
+  
+   **Keywords**: meritocracy, social inequality, inequality justification
+output:
+  bookdown::pdf_document2:
+    template: null
+    number_sections: false    
+    toc: false
+    keep_tex: false
+    pandoc_args:
+      - --template=input/mytemplate.tex #custom template para usar autores con afiliacion    
+  bookdown::word_document2:
+    number_sections: false
+    reference_docx: input/template.docx
+    toc: false
+  bookdown::html_document2:
+    number_sections: false
+linkcolor: blue
+bibliography:
+  - input/bib/merit-edjust.bib
+csl: input/bib/apa7-singlespace.csl
+editor_options:
+  chunk_output_type: console
+geometry: margin=1in
+header-includes:
+  - \usepackage{times}           # Times New Roman
+  - \hypersetup {colorlinks = true, linkcolor = blue, urlcolor = blue}    
+  - \usepackage{caption}
+  - \captionsetup[figure, table]{labelfont={bf},labelformat={default},labelsep=period}
+  - \usepackage{graphicx}
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+always_allow_html: true # for word output
+fontsize: 10pt
+papersize: a4
+---
+
+```{r eval=FALSE, include=FALSE}
+ # for render in pdf run rmarkdown::render_site("docs/paper.Rmd", output_format = "all")
+ # clean #in the yml
+ rmarkdown::render("paper.Rmd", output_format = "bookdown::pdf_document2")
+ rmarkdown::render("paper.Rmd", output_format = "bookdown::html_document2")
+ rmarkdown::render("paper.Rmd", output_format = "bookdown::word_document2")
+```
+ 
+```{r setup, include=FALSE}
+ knitr::opts_chunk$set(echo=FALSE, warning = FALSE,message = FALSE, cache = TRUE,out.width = '85%',fig.pos= "H", fig.align = 'center')
+ # knitr::opts_knit$set(base.url = "../") #relative path for .html output file
+ # knitr::opts_knit$set(root.dir = "../") #relative path for chunks within .rmd files
+ options(scipen=999)
+ options(kableExtra.auto_format = FALSE)
+ rm(list=ls())
+ options(knitr.kable.NA = '')
+ options(knitr.graphics.error = FALSE)
+ Sys.setlocale("LC_ALL", "ES_ES.UTF-8")
+```
+
+<!---
+\pagebreak
+
+# Acknowledgments
+
+The authors recognize the support of ANID/FONDECYT grant 1160921 and of  the Center for Conflict and Social Cohesion Studies (COES)  grant ANID/FONDAP 1513009.
+
+\pagebreak
+
+--->
+
+
+# Introduction
+
+Despite the widespread recognition of education as a key factor for social mobility and equality of opportunities, disparities in this domain are far from being eliminated. As the last PISA Report points out, “Socio-economically disadvantaged students are seven times more likely than advantaged students to score below Level 2 in mathematics on average across OECD countries” [@oecd_pisa_2023]. Furthermore, empirical evidence from social science research has revealed the exacerbation of educational inequalities across various domains, such as family socioeconomic status, gender, ethnicity, and migratory background, particularly after COVID-19 [@darmodyImpactsCOVID19Control2021]. Despite the consistent empirical evidence on educational inequalities and their consequences, research on distributive justice indicates remarkable individual differences in the justification of unequal access to education [@leeFairnessPerceptionsEducational2023].
+
+In the present paper we argue that the perception of meritocracy in society might play a role in the justification of economic inequalities. Meritocracy is defined as a distributive system where individual factors such as effort and talent are conceived as the main determinants of individual performance, usually sidelining the role of opportunities and social background. In recent years there has been a growing interest in studying meritocratic beliefs as well as their variations according to individual and contextual variables [@mijs_paradox_2021; @mijs_belief_2022]. This line of research has highlighted how meritocratic beliefs are associated with justifying unequal access to resources and rewards in society, by legitimizing social hierarchies in which those who already have resources and advantages are more likely to succeed [@sandel_tyranny_2020;@mcnamee_meritocracy_2004;@hadjar_meritokratie_2008]. Within this framework, this study focuses on the changes in the justification of inequalities in access to education in Chile, and on to what extent this phenomenon is associated with the perception of meritocracy and it variations during the COVID pandemic.
+
+The Chilean case is particularly relevant when it comes to the study of inequalities in education. The country is characterized by a high level of economic inequality associated with the privatization and commodification in several social policy domains, among them the educational system [@bellei_estudio_2013; @corvalanMercadoEscolarLibertad2016]. The neoliberal reforms implemented in this country during and since the military dictatorship (1973-1989) have deepened educational policies based on private subsidies, achievement incentives, selection, and segregation [@joikomujicaCuasimercadoEducativoChile2019]. Previous research in Chile has emphasized the concept of an "educational market" [@corvalanMercadoEscolarLibertad2016], characterized by selection, competition, and the provision of goods and services associated with payment capacities. Many studies have addressed this problem from economic, political, and sociological perspectives, generating relevant evidence on their academic and social consequences [@ramosarellanoEducacionPromesaIncumplida2022]. Likewise, massive social mobilizations in the country (particularly in 2006, 2011, and 2018) have had educational inequalities as one of the main targets, putting pressure on governments towards a series of reforms that advanced free higher education reforms and diminish the role of private actors in the educational system.
+
+This research endeavors to dissect the nuanced alterations in the justifications for educational disparities within the Chilean framework. Central to our investigation is the premise that the rationale underpinning these inequalities experiences a significant recalibration during periods of vulnerability and crises, specifically under the unprecedented strains of the global health and economic cataclysm triggered by the COVID-19 pandemic [@hankivsky_introduction_2022;@breznau_welfare_2021]. A pertinent aspect of this discourse is articulated in the works of Mijs [-@mijs_stratified_2016;-@mijs_visualizing_2018], showing the interplay between meritocratic beliefs and the legitimization of disparities, as well as the potential erosion of meritocratic principles amidst crises. Within this framework, we point out that periods of vulnerability and crisis (such as the health and economic crisis resulting from the COVID-19 pandemic) could weaken the justification of social inequalities, a change that could be associated with a challenge of meritocratic ideals. Furthermore, we suggest that the association between meritocratic perception and inequality justification would be weaker among lower-status groups, as they are the most affected in critical times. 
+
+
+# Inequality beliefs and the justification of economic inequality
+
+The justification of economic inequalities is a controversial field of study. As equality is usually considered a synonym of justice in common sense, the idea that someone could be willing to justify inequalities seems (in principle) far from what is considerably reasonable. Nevertheless, and as pointed out by Barry, the whole normative discussion in social justice can be conceived as “the defensibility of unequal relations between people” [-@barry_theories_1989, p. 3], whereby empirical research has consistently shown strong variations between individuals and societies regarding inequality justification [@trump_income_2018;@kelley_legitimate_2021;@mijs_paradox_2021]. Both theoretical and empirical approaches have been able to establish a clear difference between inequality and justice, which opens the question of to what extent inequality can be tolerated or even justified.
+
+The field of study of subjective economic inequality has been extensively developed in the social sciences, particularly in the area of social justice research [@Resh2016]. From a sociological point of view, the works of @kluegelBeliefsStratification1981 can be considered pioneers in identifying a field of studies comprising perceptions, beliefs, and justifications in areas such as inequality of opportunities, poverty, and distributive justice. Theoretically, the authors understand the concept of "beliefs" in a "broad sense to refer to the information (veridical or non-veridical) about a phenomenon that an individual uses as a basis both for inferring other information and for action." [@kluegelBeliefsStratification1981, p. 30]. However, the literature has strained the concept of "beliefs" by more specific distinctions around the individual and structural dimensions of economic inequality. In this regard, @wegenerIllusionDistributiveJustice1987 has suggested that perceptions of social status and reward hierarchy are relative to the observer's status in such hierarchies [@wegenerIllusionDistributiveJustice1987, p. 2]. This approach established that status positions influence how people perceive things _are_ and, in turn, these perceptions anchor how people evaluate this inequality as just or unjust [@jassoJusticeEarningsNew1978]. Additionally, @janmaatSubjectiveInequalityReview2013 has suggested more detailed conceptual distinctions about how people perceive economic inequality _is_, how they believe or prefer it _should be_, and the process of evaluating such differences as fair.
+
+Theoretically, @liebigSociologyJustice2016 establishes three fundamental distinctions in justice attitudes in the field of sociological justice research. First, _order-related attitudes_ refer to individual motives that explain preferences for resource allocation based on the principles of equality, need, or entitlement. Second, _procedural justice attitudes_ account for the degree of acceptance of unfavorable outcomes under conditions in which the procedure under which those decisions were made is considered fair (e.g., opportunities). Finally, they can be _outcome-related attitudes_ related primarily to the economic resources that a person currently obtains and the set of collective commitments associated with possessing those resources (e.g., transfers or taxes). Within this framework, we conceptualize the justification of inequality in the first area of order-related attitudes, as it expresses preferences for resource allocation that can be associated to concepts that reflect distributive principles [@kluegel_social_1995;@sonhing_merit_2011]
+
+An important finding in the area of order-related attitudes is that beliefs about inequality are stratified by social status [@janmaatSubjectiveInequalityReview2013; @kluegelBeliefsInequalityAmericans1986]. The evidence suggests that advantaged positions in terms of socioeconomic status, such as income, education, or occupational prestige, are associated with preferences for less egalitarian class imageries [@Evans1992;@Evans2017] and greater justification of salary gaps [@hadler_why_2005;@kelley_legitimate_2021]. In contrast to this evidence, it has been argued that human beings are intrinsically motivated to justify the system they inhabit, even when the information available to them points in the opposite direction [@jost_psychology_2003,@vandertoornTwentyYearsSystem2014]. Individuals would be generally disposed to justify the economic status quo regardless of self- and group economic interest because their support partially depends on their beliefs in system-justifying ideologies [@trump_when_2020]. As a result, what has been suggested is that low-status might perceive the status quo as just as they are more strongly attached to dominant ideologies, while high-status individuals are more prone to justify the system to a greater extent because it favors their interests and dominant position [@jostTheorySystemJustification2020].
+
+Another factor that has been linked to inequality beliefs is the perception of economic inequality [@kelleyLegitimationInequalityOccupational1993; @osberg_fair_2006;@castillo_perception_2022]. Studies in this matter have argued that perceived economic inequality functions as an anchor for the justifications of inequality because if these inequalities are indeed seen as just in their generative processes, then they will be considered as just [@wegenerIllusionDistributiveJustice1987, @Wegener1990]. Thus, both the role of social status and economic inequality perceptions have found support in correlational [@Castillo2012a_justice;@schroder_income_2017], as well as in experimental studies that have manipulated inequality perception [@iturra_percepcion_2023;@trump_income_2018]. In addition, normative or value-driven mechanisms can also explain to what extent people justify inequality. For instance, it has been established that justice ideologies such as individualism or egalitarianism can mediate the influence of individual status on income inequality justification [@Castillo2011]. Likewise, system justification ideologies can strengthen the influence of socioeconomic status on economic inequality preferences [@garcia-sanchez_creencias_2022]. Altogether, these studies have shown that not only socio-structural factors influence what people believe regarding the distribution of economic resources, but their normative stances and perceptions can also determine preferences for economic inequality in diverse domains.
+
+# The justification of educational inequality 
+
+Studies addressing inequality justification have assessed the support for market ideologies, salary gaps, and distributive preferences. A strand of this research has focused on specific policy areas such as health, pensions, and education,  attending to the degree of justification of market-based access to social services. For instance, @lindhPublicOpinionMarkets2015 found that public support for the market distribution of social services is generally low in most countries, implying that most people believe it is unfair for market forces to determine access to basic social services. Similarly, @busemeyer_welfare_2020 shows that high-income citizens are less supportive of expanding public spending on universal benefit schemes. Instead, they tend to prefer a public basic insurance scheme, even if it provides relatively more benefits to low-income individuals.
+
+The study of inequality justification in the sphere of education is a rather specific and unattended field. Most studies on educational inequality relate performance indicators (such as grades and standardized test results) to stratification-related variables, whereby few refer specifically to if and how individuals tolerate and even justify educational inequalities. This is probably because in principle it seems counter-intuitive to think that someone would be willing to justify differences in such a sensitive area. This paradox is phrased by @confortiLegitimationInequalityAmerican1992 as “while equality is embraced as a value, inequality is accepted as a reality” (p.230).
+
+In the area of empirical studies, the operationalization of educational inequality justification in terms of questionnaire items is diverse, and there is not a single instrument or scale dedicated specifically to this concept. Rather, some attitudinal surveys usually include education-related items that are posteriorly used as dependent or independent variables. Some examples are ISSP (_Is it just or unjust – right or wrong – that people with higher incomes can buy better education for their children than people with lower incomes?_), and the ESS 2018 (_Compared to other people in [country], I have had a fair chance of achieving the level of education I was seeking_). Although both questions have been used to measure the justification of educational inequality, they refer to different aspects. The ESS can be classified as reflexive, as the respondent is involved as a referent for the question, whereas the ISSP question is non-reflexive. Furthermore, ISSP refers to educational access, while the ESS refers to educational outputs.
+
+A number of studies have addressed the justification of educational inequality from different conceptual perspectives and methodological strategies. Some studies emphasize the justification of differences between specific groups, finding for instance that Americans are more concerned about—and more supportive of proposals to close—wealth-based achievement gaps than Black-White or Hispanic-White gaps [@valantPoliticsAchievementGaps2016]. Other studies focus on the association between status differences and inequality justification in education, based on the rational premise that those who are worst-off would tend to show lower levels of justification [@stoilovaFairnessEducationalOpportunities2023]. However, most of the studies in this area go beyond status differences, focusing on how subjective factors such as perceptions and beliefs - among them meritocracy - are related to different levels of justification.
+
+The perception of economic inequality is one of the main factors associated with the justification of educational inequality. As pointed out by @janmaatSubjectiveInequalityReview2013, justifications are usually confused under the labels of “beliefs” and “attitudes,” and their distinction from perceptions is relevant as it helps state that justifying a certain level of inequality requires taking into account which level of (perceived) inequality is first and foremost being perceived [@sonhing_merit_2011;@castillo_multidimensional_2023]. For instance, a recent study by @dayPerceivedIdealInequality2023 on the perception and justification of inequality in university endowments in the U.S. points out that individuals tend to underestimate the magnitude of existing inequality while simultaneously desiring greater equality. Furthermore, through an experiment, they demonstrate that information about inequality in university endowments (i.e., manipulating inequality perception) increases the perception of injustice in education. Results of this study are in line with the consistent evidence on biases related to the undersetimation of economic inequality [@castillo_perception_2022;@gimpelson_misperceiving_2018]
+
+Besides focusing on the relationship between perception and justification of educational inequality, another group of studies have addressed how the justification of inequality is associated with the support of different distributive principles. In an experiment by @igliozziFairShareEffects2024, they establish how the support for different justice principles (equity, equality, and need) is related to support for redistributive policies in domains such as education. They find that a larger system justification  [@jost_psychology_2003]) is related to higher support for the principles of equity and equality (over need) in distributing educational outcomes, where equity was measured in terms of access to education related to performance ('Students who place within the highest 50% of testing scores from the previous year can attend the magnet school'). In the same line, @leeFairnessPerceptionsEducational2023 show that performance assessments (in what they call “neoliberal orientations”) predicted people's fair perceptions of educational inequality.
+
+_Justificacion, inequality and meritocracy in the educational domain_
+
+The relationship between performance and outputs brings us to the concepts of merit and meritocracy, key in educational justice research. The concept of meritocracy, coined by sociologist Michael Young in his satirical work "The Rise of the Meritocracy" [-@young_rise_1962], has a rich history and multifaceted meaning. Young's term was initially used to critique a hypothetical future society where social and economic positions were entirely determined by individuals' merits, talents, and efforts, ostensibly eliminating the influence of inherited privilege. However, over time, the term has evolved to describe a social system where advancement and success are perceived as directly linked to one's abilities and achievements, sidelining inequalities of opportunities [@bell_politics_2020]. This would contribute to Justificacion, inequality and meritocracy in the educational domainlegitimizing social inequality [@sandel_tyranny_2020], as individual ability is often inherited, and educational attainment is influenced by family background (Goldin, 2000).
+
+Empirical research examining the relationship between meritocratic perceptions and the justification of educational inequality provides valuable insights into the dynamics shaping individuals' attitudes and beliefs. Some studies have explored the extent to which people believe that educational systems are meritocratic and how these perceptions influence their acceptance or rejection of educational disparities as well as status differences [@McCoy2007]. This belief is particularly influential in educational institutions, where it not only encourages academic success but also legitimizes social and income inequality [@batruch_belief_2023]. Most of the evidence so far suggests that those who believe in a direct link between effort, talent, and educational success are more inclined to rationalize existing disparities in educational outcomes. However, empirical findings also reveal nuances in this relationship. Research has identified contextual factors that moderate the link between meritocratic perceptions and acceptance of educational inequality. For instance, studies show that when individuals perceive structural barriers, such as economic disparities or discrimination, as hindering the meritocratic ideal, they may be less likely to justify educational inequalities [@dayPerceivedIdealInequality2023]. This suggests that while meritocratic beliefs play a significant role, individuals' awareness of broader societal issues can mediate their willingness to rationalize educational disparities.
+
+_This study_
+
+The present research uses longitudinal survey data from 2016 to 2022 to asses changes in inequality justification. As there are measures before and after the COVID pandemic, firstly we explore to what extent it is possible to identify variations inequality justification in this time frame. Although we are aware that it is not possible to make a causal claim given that this period is characterized by many other circumstances besides COVID, we argue that the increase of risk perceptions in critical situations (as the pandemic) impacts on public concerns about equality and redistribution [@breznau_welfare_2021]. Although the pandemic might have triggered such concerns mostly regarding health, we believe that other policy areas, as education, could have been impacted in this period. Consistently, our first hypothesis is: 
+
+$H_1$: The justification of educational inequalities decreases after the pandemic
+
+Our second argument is based on the evidence that relates rational interests with justifications and preferences [@hing_failure_2019], expecting that:
+
+$H_2$: Those with lower status characteristics show lower justification of educational inequalities
+
+Thirdly, we address inequality perception. As referred to above, the justification of inequality requires, first and foremost, that such inequality is known or perceived by individuals. As a larger inequality in this domain threatens a basic equality ideal, the corresponding hypothesis in this case is:
+
+$H_3$: A larger inequality perception is negatively associated with the justification of educational inequalities.
+
+Our fourth and last hypothesis refers to the central concept of meritocracy. As meritocracy justifies inequalities based on performance, we expect that:
+
+$H_4$: Higher meritocratic perceptions are positively related to the justification of educational inequalities.
+
+Finally, and in line with hypothesis 1 and 4, we explore interactions between meritocracy and inequality justification over time. As COVID-19 pandemic have affected the structural opportunities to attend schools, universities, or workplaces, the ideal of meritocracy might have been challenged. As a consequence, the justification of inequality could show a decrease over time:
+
+$H_5$:[interaction] The positive association between meritocracy and inequality justification mitigates along time
+
+#  Data, variables & methods
+
+## Data
+
+The main data source is the Chilean Longitudinal Social Survey 2016–2022. ELSOC has been designed to evaluate the way in which individuals think, feel, and behave yearly regarding a set of social issues related to conflict and social cohesion in Chile. The sampling design is probabilistic, stratified, clustered, and multistage. It provides adequate coverage of the country's largest cities (Metropolitan Area of Santiago, Valparaíso, and Concepción) and smaller cities comprising a total of 2,927 participants aged between 18 and 75 years on wave 1. It is representative of people in the north and south of the country. In addition, the sample represents 77% of the country's total population and 93% of the urban population, with a response rate of 62.4% [@elsoc_estudio_2022].
+
+The survey has been conducted yearly since 2016, except for the year 2020, when it was suspended due to the pandemic. The questionnaire was administered face-to-face, but in the 2021 wave, it was conducted entirely over the phone, and the dependent variables of this research were excluded. In 2018, wave 3 included a refreshment sample in order to counter survey attrition. The same sampling strategy as that of wave 1 was implemented for selecting new cases. As a result, the total sample of wave 3 included 3,748 cases, of which 2,229 were part of the original sample and 1,519 were from the refreshment sample. The data from the refreshment sample is not included in this article because we wanted to analyze a longer trend. Thus, only cases from the original sample are employed in the analytical sample. Regarding the original sample, the response rate was 62.4% in wave 1, achieving N = 2,927 participants. The attrition in subsequent waves was 15.5% in wave 2 (N = 2,473), 9.9% in wave 3 (N = 2,229), 3.4% in wave 4 (N = 2,153), 19.2% in wave 5 (N = 1,739), and 0.6% in wave 6 (N = 1728). In broader terms, the accumulated attrition between Wave 1 and Wave 6 is 41%. The analysis used longitudinal weights to avoid bias due to the study’s sampling design. Longitudinal weights allow us to control for attrition biases arising from systematic patterns of non-participation in the survey after the first wave, and they also allow us to incorporate known information about the target population in the construction of the weights. For a more detailed analysis of responses, attrition, and the construction of longitudinal weights, visit https://coes.cl/encuesta-panel/.
+
+## Variables
+
+The dependent variable of this study is the justification of educational inequality. This variable is measured from the phrase "It is just that high-income people have a better education for their children than people with lower incomes" ("Es justo que las personas de altos ingresos tengan una mejor educación para sus hijos que las personas con ingresos más bajos" in Spanish). Respondents rated their preferences using a Likert scale of 5 categories from “strongly disagree” to “strongly agree.” The change in this variable over the years is as follows: 2016 mean=1.87, sd=0.88; 2017 mean=1.80, sd=0.91; 2018 mean=1.82, sd=0.92; 2019 mean=1.81, sd=0.84; 2022 mean=2.11, sd=0.93.
+
+The main independent variables correspond to three items divided into two groups: one related to the perception of inequality (i.e., in Chile, the income differences are too large) and the other related to the perception of meritocracy (i.e., in Chile, people are rewarded for their effort). Both groups were measured using a Likert scale of 5 categories from “strongly disagree” to “strongly agree.”
+
+The educational level of the respondents, the household's income quintile per capita, their subjective social status, their political identification, and their age and gender were included as control variables. \@ref(fig:descriptives) shows the items used, their response categories, and their frequency.
+
+
+```{r descriptives, echo=FALSE, fig.cap = "Independent variables", fig.align='center'}
+ knitr::include_graphics("output/tables/desc02.png")
+```
+
+Figure 1 shows the distribution of the dependent variable of Justification of educational inequality and both groups of independent variables for all the years analyzed. On the one hand, Figure 1 shows that there is a large group (88.2%) of respondents who disagree or strongly disagree that people with higher incomes can access better education. Likewise, there is a large group of respondents (91.7%) who agree or strongly agree that income differences in Chile are too large. On the other hand, there is a significant degree of disagreement (disagree + strongly disagree) about whether people are rewarded for their talent (47.6%)  and for their efforts (57%).
+
+```{r frecuencies, echo=FALSE, fig.cap = "Frequency of responses for justification of educational inequality, perception of inequality, and perception of meritocracy for all the years analyzed", fig.align='center'}
+ knitr::include_graphics("output/graphs/figure1.png")
+```
+
+```{r correlation, echo=FALSE, fig.cap = "Correlation matrix of justification of educational inequality, perception of inequality, and perception of meritocracy for all the years analyzed", fig.align='center'}
+ knitr::include_graphics("output/graphs/corr.png")
+```
+
+Figure 2 presents a correlation matrix of the main variables analyzed, using data from all survey waves. In this matrix, the correlations vary between high and moderate values, which indicates a certain level of association between the variables. First, the dependent variable has a moderate and negative association with the perception of inequality and a moderate and positive association with both meritocracy perception variables. Secondly, the perception of inequality has a moderate and negative association with meritocracy perception variables. Finally, the two meritocracy variables present a high and positive association with each other.
+
+## Methods
+
+Given the hierarchical structure of the data (observations nested in surveys nested in municipalities), we applied a longitudinal multilevel strategy [@singer_applied_2009]. Longitudinal multilevel models are suited to account for the shared variance among units in the data to estimate standard errors better. Since individuals share variance within themselves over time, if the error structure is not considered, it would be as if they were considered different individuals. Multilevel models allow a solution in regression estimation by adding a random term that represents the variance associated with the nesting of the data (random effects). The linear multilevel models are estimated using the R library “lme4” [@singer_applied_2009, p.4].
+
+```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE}
+  #RUN THIS BEFORE THE ANALYSIS
+  pacman::p_load(knitr)
+  table_format = if(is_html_output()) {
+    "html"
+  } else if(is_latex_output()) {
+    "latex"
+  }
+
+  table_format2 = if(is_html_output()) {
+    T
+  } else if(is_latex_output()) {
+    F
+  }
+```
+
+# Results
+
+```{r alluvial, echo=FALSE, fig.cap = "Change in the justification of educational inequality over time (2016-2022)", fig.align='center'}
+ knitr::include_graphics("output/graphs/alluvial_dep.png")
+```
+
+Figure 3 illustrates yearly frequencies in the justification of educational inequality between 2016 and 2022. Each year represents stacked percentual frequencies, and the flows in between represent the within-subjects’ change of opinions from one year to the next, as we are using longitudinal panel data [@rosvall_mapping_2010]. For instance, from the 32.2% who strongly disagree with inequality justification in 2016, about half of them keeps responding the same in 2016, whereas the other half shifts their opinion to other response categories. In general, the large majority - between 80 and 90% - disagrees with the justification of educational inequality throughout the years. Despite this overall tendency, we also observe that the disagreement with inequality justification (disagree + strongly disagree) tends to go down in the last wave. This change is mostly a result of the radical decrease in the lowest response category (strongly disagree), which diminishes to a half when compared with previous years. 
+
+```{r means, echo=FALSE, fig.cap = "Change in the mean of justification of educational inequality, perception of inequality, and perception of meritocracy over the years", fig.align='center'}
+ knitr::include_graphics("output/graphs/years_plot.png")
+```
+
+Figure 4 shows the average changes in the main variables considered for this study. Here we observe that the justification of educational inequality has the lowest average throughout the years when compared with the other (independent) variables, whereas the highest average is consistently represented by inequality perception. Interestingly, in the last wave of the study (2022) the justification of inequality increases whereas the perception of inequality decreases. As the merit variables is concerned, they show a very similar pattern in terms of averages and changes over the years, being the perception of meritocracy related to effort always lower than the one associated to talent. 
+
+## Multivariate analysis
+
+Table 2 shows the multilevel estimation results for the justification of educational inequality. Model 1 includes the survey waves in order to observe whether there are intertemporal changes in the dependent variable. Taking 2016 as a reference point, we can observe a staggered decrease in 2017 ($\beta$=-0.15, p<.001), 2018 ($\beta$=-0.06, p<.05), and 2019 ($\beta$=-0.07, p<.01). Nevertheless, in the last wave of 2022 there is a radical increase in level of justification of economic inequality ($\beta$=0.21, p<.001), suggesting a non-linear change in this variable. Attempting to model this path of change over time, Model 2 incorporates time (survey waves) as a continuous variable as well as its quadratic term, representing the nonlinear association initially observed in Model 1. On the one hand, the survey wave depicts a negative association, expressing an average decrease of inequality justification over time, but on the other hand, the quadratic wave term is positive, indicating the reversion of this path in the last measurement point.
+
+Model 3 adds the sociodemographic variables, where having a higher income and being older (65 or older compared to 18-29) have a significant and positive influence on the justification of educational inequality. On the contrary, the gender variable has a negative effect, expressing that women in average justify less inequality in education when compared to males. Educational level and subjective social status are not shown in this table as they do not exhibit significant effects, but the complete estimation of the models is presented in the appendix. Model 3 also includes the control variables, where identifying oneself with the center, right-wing, or when reporting no political identification, has a significant and positive association on the justification of educational inequality - when compared to being left-wing. Inequality perception is added in Model 4, showing a negative association with justification of educational inequality as hypothetisized that remains stable when controlling for the rest of the variables. Models 5 and 6 introduce the meritocratic variables: talent (if intelligence and abilities are rewarded in society) and effort (if efforts are rewarded in society). In line with our hypotheses, the perception that talent is rewarded has a positive influence on the justification of educational inequality in Model 5 ($\beta$=0.04, p<0.01), however, when controlling for the perception that effort is rewarded, this effect is no longer significant. In this sense, Model 6 shows that the perception that effort is rewarded in society is not only positively associated with the justification of educational inequality ($\beta$=0.05, p<0.01), but it has a larger weight than the perception of talent. 
+
+```{r multilevel, echo=FALSE, fig.cap = "Multilevel longitudinal models for the justification of inequality in education", fig.align='center'}
+ knitr::include_graphics("output/tables/table1-individuales-pond-v2.png")
+```
+
+```{r interact, echo=FALSE, fig.cap = "Interaction effects for the justification of economic inequality", fig.align='center'}
+ knitr::include_graphics("output/tables/table3-interac-pond.png")
+```
+
+In this final part of the analyses we contrast longitudinal hypotheses regarding changes in the relationships between meritocracy and justification of economic inequality over time. In hypothesis 5 we proposed that the association between perception of meritocracy and inequality justification mitigates along time, as meritocratic ideals could have weaken due to critical situations associated to the COVID pandemic. We test this hypothesis through interaction effects, displayed in Table 2. Model 1 is shown as a baseline model, it is the same as Model 6 in Table 1 but it only displays the variables involved in the interaction for the sake of space (all other variables are controlled for). Model 2 adds the interaction between the perception of meritocracy based on talent and time (panel wave), whereas Model 3 does the same but now for the perception of meritocracy related to effort. As observed, only the effort variable show a significant interaction with the time variable (0.01, p<0.05), meaning that, in average, the association between perception of meritocracy based on effort and the justification of inequality increases in 0.01 points in every measurement point.
+
+# References
+
+# Appendix
+
+```{r multilevel-full, echo=FALSE, fig.cap = "Multilevel effects of justification of economic inequality", fig.align='center'}
+ knitr::include_graphics("output/tables/table1-individuales-pond-appendix.png")
+```

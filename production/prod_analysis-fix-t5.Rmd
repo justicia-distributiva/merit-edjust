@@ -1238,9 +1238,9 @@ educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study
 # Table 1: individual
 
 omit <- "(education)|(ess)"
-texreg::htmlreg(list(educ0, educ1, educ2, educ3, educ4, educ5, educ6),
+texreg::htmlreg(list(educ0, educ1, educ3, educ4, educ5, educ6),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. <br>
-Note: Model 3 to 7 are controlled by educational level, and subjective social status with no significant effects.", 
+Note: Model 3 to 6 are controlled by educational level, and subjective social status with no significant effects.", 
                 omit.coef = omit,
                 custom.coef.names = c("Intercept",
                                       "Wave 2017 <br> <i>(Ref. Wave 2016)</i>",
@@ -1249,11 +1249,15 @@ Note: Model 3 to 7 are controlled by educational level, and subjective social st
                                       "Wave 2022",
                                       "Wave",
                                       "Wave^2",
+#                                      "High School <br> <i>(Ref. Primary)</i>",
+#                                      "Technical",
+#                                      "Universitary",
                                       "Quintile 2 <br> <i>(Ref. Quintile 1)</i>",
                                       "Quintile 3",
                                       "Quintile 4",
                                       "Quintile 5",
                                       "Quintile NA",
+#                                      "Subjective Social Status",
                                       "Age 30-49 <br> <i>(Ref. 18-29)</i>",
                                       "Age 50-64",
                                       "Age 65 o más",
@@ -1308,67 +1312,56 @@ df_study1 <-
          )
 
 # Hipotesis
-#h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
-h2b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+merit_effort+merit_effort*ola+merit_effort*ola_2"
-h3b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+merit_talent+merit_talent*ola+merit_talent*ola_2"
-h4b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+des_perc*ola+des_perc*ola_2"
+h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_effort*ola"
+#h2b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_effort*ola+merit_effort*ola_2"
+h6 <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+
+
+h3b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_talent*ola"
+#h4b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+des_perc*ola+des_perc*ola_2"
 #h5b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*pos_id"
 #h6b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*sexo"
 #h7b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*quintil1"
 #h8b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+ola_2*edad"
 
 # A. justification educational inequality
-#educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ2 <- lmer(formula(paste0("just_educ~",h2b,"+(ola+ola_2+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(ola+ola_2+merit_talent|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(ola+ola_2+des_perc|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+#educ2 <- lmer(formula(paste0("just_educ~",h2b,"+(ola+ola_2+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(ola+merit_talent|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+#educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(ola+ola_2+des_perc|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 #educ5 <- lmer(formula(paste0("just_educ~",h5b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 #educ6 <- lmer(formula(paste0("just_educ~",h6b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 #educ7 <- lmer(formula(paste0("just_educ~",h7b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 #educ8 <- lmer(formula(paste0("just_educ~",h8b,"+(ola+ola_2|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 # table 3: interacciones
-omit <- "(education)|(ess)|(quintil1)|(edad)|(sexo)|(pos_id)"
-texreg::htmlreg(list(educ2,educ3,educ4),
+omit <- "(education)|(ess)|(quintil1)|(edad)|(sexo)|(pos_id)|(des_perc)"
+texreg::htmlreg(list(educ6,educ3,educ1),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. <br>
-Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender and political position",
+Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, <br> political position and inequality perception",
                 omit.coef = omit,
                 custom.coef.names = c("Intercept",
                                       "Wave",
                                       "Wave^2",
-                                      "Merit: Effort",
-                                      "Wave * Merit: Effort",
-                                      "Wave^2 * Merit: Effort",
                                       "Merit: Talent",
+                                      "Merit: Effort",
                                       "Wave * Merit: Talent",
-                                      "Wave^2 * Merit: Talent",
-                                      "Inequality perception",
-                                      "Wave * Inequality perception",
-                                      "Wave^2 * Inequality perception"
+                                      "Wave * Merit: Effort"
                                       ),
                 custom.gof.names = c("AIC", "BIC", "Log Likelihood",
                                      "Num. obs.",
                                      "Num. groups: Individuals",
                                      "Var: Individuals (Intercept)",
-                                     "Var: Individuals Wave",
-                                     "Var: Individuals Wave^2",
-                                     "Var: Individuals Merit: Effort",
-                                     "Cov: Individuals (Intercept) Wave",
-                                     "Cov: Individuals (Intercept) Wave^2",
-                                     "Cov: Individuals (Intercept) Merit: Effort",
-                                     "Cov: Individuals Wave Wave^2",
-                                     "Cov: Individuals Wave Merit: Effort",
-                                     "Cov: Individuals Wave^2 Merit: Effort",
                                      "Var: Residual",
+                                     "Var: Individuals Wave",
                                      "Var: Individuals Merit: Talent",
+                                     "Cov: Individuals (Intercept) Wave",
                                      "Cov: Individuals (Intercept) Merit: Talent",
                                      "Cov: Individuals Wave Merit: Talent",
-                                     "Cov: Individuals Wave^2 Merit: Talent",
-                                     "Var: Individuals Inequality perception",
-                                     "Cov: Individuals (Intercept) Inequality perception",
-                                     "Cov: Individuals Wave Inequality perception",
-                                     "Cov: Individuals Wave^2 Inequality perception"
-                                     ),
+                                     "Var: Individuals Merit: Effort",
+                                     "Cov: Individuals (Intercept) Merit: Effort",
+                                     "Cov: Individuals Wave Merit: Effort"),
                 file = "output/tables/table3-interac_pond.html")
           #omit.coef = omit
 

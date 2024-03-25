@@ -1,0 +1,46 @@
+---
+title: "Changes in the justification of educational inequalities: The role of perceptions of inequality and meritocracy during the COVID pandemic [^*]"
+linestretch: '1.5'
+output:
+  bookdown::pdf_document2:
+    template: null
+    toc: false
+    number_sections: false
+geometry: margin=0.78in
+header-includes:
+  - \usepackage{times}           # Times New Roman
+  - \usepackage{caption}
+  - \captionsetup[figure, table]{labelfont={bf},labelformat={default},labelsep=period}
+  - \usepackage[figurename=Fig.]{caption}
+  - \usepackage{graphicx}
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+fontsize: 12pt
+
+---
+
+
+Juan Carlos Castillo, Department of Sociology, Universidad de Chile, Santiago de Chile. *
+
+ORCID: 0000-0003-1265-7854
+
+Julio Iturra, Bremen International Graduate School of Social Sciences, Bremen, Germany.
+
+ORCID: 0000-0003-1993-3479
+
+Kevin Carrasco, Center for Social Conflict and Cohesion Studies
+
+ORCID: 0000-0002-9348-8361
+
+Word count: 
+
+[^*]: Corresponding author (juancastillov@uchile.cl - [jc-castillo.com](https://juancarloscastillo.github.io/jc-castillo/) -  Ignacio Carrera Pinto 1045 Ñuñoa, Santiago de Chile). The authors recognize the support of ANID/FONDECYT grant 1210847 and of the Center for Conflict and Social Cohesion Studies (COES)  grant ANID/FONDAP 1513009.
