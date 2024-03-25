@@ -146,7 +146,7 @@ sjlabelled::set_label(x = df_study1$merit_talent,
 lab_study1 <- sjlabelled::get_label(df_study1) 
 df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
 
-df<- dfSummary(x = dplyr::select(df_study1, ola, just_educ, des_perc, merit_talent, merit_effort, educ, quintil1, ess, pos_id, edad, sexo),
+df<- dfSummary(x = dplyr::select(df_study1, merit_talent, merit_effort, des_perc, educ, quintil1, ess, edad, sexo, pos_id),
                plain.ascii = FALSE,
                style = "grid",
                tmp.img.dir = "/tmp",

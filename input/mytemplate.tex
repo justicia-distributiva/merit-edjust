@@ -421,8 +421,8 @@ $if(author)$
     \setlength{\affilsep}{2em}
     \renewcommand*{\Affilfont}{\normalsize\normalfont}
     \renewcommand\Authsep{, }
-    \renewcommand\Authand{ y }
-    \renewcommand\Authands{, y }
+    \renewcommand\Authand{ \& }
+    \renewcommand\Authands{, \& }
     $for(author)$
         $if(author.name)$
             $if(author.number)$
@@ -437,7 +437,7 @@ $if(author)$
                     \affil[]{$author.affiliation$}
                 $endif$
             $endif$
-            $else$  
+            $else$
             \author{$author$}
         $endif$
     $endfor$
@@ -457,7 +457,7 @@ $endif$
 
 \providecommand{\keywords}[1]
 {
-  \small	
+  \small
   \textbf{Keywords:} #1
 }
 

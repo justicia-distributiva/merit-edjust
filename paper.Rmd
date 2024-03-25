@@ -9,23 +9,24 @@ author:
 - name: Juan Carlos Castillo
   affiliation: Department of Sociology, Universidad de Chile
   email: juancastillov@uchile.cl
-  number: 1
+  number: 1, 3 
 - name: Julio Iturra
   affiliation: Bremen International Graduate School of Social Sciences, Universität Bremen
   number: 2
 - name: Kevin Carrasco
   affiliation: Center for Social Conflict and Cohesion Studies
   number: 3
-abstract: |
+abstract: | 
+  Education is considered a key tool for social mobility and equality of opportunities. However, despite the widespread appreciation of education, disparities in educational outcomes persist over time, linked to variables such as families socioeconomic status, gender, ethnic origin, and migratory background, among others. While it is often assumed that there is a consensus on equal access to educational opportunities, empirical research on distributive justice teaches us that this assumption is far from reality. A significant body of evidence in this area indicates a substantial degree of acceptance and even justification of social inequalities, with education being no exception. In this regard, meritocracy emerges as one of the central concepts in the educational context related to justifying inequalities. As meritocracy emphasizes individual factors such as effort and talent in individual performance, the role of opportunities and social background is usually sidelined, leading to justifying inequalities of outcomes that perpetuate systemic disadvantages for marginalized groups. This research focuses on the changes in the justification of inequalities in access to education in Chile and how this justification is associated with the perception of meritocracy. The Chilean case offers an interesting context for this study due to its high economic inequality, deep neoliberal policies, and commodification of social services such as education. The central argument of this article is that the justification of inequalities weakens during periods of vulnerability and crisis (such as the health and economic crisis resulting from the COVID-19 pandemic). This change could be associated with a challenge of meritocratic ideals. Furthermore, we suggest that the association between a low meritocratic perception and less inequality justification would be stronger among traditionally vulnerable groups, such as individuals from lower social classes, less educated, and women. We analyze the ELSOC representative panel survey (2016 – 2022, 6 waves, N = 2,927), a study that includes various social, political, and economic topics during the last years. Estimating the statistical longitudinal models (multilevel random effects) shows mixed evidence about our hypotheses. Whereas we find support for the association between the perception of meritocracy and justification of inequality across time, the analyses that involved changes in justification of inequality are against our initial proposal. In addition, individuals in more advantaged situations and with greater resources tend to defend their interests and justify greater education inequality. Throughout the years, a larger perceived economic inequality has motivated a lower justification of inequality in education. 
   .
   \newline
   \newline
   
-   **Keywords**: meritocracy, social inequality, inequality justification
+   **Keywords**: meritocracy, social inequality, inequality justification, COVID-19
 output:
   bookdown::pdf_document2:
     template: null
-    number_sections: false    
+    number_sections: true    
     toc: false
     keep_tex: false
     pandoc_args:
@@ -61,7 +62,7 @@ header-includes:
   - \usepackage{tabu}
   - \usepackage{threeparttable}
 always_allow_html: true # for word output
-fontsize: 10pt
+fontsize: 12pt
 papersize: a4
 ---
 
@@ -85,16 +86,14 @@ papersize: a4
  Sys.setlocale("LC_ALL", "ES_ES.UTF-8")
 ```
 
-<!---
+
 \pagebreak
 
 # Acknowledgments
 
-The authors recognize the support of ANID/FONDECYT grant 1160921 and of  the Center for Conflict and Social Cohesion Studies (COES)  grant ANID/FONDAP 1513009.
+The authors recognize the support of ANID/FONDECYT grant 1160921; the Center for Conflict and Social Cohesion Studies (COES) grant ANID/FONDAP 1513009; and Millenium Nucleus on Digital Inequalities and Opportunities (NUDOS) NCS2022_046
 
 \pagebreak
-
---->
 
 
 # Introduction
@@ -174,9 +173,10 @@ The survey has been conducted yearly since 2016, except for the year 2020, when 
 
 The main variable of this study is the justification of educational inequality. This item is measured using the following statement:"It is just that high-income people have a better education for their children than people with lower incomes" ("Es justo que las personas de altos ingresos tengan una mejor educación para sus hijos que las personas con ingresos más bajos" in Spanish). Here, the respondents declared their preferences on a Likert scale from "strongly disagree" (1) to “strongly agree.” (5)
 
-The main independent variables refer to meritocratic perception, which is operationalized by two items, one related to effort ("In Chile, people are rewarded for their efforts"), and the other related to talent ("In Chile, people are rewarded for their intelligence and skills"). In addition, we included an indicator for economic inequality perception ("In Chile, the income differences are too large"). All these variables were also measured using a Likert scale from "strongly disagree" (1) to "strongly agree" (5). Then,  educational level and household income quintiles are included as objective status measures, as well as subjective social status. Finally, political identification on a left-right scale, age and gender were included as control variables. \@ref(tab:descriptives) shows the items used, their response categories, and their frequency.
+The main independent variables refer to meritocratic perception, which is operationalized by two items, one related to effort ("In Chile, people are rewarded for their efforts"), and the other related to talent ("In Chile, people are rewarded for their intelligence and skills"). In addition, we included an indicator for economic inequality perception ("In Chile, the income differences are too large"). All these variables were also measured using a Likert scale from "strongly disagree" (1) to "strongly agree" (5). Then,  educational level and household income quintiles are included as objective status measures, as well as subjective social status. Finally, political identification on a left-right scale, age and gender were included as control variables. Table \@ref(tab:descriptives) shows the items used, their response categories, and their frequency.
 
 ```{r descriptives, echo=FALSE, results='asis'}
+pacman::p_load(kableExtra)
 kable(data.frame(image='![](output/tables/desc02.png)'),    # generar tabla
       format="pipe",
              caption="Independent variables",
@@ -187,7 +187,7 @@ kable(data.frame(image='![](output/tables/desc02.png)'),    # generar tabla
 Figure \@ref(fig:frecuencies) shows the average distribution throughout the years for the dependent and independent variables. We observe that there is a large group (88.2%) of respondents who disagree or strongly disagree that people with higher incomes can access better education. Likewise, a large group of respondents (91.7%) agree or strongly agree that income differences in Chile are too large. On the other hand, there is an important level of disagreement (disagree + strongly disagree) about the perception of meritocracy, this is, whether people are rewarded for their talent (47.6%) and for their efforts (57%).
 
 ```{r frecuencies, echo=FALSE, fig.cap = "Frequency of responses for justification of educational inequality, perception of inequality, and perception of meritocracy for all the years analyzed", fig.align='center'}
- knitr::include_graphics("output/graphs/figure1.png")
+ knitr::include_graphics("output/graphs/merit_plot.png")
 ```
 
 
@@ -240,19 +240,165 @@ Model 3 adds the sociodemographic variables, where having a higher income and be
 Models 5 and 6 introduce the meritocratic variables: talent (if intelligence and abilities are rewarded in society) and effort (if efforts are rewarded in society). In line with our hypotheses, the perception that talent is rewarded has a positive influence on the justification of educational inequality in Model 5 ($\beta$=0.04, p<0.01). However, when controlling for the perception that effort is rewarded, this effect is no longer significant. In this sense, Model 6 shows that the perception that effort is rewarded in society is not only positively associated with the justification of educational inequality ($\beta$=0.05, p<0.01), but it has a larger weight than the perception of talent. 
 
 ```{r multilevel, echo=FALSE, results='asis'}
-kable(data.frame(image='![](output/tables/table1-individuales-pond-v2.png)'),    # generar tabla
-      format="pipe",
-             caption="Multilevel longitudinal models for the justification of inequality in education",
-             col.names = "",
-             row.names = F)
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               lme4,
+               texreg
+               )
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
+
+# generate analytical sample
+df_study1 <- 
+  df_study_long_t6_comunas %>%
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo) %>% 
+  na.omit() %>% 
+  mutate(ola = as.factor(ola),
+         ola_num = as.numeric(ola),
+         ola_2=as.numeric(ola)^2,
+         sexo=as.factor(sexo)
+         )
+# Hipotesis
+h0 <- "ola"
+h1 <- "ola_num+ola_2"
+h2 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo"
+h3 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id"
+h4 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc"
+h5 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent"
+h6 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+
+# A. Education distributive justice
+educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ0 <- lmer(formula(paste0("just_educ~",h0,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ1 <- lmer(formula(paste0("just_educ~",h1,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ2 <- lmer(formula(paste0("just_educ~",h2,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ3 <- lmer(formula(paste0("just_educ~",h3,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ4 <- lmer(formula(paste0("just_educ~",h4,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ5 <- lmer(formula(paste0("just_educ~",h5,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+
+# Table 1: individual
+
+omit <- "(education)|(ess)"
+texreg::texreg(list(educ0, educ1, educ3, educ4, educ5, educ6),
+                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05.
+Note: Model 3 to 6 are controlled by educational level, and subjective social status with no significant effects.", 
+                omit.coef = omit,
+                custom.coef.names = c("Intercept",
+                                      "Wave 2017",
+                                      "Wave 2018",
+                                      "Wave 2019",
+                                      "Wave 2022",
+                                      "Wave",
+                                      "Wave^2",
+#                                      "High School <br> <i>(Ref. Primary)</i>",
+#                                      "Technical",
+#                                      "Universitary",
+                                      "Quintile 2",
+                                      "Quintile 3",
+                                      "Quintile 4",
+                                      "Quintile 5",
+                                      "Quintile NA",
+#                                      "Subjective Social Status",
+                                      "Age 30-49",
+                                      "Age 50-64",
+                                      "Age 65 or more",
+                                      "Gender (Ref. Male)",
+                                      "Center",
+                                      "Right",
+                                      "Does not identify",
+                                      "Inequality perception",
+                                      "Merit: Talent",
+                                      "Merit: Effort" ),
+                groups = list("Wave (Ref.= Wave 2016)" = 2:5,
+                  "Quintile (Ref.= Quintile 1)" = 8:12,
+                  "Age (Ref.= 18-29)" = 13:15,
+                  "Pol. pos (Ref.= Left)" = 17:19
+                  ),
+                include.loglik = FALSE,
+                include.aic = FALSE,
+                custom.gof.names = c("BIC",
+                                     "Num. obs.",
+                                     "Num. groups: Individuals",
+                                     "Var: Individuals (Intercept)",
+                                     "Var: Residual"),
+               caption = paste("(\\#tab:multilevel)","Multilevel longitudinal models for the justification of inequality in education"),
+               center = TRUE,
+               caption.above = TRUE,
+               scalebox = 0.765,
+               float.pos = "!ht", 
+               booktabs = FALSE, 
+               use.packages = FALSE, 
+               include.rs = FALSE, 
+               include.rmse = FALSE,
+               include.ci = FALSE)
+
 ```
 
 ```{r interact, echo=FALSE, results='asis'}
-kable(data.frame(image='![](output/tables/table3-interac-pond.png)'),    # generar tabla
-      format="pipe",
-             caption="Interaction effects for the justification of economic inequality",
-             col.names = "",
-             row.names = F)
+df_study1 <- 
+  df_study_long_t6_comunas %>%
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent,education=educ,quintil1:sexo) %>% 
+  na.omit() %>% 
+  mutate(ola = as.numeric(ola),
+         ola_2=as.numeric(ola)^2,
+         sexo=as.factor(sexo)
+ #        edad=as.numeric(edad)
+         #pos_id=as.numeric(pos_id)
+         )
+
+# Hipotesis
+
+h6 <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_effort*ola"
+h3b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_talent*ola"
+
+# A. justification educational inequality
+educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(ola+merit_talent|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+
+# table 3: interacciones
+omit <- "(education)|(ess)|(quintil1)|(edad)|(sexo)|(pos_id)|(des_perc)"
+texreg::texreg(list(educ6,educ3,educ1),
+                custom.note = "\\item *** p < 0.001; ** p < 0.01; * p < 0.05.
+Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, <br> political position and inequality perception",
+                omit.coef = omit,
+                include.loglik = FALSE,
+                include.aic = FALSE,
+                custom.coef.names = c("Intercept",
+                                      "Wave",
+                                      "Wave^2",
+                                      "Merit: Talent",
+                                      "Merit: Effort",
+                                      "Wave * Merit: Talent",
+                                      "Wave * Merit: Effort"
+                                      ),
+                custom.gof.names = c("BIC",
+                                     "Num. obs.",
+                                     "Num. groups: Individuals",
+                                     "Var: Individuals (Intercept)",
+                                     "Var: Residual",
+                                     "Var: Individuals Wave",
+                                     "Var: Individuals Merit: Talent",
+                                     "Cov: Individuals (Intercept) Wave",
+                                     "Cov: Individuals (Intercept) Merit: Talent",
+                                     "Cov: Individuals Wave Merit: Talent",
+                                     "Var: Individuals Merit: Effort",
+                                     "Cov: Individuals (Intercept) Merit: Effort",
+                                     "Cov: Individuals Wave Merit: Effort"),  
+               caption = paste("(\\#tab:interact)","Interaction effects for the justification of economic inequality"),
+               center = TRUE,
+               caption.above = TRUE,
+               scalebox = 0.765,
+               float.pos = "!ht", 
+               booktabs = TRUE, 
+               use.packages = FALSE, 
+               include.rs = FALSE, 
+               include.rmse = FALSE,
+               include.ci = FALSE,
+               threeparttable = TRUE)
 ```
 
 In this final part of the analysis, we contrast longitudinal hypotheses regarding changes in the relationship between meritocracy and justification of economic inequality over time. In hypothesis 5 we proposed that the association between the perception of meritocracy and inequality justification mitigates over time, as meritocratic ideals could have weakened due to critical situations associated with the COVID pandemic. We test this hypothesis through interaction effects, displayed in Table \@ref(tab:interact). Model 1 is shown as a baseline model, it is the same as Model 6 in Table 1 but it only displays the variables involved in the interaction for the sake of space (all other variables are controlled for). Model 2 adds the interaction between the perception of meritocracy based on talent and time (panel wave), whereas Model 3 does the same but now for the perception of meritocracy related to effort. As observed, only the effort variable shows a significant interaction with the time variable (0.01, p<0.05), meaning that, on average, the association between the perception of meritocracy based on effort and the justification of inequality increases by 0.01 points in every measurement point.
@@ -274,8 +420,97 @@ The capabilities of the ELSOC longitudinal database are not limited to micro-lev
 
 # References
 
-# Appendix
+::: {#refs}
+:::
 
-```{r multilevel-full, echo=FALSE, fig.cap = "Multilevel effects of justification of economic inequality", fig.align='center'}
- knitr::include_graphics("output/tables/table1-individuales-pond-appendix.png")
+# (APPENDIX) Appendix {.unnumbered}
+
+`r if (knitr::is_latex_output()){ '\\appendix'}` `r if (knitr::is_latex_output()){ '\\section{Appendix}'}`
+
+```{r multilevel-full, echo=FALSE, results='asis'}
+df_study1 <- 
+  df_study_long_t6_comunas %>%
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo) %>% 
+  na.omit() %>% 
+  mutate(ola = as.factor(ola),
+         ola_num = as.numeric(ola),
+         ola_2=as.numeric(ola)^2,
+         sexo=as.factor(sexo)
+         )
+# Hipotesis
+h0 <- "ola"
+h1 <- "ola_num+ola_2"
+h2 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo"
+h3 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id"
+h4 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc"
+h5 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent"
+h6 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+
+# A. Education distributive justice
+educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ0 <- lmer(formula(paste0("just_educ~",h0,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ1 <- lmer(formula(paste0("just_educ~",h1,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ2 <- lmer(formula(paste0("just_educ~",h2,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ3 <- lmer(formula(paste0("just_educ~",h3,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ4 <- lmer(formula(paste0("just_educ~",h4,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ5 <- lmer(formula(paste0("just_educ~",h5,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+
+# Table 1: individual
+
+omit <- "(education)|(ess)"
+texreg::texreg(list(educ0, educ1, educ3, educ4, educ5, educ6),
+                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05.", 
+#                omit.coef = omit,
+                custom.coef.names = c("Intercept",
+                                      "Wave 2017",
+                                      "Wave 2018",
+                                      "Wave 2019",
+                                      "Wave 2022",
+                                      "Wave",
+                                      "Wave^2",
+                                      "High School",
+                                      "Technical",
+                                      "Universitary",
+                                      "Quintile 2",
+                                      "Quintile 3",
+                                      "Quintile 4",
+                                      "Quintile 5",
+                                      "Quintile NA",
+                                      "Subjective Social Status",
+                                      "Age 30-49",
+                                      "Age 50-64",
+                                      "Age 65 or more",
+                                      "Gender (Ref. Male)",
+                                      "Center",
+                                      "Right",
+                                      "Does not identify",
+                                      "Inequality perception",
+                                      "Merit: Talent",
+                                      "Merit: Effort" ),
+                groups = list("Wave (Ref.= Wave 2016)" = 2:5,
+                              "Education (Ref.=Primary)"= 8:10,
+                  "Quintile (Ref.= Quintile 1)" = 11:15,
+                  "Age (Ref.= 18-29)" = 17:19,
+                  "Pol. pos (Ref.= Left)" = 21:23
+                  ),
+                include.loglik = FALSE,
+                include.aic = FALSE,
+                custom.gof.names = c("BIC",
+                                     "Num. obs.",
+                                     "Num. groups: Individuals",
+                                     "Var: Individuals (Intercept)",
+                                     "Var: Residual"),
+               caption = paste("(\\#tab:multilevel-full)","Multilevel effects of justification of economic inequality"),
+               center = TRUE,
+               caption.above = TRUE,
+               scalebox = 0.73,
+               float.pos = "!ht", 
+               booktabs = FALSE, 
+               use.packages = FALSE, 
+               include.rs = FALSE, 
+               include.rmse = FALSE,
+               include.ci = FALSE)
+
 ```
+
