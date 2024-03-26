@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.26)  26 MAR 2024 10:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.26)  26 MAR 2024 10:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -467,40 +467,16 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 ) (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
 Package: threeparttable 2003/06/13  v 3.0
 \@tempboxb=\box69
-) (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
-Package: threeparttablex 2013/07/23 v0.3 by daleif
-(c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
-Package: environ 2014/05/04 v0.3 A new way to define environments
-(c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
-Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
-))
-\TPTL@width=\skip67
-) (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
-\UL@box=\box70
-\UL@hyphenbox=\box71
-\UL@skip=\skip68
-\UL@hook=\toks34
-\UL@height=\dimen261
-\UL@pe=\count315
-\UL@pixel=\dimen262
-\ULC@box=\box72
-Package: ulem 2019/11/18
-\ULdepth=\dimen263
-) (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
-Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
-\rotheadsize=\dimen264
-\c@nlinenum=\count316
-\TeXr@lab=\toks35
 )
-\cslhangindent=\skip69
-\csllabelwidth=\skip70
-LaTeX Font Info:    Trying to load font information for T1+ptm on input line 144.
+\cslhangindent=\skip67
+\csllabelwidth=\skip68
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 130.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 ) (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-03-14 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count317
-\l__pdf_internal_box=\box73
+\l__color_backend_stack_int=\count315
+\l__pdf_internal_box=\box70
 ) (./paper.aux
 
 LaTeX Warning: Label `table:coefficients' multiply defined.
@@ -511,31 +487,31 @@ LaTeX Warning: Label `table:coefficients' multiply defined.
 )
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 130.
+LaTeX Font Info:    ... okay on input line 130.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 144.
+Package hyperref Info: Link coloring ON on input line 130.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -575,42 +551,42 @@ Package caption Info: float package is loaded.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 146.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 132.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 146.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 132.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 146.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 132.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 146.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 132.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 146.
+(Font)              <14.4> on input line 132.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 146.
+(Font)              <10> on input line 132.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 146.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 146.
+(Font)              <7> on input line 132.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 132.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 146.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 132.
 (c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 149--152
+Underfull \hbox (badness 10000) in paragraph at lines 135--138
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 149--152
+Underfull \hbox (badness 10000) in paragraph at lines 135--138
 
  []
 
@@ -618,43 +594,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 149--152
 
 {c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}] [2] [3] [4] [5] [6] [7] [8]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 215.
+(Font)              <12> on input line 201.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 215.
+(Font)              <8> on input line 201.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 215.
+(Font)              <6> on input line 201.
 [9{c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}] [10]
 <output/graphs/merit_plot.png, id=213, 722.7pt x 433.62pt>
 File: output/graphs/merit_plot.png Graphic file (type png)
 <use output/graphs/merit_plot.png>
-Package pdftex.def Info: output/graphs/merit_plot.png  used on input line 250.
+Package pdftex.def Info: output/graphs/merit_plot.png  used on input line 236.
 (pdftex.def)             Requested size: 385.02515pt x 231.01509pt.
 <output/tables/desc02.png, id=215, 578.16pt x 735.24687pt>
 File: output/tables/desc02.png Graphic file (type png)
 <use output/tables/desc02.png>
-Package pdftex.def Info: output/tables/desc02.png  used on input line 266.
+Package pdftex.def Info: output/tables/desc02.png  used on input line 252.
 (pdftex.def)             Requested size: 452.96558pt x 576.03696pt.
 [11 <./output/graphs/merit_plot.png>] [12 <./output/tables/desc02.png>]
 <output/graphs/alluvial_dep.png, id=231, 505.89pt x 578.16pt>
 File: output/graphs/alluvial_dep.png Graphic file (type png)
 <use output/graphs/alluvial_dep.png>
-Package pdftex.def Info: output/graphs/alluvial_dep.png  used on input line 279.
+Package pdftex.def Info: output/graphs/alluvial_dep.png  used on input line 265.
 (pdftex.def)             Requested size: 385.02844pt x 440.03253pt.
 [13 <./output/graphs/alluvial_dep.png>]
 <output/graphs/years_plot.png, id=244, 505.89pt x 433.62pt>
 File: output/graphs/years_plot.png Graphic file (type png)
 <use output/graphs/years_plot.png>
-Package pdftex.def Info: output/graphs/years_plot.png  used on input line 290.
+Package pdftex.def Info: output/graphs/years_plot.png  used on input line 276.
 (pdftex.def)             Requested size: 385.02844pt x 330.0244pt.
 [14 <./output/graphs/years_plot.png>]
 <output/graphs/corr.png, id=252, 602.25pt x 301.125pt>
 File: output/graphs/corr.png Graphic file (type png)
 <use output/graphs/corr.png>
-Package pdftex.def Info: output/graphs/corr.png  used on input line 301.
+Package pdftex.def Info: output/graphs/corr.png  used on input line 287.
 (pdftex.def)             Requested size: 385.04352pt x 192.52176pt.
 [15 <./output/graphs/corr.png>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 437.
+(Font)              <5> on input line 423.
 [16]
 
 LaTeX Warning: Text page 17 contains only floats.
@@ -681,15 +657,15 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14552 strings out of 476064
- 235121 string characters out of 5791135
+ 14197 strings out of 476064
+ 229330 string characters out of 5791135
  1988496 words of memory out of 5000000
- 36274 multiletter control sequences out of 15000+600000
- 616857 words of font info for 94 fonts, out of 8000000 for 9000
+ 35940 multiletter control sequences out of 15000+600000
+ 616751 words of font info for 93 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  83i,14n,93p,2026b,572s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/kevin/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (28 pages, 1100479 bytes).
+Output written on paper.pdf (28 pages, 1100477 bytes).
 PDF statistics:
  519 PDF objects out of 1000 (max. 8388607)
  461 compressed objects within 5 object streams
