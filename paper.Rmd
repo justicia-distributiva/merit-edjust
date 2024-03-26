@@ -5,17 +5,17 @@ linestretch: '1.5'
 link-citations: yes
 # params:
 # lang: en-GB
-author: 
-- name: Juan Carlos Castillo
-  affiliation: Department of Sociology, Universidad de Chile
-  email: juancastillov@uchile.cl
-  number: 1, 3 
-- name: Julio Iturra
-  affiliation: Bremen International Graduate School of Social Sciences, Universität Bremen
-  number: 2
-- name: Kevin Carrasco
-  affiliation: Center for Social Conflict and Cohesion Studies
-  number: 3
+# author: 
+# - name: Juan Carlos Castillo
+#   affiliation: Department of Sociology, Universidad de Chile
+#   email: juancastillov@uchile.cl
+#   number: 1, 3 
+# - name: Julio Iturra
+#   affiliation: Bremen International Graduate School of Social Sciences, Universität Bremen
+#   number: 2
+# - name: Kevin Carrasco
+#   affiliation: Center for Social Conflict and Cohesion Studies
+#   number: 3
 abstract: | 
   Education is considered a key tool for social mobility and equality of opportunities. However, despite the widespread value of education, disparities in educational outcomes persist over time. To what extent are such educational disparities justified in society? And, what are the main factors driving this kind of justification? This research focuses on the changes in the justification of inequality in access to education in Chile and their links with the perception of meritocracy. The Chilean case offers an interesting context for this study given its high economic inequality, deep neoliberal policies, and commodification of social services such as education. The central argument of this article is that the justification of inequalities weakens during periods of vulnerability and crisis (such as the health and economic crisis resulting from the COVID-19 pandemic), which could be linked to a challenge of meritocratic ideals. For testing the research hypotheses we estimate a series of longitudinal multilevel models with data from a Chilean longitudinal panel survey (2016 – 2022, 6 waves, N = 2,927). Whereas we find support for the association between the perception of meritocracy and justification of inequality, the analyses that involved changes over time showed an increase in the justification of inequality in education. The discussion of these results delves into the social consequences of justifying inequality in a sensitive area as education, as well as the persistence of meritocratic ideals despite challenging events.
   
@@ -34,7 +34,7 @@ output:
       - --template=input/mytemplate.tex #custom template para usar autores con afiliacion    
   bookdown::word_document2:
     number_sections: false
-    reference_docx: input/template.docx
+    # reference_docx: input/template.docx
     toc: false
   bookdown::html_document2:
     number_sections: false
@@ -76,7 +76,9 @@ papersize: a4
 ```
  
 ```{r setup, include=FALSE}
- knitr::opts_chunk$set(echo=FALSE, warning = FALSE,message = FALSE, cache = TRUE,out.width = '85%',fig.pos= "H", fig.align = 'center')
+ knitr::opts_chunk$set(echo=FALSE, warning = FALSE,message = FALSE, cache = TRUE,out.width = '85%',fig.pos= "H"
+                       # , fig.align = 'center'
+                       )
  # knitr::opts_knit$set(base.url = "../") #relative path for .html output file
  # knitr::opts_knit$set(root.dir = "../") #relative path for chunks within .rmd files
  options(scipen=999)
@@ -97,7 +99,7 @@ Despite the widespread recognition of education as a key factor for social mobil
 
 Meritocracy is defined as a distributive system where individual factors such as effort and talent are conceived as the main determinants of individual performance, usually sidelining the role of opportunities and social background. In recent years, there has been a growing interest in studying meritocratic beliefs as well as their variations according to individual and contextual variables [@mijs_paradox_2021; @mijs_belief_2022]. This line of research has highlighted how meritocratic beliefs are associated with justifying unequal access to resources and rewards in society, by legitimizing social hierarchies in which those who already have resources and advantages are more likely to succeed [@sandel_tyranny_2020;@mcnamee_meritocracy_2004;@hadjar_meritokratie_2008]. Within this framework, this study focuses on the changes in the justification of inequalities in access to education in Chile, and to what extent this phenomenon is associated with the perception of meritocracy and its variations during the COVID pandemic.
 
-The Chilean case is particularly relevant when it comes to the study of inequalities in education. The country is characterized by a high level of economic inequality associated with the privatization and commodification of several social policy domains, among them the educational system [@bellei_estudio_2013; @corvalanMercadoEscolarLibertad2016]. The neoliberal reforms implemented during and since the military dictatorship (1973-1989) have deepened educational policies based on private subsidies, achievement incentives, selection, and segregation [@joikomujicaCuasimercadoEducativoChile2019]. Previous research in Chile has emphasized the concept of an "educational market" [@corvalanMercadoEscolarLibertad2016], characterized by selection, competition, and the provision of goods and services associated with payment capacities. Many studies have addressed this problem from economic, political, and sociological perspectives, generating relevant evidence on their academic and social consequences [@ramosarellanoEducacionPromesaIncumplida2022]. Likewise, massive social mobilizations in the country (particularly in 2006, 2011, and 2018) have had educational inequalities as one of the main targets, putting pressure on governments towards a series of reforms that have advanced free higher education reforms and have diminished the role of private actors in the educational system.
+The Chilean case is particularly relevant when it comes to the study of inequalities in education. The country is characterized by a high level of economic inequality associated with the privatization and commodification of several social policy domains, among them the educational system [@bellei_estudio_2013; @corvalanMercadoEscolarLibertad2016]. The neoliberal reforms implemented during and since the military dictatorship (1973-1989) have deepened educational policies based on private subsidies, achievement incentives, selection, and segregation [@joiko_cuasimercado_2019]. Previous research in Chile has emphasized the concept of an "educational market" [@corvalanMercadoEscolarLibertad2016], characterized by selection, competition, and the provision of goods and services associated with payment capacities. Many studies have addressed this problem from economic, political, and sociological perspectives, generating relevant evidence on their academic and social consequences [@ramos_educacion_2022]. Likewise, massive social mobilizations in the country (particularly in 2006, 2011, and 2018) have had educational inequalities as one of the main targets, putting pressure on governments towards a series of reforms that have advanced free higher education reforms and have diminished the role of private actors in the educational system.
 
 This research endeavors to dissect the nuanced alterations in the justifications for educational disparities within the Chilean framework. Central to our investigation is the premise that the rationale underpinning these inequalities experiences a significant recalibration during periods of vulnerability and crises, specifically under the unprecedented strains of the global health and economic cataclysm triggered by the COVID-19 pandemic [@hankivsky_introduction_2022;@breznau_welfare_2021]. A pertinent aspect of this discourse is articulated in the works of Mijs [-@mijs_stratified_2016;-@mijs_visualizing_2018], showing the interplay between meritocratic beliefs and the legitimization of disparities, as well as the potential erosion of meritocratic principles amidst crises. Within this framework, we point out that periods of vulnerability (such as the health and economic crisis resulting from the COVID-19 pandemic) could weaken the justification of social inequalities, a change that would be at least in part linked to a challenge of the meritocratic ideals. Furthermore, we suggest that the association between meritocratic perception and inequality justification would be weaker among lower-status groups, as they are the most affected in critical times. 
 
@@ -140,7 +142,7 @@ The present research uses longitudinal survey data from 2016 to 2022 to asses ch
 
 $H_1$: The justification of educational inequalities decreases after the pandemic
 
-Our second argument is based on the evidence that relates rational interests with justifications and preferences [@hing_failure_2019], expecting that:
+Our second argument is based on the evidence that relates rational interests with justifications and preferences [@sonhing_failure_2019], expecting that:
 
 $H_2$: Those with lower status characteristics show lower justification of educational inequalities
 
@@ -412,9 +414,9 @@ The capabilities of the ELSOC longitudinal database are not limited to micro-lev
 
 \pagebreak
 
-_Acknowledgments_
+<!-- _Acknowledgments_ -->
 
-The authors recognize the support of ANID/FONDECYT grant 1210847; the Center for Conflict and Social Cohesion Studies (COES) grant ANID/FONDAP 1513009; and Millenium Nucleus on Digital Inequalities and Opportunities (NUDOS) NCS2022_046
+<!-- The authors recognize the support of ANID/FONDECYT grant 1210847; the Center for Conflict and Social Cohesion Studies (COES) grant ANID/FONDAP 1513009; and Millenium Nucleus on Digital Inequalities and Opportunities (NUDOS) NCS2022_046 -->
 
 
 # References
