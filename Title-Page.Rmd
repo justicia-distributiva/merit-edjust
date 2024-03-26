@@ -41,6 +41,6 @@ Kevin Carrasco, Center for Social Conflict and Cohesion Studies
 
 ORCID: 0000-0002-9348-8361
 
-Word count: 
+Word count: 7663
 
-[^*]: Corresponding author (juancastillov@uchile.cl - [jc-castillo.com](https://juancarloscastillo.github.io/jc-castillo/) -  Ignacio Carrera Pinto 1045 Ñuñoa, Santiago de Chile). The authors recognize the support of ANID/FONDECYT grant 1210847 and of the Center for Conflict and Social Cohesion Studies (COES)  grant ANID/FONDAP 1513009.
+[^*]: Corresponding author (juancastillov@uchile.cl - [jc-castillo.com](https://juancarloscastillo.github.io/jc-castillo/) -  Ignacio Carrera Pinto 1045 Ñuñoa, Santiago de Chile). The authors recognize the support of the National Research and Development Agency (ANID) through the grant from the National Fund for Scientific and Technological Development (FONDECYT) N° 1210847; from the Center for Conflict and Social Cohesion Studies (COES) grant Financing Fund for Research Centers in Priority Areas (FONDAP) N° 1523A0005; and Millenium Nucleus on Digital Inequalities and Opportunities (NUDOS) NCS2022_046
