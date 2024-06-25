@@ -8,3 +8,5 @@ Kevin Carrasco, Center for Social Conflict and Cohesion Studies - [github](https
 
 
 Análisis: [https://justicia-distributiva.github.io/merit-edjust/production/prod_analysis.html#3_Models](https://justicia-distributiva.github.io/merit-edjust/production/prod_analysis.html#3_Models)
+
+[Presentation ISSP Annual meeting, Chile, July 2024](https://justicia-distributiva.github.io/merit-edjust/presentations/ISPP-santiago2024/ispp2024.html)

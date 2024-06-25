@@ -1,0 +1,587 @@
+---
+pagetitle: "Changes in the justification of educational inequalities: The role of perceptions of inequality and meritocracy during the COVID pandemic"
+author: Juan Carlos Castillo, Julio Iturra & Kevin Carrasco
+bibliography: ../../input/bib/merit-edjust.bib 
+csl: ../../input/bib/apa7-singlespace.csl
+
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+    R.options:
+      knitr.graphics.auto_pdf: true
+      
+format: 
+  revealjs:
+    logo: images/edumer.png
+    slide-number: true
+    theme: [pp.scss]
+    #theme: [pp.scss]
+    title-slide-attributes:
+      visibility: false
+#      data-background-image: images/portada.jpg
+#      data-background-size: cover
+    auto-play-media: true
+
+editor: visual
+---
+
+```{r data, results=FALSE, warning=FALSE, echo=FALSE}
+if (!require("pacman")) install.packages("pacman") # instalar pacman
+                            # cargar librerias
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               ggplot2,
+               sjPlot,
+               tidyverse,
+               ggalluvial,
+               survey,
+               shadowtext,
+               srvyr
+               )
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
+
+```
+
+::: {.columns .v-center-container}
+::: {.column width="30%"}
+![](qr.png){width="80%" fig-align="right"}
+<br>
+![](images/logocoes.png){width="90%" fig-align="right"}
+<br>
+![](images/edumer.png){width="80%" fig-align="left"}
+:::
+
+::: {.column width="70%"}
+
+## **Changes in the justification of educational inequalities:**
+
+### The role of perceptions of inequality and meritocracy during the COVID pandemic
+
+----------------------------------------------------------------
+
+Juan Carlos Castillo, Julio Iturra & **Kevin Carrasco* **
+
+
+#### Fondecyt N° 1210847: Meritocracia en la escuela
+#### Center for social conflict and cohesion studies
+
+**ISPP Annual meeting** Chile, July 2024
+:::
+:::
+
+
+# Introduction {data-background-color="black"}
+
+## Introduction
+
+::: {.incremental}
+
+::: {.columns .v-center-container}
+::: {.column width="50%" .incremental}
+
+### Justification of inequality
+
+- Perceived economic inequality and justification of inequality [@wegenerIllusionDistributiveJustice1987; @jassoJusticeEarningsNew1978; @janmaatSubjectiveInequalityReview2013]
+
+- Cultural factors and policy feedback effects [@kelley_legitimate_2021; @mijs_paradox_2021; @trump_income_2018]
+
+- Chile, marketization & neoliberal reforms [@bellei_estudio_2013; @corvalanMercadoEscolarLibertad2016]
+
+:::
+
+
+::: {.column width="50%" .incremental}
+### Meritocracy
+
+- Effort and talent [@young_rise_1962]
+
+- Normative and perceptual elements [@duru-bellat_who_2012; @castillo_meritocracia_2019]
+
+:::
+:::
+
+::: {.r-stack style="font-size: 130%;"}
+- Covid pandemic [@breznau_welfare_2021; @hankivsky_introduction_2022]
+:::
+
+:::
+
+## This study
+
+<br>
+
+![](general-scheme.png){width="100%" fig-align="center"}
+
+# Methods {data-background-color="black"}
+
+## Data 
+
+::: {.incremental}
+
+- Longitudinal social study of Chile (ELSOC-COES) 2016-2022
+
+- 2021 (telephone version) the dependent variable was not asked
+
+- N total=8042; 1689 individuals for 5 waves
+
+:::
+
+## Variables
+
+```{r bivariate-plots, echo=FALSE}
+df_study1 <- df_study_long_t6_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
+                                               just_educ, des_perc, merit_effort, merit_talent,
+                                               educ, quintil1:sexo) %>% na.omit()
+merit_plot <- df_study1 %>% 
+  select(merit_effort, merit_talent, des_perc, just_educ) %>% 
+  sjPlot::plot_stackfrq(weight.by = df_study1$ponderador_long_total,
+                        expand.grid =TRUE,
+                      geom.colors = "PuBu",
+                      show.total = FALSE, 
+                      vjust=rep(c("bottom", "top", "bottom", "top", "bottom"),4),
+                      legend.labels = c("Strongly disagree", "Disagree", "Neither agree
+nor disagree", "Agree", "Strongly agree"),
+                      axis.labels = c("Merit effort", "Merit talent", "Inequality 
+perception", "Justification 
+of 
+educational inequality")
+                      ) +
+  theme_light(base_size = 16) +
+  theme(legend.position="bottom", text = element_text(size = 14),
+        plot.caption = element_text(hjust = 1)) +
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2022 (n = 8042)")
+merit_plot
+
+```
+
+## Variables {.smaller}
+
+```{r error=FALSE}
+df_study1 <- df_study_long_t6_comunas %>% dplyr::select(ola,
+                                               just_educ, des_perc, merit_talent, merit_effort,
+                                               educ, quintil1:sexo)
+
+df_study1$ola <- factor(df_study1$ola,
+         labels = c("2016","2017","2018","2019", "2022"))
+df_study1$ola <- 
+sjlabelled::set_label(x = df_study1$ola,
+                      label = "Wave")
+
+df_study1$sexo <- factor(df_study1$sexo,
+         labels = c("Male", "Female"))
+df_study1$sexo <- 
+sjlabelled::set_label(x = df_study1$sexo,
+                      label = "Gender")
+
+for (i in c("just_educ", "des_perc",
+            "merit_effort","merit_talent")) {
+  df_study1[[i]] <- factor(df_study1[[i]],
+                            levels = 1:5,
+                            labels = c("Strongly disagree","Disagree",
+                                       "Neither disagree nor agree",
+                                       "Agree", "Strongly agree"))
+}
+
+
+
+df_study1$just_educ <- 
+sjlabelled::set_label(x = df_study1$just_educ, 
+                      label = "Justification of educational inequality")
+
+#
+df_study1$des_perc <- 
+sjlabelled::set_label(x = df_study1$des_perc, 
+                      label = "Income differences are too large") 
+
+#
+df_study1$merit_effort <- 
+sjlabelled::set_label(x = df_study1$merit_effort, 
+                      label = "People are rewarded for their efforts")
+
+#
+df_study1$merit_talent <- 
+sjlabelled::set_label(x = df_study1$merit_talent, 
+                      label = "People are rewarded for their intelligence and skills")
+
+
+lab_study1 <- sjlabelled::get_label(df_study1) 
+df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
+```
+
+::: {.columns .v-center-container}
+
+::: {.column width="50%"}
+
+```{r error=FALSE}
+df<- dfSummary(x = select(df_study1, ola, quintil1, sexo),
+               plain.ascii = FALSE,
+               style = "grid",
+               tmp.img.dir = "/tmp",
+               graph.magnif = TRUE,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = F,    # missing
+               graph.col = F, # plot
+               valid.col = F, # n valido
+               col.widths = c(10,10,10)
+               )
+df$Variable <- NULL # delete variable column
+
+print(df, method='render',
+      footnote = NA, 
+      headings = FALSE, 
+      style = list(
+        table = "font-size: 8px;",
+        th = "font-size: 8px;",
+        td = "font-size: 8px;"
+      ))
+```
+
+:::
+
+::: {.column width="50%"}
+```{r error=FALSE}
+df<- dfSummary(x = select(df_study1, edad, pos_id),
+               plain.ascii = FALSE,
+               style = "grid",
+               tmp.img.dir = "/tmp",
+               graph.magnif = TRUE,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = F,    # missing
+               graph.col = F, # plot
+               valid.col = F, # n valido
+               col.widths = c(10,10,10)
+               )
+df$Variable <- NULL # delete variable column
+
+print(df, method='render',
+      footnote = NA, 
+      headings = FALSE, 
+      style = list(
+        table = "font-size: 8px;",
+        th = "font-size: 8px;",
+        td = "font-size: 8px;"
+      ))
+```
+:::
+
+:::
+
+# Results {data-background-color="black"}
+
+##
+
+### Changes in the justification of educational inequality (2016-2022)
+
+```{r}
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
+df_study1 <- df_study_long_t6_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
+                                               just_educ, des_perc, merit_effort, merit_talent,
+                                               educ, quintil1:sexo) %>% na.omit()
+df_study1 <- df_study1[complete.cases(df_study1$segmento), ]
+
+df_study1$just_educ <- factor(df_study1$just_educ,
+         labels = c("Strongly 
+disagree", "Disagree", "Neither agree
+nor disagree", "Agree", "Strongly 
+agree"))
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador_long_total, #ponderador longitudinal
+                          nest = TRUE,
+                          data = df_study1)
+
+
+#Paso 1
+datos.justeduc <- data.frame((svytable(~just_educ + ola + idencuesta, elsoc_diseno, round = F))) %>% dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#Paso 2
+etiquetas.justeduc <- data.frame((svytable(~just_educ + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
+  mutate(idencuesta = 1)
+datos.justeduc$just_educ <- factor(datos.justeduc$just_educ, levels = rev(levels(datos.justeduc$just_educ)))
+etiquetas.justeduc$just_educ <- factor(etiquetas.justeduc$just_educ, levels = rev(levels(etiquetas.justeduc$just_educ)))
+```
+
+```{r alluvial}
+colors<- c("#f1eef6ff","#bdc9e1ff","#b3b3b3ff","#74a9cfff","#0570b0ff")
+alluvial_justeduc <- ggplot(datos.justeduc, aes(x = ola, fill = just_educ, stratum = just_educ,
+                             alluvium = idencuesta, y = porcentaje))+
+    ggalluvial::geom_flow(alpha = .66) + 
+    ggalluvial::geom_stratum(linetype = 0) +
+    scale_y_continuous(labels = scales::percent) + 
+    ylab(label = NULL) +
+    xlab(label = NULL) + 
+    theme(#legend.position = 'top',
+          legend.title = element_blank(),
+          plot.caption = element_text(hjust = 1)) +
+    scale_fill_manual(values = colors) +
+    geom_shadowtext(data = etiquetas.justeduc, 
+              aes(label = ifelse(porcentaje > 0 , scales::percent(porcentaje, accuracy = .1),"")),
+              position = position_stack(vjust = .5),
+              show.legend = FALSE,
+              size = 4,
+              color = rep('white'),
+              bg.colour='grey30')+
+  scale_x_discrete(labels = c(2016, 2017, 2018, 2019, 2022)) +
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2022 (n = 8042)")
+
+alluvial_justeduc
+```
+
+## 
+
+### Changes in the main independent variables over years (2016-2022)
+
+```{r}
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
+df_study1 <- df_study_long_t6_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
+                                               just_educ, des_perc, merit_effort, merit_talent,
+                                               educ, quintil1:sexo) %>% na.omit()
+df_study1 <- df_study1[complete.cases(df_study1$segmento), ]
+
+elsoc_diseno <- as_survey_design(df_study1,
+                                 ids = segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ponderador_long_total, #ponderador longitudinal
+                          nest = TRUE
+                          )
+
+just_years_mean = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
+  group_by(ola) %>%
+  summarise(education = survey_mean(just_educ, vartype = "ci", na.rm = T)) %>% 
+  ungroup()
+
+just_years <- just_years_mean %>% 
+  pivot_longer(cols = c("education"), 
+               names_to = "variable",
+               values_to = "value") %>% 
+  cbind(type=c("Dependent")) %>% 
+  select(ola, variable, value, type, value_upp=education_upp, value_low=education_low)
+
+ineq_years = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
+  group_by(ola) %>%
+  summarise(inequality = survey_mean(des_perc, vartype = "ci", na.rm = T),
+            ) %>% 
+  ungroup()
+
+ineq_years <- ineq_years %>% 
+  pivot_longer(cols = c(
+                        "inequality"), 
+               names_to = "variable",
+               values_to = "value") %>% 
+  cbind(type=c("Independent")) %>% 
+  select(ola, variable, value, type, value_upp=inequality_upp, value_low=inequality_low)
+
+talent_years = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
+  group_by(ola) %>%
+  summarise(
+            talent = survey_mean(merit_talent, vartype = "ci", na.rm = T)) %>% 
+  ungroup()
+
+talent_years <- talent_years %>% 
+  pivot_longer(cols = c(
+                        "talent"), 
+               names_to = "variable",
+               values_to = "value") %>% 
+  cbind(type=c("Independent")) %>% 
+  select(ola, variable, value, type, value_upp=talent_upp, value_low=talent_low)
+
+effort_years = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
+  group_by(ola) %>%
+  summarise(
+            effort = survey_mean(merit_effort, vartype = "ci", na.rm = T)) %>% 
+  ungroup()
+
+effort_years <- effort_years %>% 
+  pivot_longer(cols = c(
+                        "effort"), 
+               names_to = "variable",
+               values_to = "value") %>% 
+  cbind(type=c("Independent")) %>% 
+  select(ola, variable, value, type, value_upp=effort_upp, value_low=effort_low)
+  
+
+vars_years <- rbind(just_years, ineq_years, talent_years, effort_years)
+
+
+categorias_x <- c(2016, 2017, 2018, 2019, 2022)
+vars_years$variable <- factor(vars_years$variable, levels = c("education", "inequality", "talent", "effort"), labels=  c("Justification
+educational
+inequality
+(dependent)", "Inequality
+perception", "Merit: Talent", "Merit: Effort"),
+ordered = TRUE)
+
+
+
+categorias_z <- c("Justification
+educational
+inequality
+(dependent)", "Inequality
+perception
+(independent)", "Merit: Talent
+(independent)", "Merit: Effort
+(independent)")
+
+## Crear el gráfico principal
+years_plot <- ggplot(vars_years, aes(ola, value, color = variable, shape = variable, linetype = variable)) +
+  theme_bw(base_size = 14) +
+  geom_point(size = 4) +
+  geom_line(aes(group = variable)) +
+  geom_errorbar(aes(ymin = value_low, ymax = value_upp), width = 0.2) +
+  ylab("Mean") +
+  xlab("Wave") +
+  ylim(1, 5) +
+  scale_x_discrete(labels = categorias_x) +
+  scale_color_manual(labels = categorias_z, name = "Variable", values =  c("#bdc9e1ff","#0570b0ff","#74a9cfff","#b3b3b3ff")) +
+  scale_shape_manual(labels = categorias_z, name = "Variable", values = c("square", "circle", "triangle", "diamond")) +
+  scale_linetype_manual(labels = categorias_z, name = "Variable", 
+                        values = c("solid", "dashed", "dotted", "dotdash")) +  # Definir diferentes tipos de línea
+   theme(legend.position = "none") +
+  coord_cartesian(xlim = c(1, 6)) +  # Ampliar el eje x
+  scale_x_discrete(labels = c(2016, 2017, 2018, 2019, 2022, ""))  # Personalizar etiquetas del eje x
+
+# Obtener los datos para etiquetar las líneas
+label_data <- vars_years %>%
+  group_by(variable) %>%
+  filter(row_number() == n()) %>%
+  ungroup() %>%
+  mutate(label_x = 5.5, label_y = value)
+
+# Añadir etiquetas personalizadas
+years_plot <- years_plot +
+  geom_point(data = label_data, aes(label_x - 0.05, label_y, color = variable, shape = variable), size = 4) +  # Capa de puntos para los símbolos de forma
+  geom_text(data = label_data, aes(label_x, label_y, label = variable), color = "black", hjust = 0, nudge_x = 0.05, nudge_y = 0, size = 4, lineheight = 0.8) +  # Ajustar el interlineado del texto de las etiquetas
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2022 (n = 8042)")
+years_plot
+```
+
+## 
+
+### Multivariate analysis
+
+```{r distribution-educ}
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               lme4,
+               texreg
+               )
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
+
+# generate analytical sample
+df_study1 <- 
+  df_study_long_t6_comunas %>%
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo) %>% 
+  na.omit() %>% 
+  mutate(ola = as.factor(ola),
+         ola_num = as.numeric(ola),
+         ola_2=as.numeric(ola)^2,
+         sexo=as.factor(sexo)
+         )
+
+h6 <- "ola+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+
+plot_model(educ6, 
+            rm.terms = c("educationHigh school", "educationTechnical", "educationUniversitary", "ess", "quintil1Q5"), #quitar terminos
+            title = "", #quitar titulo
+            show.values = TRUE, #mostrar valor de efectos
+            dot.size = 1.5, #tamaño circulos
+            line.size = 1, #tamaño CI
+            value.size = 3.5, #tamaño valor efectoss
+            spacing = 1, #espacio entre efectos
+            vline.color = "red", # linea roja en punto neutro (1)
+            axis.labels = rev(c("Year 2017", "Year 2018", "Year 2019", "Year 2022", 
+                                "Quintile 2", "Quintile 3", "Quintile 4", "Quintile 5",
+                                "Age 30-49", "Age 50-64", "Age 65 or more",
+                                "Female", "Center", "Right", "Does not identify",
+                                "Inequality perception", "Merit: Talent", "Merit: Effort")), # con rev porque automatico los tira en otro orden
+            group.terms = c(1,1,1,2,3,3,3,3,4,4,4,1,5,5,5,1,2,2),
+            value.offset = 0.4  # Ajusta este valor para mover el texto de los coeficientes hacia arriba
+) + # variables dependientes
+  theme_bw(base_size = 16)
+```
+
+# Conclusions {data-background-color="black"}
+
+## Conclusions 
+
+::: {.incremental}
+
+- Decreasing pattern of justification of educational inequality between 2017-2019, but a increase in the last measurement point (2022).
+
+- Mixed evidence about the association between the perception of meritocracy and justification of inequality across time.
+
+- Throughout the years, a larger perceived economic inequality motivates a lower justification of inequality in education
+
+:::
+
+## Future research 
+
+::: {.incremental}
+
+- Access vs outcomes in education
+
+- 7 wave of ELSOC (2024)
+
+- Justification of inequality in pensions and health (market justice preferences)
+:::
+
+# Thank you!
+
+- Kevin Carrasco ([kevin.carrasco@ug.uchile.cl](kevin.carrasco@ug.uchile.cl))
+
+- Github Repo: [https://github.com/justicia-distributiva/merit-edjust](https://github.com/justicia-distributiva/merit-edjust)
+
+
+
+# Anexos {data-background-color="black"}
+
+## Interaction effects
+
+```{r}
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               lme4,
+               texreg,
+               ggplot2
+               )
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
+
+# generate analytical sample
+df_study1 <- 
+  df_study_long_t6_comunas %>%
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent,education=educ,quintil1:sexo) %>% 
+  na.omit() %>% 
+  mutate(ola = as.numeric(ola),
+         ola_2=as.numeric(ola)^2,
+         sexo=as.factor(sexo)
+ #        edad=as.numeric(edad)
+         #pos_id=as.numeric(pos_id)
+         )
+h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_effort*ola"
+educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+
+plot_model(educ1, 
+            type="int"
+) + # variables dependientes
+  theme_bw(base_size = 16)+
+  labs(title="",
+       x="Wave",
+       y="Justification of educational inequality",
+       color="Merit: Effort")
+```
+
+
+## References
