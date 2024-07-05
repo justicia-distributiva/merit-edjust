@@ -21,7 +21,7 @@ $blockMargin: 20px;
 // Headings
 $headingMargin: 0 0 $blockMargin 0;
 $headingFont: 'Times New Roman', Impact, sans-serif; /* Updated font */
-$headingColor: black;
+$headingColor: black; // This color will be applied to all headings unless overridden
 $headingLineHeight: 1.2;
 $headingLetterSpacing: normal;
 $headingTextTransform: none;
@@ -35,6 +35,24 @@ $heading3Size: 1.55em;
 $heading4Size: 1.00em;
 
 $codeFont: monospace;
+
+// Specific styles for h1 to make it red
+h1, h2 {
+  color: #ff0000 !important; // Red color for h1
+  font-size: $heading1Size !important;
+  margin: $headingMargin !important;
+  line-height: $headingLineHeight !important;
+  letter-spacing: $headingLetterSpacing !important;
+  text-transform: $headingTextTransform !important;
+  text-shadow: $heading1TextShadow !important;
+  font-weight: $headingFontWeight !important;
+  font-family: $headingFont !important;
+}
+
+// Ensure other headings use the default $headingColor
+h3, h4, h5, h6 {
+  color: $headingColor; // Use the default heading color
+}
 
 // Links and actions
 $linkColor: darkblue;
@@ -67,4 +85,16 @@ $selectionColor: #fff;
   justify-content: center;
   align-items: center;
   height: 90%;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  height: 20%;
+}
+
+.rojo {
+  $mainFont: 'Times New Roman', sans-serif; /* Updated font */
+  $mainFontSize: 30px;
+  $mainColor: black;
 }

@@ -23,7 +23,7 @@ format:
 #      data-background-size: cover
     auto-play-media: true
 
-editor: visual
+editor: source
 ---
 
 ```{r data, results=FALSE, warning=FALSE, echo=FALSE}
@@ -46,66 +46,75 @@ load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 ```
 
 ::: {.columns .v-center-container}
-::: {.column width="30%"}
-![](qr.png){width="80%" fig-align="right"}
-<br>
-![](images/logocoes.png){width="90%" fig-align="right"}
-<br>
-![](images/edumer.png){width="80%" fig-align="left"}
+::: {.column width="20%"}
+![](qr.png){width="80%" fig-align="right"} <br> ![](images/logocoes.png){width="90%" fig-align="right"} <br> ![](images/edumer.png){width="80%" fig-align="left"}
 :::
 
-::: {.column width="70%"}
-
-## **Changes in the justification of educational inequalities:**
+::: {.column width="80%"}
+## Changes in the justification of educational inequalities:
 
 ### The role of perceptions of inequality and meritocracy during the COVID pandemic
 
-----------------------------------------------------------------
+------------------------------------------------------------------------
 
-Juan Carlos Castillo, Julio Iturra & **Kevin Carrasco* **
+Juan Carlos Castillo, Julio Iturra & **Kevin Carrasco\***
 
+Fondecyt N° 1210847: Meritocracia en la escuela
 
-#### Fondecyt N° 1210847: Meritocracia en la escuela
-#### Center for social conflict and cohesion studies
+Center for social conflict and cohesion studies
 
 **ISPP Annual meeting** Chile, July 2024
 :::
 :::
 
 
-# Introduction {data-background-color="black"}
+## Research question {data-background-color="black"}
 
-## Introduction
+### To what extent has the justification of educational inequality changed over time? 
 
-::: {.incremental}
+### to what extent does the perception of meritocracy influence the justification of educational inequality?
 
-::: {.columns .v-center-container}
-::: {.column width="50%" .incremental}
+## Team
 
-### Justification of inequality
+![](images/team.png){width="100%" fig-align="center"}
 
-- Perceived economic inequality and justification of inequality [@wegenerIllusionDistributiveJustice1987; @jassoJusticeEarningsNew1978; @janmaatSubjectiveInequalityReview2013]
+## Justification of educational inequality
 
-- Cultural factors and policy feedback effects [@kelley_legitimate_2021; @mijs_paradox_2021; @trump_income_2018]
+::: incremental
 
-- Chile, marketization & neoliberal reforms [@bellei_estudio_2013; @corvalanMercadoEscolarLibertad2016]
+-   Perceived economic inequality and justification of inequality [@wegenerIllusionDistributiveJustice1987; @jassoJusticeEarningsNew1978; @janmaatSubjectiveInequalityReview2013]
+
+-   Cultural factors and policy feedback effects [@kelley_legitimate_2021; @mijs_paradox_2021; @trump_income_2018]
+
+-   Chile, marketization & neoliberal reforms [@bellei_estudio_2013; @corvalanMercadoEscolarLibertad2016]
+
+:::
+
+::: {.notes}
+
+This research focuses on analyzing the differences that exist in the justifications for educational inequality in the Chilean context. Research in the field of social justice has distinguished, on the one hand, the perception of economic inequality and, on the other, the extent to which people are willing to tolerate these levels of inequality. In this sense, this research focuses on the second aspects, trying to address the degree to which people justify unequal access to better education.
+
+Furthermore, differences between individual and contextual variables have been evident in the literature, where the Chilean context becomes relevant as it is marked by a strong marketization of social services based on neoliberal reforms that have privatized different areas of the social sphere, such as education is.
+
+Added to this general framework, we also propose that this justification of inequality has varied over time and that, above all, it should decrease in times of crisis such as the pandemic, since it is in these moments when inequalities increase and therefore People should be less willing to tolerate greater inequality, especially among lower-status groups.
 
 :::
 
+## Meritocracy
 
-::: {.column width="50%" .incremental}
-### Meritocracy
+::: incremental
 
-- Effort and talent [@young_rise_1962]
+-   Effort and talent [@young_rise_1962]
 
-- Normative and perceptual elements [@duru-bellat_who_2012; @castillo_meritocracia_2019]
+-   Normative and perceptual elements [@duru-bellat_who_2012; @castillo_multidimensional_2023]
 
 :::
-:::
 
-::: {.r-stack style="font-size: 130%;"}
-- Covid pandemic [@breznau_welfare_2021; @hankivsky_introduction_2022]
-:::
+::: {.notes}
+
+The second central aspect of this research is that of meritocracy, which has its origins in the book Rise of the meritocracy by Michel Young, and which points to the belief or perception that social rewards are assigned based on effort and talent. This line of research has also been divided into two aspects, normative and perceptual, differentiated between whether people believe that rewards should be assigned based on effort and talent or whether this is the case in society. 
+
+In this research, the focus is on the second aspect, addressing whether people perceive whether rewards are assigned based on effort and talent.
 
 :::
 
@@ -115,165 +124,67 @@ Juan Carlos Castillo, Julio Iturra & **Kevin Carrasco* **
 
 ![](general-scheme.png){width="100%" fig-align="center"}
 
-# Methods {data-background-color="black"}
+::: {.notes}
 
-## Data 
-
-::: {.incremental}
-
-- Longitudinal social study of Chile (ELSOC-COES) 2016-2022
-
-- 2021 (telephone version) the dependent variable was not asked
-
-- N total=8042; 1689 individuals for 5 waves
+In summary, this is the general scheme that we propose in this research, where the justification of educational inequality is our dependent variable and which should be affected by the perception of meritocracy, in addition to being conditioned by other factors such as the time and the pandemic of covid and individual factors of each respondent like perception of inequality, gender, age, political positions.
 
 :::
 
-## Variables
+# Methods {data-background-color="black"}
 
-```{r bivariate-plots, echo=FALSE}
+## Data
+
+-   Longitudinal social study of Chile (ELSOC-COES) 2016-2022
+
+-   2021 (telephone version) the dependent variable was not asked
+
+-   N total=8042; 1689 individuals for 5 waves
+
+-   More information in: [https://coes.cl/encuesta-panel/](https://coes.cl/encuesta-panel/)
+
+::: {.smaller}
+
+![](images/ELSOC.png){width="50%" fig-align="center"}
+:::
+
+::: {.notes}
+
+To carry out this research, we used data from the Chilean social longitudinal study carried out by the COES between 2016 and 2022. However, this survey was not carried out in 2020 and in 2021 it was carried out a short version by telephone and in summary, not including the main dependent variable of this research. Thus, we have the responses of one thousand sixty-nine people for the 5 waves in which all these intems are available.
+
+:::
+
+##
+
+### **It's just that people with higher income have a better education for their children than people with lower income?**
+
+
+```{r dependent, echo=FALSE}
 df_study1 <- df_study_long_t6_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
                                                just_educ, des_perc, merit_effort, merit_talent,
                                                educ, quintil1:sexo) %>% na.omit()
 merit_plot <- df_study1 %>% 
-  select(merit_effort, merit_talent, des_perc, just_educ) %>% 
+  select(just_educ) %>% 
   sjPlot::plot_stackfrq(weight.by = df_study1$ponderador_long_total,
                         expand.grid =TRUE,
                       geom.colors = "PuBu",
                       show.total = FALSE, 
-                      vjust=rep(c("bottom", "top", "bottom", "top", "bottom"),4),
-                      legend.labels = c("Strongly disagree", "Disagree", "Neither agree
-nor disagree", "Agree", "Strongly agree"),
-                      axis.labels = c("Merit effort", "Merit talent", "Inequality 
-perception", "Justification 
-of 
-educational inequality")
+                      vjust=c("bottom", "top", "bottom", "top", "bottom"),
+                      legend.labels = c("Strongly disagree", "Disagree", "Neither agree\n nor disagree", "Agree", "Strongly agree"),
+                      axis.labels = c("")
                       ) +
-  theme_light(base_size = 16) +
-  theme(legend.position="bottom", text = element_text(size = 14),
+  theme_light(base_size = 20) +
+  theme(legend.position="bottom", text = element_text(size = 16),
         plot.caption = element_text(hjust = 1)) +
   labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2022 (n = 8042)")
 merit_plot
 
 ```
 
-## Variables {.smaller}
+::: {.notes}
 
-```{r error=FALSE}
-df_study1 <- df_study_long_t6_comunas %>% dplyr::select(ola,
-                                               just_educ, des_perc, merit_talent, merit_effort,
-                                               educ, quintil1:sexo)
-
-df_study1$ola <- factor(df_study1$ola,
-         labels = c("2016","2017","2018","2019", "2022"))
-df_study1$ola <- 
-sjlabelled::set_label(x = df_study1$ola,
-                      label = "Wave")
-
-df_study1$sexo <- factor(df_study1$sexo,
-         labels = c("Male", "Female"))
-df_study1$sexo <- 
-sjlabelled::set_label(x = df_study1$sexo,
-                      label = "Gender")
-
-for (i in c("just_educ", "des_perc",
-            "merit_effort","merit_talent")) {
-  df_study1[[i]] <- factor(df_study1[[i]],
-                            levels = 1:5,
-                            labels = c("Strongly disagree","Disagree",
-                                       "Neither disagree nor agree",
-                                       "Agree", "Strongly agree"))
-}
-
-
-
-df_study1$just_educ <- 
-sjlabelled::set_label(x = df_study1$just_educ, 
-                      label = "Justification of educational inequality")
-
-#
-df_study1$des_perc <- 
-sjlabelled::set_label(x = df_study1$des_perc, 
-                      label = "Income differences are too large") 
-
-#
-df_study1$merit_effort <- 
-sjlabelled::set_label(x = df_study1$merit_effort, 
-                      label = "People are rewarded for their efforts")
-
-#
-df_study1$merit_talent <- 
-sjlabelled::set_label(x = df_study1$merit_talent, 
-                      label = "People are rewarded for their intelligence and skills")
-
-
-lab_study1 <- sjlabelled::get_label(df_study1) 
-df_study1 <- df_study1 %>% na.omit() %>% sjlabelled::set_label(lab_study1)
-```
-
-::: {.columns .v-center-container}
-
-::: {.column width="50%"}
-
-```{r error=FALSE}
-df<- dfSummary(x = select(df_study1, ola, quintil1, sexo),
-               plain.ascii = FALSE,
-               style = "grid",
-               tmp.img.dir = "/tmp",
-               graph.magnif = TRUE,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = F,    # missing
-               graph.col = F, # plot
-               valid.col = F, # n valido
-               col.widths = c(10,10,10)
-               )
-df$Variable <- NULL # delete variable column
-
-print(df, method='render',
-      footnote = NA, 
-      headings = FALSE, 
-      style = list(
-        table = "font-size: 8px;",
-        th = "font-size: 8px;",
-        td = "font-size: 8px;"
-      ))
-```
+Therefore, the main variable of this research is the justification of educational inequality, which in general has a wide degree of disagreement, that is, people who do not justify access to a better education for those who can afford it.
 
 :::
-
-::: {.column width="50%"}
-```{r error=FALSE}
-df<- dfSummary(x = select(df_study1, edad, pos_id),
-               plain.ascii = FALSE,
-               style = "grid",
-               tmp.img.dir = "/tmp",
-               graph.magnif = TRUE,
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = F,    # missing
-               graph.col = F, # plot
-               valid.col = F, # n valido
-               col.widths = c(10,10,10)
-               )
-df$Variable <- NULL # delete variable column
-
-print(df, method='render',
-      footnote = NA, 
-      headings = FALSE, 
-      style = list(
-        table = "font-size: 8px;",
-        th = "font-size: 8px;",
-        td = "font-size: 8px;"
-      ))
-```
-:::
-
-:::
-
-# Results {data-background-color="black"}
 
 ##
 
@@ -305,8 +216,8 @@ datos.justeduc <- data.frame((svytable(~just_educ + ola + idencuesta, elsoc_dise
 #Paso 2
 etiquetas.justeduc <- data.frame((svytable(~just_educ + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
   mutate(idencuesta = 1)
-datos.justeduc$just_educ <- factor(datos.justeduc$just_educ, levels = rev(levels(datos.justeduc$just_educ)))
-etiquetas.justeduc$just_educ <- factor(etiquetas.justeduc$just_educ, levels = rev(levels(etiquetas.justeduc$just_educ)))
+datos.justeduc$just_educ <- factor(datos.justeduc$just_educ, levels = levels(datos.justeduc$just_educ))
+etiquetas.justeduc$just_educ <- factor(etiquetas.justeduc$just_educ, levels = levels(etiquetas.justeduc$just_educ))
 ```
 
 ```{r alluvial}
@@ -330,10 +241,67 @@ alluvial_justeduc <- ggplot(datos.justeduc, aes(x = ola, fill = just_educ, strat
               color = rep('white'),
               bg.colour='grey30')+
   scale_x_discrete(labels = c(2016, 2017, 2018, 2019, 2022)) +
-  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2022 (n = 8042)")
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2022 (n = 8042)",
+          title="It's just that people with higher income have a better education for their children than people with lower income?")
 
-alluvial_justeduc
+alluvial_justeduc +theme_light()
 ```
+
+::: {.notes}
+
+In the same way, it is interesting to note that although in 2017 there was a decrease in the justification of inequality, it began to grow in the following years and reached its highest level after the pandemic. Therefore, contrary to our first hypothesis, this first result goes in the opposite direction, with a great variation among those who respond to the highest categories of disagreement.
+
+:::
+
+## Independent variables
+
+```{r independent, echo=FALSE}
+df_study1 <- df_study_long_t6_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
+                                               just_educ, des_perc, merit_effort, merit_talent,
+                                               educ, quintil1:sexo) %>% na.omit()
+merit_plot <- df_study1 %>% 
+  select(merit_effort, merit_talent) %>% 
+  sjPlot::plot_stackfrq(weight.by = df_study1$ponderador_long_total,
+                        expand.grid =TRUE,
+                      geom.colors = "PuBu",
+                      show.total = FALSE, 
+                      vjust=rep(c("bottom", "top", "bottom", "top", "bottom"),2),
+                      legend.labels = c("Strongly disagree", "Disagree", "Neither agree\n nor disagree", "Agree", "Strongly agree"),
+                      axis.labels = c("Merit effort", "Merit talent")
+                      ) +
+  theme_light(base_size = 20) +
+  theme(legend.position="bottom", text = element_text(size = 16),
+        plot.caption = element_text(hjust = 1)) +
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2022 (n = 8042)")
+merit_plot
+
+```
+
+::: {.notes}
+
+On the other hand, the main independent variables are two variables of perception of meritocracy, that is, whether effort and talent are rewarded in Chilean society.
+
+::: 
+
+## Independent variables
+
+::: {.incremental}
+
+- Inequality perception
+
+- Wave
+
+- Household income quintile per capita
+
+- Gender
+
+- Age groups
+
+- Political identification
+
+:::
+
+# Results {data-background-color="black"}
 
 ## 
 
@@ -365,20 +333,6 @@ just_years <- just_years_mean %>%
   cbind(type=c("Dependent")) %>% 
   select(ola, variable, value, type, value_upp=education_upp, value_low=education_low)
 
-ineq_years = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
-  group_by(ola) %>%
-  summarise(inequality = survey_mean(des_perc, vartype = "ci", na.rm = T),
-            ) %>% 
-  ungroup()
-
-ineq_years <- ineq_years %>% 
-  pivot_longer(cols = c(
-                        "inequality"), 
-               names_to = "variable",
-               values_to = "value") %>% 
-  cbind(type=c("Independent")) %>% 
-  select(ola, variable, value, type, value_upp=inequality_upp, value_low=inequality_low)
-
 talent_years = elsoc_diseno %>% #filter(!is.na(ola)) %>% 
   group_by(ola) %>%
   summarise(
@@ -408,15 +362,14 @@ effort_years <- effort_years %>%
   select(ola, variable, value, type, value_upp=effort_upp, value_low=effort_low)
   
 
-vars_years <- rbind(just_years, ineq_years, talent_years, effort_years)
+vars_years <- rbind(just_years, talent_years, effort_years)
 
 
 categorias_x <- c(2016, 2017, 2018, 2019, 2022)
-vars_years$variable <- factor(vars_years$variable, levels = c("education", "inequality", "talent", "effort"), labels=  c("Justification
+vars_years$variable <- factor(vars_years$variable, levels = c("education", "talent", "effort"), labels=  c("Justification
 educational
 inequality
-(dependent)", "Inequality
-perception", "Merit: Talent", "Merit: Effort"),
+(dependent)", "Merit: Talent", "Merit: Effort"),
 ordered = TRUE)
 
 
@@ -424,26 +377,76 @@ ordered = TRUE)
 categorias_z <- c("Justification
 educational
 inequality
-(dependent)", "Inequality
-perception
-(independent)", "Merit: Talent
+(dependent)", "Merit: Talent
 (independent)", "Merit: Effort
 (independent)")
 
 ## Crear el gráfico principal
-years_plot <- ggplot(vars_years, aes(ola, value, color = variable, shape = variable, linetype = variable)) +
+years_plot <- vars_years %>% filter(type=="Dependent") %>% 
+ggplot(aes(ola, value, color = variable, shape = variable, linetype = variable)) +
   theme_bw(base_size = 14) +
   geom_point(size = 4) +
   geom_line(aes(group = variable)) +
   geom_errorbar(aes(ymin = value_low, ymax = value_upp), width = 0.2) +
   ylab("Mean") +
   xlab("Wave") +
-  ylim(1, 5) +
+#  ylim(1, 5) +
+  scale_y_continuous(breaks = c(1, 2, 3, 4, 5),
+                     labels = c("Strongly\n disagree", "Disagree", "Neither agree\n nor disagree", "Agree", "Strongly\n agree"),
+                     limits = c(1, 5)) +
   scale_x_discrete(labels = categorias_x) +
-  scale_color_manual(labels = categorias_z, name = "Variable", values =  c("#bdc9e1ff","#0570b0ff","#74a9cfff","#b3b3b3ff")) +
-  scale_shape_manual(labels = categorias_z, name = "Variable", values = c("square", "circle", "triangle", "diamond")) +
+  scale_color_manual(labels = categorias_z, name = "Variable", values =  c("#bdc9e1ff")) +
+  scale_shape_manual(labels = categorias_z, name = "Variable", values = c("square")) +
   scale_linetype_manual(labels = categorias_z, name = "Variable", 
-                        values = c("solid", "dashed", "dotted", "dotdash")) +  # Definir diferentes tipos de línea
+                        values = c("solid")) +  # Definir diferentes tipos de línea
+   theme(legend.position = "none") +
+  coord_cartesian(xlim = c(1, 6)) +  # Ampliar el eje x
+  scale_x_discrete(labels = c(2016, 2017, 2018, 2019, 2022, ""))  # Personalizar etiquetas del eje x
+
+# Obtener los datos para etiquetar las líneas
+label_data <- vars_years %>% filter(type=="Dependent") %>% 
+  group_by(variable) %>%
+  filter(row_number() == n()) %>%
+  ungroup() %>%
+  mutate(label_x = 5.5, label_y = value)
+
+# Añadir etiquetas personalizadas
+years_plot <- years_plot +
+  geom_point(data = label_data, aes(label_x - 0.05, label_y, color = variable, shape = variable), size = 4) +  # Capa de puntos para los símbolos de forma
+  geom_text(data = label_data, aes(label_x, label_y, label = variable), color = "black", hjust = 0, nudge_x = 0.05, nudge_y = 0, size = 4, lineheight = 0.8) +  # Ajustar el interlineado del texto de las etiquetas
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2022 (n = 8042)")
+years_plot
+```
+
+::: {.notes}
+
+As a summary, we have here the variation in the average justification of educational inequality during these years, with the maximum reached in 2022
+
+:::
+
+## 
+
+### Changes in the main independent variables over years (2016-2022)
+
+```{r}
+## Crear el gráfico principal
+years_plot <- vars_years %>% 
+ggplot(aes(ola, value, color = variable, shape = variable, linetype = variable)) +
+  theme_bw(base_size = 14) +
+  geom_point(size = 4) +
+  geom_line(aes(group = variable)) +
+  geom_errorbar(aes(ymin = value_low, ymax = value_upp), width = 0.2) +
+  ylab("Mean") +
+  xlab("Wave") +
+#  ylim(1, 5) +
+  scale_y_continuous(breaks = c(1, 2, 3, 4, 5),
+                     labels = c("Strongly\n disagree", "Disagree", "Neither agree\n nor disagree", "Agree", "Strongly\n agree"),
+                     limits = c(1, 5)) +
+  scale_x_discrete(labels = categorias_x) +
+  scale_color_manual(labels = categorias_z, name = "Variable", values =  c("#bdc9e1ff","#0570b0ff","#74a9cfff")) +
+  scale_shape_manual(labels = categorias_z, name = "Variable", values = c("square", "circle", "triangle")) +
+  scale_linetype_manual(labels = categorias_z, name = "Variable", 
+                        values = c("solid", "dashed", "dotted")) +  # Definir diferentes tipos de línea
    theme(legend.position = "none") +
   coord_cartesian(xlim = c(1, 6)) +  # Ampliar el eje x
   scale_x_discrete(labels = c(2016, 2017, 2018, 2019, 2022, ""))  # Personalizar etiquetas del eje x
@@ -463,7 +466,14 @@ years_plot <- years_plot +
 years_plot
 ```
 
-## 
+
+::: {.notes}
+
+But what I want to show is the comparison with the variables of perception of meritocracy based on talent and effort, which both follow a similar pattern, increasing in 2018 and then falling again until 2022.
+
+:::
+
+##
 
 ### Multivariate analysis
 
@@ -488,7 +498,7 @@ df_study1 <-
          sexo=as.factor(sexo)
          )
 
-h6 <- "ola+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+h6 <- "merit_talent+merit_effort+ola+des_perc+education+quintil1+ess+edad+sexo+pos_id"
 educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 plot_model(educ6, 
@@ -500,88 +510,102 @@ plot_model(educ6,
             value.size = 3.5, #tamaño valor efectoss
             spacing = 1, #espacio entre efectos
             vline.color = "red", # linea roja en punto neutro (1)
-            axis.labels = rev(c("Year 2017", "Year 2018", "Year 2019", "Year 2022", 
+            axis.labels = rev(c("Merit: Talent", "Merit: Effort",
+                                "Year 2017", "Year 2018", "Year 2019", "Year 2022",
+                                "Inequality perception", 
                                 "Quintile 2", "Quintile 3", "Quintile 4", "Quintile 5",
                                 "Age 30-49", "Age 50-64", "Age 65 or more",
-                                "Female", "Center", "Right", "Does not identify",
-                                "Inequality perception", "Merit: Talent", "Merit: Effort")), # con rev porque automatico los tira en otro orden
-            group.terms = c(1,1,1,2,3,3,3,3,4,4,4,1,5,5,5,1,2,2),
+                                "Female", "Center", "Right", "Does not identify")), # con rev porque automatico los tira en otro orden
+            group.terms = c(2,2,1,1,1,2,1,3,3,3,3,4,4,4,1,5,5,5),
             value.offset = 0.4  # Ajusta este valor para mover el texto de los coeficientes hacia arriba
 ) + # variables dependientes
   theme_bw(base_size = 16)
 ```
 
-# Conclusions {data-background-color="black"}
+::: {.notes}
 
-## Conclusions 
+Finally, we carried out a linear regression analysis to evaluate each of the variables, and following our main hypotheses, the perception of meritocracy based on effort, but not talent, influences positively the justification of educational inequality.
 
-::: {.incremental}
+Also, in this results we can see that although in the first years the justification of inequality in education decreases compared to 2016, it is greater for 2022.
 
-- Decreasing pattern of justification of educational inequality between 2017-2019, but a increase in the last measurement point (2022).
-
-- Mixed evidence about the association between the perception of meritocracy and justification of inequality across time.
-
-- Throughout the years, a larger perceived economic inequality motivates a lower justification of inequality in education
+In relation with the rest of control variables, the perception of inequality negatively influences the justification of educational inequality, the income quantiles, only the two greatest have a significant effect that is positive, while in age only the category of those over sixty-five years of age is significant. On the other hand, being a woman is negatively associated with the justification of educational inequality, while, compared to those who are on the left, being from the center, right, or those who do not identify with any of these options justify greater educational inequality.
 
 :::
 
-## Future research 
+## Conclusions {data-background-color="black"}
 
-::: {.incremental}
+::: incremental
+-   Decreasing pattern of justification of educational inequality between 2017-2019, but a increase in the last measurement point (2022).
 
-- Access vs outcomes in education
+-   Mixed evidence about the association between the perception of meritocracy and justification of inequality across time.
 
-- 7 wave of ELSOC (2024)
+-   Throughout the years, a larger perceived economic inequality motivates a lower justification of inequality in education
+:::
 
-- Justification of inequality in pensions and health (market justice preferences)
+::: {.notes}
+
+In this way, we can conclude that there is a pattern of decreasing justification of educational inequality between 2017 and 2019, but with an increase in the last measurement in 2022.
+
+We found mixed evidence on the association of the perception of meritocracy and the justification of educational inequality, since effort is significant but not talent, which could be attributed to the fact that talent is rather randomly assigned and does not depend so much on the individual capabilities.
+
+In any case, over the years a greater perception of economic inequality influences a lower justification of educational inequality, coinciding with previous literature.
+
+
+:::
+
+## Future research
+
+::: incremental
+-   Access vs outcomes in education
+
+-   7 wave of ELSOC (2023)
+
+-   Justification of inequality in pensions and health (market justice preferences)
+:::
+
+::: {.notes}
+
+For future research, it would be interesting to delve deeper into what is perceived as justification for educational inequality, since there may be differences in inequality in access to education with inequality in educational results, as well as by level, such as at the school level. or university level.
+
+We will now also soon have the seventh wave of elsoc available, which will be interesting to evaluate how it has varied in the last year
+
+and finally we also aim to be able to evaluate similar factors that could influence other aspects of society such as pensions and health, which in other research we have called market justice preferences.
+
+
 :::
 
 # Thank you!
 
-- Kevin Carrasco ([kevin.carrasco@ug.uchile.cl](kevin.carrasco@ug.uchile.cl))
+-   Kevin Carrasco ([kevin.carrasco\@ug.uchile.cl](kevin.carrasco@ug.uchile.cl))
 
-- Github Repo: [https://github.com/justicia-distributiva/merit-edjust](https://github.com/justicia-distributiva/merit-edjust)
+-   Github Repo: [https://github.com/justicia-distributiva/merit-edjust](https://github.com/justicia-distributiva/merit-edjust)
 
+## References 
 
-
-# Anexos {data-background-color="black"}
-
-## Interaction effects
-
-```{r}
-pacman::p_load(dplyr,       # Manipulacion de datos
-               knitr,
-               kableExtra,
-               summarytools,
-               lme4,
-               texreg,
-               ggplot2
-               )
-load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
-
-# generate analytical sample
-df_study1 <- 
-  df_study_long_t6_comunas %>%
-  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent,education=educ,quintil1:sexo) %>% 
-  na.omit() %>% 
-  mutate(ola = as.numeric(ola),
-         ola_2=as.numeric(ola)^2,
-         sexo=as.factor(sexo)
- #        edad=as.numeric(edad)
-         #pos_id=as.numeric(pos_id)
-         )
-h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_effort*ola"
-educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-
-plot_model(educ1, 
-            type="int"
-) + # variables dependientes
-  theme_bw(base_size = 16)+
-  labs(title="",
-       x="Wave",
-       y="Justification of educational inequality",
-       color="Merit: Effort")
-```
+::: {#refs}
+:::
 
 
-## References
+## {.appendix}
+
+::: {.columns}
+::: {.column width="20%"}
+![](qr.png){width="80%" fig-align="right"} <br> ![](images/logocoes.png){width="90%" fig-align="right"} <br> ![](images/edumer.png){width="80%" fig-align="left"}
+:::
+
+::: {.column width="80%"}
+## Changes in the justification of educational inequalities:
+
+### The role of perceptions of inequality and meritocracy during the COVID pandemic
+
+------------------------------------------------------------------------
+
+Juan Carlos Castillo, Julio Iturra & **Kevin Carrasco\***
+
+Fondecyt N° 1210847: Meritocracia en la escuela
+
+Center for social conflict and cohesion studies
+
+**ISPP Annual meeting** Chile, July 2024
+:::
+:::
