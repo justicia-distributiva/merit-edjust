@@ -94,7 +94,7 @@ $selectionColor: #fff;
 }
 
 .rojo {
-  $mainFont: 'Times New Roman', sans-serif; /* Updated font */
-  $mainFontSize: 30px;
-  $mainColor: black;
+  font-family: 'Times New Roman', sans-serif; /* Fuente actualizada */
+  font-size: 80px; /* Tamaño de la fuente */
+  color: #ff0000; /* Color rojo */
 }

@@ -51,7 +51,7 @@ load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 :::
 
 ::: {.column width="80%"}
-## Changes in the justification of educational inequalities:
+### <span class="rojo">Changes in the justification of educational inequalities:</span>
 
 ### The role of perceptions of inequality and meritocracy during the COVID pandemic
 
@@ -594,7 +594,7 @@ and finally we also aim to be able to evaluate similar factors that could influe
 :::
 
 ::: {.column width="80%"}
-## Changes in the justification of educational inequalities:
+### <span class="rojo">Changes in the justification of educational inequalities:</span>
 
 ### The role of perceptions of inequality and meritocracy during the COVID pandemic
 
