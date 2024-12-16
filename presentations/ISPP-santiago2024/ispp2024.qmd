@@ -74,6 +74,7 @@ Center for social conflict and cohesion studies
 
 ### to what extent does the perception of meritocracy influence the justification of educational inequality?
 
+
 ## Team
 
 ![](images/team.png){width="100%" fig-align="center"}

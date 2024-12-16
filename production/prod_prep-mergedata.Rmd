@@ -50,7 +50,7 @@ pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
 
 load(file = here::here("input/data-proc/df_study1_long.RData"))
 load(file = here::here("input/data-proc/df_study2_long.RData"))
-load(file = here::here("input/data-proc/df_study1_long_t6.RData"))
+load(file = here::here("input/data-proc/df_study1_long_t7.RData"))
 load(file = here::here("input/data-proc/study_1_comunas.RData"))
 load(file = here::here("input/data-proc/df_casen_comunas_wide.RData")) # contienen las variables de Gini comunal y Proporcion de Universitarios comunal.
 load(file = here::here("input/data-proc/df_casen_comunas_long.RData")) # contienen las variables de Gini comunal y Proporcion de Universitarios comunal.
@@ -58,13 +58,16 @@ load(file = here::here("input/data-proc/df_matricula_comunas_wide.RData")) # con
 load(file = here::here("input/data-proc/df_matricula_comunas_long.RData")) # contienen las variables de Proporción de Matrícula en establecimientos Particular Pagados
 load(file = here::here("input/data-proc/df_simce_comunas_wide.RData")) # contiene las variables de Simce a nivel comunal promedio y la varianza dentro de la comuna
 load(file = here::here("input/data-proc/df_simce_comunas_long.RData")) # contiene las variables de Simce a nivel comunal promedio y la varianza dentro de la comuna
+```
 
 
+```{r}
 ## Juntar Gini y prop universitarios por comuna
 
 df_gini_comunas_wide <-  df_gini_comunas_wide %>% dplyr::rename(comunacod=COMUNA_COD) 
 df_gini_comunas_wide$comunacod <- as.numeric(df_gini_comunas_wide$comunacod)
 
+df_study1_comunas <- df_study1_comunas[!duplicated(df_study1_comunas$comuna), ]
 
 df_study1_long_comunas <- 
  dplyr::left_join(x = df_study1_long,
@@ -78,7 +81,8 @@ df_study1_long_comunas <- df_study1_long_comunas %>% mutate(year= case_when(ola=
                                                                             ola==2~2017,
                                                                             ola==3~2017,
                                                                             ola==4~2022,
-                                                                            ola==6~2022))
+                                                                            ola==6~2022,
+                                                                            ola==7~2023))
 
 
 df_study1_long_comunas <- 
@@ -105,7 +109,8 @@ df_study2_long_comunas <- df_study2_long_comunas %>% mutate(year= case_when(ola=
                                                                             ola==2~2017,
                                                                             ola==3~2017,
                                                                             ola==4~2022,
-                                                                            ola==6~2022))
+                                                                            ola==6~2022,
+                                                                            ola==7~2023))
 
 df_study2_long_comunas <- 
  dplyr::left_join(x = df_study2_long_comunas,
@@ -117,29 +122,30 @@ df_study2_long_comunas <-
                   y = select(df_gini_comunas_wide, comunacod,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag")), 
                   by = c("comunacod"))
 
-df_study_long_t6_comunas <- 
- dplyr::left_join(x = df_study1_long_t6,
+df_study_long_t7_comunas <- 
+ dplyr::left_join(x = df_study1_long_t7,
                   y = df_study1_comunas, 
                   by = "comunacod") %>% 
  dplyr::select(idencuesta:edad,sexo,
                esc_cit17) %>% 
  dplyr::rename(comuna=comuna.x) 
 
-df_study_long_t6_comunas <- df_study_long_t6_comunas %>% mutate(year= case_when(ola==1~2017,
+df_study_long_t7_comunas <- df_study_long_t7_comunas %>% mutate(year= case_when(ola==1~2017,
                                                                             ola==2~2017,
                                                                             ola==3~2017,
                                                                             ola==4~2022,
-                                                                            ola==6~2022))
+                                                                            ola==6~2022,
+                                                                            ola==7~2023))
 
 
-df_study_long_t6_comunas <- 
- dplyr::left_join(x = df_study_long_t6_comunas,
+df_study_long_t7_comunas <- 
+ dplyr::left_join(x = df_study_long_t7_comunas,
                   y = select(df_gini_comunas_long, comunacod=COMUNA_COD,year, starts_with("gini"), prop_univ, starts_with("inc"), starts_with("log")), 
                   by = c("comunacod", "year"))
 
 
-df_study_long_t6_comunas <- 
- dplyr::left_join(x = df_study_long_t6_comunas,
+df_study_long_t7_comunas <- 
+ dplyr::left_join(x = df_study_long_t7_comunas,
                   y = select(df_gini_comunas_wide, comunacod,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag"), starts_with("inc"), starts_with("log")), 
                   by = c("comunacod"))
 
@@ -150,21 +156,24 @@ df_study1_long_comunas <- df_study1_long_comunas %>% mutate(year= case_when(ola=
                                                                             ola==2~2017,
                                                                             ola==3~2018,
                                                                             ola==4~2019,
-                                                                            ola==6~2022))
+                                                                            ola==6~2022,
+                                                                            ola==7~2023))
 
 df_study2_long_comunas <- df_study2_long_comunas %>% mutate(year= case_when(ola==1~2016,
                                                                             ola==2~2017,
                                                                             ola==3~2018,
                                                                             ola==4~2019,
                                                                             ola==5~2021,
-                                                                            ola==6~2022))
+                                                                            ola==6~2022,
+                                                                            ola==7~2023))
 
-df_study_long_t6_comunas <- df_study_long_t6_comunas %>% mutate(year= case_when(ola==1~2016,
+df_study_long_t7_comunas <- df_study_long_t7_comunas %>% mutate(year= case_when(ola==1~2016,
                                                                             ola==2~2017,
                                                                             ola==3~2018,
                                                                             ola==4~2019,
                                                                             ola==5~2021,
-                                                                            ola==6~2022))
+                                                                            ola==6~2022,
+                                                                            ola==7~2023))
 
 df_study1_long_comunas <- 
  dplyr::left_join(x = df_study1_long_comunas,
@@ -186,13 +195,13 @@ df_study2_long_comunas <-
                   y = select(df_matricula_comunas_wide, comunacod=cod_com_rbd_16,starts_with("total_mat_pagado"), starts_with("prop_pagado"), pagadolag22_16),
                   by = c("comunacod"))
 
-df_study_long_t6_comunas <- 
- dplyr::left_join(x = df_study_long_t6_comunas,
+df_study_long_t7_comunas <- 
+ dplyr::left_join(x = df_study_long_t7_comunas,
                   y = select(df_matricula_comunas_long, comunacod=cod_com_rbd_15,year, total_mat_pagado,prop_pagado), 
                   by = c("comunacod", "year"))
 
-df_study_long_t6_comunas <- 
- dplyr::left_join(x = df_study_long_t6_comunas,
+df_study_long_t7_comunas <- 
+ dplyr::left_join(x = df_study_long_t7_comunas,
                   y = select(df_matricula_comunas_wide, comunacod=cod_com_rbd_16,starts_with("total_mat_pagado"), starts_with("prop_pagado"), pagadolag22_16), 
                   by = c("comunacod"))
 
@@ -219,13 +228,13 @@ df_study2_long_comunas <-
                   y = select(df_comuna_rbd_wide, comunacod=COMUNA,starts_with("gini"), starts_with("prop_univ"), starts_with("univlag")), 
                   by = c("comunacod"))
 
-df_study_long_t6_comunas <- 
- dplyr::left_join(x = df_study_long_t6_comunas,
+df_study_long_t7_comunas <- 
+ dplyr::left_join(x = df_study_long_t7_comunas,
                   y = select(df_simce_comunas_long, comunacod=cod_com_15,year, prom_simce_comuna,var_simce_comuna), 
                   by = c("comunacod", "year"))
 
-df_study_long_t6_comunas <- 
- dplyr::left_join(x = df_study_long_t6_comunas,
+df_study_long_t7_comunas <- 
+ dplyr::left_join(x = df_study_long_t7_comunas,
                   y = select(df_comuna_rbd_wide, comunacod=COMUNA,starts_with("prom_simce"), starts_with("var_simce")), 
                   by = c("comunacod"))
 
@@ -235,8 +244,8 @@ summary(df_study1_long_comunas$var_simce_comuna)
 
 df_study1_long_comunas$prom_simce_comuna_rescaled <- df_study1_long_comunas$prom_simce_comuna / 10
 df_study1_long_comunas$var_simce_comuna_rescaled <- df_study1_long_comunas$var_simce_comuna / 100
-df_study_long_t6_comunas$prom_simce_comuna_rescaled <- df_study_long_t6_comunas$prom_simce_comuna / 10
-df_study_long_t6_comunas$var_simce_comuna_rescaled <- df_study_long_t6_comunas$var_simce_comuna / 100
+df_study_long_t7_comunas$prom_simce_comuna_rescaled <- df_study_long_t7_comunas$prom_simce_comuna / 10
+df_study_long_t7_comunas$var_simce_comuna_rescaled <- df_study_long_t7_comunas$var_simce_comuna / 100
 # Verificar el rescalado
 summary(df_study1_long_comunas$prom_simce_comuna_rescaled)
 summary(df_study1_long_comunas$var_simce_comuna_rescaled)
@@ -245,7 +254,7 @@ save(df_study1_long_comunas,
      file = here::here("input/data-proc/df_study1_long_comunas.RData"))
 save(df_study2_long_comunas,
      file = here::here("input/data-proc/df_study2_long_comunas.RData"))
-save(df_study_long_t6_comunas,
+save(df_study_long_t7_comunas,
      file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 
 # save codebook
@@ -255,7 +264,7 @@ sjPlot::view_df(df_study1_long_comunas,
         show.na = T,
         file = here::here("output/df_study1_long_comunas.html"))
 
-sjPlot::view_df(df_study_long_t6_comunas,
+sjPlot::view_df(df_study_long_t7_comunas,
         show.frq = T, 
         show.prc = T, 
         show.na = T,
