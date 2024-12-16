@@ -1566,7 +1566,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">Preparación de datos</h1>
-<h4 class="date">domingo 15 diciembre 2024 21:52:10</h4>
+<h4 class="date">lunes 16 diciembre 2024 0:07:41</h4>
 
 </div>
 
@@ -1624,7 +1624,16 @@ elsoc_long_2016_2023 %&gt;%
          ahead_family=r12_02,
          ahead_educ=r12_03,
          ahead_ambition=r12_04,
-         ahead_hardwork=r12_05) %&gt;% 
+         ahead_hardwork=r12_05,
+         covid_conocidos=r03_09,
+         covid_economia=c37_09,
+         covid_cuarentena=c37_10,
+         covid_propio=s31,
+         covid_alimentos=m62,
+         covid_beneficios=m63_01,
+         covid_retirouno=m63_02,
+         covid_retirodos=m63_03
+         ) %&gt;% 
   sjlabelled::drop_labels(., drop.na = FALSE)
   
 #
@@ -2187,6 +2196,14 @@ elsoc_long_2016_2023 %&gt;%
          # quintil,
          quintil1,
          ess,
+         covid_conocidos,
+         covid_economia,
+         covid_cuarentena,
+         covid_propio,
+         covid_alimentos,
+         covid_beneficios,
+         covid_retirouno,
+         covid_retirodos,
          # ess_inm,
          # nation_t1,
          # know_inm,
@@ -2273,8 +2290,64 @@ df_study1_wide$comunacod_5 &lt;-df_study1_wide$comunacod_1
 df_study1_wide$comunacod_6 &lt;-df_study1_wide$comunacod_1
 df_study1_wide$comunacod_7 &lt;-df_study1_wide$comunacod_1
 
+df_study1_wide$covid_conocidos_1 &lt;-df_study1_wide$covid_conocidos_5 #conocidos covid
+df_study1_wide$covid_conocidos_2 &lt;-df_study1_wide$covid_conocidos_5
+df_study1_wide$covid_conocidos_3 &lt;-df_study1_wide$covid_conocidos_5
+df_study1_wide$covid_conocidos_4 &lt;-df_study1_wide$covid_conocidos_5
+df_study1_wide$covid_conocidos_6 &lt;-df_study1_wide$covid_conocidos_5
+df_study1_wide$covid_conocidos_7 &lt;-df_study1_wide$covid_conocidos_5
+
+df_study1_wide$covid_economia_1 &lt;-df_study1_wide$covid_economia_5 #Importancia economia sobre salud
+df_study1_wide$covid_economia_2 &lt;-df_study1_wide$covid_economia_5
+df_study1_wide$covid_economia_3 &lt;-df_study1_wide$covid_economia_5
+df_study1_wide$covid_economia_4 &lt;-df_study1_wide$covid_economia_5
+df_study1_wide$covid_economia_6 &lt;-df_study1_wide$covid_economia_5
+df_study1_wide$covid_economia_7 &lt;-df_study1_wide$covid_economia_5
+
+df_study1_wide$covid_cuarentena_1 &lt;-df_study1_wide$covid_cuarentena_5 #importancia cuarentena
+df_study1_wide$covid_cuarentena_2 &lt;-df_study1_wide$covid_cuarentena_5
+df_study1_wide$covid_cuarentena_3 &lt;-df_study1_wide$covid_cuarentena_5
+df_study1_wide$covid_cuarentena_4 &lt;-df_study1_wide$covid_cuarentena_5
+df_study1_wide$covid_cuarentena_6 &lt;-df_study1_wide$covid_cuarentena_5
+df_study1_wide$covid_cuarentena_7 &lt;-df_study1_wide$covid_cuarentena_5
+
+df_study1_wide$covid_propio_1 &lt;-df_study1_wide$covid_propio_5 #Diagnostico covid propio
+df_study1_wide$covid_propio_2 &lt;-df_study1_wide$covid_propio_5
+df_study1_wide$covid_propio_3 &lt;-df_study1_wide$covid_propio_5
+df_study1_wide$covid_propio_4 &lt;-df_study1_wide$covid_propio_5
+df_study1_wide$covid_propio_6 &lt;-df_study1_wide$covid_propio_5
+df_study1_wide$covid_propio_7 &lt;-df_study1_wide$covid_propio_5
+
+df_study1_wide$covid_alimentos_1 &lt;-df_study1_wide$covid_alimentos_5 # Dificultades conseguir alimentos
+df_study1_wide$covid_alimentos_2 &lt;-df_study1_wide$covid_alimentos_5
+df_study1_wide$covid_alimentos_3 &lt;-df_study1_wide$covid_alimentos_5
+df_study1_wide$covid_alimentos_4 &lt;-df_study1_wide$covid_alimentos_5
+df_study1_wide$covid_alimentos_6 &lt;-df_study1_wide$covid_alimentos_5
+df_study1_wide$covid_alimentos_7 &lt;-df_study1_wide$covid_alimentos_5
+
+df_study1_wide$covid_beneficios_1 &lt;-df_study1_wide$covid_beneficios_5 #Recibe beneficios
+df_study1_wide$covid_beneficios_2 &lt;-df_study1_wide$covid_beneficios_5
+df_study1_wide$covid_beneficios_3 &lt;-df_study1_wide$covid_beneficios_5
+df_study1_wide$covid_beneficios_4 &lt;-df_study1_wide$covid_beneficios_5
+df_study1_wide$covid_beneficios_6 &lt;-df_study1_wide$covid_beneficios_5
+df_study1_wide$covid_beneficios_7 &lt;-df_study1_wide$covid_beneficios_5
+
+df_study1_wide$covid_retirouno_1 &lt;-df_study1_wide$covid_retirouno_5 #Primer retiro afp
+df_study1_wide$covid_retirouno_2 &lt;-df_study1_wide$covid_retirouno_5
+df_study1_wide$covid_retirouno_3 &lt;-df_study1_wide$covid_retirouno_5
+df_study1_wide$covid_retirouno_4 &lt;-df_study1_wide$covid_retirouno_5
+df_study1_wide$covid_retirouno_6 &lt;-df_study1_wide$covid_retirouno_5
+df_study1_wide$covid_retirouno_7 &lt;-df_study1_wide$covid_retirouno_5
+
+df_study1_wide$covid_retirodos_1 &lt;-df_study1_wide$covid_retirodos_5 #Segundo retiro afp
+df_study1_wide$covid_retirodos_2 &lt;-df_study1_wide$covid_retirodos_5
+df_study1_wide$covid_retirodos_3 &lt;-df_study1_wide$covid_retirodos_5
+df_study1_wide$covid_retirodos_4 &lt;-df_study1_wide$covid_retirodos_5
+df_study1_wide$covid_retirodos_6 &lt;-df_study1_wide$covid_retirodos_5
+df_study1_wide$covid_retirodos_7 &lt;-df_study1_wide$covid_retirodos_5
+
 dim(df_study1_wide)</code></pre>
-<pre><code>## [1] 2928  156</code></pre>
+<pre><code>## [1] 2928  212</code></pre>
 <pre class="r"><code>sjPlot::view_df(df_study1_wide,
                 show.frq = T,show.values = T,show.na = T,show.prc = T, show.type = T)</code></pre>
 <pre><code>## just_educ_5 [42], just_pension_5 [49], just_salud_5 [56]</code></pre>
@@ -6031,6 +6104,1651 @@ Subjective Social Status: individual
 136
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_conocidos_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1203 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+571<br>204<br>457<br>233<br>139<br>40<br>81
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+137
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_conocidos_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1203 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+571<br>204<br>457<br>233<br>139<br>40<br>81
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+138
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_conocidos_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1203 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+571<br>204<br>457<br>233<br>139<br>40<br>81
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+139
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_conocidos_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1203 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+571<br>204<br>457<br>233<br>139<br>40<br>81
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+140
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_conocidos_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1203 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+571<br>204<br>457<br>233<br>139<br>40<br>81
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+141
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_conocidos_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1203 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+571<br>204<br>457<br>233<br>139<br>40<br>81
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+142
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_conocidos_7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1203 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+571<br>204<br>457<br>233<br>139<br>40<br>81
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+143
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_economia_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1204 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+284<br>973<br>208<br>217<br>42
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+144
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_economia_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1204 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+284<br>973<br>208<br>217<br>42
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+145
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_economia_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1204 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+284<br>973<br>208<br>217<br>42
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+146
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_economia_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1204 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+284<br>973<br>208<br>217<br>42
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+147
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_economia_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1204 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+284<br>973<br>208<br>217<br>42
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+148
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_economia_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1204 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+284<br>973<br>208<br>217<br>42
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+149
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_economia_7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1204 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+284<br>973<br>208<br>217<br>42
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+150
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_cuarentena_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1205 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+24<br>169<br>118<br>1032<br>380
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+151
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_cuarentena_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1205 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24<br>169<br>118<br>1032<br>380
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+152
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_cuarentena_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1205 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+24<br>169<br>118<br>1032<br>380
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+153
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_cuarentena_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1205 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24<br>169<br>118<br>1032<br>380
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+154
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_cuarentena_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1205 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+24<br>169<br>118<br>1032<br>380
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+155
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_cuarentena_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1205 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24<br>169<br>118<br>1032<br>380
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+156
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_cuarentena_7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1205 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+24<br>169<br>118<br>1032<br>380
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+157
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_propio_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+144<br>1592
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+158
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_propio_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+144<br>1592
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+159
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_propio_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+144<br>1592
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+160
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_propio_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+144<br>1592
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+161
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_propio_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+144<br>1592
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+162
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_propio_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+144<br>1592
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+163
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_propio_7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+144<br>1592
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+164
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_alimentos_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1014<br>346<br>247<br>89<br>20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+165
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_alimentos_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1014<br>346<br>247<br>89<br>20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+166
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_alimentos_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1014<br>346<br>247<br>89<br>20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+167
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_alimentos_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1014<br>346<br>247<br>89<br>20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+168
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_alimentos_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1014<br>346<br>247<br>89<br>20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+169
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_alimentos_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1014<br>346<br>247<br>89<br>20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+170
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_alimentos_7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1014<br>346<br>247<br>89<br>20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+171
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_beneficios_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1193 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1154<br>581
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+172
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_beneficios_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1193 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1154<br>581
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+173
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_beneficios_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1193 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1154<br>581
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+174
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_beneficios_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1193 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1154<br>581
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+175
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_beneficios_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1193 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1154<br>581
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+176
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_beneficios_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1193 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1154<br>581
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+177
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_beneficios_7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1193 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1154<br>581
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+178
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirouno_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1219<br>517
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+179
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirouno_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1219<br>517
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+180
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirouno_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1219<br>517
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+181
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirouno_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1219<br>517
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+182
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirouno_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1219<br>517
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+183
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirouno_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1219<br>517
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+184
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirouno_7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1192 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1219<br>517
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+185
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirodos_1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1710 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+925<br>293
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+186
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirodos_2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1710 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+925<br>293
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+187
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirodos_3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1710 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+925<br>293
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+188
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirodos_4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1710 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+925<br>293
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+189
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirodos_5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1710 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+925<br>293
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+190
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirodos_6
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1710 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+925<br>293
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+191
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirodos_7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1710 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+925<br>293
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+192
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id_1
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
@@ -6056,7 +7774,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-137
+193
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 pos_id_2
@@ -6084,7 +7802,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-138
+194
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id_3
@@ -6112,7 +7830,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-139
+195
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 pos_id_4
@@ -6140,7 +7858,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-140
+196
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id_5
@@ -6168,7 +7886,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-141
+197
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 pos_id_6
@@ -6196,7 +7914,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-142
+198
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id_7
@@ -6224,7 +7942,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-143
+199
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad_1
@@ -6252,7 +7970,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-144
+200
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 edad_2
@@ -6280,7 +7998,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-145
+201
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad_3
@@ -6308,7 +8026,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-146
+202
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 edad_4
@@ -6336,7 +8054,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-147
+203
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad_5
@@ -6364,7 +8082,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-148
+204
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 edad_6
@@ -6392,7 +8110,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-149
+205
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad_7
@@ -6420,7 +8138,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-150
+206
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo_1
@@ -6449,7 +8167,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-151
+207
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 sexo_2
@@ -6478,7 +8196,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-152
+208
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo_3
@@ -6507,7 +8225,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-153
+209
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 sexo_4
@@ -6536,7 +8254,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-154
+210
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo_5
@@ -6565,7 +8283,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-155
+211
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 sexo_6
@@ -6594,7 +8312,7 @@ Hombre<br>Mujer
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-156
+212
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo_7
@@ -6631,6 +8349,8 @@ df_study1_long &lt;- data.table::melt.data.table(data.table::setDT(df_study1_wid
                                  &quot;^just_educ_&quot;, &quot;^just_pension_&quot;, &quot;^just_salud_&quot;, &quot;^des_perc_&quot;,
                                  &quot;^merit_effort_&quot;,&quot;^merit_talent_&quot;,
                                  &quot;^ahead_family_&quot;, &quot;^ahead_educ_&quot;, &quot;^ahead_ambition_&quot;, &quot;^ahead_hardwork_&quot;,
+                                 &quot;^covid_conocidos_&quot;, &quot;^covid_economia_&quot;, &quot;^covid_cuarentena_&quot;, &quot;^covid_propio_&quot;,
+                                 &quot;^covid_alimentos_&quot;, &quot;^covid_beneficios_&quot;, &quot;^covid_retirouno_&quot;, &quot;^covid_retirodos_&quot;,
                                  &quot;^educ_&quot;,&quot;^educyear_&quot;,&quot;^quintil1_&quot;,&quot;^ess_&quot;,
                                  &quot;^pos_id_&quot;,
                                  &quot;^edad_&quot;,&quot;^sexo_&quot;
@@ -6639,6 +8359,8 @@ df_study1_long &lt;- data.table::melt.data.table(data.table::setDT(df_study1_wid
                              &quot;just_educ&quot;, &quot;just_pension&quot;,&quot;just_salud&quot;, &quot;des_perc&quot;,
                              &quot;merit_effort&quot;,&quot;merit_talent&quot;,
                              &quot;ahead_family&quot;,&quot;ahead_educ&quot;,&quot;ahead_ambition&quot;,&quot;ahead_hardwork&quot;,
+                             &quot;covid_conocidos&quot;, &quot;covid_economia&quot;, &quot;covid_cuarentena&quot;, &quot;covid_propio&quot;,
+                             &quot;covid_alimentos&quot;, &quot;covid_beneficios&quot;, &quot;covid_retirouno&quot;, &quot;covid_retirodos&quot;,
                              &quot;educ&quot;,&quot;educyear&quot;,&quot;quintil1&quot;,&quot;ess&quot;,
                              &quot;pos_id&quot;,
                              &quot;edad&quot;,&quot;sexo&quot;),
@@ -6652,11 +8374,13 @@ names(df_study1_long) #check names of long dataset</code></pre>
 ## [10] &quot;just_pension&quot;          &quot;just_salud&quot;            &quot;des_perc&quot;             
 ## [13] &quot;merit_effort&quot;          &quot;merit_talent&quot;          &quot;ahead_family&quot;         
 ## [16] &quot;ahead_educ&quot;            &quot;ahead_ambition&quot;        &quot;ahead_hardwork&quot;       
-## [19] &quot;educ&quot;                  &quot;educyear&quot;              &quot;quintil1&quot;             
-## [22] &quot;ess&quot;                   &quot;pos_id&quot;                &quot;edad&quot;                 
-## [25] &quot;sexo&quot;</code></pre>
+## [19] &quot;covid_conocidos&quot;       &quot;covid_economia&quot;        &quot;covid_cuarentena&quot;     
+## [22] &quot;covid_propio&quot;          &quot;covid_alimentos&quot;       &quot;covid_beneficios&quot;     
+## [25] &quot;covid_retirouno&quot;       &quot;covid_retirodos&quot;       &quot;educ&quot;                 
+## [28] &quot;educyear&quot;              &quot;quintil1&quot;              &quot;ess&quot;                  
+## [31] &quot;pos_id&quot;                &quot;edad&quot;                  &quot;sexo&quot;</code></pre>
 <pre class="r"><code>dim(df_study1_long) #check dimensions of the dataframe</code></pre>
-<pre><code>## [1] 20496    25</code></pre>
+<pre><code>## [1] 20496    33</code></pre>
 <pre class="r"><code># Original dataset with 6 waves
 df_study2_long &lt;- df_study1_long
 
@@ -6666,7 +8390,7 @@ df_study1_long %&gt;%
   filter(ola %in% c(1,2,3,4,6,7)) %&gt;% 
   mutate(ola=factor(ola,levels = 1:7,labels = 1:7))
 dim(df_study1_long) #check, now is OK</code></pre>
-<pre><code>## [1] 17568    25</code></pre>
+<pre><code>## [1] 17568    33</code></pre>
 <pre class="r"><code>df_study1_long &lt;- 
 set_label(x = df_study1_long,
           label = get_label(select(df_study1,names(df_study1_long))))
@@ -7226,6 +8950,241 @@ agree<br>Agree<br>Strongly agree
 19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_conocidos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7218 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3426<br>1224<br>2742<br>1398<br>834<br>240<br>486
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_economia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+7224 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1704<br>5838<br>1248<br>1302<br>252
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+21
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_cuarentena
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7230 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+144<br>1014<br>708<br>6192<br>2280
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+22
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_propio
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+7152 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+864<br>9552
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_alimentos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+6084<br>2076<br>1482<br>534<br>120
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_beneficios
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+7158 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+6924<br>3486
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+25
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirouno
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7152 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7314<br>3102
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+26
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirodos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+10260 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5550<br>1758
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+27
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
@@ -7251,7 +9210,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20
+28
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educyear
@@ -7275,7 +9234,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-21
+29
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 quintil1
@@ -7303,7 +9262,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22
+30
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ess
@@ -7327,7 +9286,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-23
+31
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id
@@ -7355,7 +9314,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-24
+32
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad
@@ -7383,7 +9342,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-25
+33
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo
@@ -7432,11 +9391,13 @@ names(df_study1_long_t7)</code></pre>
 ## [10] &quot;just_pension&quot;          &quot;just_salud&quot;            &quot;des_perc&quot;             
 ## [13] &quot;merit_effort&quot;          &quot;merit_talent&quot;          &quot;ahead_family&quot;         
 ## [16] &quot;ahead_educ&quot;            &quot;ahead_ambition&quot;        &quot;ahead_hardwork&quot;       
-## [19] &quot;educ&quot;                  &quot;educyear&quot;              &quot;quintil1&quot;             
-## [22] &quot;ess&quot;                   &quot;pos_id&quot;                &quot;edad&quot;                 
-## [25] &quot;sexo&quot;</code></pre>
+## [19] &quot;covid_conocidos&quot;       &quot;covid_economia&quot;        &quot;covid_cuarentena&quot;     
+## [22] &quot;covid_propio&quot;          &quot;covid_alimentos&quot;       &quot;covid_beneficios&quot;     
+## [25] &quot;covid_retirouno&quot;       &quot;covid_retirodos&quot;       &quot;educ&quot;                 
+## [28] &quot;educyear&quot;              &quot;quintil1&quot;              &quot;ess&quot;                  
+## [31] &quot;pos_id&quot;                &quot;edad&quot;                  &quot;sexo&quot;</code></pre>
 <pre class="r"><code>dim(df_study1_long_t7)</code></pre>
-<pre><code>## [1] 10422    25</code></pre>
+<pre><code>## [1] 10422    33</code></pre>
 <pre class="r"><code>sjmisc::frq(df_study1_long_t7$ola)</code></pre>
 <pre><code>## Identificador de ola de encuesta (x) &lt;categorical&gt; 
 ## # total N=10422 valid N=10422 mean=3.83 sd=2.11
@@ -7955,6 +9916,217 @@ agree<br>Agree<br>Strongly agree
 19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_conocidos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7218 (41.09%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3426<br>1224<br>2742<br>1398<br>834<br>240<br>486
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+33.10<br>11.83<br>26.49<br>13.51<br>8.06<br>2.32<br>4.70
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_economia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+7224 (41.12%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1704<br>5838<br>1248<br>1302<br>252
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+16.47<br>56.44<br>12.06<br>12.59<br>2.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+21
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_cuarentena
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7230 (41.15%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+144<br>1014<br>708<br>6192<br>2280
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1.39<br>9.81<br>6.85<br>59.90<br>22.05
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+22
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_propio
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+7152 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+864<br>9552
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+8.29<br>91.71
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_alimentos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7200 (40.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+6084<br>2076<br>1482<br>534<br>120
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+58.68<br>20.02<br>14.29<br>5.15<br>1.16
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_beneficios
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+7158 (40.74%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+6924<br>3486
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+66.51<br>33.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+25
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirouno
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7152 (40.71%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+7314<br>3102
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+70.22<br>29.78
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+26
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirodos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+10260 (58.40%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5550<br>1758
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+75.94<br>24.06
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+27
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
@@ -7977,7 +10149,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20
+28
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educyear
@@ -7998,7 +10170,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-21
+29
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 quintil1
@@ -8023,7 +10195,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22
+30
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ess
@@ -8044,7 +10216,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-23
+31
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id
@@ -8069,7 +10241,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-24
+32
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad
@@ -8094,7 +10266,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-25
+33
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo
@@ -8618,6 +10790,217 @@ agree<br>Agree<br>Strongly agree
 19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_conocidos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Num. Conocidos: Diagnosticado con Coronavirus
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1980 (19.00%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5<br>6<br>7
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Ninguno<br>Uno<br>Entre 2 y 4<br>Entre 5 y 7<br>Entre 8 y 10<br>Entre 11
+y 15<br>16 o mas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+2814<br>1062<br>2232<br>1110<br>648<br>180<br>396
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+33.33<br>12.58<br>26.44<br>13.15<br>7.68<br>2.13<br>4.69
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+20
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_economia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Grado de acuerdo: actividad economia y salud<br>publica
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1968 (18.88%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1404<br>4686<br>1038<br>1134<br>192
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+16.61<br>55.43<br>12.28<br>13.41<br>2.27
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+21
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_cuarentena
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Grado de acuerdo: cuarentenas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1980 (19.00%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Totalmente en desacuerdo<br>En desacuerdo<br>Ni de acuerdo ni en
+desacuerdo<br>De acuerdo<br>Totalmente de acuerdo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+126<br>828<br>570<br>5004<br>1914
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1.49<br>9.81<br>6.75<br>59.28<br>22.67
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+22
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_propio
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Diagnostico de enfermedad: Coronavirus (COVID-19)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1956 (18.77%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+708<br>7758
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+8.36<br>91.64
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+23
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_alimentos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Acceso a alimentos y suministros basicos en<br>pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1962 (18.83%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2<br>3<br>4<br>5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+4878<br>1770<br>1260<br>396<br>96
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+57.66<br>20.92<br>14.89<br>4.68<br>1.13
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+24
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_beneficios
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a beneficios del Estado
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1962 (18.83%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+5868<br>2592
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+69.36<br>30.64
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+25
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+covid_retirouno
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Accedio a primer retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1962 (18.83%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5916<br>2544
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+69.93<br>30.07
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+26
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+covid_retirodos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Accedio a segundo retiro 10% AFP
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+4506 (43.24%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+1<br>2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Si<br>No
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+4470<br>1446
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+75.56<br>24.44
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+27
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 educ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
@@ -8640,7 +11023,7 @@ Primary<br>High school<br>Technical<br>Universitary
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-20
+28
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 educyear
@@ -8661,7 +11044,7 @@ Education in years
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-21
+29
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 quintil1
@@ -8686,7 +11069,7 @@ Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22
+30
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 ess
@@ -8707,7 +11090,7 @@ Subjective Social Status: individual
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-23
+31
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 pos_id
@@ -8732,7 +11115,7 @@ Left<br>Center<br>Right<br>Does not identify
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-24
+32
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 edad
@@ -8757,7 +11140,7 @@ Age groups
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-25
+33
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 sexo

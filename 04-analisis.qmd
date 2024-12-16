@@ -52,13 +52,16 @@ load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 # generate analytical sample
 df_study1 <- 
   df_study_long_t7_comunas %>%
-  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo) %>% 
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo, covid_economia, covid_beneficios) %>% 
   na.omit() %>% 
   mutate(ola = as.factor(ola),
          ola_num = as.numeric(ola),
          ola_2=as.numeric(ola)^2,
          sexo=as.factor(sexo)
          )
+
+df_study1$covid_beneficios<- car::recode(df_study1$covid_beneficios, c("1=2; 2=1"))
+
 # Hipotesis
 h0 <- "ola"
 h1 <- "ola_num+ola_2"
@@ -67,6 +70,8 @@ h3 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id"
 h4 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc"
 h5 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent"
 h6 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+h7 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+covid_economia"
+h8 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+covid_economia+covid_beneficios"
 
 # A. Education distributive justice
 educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
@@ -77,11 +82,13 @@ educ3 <- lmer(formula(paste0("just_educ~",h3,"+(1|idencuesta)")),data = df_study
 educ4 <- lmer(formula(paste0("just_educ~",h4,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 educ5 <- lmer(formula(paste0("just_educ~",h5,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ7 <- lmer(formula(paste0("just_educ~",h7,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ8 <- lmer(formula(paste0("just_educ~",h8,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 # Table 1: individual
 
 omit <- "(education)|(ess)"
-texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6),
+texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6,educ7,educ8),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05.
 Note: Model 3 to 6 are controlled by educational level, and subjective social status with no significant effects.", 
                 omit.coef = omit,
@@ -111,7 +118,9 @@ Note: Model 3 to 6 are controlled by educational level, and subjective social st
                                       "Does not identify",
                                       "Inequality perception",
                                       "Merit: Talent",
-                                      "Merit: Effort" ),
+                                      "Merit: Effort" ,
+                                      "Covid: economy more important than health",
+                                      "Covid: receive state benefits"),
                 groups = list("Wave (Ref.= Wave 2016)" = 2:6,
                   "Household Income (Ref.= Quintile 1)" = 9:13,
                   "Age (Ref.= 18-29)" = 14:16,
@@ -142,7 +151,7 @@ Note: Model 3 to 6 are controlled by educational level, and subjective social st
 
 df_study1 <- 
   df_study_long_t7_comunas %>%
-  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent,education=educ,quintil1:sexo) %>% 
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent,education=educ,quintil1:sexo, covid_economia, covid_beneficios) %>% 
   na.omit() %>% 
   mutate(ola = as.numeric(ola),
          ola_2=as.numeric(ola)^2,
@@ -151,11 +160,12 @@ df_study1 <-
          #pos_id=as.numeric(pos_id)
          )
 
+df_study1$covid_beneficios<- car::recode(df_study1$covid_beneficios, c("1=2; 2=1"))
 # Hipotesis
 
-h6 <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
-h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_effort*ola"
-h3b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+merit_talent*ola"
+h6 <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+covid_economia+covid_beneficios"
+h1b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+covid_economia+covid_beneficios+merit_effort*ola"
+h3b <- "ola+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort+covid_economia+covid_beneficios+merit_talent*ola"
 
 # A. justification educational inequality
 educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
@@ -163,7 +173,7 @@ educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(ola+merit_talent|idencuesta)"))
 educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 # table 3: interacciones
-omit <- "(education)|(ess)|(quintil1)|(edad)|(sexo)|(pos_id)|(des_perc)"
+omit <- "(education)|(ess)|(quintil1)|(edad)|(sexo)|(pos_id)|(des_perc)|(covid_beneficios)|(covid_economia)"
 texreg::knitreg(list(educ6,educ3,educ1),
                 custom.note = "\\item *** p < 0.001; ** p < 0.01; * p < 0.05. Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, political position, and inequality perception",
                 omit.coef = omit,

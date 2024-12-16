@@ -109,7 +109,16 @@ elsoc_long_2016_2023 %>%
          ahead_family=r12_02,
          ahead_educ=r12_03,
          ahead_ambition=r12_04,
-         ahead_hardwork=r12_05) %>% 
+         ahead_hardwork=r12_05,
+         covid_conocidos=r03_09,
+         covid_economia=c37_09,
+         covid_cuarentena=c37_10,
+         covid_propio=s31,
+         covid_alimentos=m62,
+         covid_beneficios=m63_01,
+         covid_retirouno=m63_02,
+         covid_retirodos=m63_03
+         ) %>% 
   sjlabelled::drop_labels(., drop.na = FALSE)
   
 #
@@ -365,7 +374,10 @@ sjlabelled::set_label(x = elsoc_long_2016_2023$pos_id,
                       label = "Political identification") 
 
 sjmisc::frq(elsoc_long_2016_2023$pos_id)
+```
 
+
+```{r}
 # Select variables______________________________________________________________
 
 df_study1 <- 
@@ -392,6 +404,14 @@ elsoc_long_2016_2023 %>%
          # quintil,
          quintil1,
          ess,
+         covid_conocidos,
+         covid_economia,
+         covid_cuarentena,
+         covid_propio,
+         covid_alimentos,
+         covid_beneficios,
+         covid_retirouno,
+         covid_retirodos,
          # ess_inm,
          # nation_t1,
          # know_inm,
@@ -478,6 +498,62 @@ df_study1_wide$comunacod_5 <-df_study1_wide$comunacod_1
 df_study1_wide$comunacod_6 <-df_study1_wide$comunacod_1
 df_study1_wide$comunacod_7 <-df_study1_wide$comunacod_1
 
+df_study1_wide$covid_conocidos_1 <-df_study1_wide$covid_conocidos_5 #conocidos covid
+df_study1_wide$covid_conocidos_2 <-df_study1_wide$covid_conocidos_5
+df_study1_wide$covid_conocidos_3 <-df_study1_wide$covid_conocidos_5
+df_study1_wide$covid_conocidos_4 <-df_study1_wide$covid_conocidos_5
+df_study1_wide$covid_conocidos_6 <-df_study1_wide$covid_conocidos_5
+df_study1_wide$covid_conocidos_7 <-df_study1_wide$covid_conocidos_5
+
+df_study1_wide$covid_economia_1 <-df_study1_wide$covid_economia_5 #Importancia economia sobre salud
+df_study1_wide$covid_economia_2 <-df_study1_wide$covid_economia_5
+df_study1_wide$covid_economia_3 <-df_study1_wide$covid_economia_5
+df_study1_wide$covid_economia_4 <-df_study1_wide$covid_economia_5
+df_study1_wide$covid_economia_6 <-df_study1_wide$covid_economia_5
+df_study1_wide$covid_economia_7 <-df_study1_wide$covid_economia_5
+
+df_study1_wide$covid_cuarentena_1 <-df_study1_wide$covid_cuarentena_5 #importancia cuarentena
+df_study1_wide$covid_cuarentena_2 <-df_study1_wide$covid_cuarentena_5
+df_study1_wide$covid_cuarentena_3 <-df_study1_wide$covid_cuarentena_5
+df_study1_wide$covid_cuarentena_4 <-df_study1_wide$covid_cuarentena_5
+df_study1_wide$covid_cuarentena_6 <-df_study1_wide$covid_cuarentena_5
+df_study1_wide$covid_cuarentena_7 <-df_study1_wide$covid_cuarentena_5
+
+df_study1_wide$covid_propio_1 <-df_study1_wide$covid_propio_5 #Diagnostico covid propio
+df_study1_wide$covid_propio_2 <-df_study1_wide$covid_propio_5
+df_study1_wide$covid_propio_3 <-df_study1_wide$covid_propio_5
+df_study1_wide$covid_propio_4 <-df_study1_wide$covid_propio_5
+df_study1_wide$covid_propio_6 <-df_study1_wide$covid_propio_5
+df_study1_wide$covid_propio_7 <-df_study1_wide$covid_propio_5
+
+df_study1_wide$covid_alimentos_1 <-df_study1_wide$covid_alimentos_5 # Dificultades conseguir alimentos
+df_study1_wide$covid_alimentos_2 <-df_study1_wide$covid_alimentos_5
+df_study1_wide$covid_alimentos_3 <-df_study1_wide$covid_alimentos_5
+df_study1_wide$covid_alimentos_4 <-df_study1_wide$covid_alimentos_5
+df_study1_wide$covid_alimentos_6 <-df_study1_wide$covid_alimentos_5
+df_study1_wide$covid_alimentos_7 <-df_study1_wide$covid_alimentos_5
+
+df_study1_wide$covid_beneficios_1 <-df_study1_wide$covid_beneficios_5 #Recibe beneficios
+df_study1_wide$covid_beneficios_2 <-df_study1_wide$covid_beneficios_5
+df_study1_wide$covid_beneficios_3 <-df_study1_wide$covid_beneficios_5
+df_study1_wide$covid_beneficios_4 <-df_study1_wide$covid_beneficios_5
+df_study1_wide$covid_beneficios_6 <-df_study1_wide$covid_beneficios_5
+df_study1_wide$covid_beneficios_7 <-df_study1_wide$covid_beneficios_5
+
+df_study1_wide$covid_retirouno_1 <-df_study1_wide$covid_retirouno_5 #Primer retiro afp
+df_study1_wide$covid_retirouno_2 <-df_study1_wide$covid_retirouno_5
+df_study1_wide$covid_retirouno_3 <-df_study1_wide$covid_retirouno_5
+df_study1_wide$covid_retirouno_4 <-df_study1_wide$covid_retirouno_5
+df_study1_wide$covid_retirouno_6 <-df_study1_wide$covid_retirouno_5
+df_study1_wide$covid_retirouno_7 <-df_study1_wide$covid_retirouno_5
+
+df_study1_wide$covid_retirodos_1 <-df_study1_wide$covid_retirodos_5 #Segundo retiro afp
+df_study1_wide$covid_retirodos_2 <-df_study1_wide$covid_retirodos_5
+df_study1_wide$covid_retirodos_3 <-df_study1_wide$covid_retirodos_5
+df_study1_wide$covid_retirodos_4 <-df_study1_wide$covid_retirodos_5
+df_study1_wide$covid_retirodos_6 <-df_study1_wide$covid_retirodos_5
+df_study1_wide$covid_retirodos_7 <-df_study1_wide$covid_retirodos_5
+
 dim(df_study1_wide)
 
 sjPlot::view_df(df_study1_wide,
@@ -493,6 +569,8 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                                  "^just_educ_", "^just_pension_", "^just_salud_", "^des_perc_",
                                  "^merit_effort_","^merit_talent_",
                                  "^ahead_family_", "^ahead_educ_", "^ahead_ambition_", "^ahead_hardwork_",
+                                 "^covid_conocidos_", "^covid_economia_", "^covid_cuarentena_", "^covid_propio_",
+                                 "^covid_alimentos_", "^covid_beneficios_", "^covid_retirouno_", "^covid_retirodos_",
                                  "^educ_","^educyear_","^quintil1_","^ess_",
                                  "^pos_id_",
                                  "^edad_","^sexo_"
@@ -501,6 +579,8 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                              "just_educ", "just_pension","just_salud", "des_perc",
                              "merit_effort","merit_talent",
                              "ahead_family","ahead_educ","ahead_ambition","ahead_hardwork",
+                             "covid_conocidos", "covid_economia", "covid_cuarentena", "covid_propio",
+                             "covid_alimentos", "covid_beneficios", "covid_retirouno", "covid_retirodos",
                              "educ","educyear","quintil1","ess",
                              "pos_id",
                              "edad","sexo"),
