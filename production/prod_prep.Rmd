@@ -87,7 +87,7 @@ remove(list = ls()) # clean workspace
 # .rs.restartR() #restart R session
 if (!require("pacman")) install.packages("pacman") # install pacman
 # load libraries
-pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here)
+pacman::p_load(dplyr,readxl,sjmisc, sjlabelled, questionr, car,here, ggstats)
 load(here::here("input/data-original/elsoc_long.Rdata"))
 
 elsoc_long_2016_2023[elsoc_long_2016_2023 ==-999] <- NA
@@ -120,7 +120,10 @@ elsoc_long_2016_2023 %>%
          covid_retirodos=m63_03
          ) %>% 
   sjlabelled::drop_labels(., drop.na = FALSE)
-  
+```
+
+
+```{r}
 #
 sjmisc::frq(elsoc_long_2016_2023$just_educ)
 elsoc_long_2016_2023$just_educ <- 
@@ -195,141 +198,9 @@ sjmisc::frq(elsoc_long_2016_2023$ahead_family)
 sjmisc::frq(elsoc_long_2016_2023$ahead_educ)
 sjmisc::frq(elsoc_long_2016_2023$ahead_ambition)
 sjmisc::frq(elsoc_long_2016_2023$ahead_hardwork)
-# Socioeconomic_________________________________________________________________
+```
 
-# Education_______________________________________
-elsoc_long_2016_2023$educ <- 
-  car::recode(elsoc_long_2016_2023$m01,
-              "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4; c(-888,-999)=NA")
-elsoc_long_2016_2023$educ <-
-  factor(elsoc_long_2016_2023$educ,
-         labels = c("Primary","High school","Technical","Universitary"))
-
-#reverse education, reference level is the highest level
-#elsoc_long_2016_2023$educ <- forcats::fct_rev(elsoc_long_2016_2023$educ)
-
-elsoc_long_2016_2023$educ <- 
-sjlabelled::set_label(x = elsoc_long_2016_2023$educ,
-                      label = "Education")
-sjmisc::frq(elsoc_long_2016_2023$educ)
-
-#Recoding of education to years based on casen 2017.
-elsoc_long_2016_2023$educyear<- as.numeric(
-  car::recode(elsoc_long_2016_2023$m01, 
-              "1=0;2=4.3;3=7.5;4=9.8;5=12.02;6=13.9;
-               7=14.8;8=14.9;9=16.9;10=19.07;c(-888,-999)=NA", 
-              as.numeric = T))
-
-elsoc_long_2016_2023$educyear <- 
-sjlabelled::set_label(x = elsoc_long_2016_2023$educyear,
-                      label = "Education in years")
-
-class(elsoc_long_2016_2023$educyear)
-sjmisc::frq(elsoc_long_2016_2023$educyear)
-
-# Household income_________________________________________
-
-#Impute midpoint of income ranges
-elsoc_long_2016_2023$m30_rec <-
-as.numeric(car::recode(elsoc_long_2016_2023$m30,
-           "1=110000;2=251000;3=305000;4=355000;5=400000;
-            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
-            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
-            19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
-
-#Impute midpoint of income ranges (2021)
-elsoc_long_2016_2023$m30b_rec <-
-as.numeric(car::recode(elsoc_long_2016_2023$m30b,
-           "1=125000;2=300000;3=400000;4=575000;5=70000;NA=NA;c(-888,-999)=NA"))
-
-sjmisc::frq(elsoc_long_2016_2023$m30b_rec)
-
-#Recode DK/DA of Income to NA
-elsoc_long_2016_2023$m29_rec <-
-  as.numeric(car::recode(elsoc_long_2016_2023$m29,"c(-888,-999)=NA"))
-
-#replace NA of income with new imputed variable
-elsoc_long_2016_2023$m29_imp <- 
-  ifelse(test = !is.na(elsoc_long_2016_2023$m29_rec),
-         yes =  elsoc_long_2016_2023$m29_rec,
-         no =  elsoc_long_2016_2023$m30_rec)
-summary(elsoc_long_2016_2023$m29_imp)
-
-elsoc_long_2016_2023$m29_imp <- 
-  ifelse(test = is.na(elsoc_long_2016_2023$m29_imp),
-         yes =  elsoc_long_2016_2023$m30b_rec,
-         no =  elsoc_long_2016_2023$m29_imp)
-summary(elsoc_long_2016_2023$m29_imp)
-
-# deflate at each year's prices
-elsoc_long_2016_2023$deflactor <-
-  with(elsoc_long_2016_2023, case_when(
-    ola == 2016 ~ 113.88 / 123.82,
-    ola == 2017 ~ 116.46 / 123.82,
-    ola == 2018 ~ 119.45 / 123.82,
-    ola == 2019 ~ 123.82 / 123.82
-  ))
-
-# N Household:
-elsoc_long_2016_2023 <-
-  elsoc_long_2016_2023 %>%
-  mutate(n_hogar =
-           dplyr::case_when(ola == 1 ~ nhogar1,
-                            ola == 2 ~ m46_nhogar,
-                            ola == 3 ~ m54,
-                            ola == 4 ~ m54,
-                            ola == 5 ~ m54,
-                            ola == 6 ~ m54,
-                            ola == 7 ~ m54))
-sjmisc::frq(elsoc_long_2016_2023$n_hogar)
-
-#Recode DK/DA to NA
-elsoc_long_2016_2023$n_hogar_r<-
-  car::recode(elsoc_long_2016_2023$n_hogar,"c(-888,-999)=NA")
-
-# Per capita household income:
-elsoc_long_2016_2023$ing_pc <- 
-  (elsoc_long_2016_2023$m29_imp/elsoc_long_2016_2023$n_hogar_r)
-
-elsoc_long_2016_2023$ing_pc <-
-sjlabelled::set_label(x = elsoc_long_2016_2023$ing_pc,
-                      label = "Household income per capita")  
-
-sjmisc::descr(elsoc_long_2016_2023$ing_pc)
-
-# Compute income quintiles
-elsoc_long_2016_2023 <- elsoc_long_2016_2023 %>% 
-  group_by(ola) %>% 
-  mutate(quintil = ntile(-desc(ing_pc), 5)) %>% 
-  ungroup()
-
-elsoc_long_2016_2023$quintil <- 
-  factor(elsoc_long_2016_2023$quintil,
-         levels = c(1, 2, 3, 4, 5),
-         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
-
-#reverse quintile, reference level is the highest quintile
-#elsoc_long_2016_2023$quintil <- forcats::fct_rev(elsoc_long_2016_2023$quintil)
-
-elsoc_long_2016_2023$quintil <- 
-sjlabelled::set_label(x = elsoc_long_2016_2023$quintil,
-                      label = "Household income quintile per capita")  
-
-sjmisc::frq(elsoc_long_2016_2023$quintil)
-
-#include new quintile category with missing cases
-elsoc_long_2016_2023$quintil1<-
-  car::recode(elsoc_long_2016_2023$quintil, 
-              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
-
-#elsoc_long_2016_2023$quintil1 <- factor(elsoc_long_2016_2023$quintil1, c("Q1","Q2","Q3","Q4","Q5","QNA"))
-
-elsoc_long_2016_2023$quintil1 <- 
-sjlabelled::set_label(x = elsoc_long_2016_2023$quintil1,
-                      label = "Household income quintile per capita (NA)") 
-sjmisc::frq(elsoc_long_2016_2023$quintil1)
-
-
+```{r}
 #Age Ranges
 elsoc_long_2016_2023$edad <- 
   factor(car::recode(elsoc_long_2016_2023$m0_edad, 
@@ -376,8 +247,43 @@ sjlabelled::set_label(x = elsoc_long_2016_2023$pos_id,
 sjmisc::frq(elsoc_long_2016_2023$pos_id)
 ```
 
+```{r}
+# Socioeconomic_________________________________________________________________
+
+# Education_______________________________________
+elsoc_long_2016_2023$educ <- 
+  car::recode(elsoc_long_2016_2023$m01,
+              "c(1,2,3,4,5,6,7)=1;c(8,9,10)=2; c(-888,-999)=NA")
+elsoc_long_2016_2023$educ <-
+  factor(elsoc_long_2016_2023$educ,
+         labels = c("Less than Universitary","Universitary"))
+
+#reverse education, reference level is the highest level
+#elsoc_long_2016_2023$educ <- forcats::fct_rev(elsoc_long_2016_2023$educ)
+
+elsoc_long_2016_2023$educ <- 
+sjlabelled::set_label(x = elsoc_long_2016_2023$educ,
+                      label = "Education")
+sjmisc::frq(elsoc_long_2016_2023$educ)
+
+#Recoding of education to years based on casen 2017.
+elsoc_long_2016_2023$educyear<- as.numeric(
+  car::recode(elsoc_long_2016_2023$m01, 
+              "1=0;2=4.3;3=7.5;4=9.8;5=12.02;6=13.9;
+               7=14.8;8=14.9;9=16.9;10=19.07;c(-888,-999)=NA", 
+              as.numeric = T))
+
+elsoc_long_2016_2023$educyear <- 
+sjlabelled::set_label(x = elsoc_long_2016_2023$educyear,
+                      label = "Education in years")
+
+class(elsoc_long_2016_2023$educyear)
+sjmisc::frq(elsoc_long_2016_2023$educyear)
+```
+
 
 ```{r}
+# N Household:
 # Select variables______________________________________________________________
 
 df_study1 <- 
@@ -387,8 +293,6 @@ elsoc_long_2016_2023 %>%
          muestra,
          ponderador_long_total, segmento, estrato,
          sexo,
-         # cuestion_mig,
-         # starts_with("in_"),
          just_educ,
          just_pension,
          just_salud,
@@ -402,7 +306,7 @@ elsoc_long_2016_2023 %>%
          educ,educyear,
          # ing_pc,
          # quintil,
-         quintil1,
+#         quintil1,
          ess,
          covid_conocidos,
          covid_economia,
@@ -412,26 +316,210 @@ elsoc_long_2016_2023 %>%
          covid_beneficios,
          covid_retirouno,
          covid_retirodos,
-         # ess_inm,
-         # nation_t1,
-         # know_inm,
-         # know_inm_bi,
-         # frien_inm_bi_t4,
-         # frien_inm_bi_t1,
-         # know_inm_t1t4,
-         # frien_inm,
-         # frien_inm_bi,
-         # frien_inm_t1t4,
          pos_id,
-         edad)
+         edad,
+         nhogar1,
+         m46_nhogar,
+         m54, m30, m30b, m29)
 
+# Household income_________________________________________
+
+#Impute midpoint of income ranges
+df_study1$m30_rec <-
+as.numeric(car::recode(df_study1$m30,
+           "1=110000;2=251000;3=305000;4=355000;5=400000;
+            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+            19=2275000;20=2700000;NA=NA;c(-888,-999)=NA"))
+
+#Impute midpoint of income ranges (2021)
+df_study1$m30b_rec <-
+as.numeric(car::recode(df_study1$m30b,
+           "1=125000;2=300000;3=400000;4=575000;5=70000;NA=NA;c(-888,-999)=NA"))
+
+sjmisc::frq(df_study1$m30b_rec)
+
+#Recode DK/DA of Income to NA
+df_study1$m29_rec <-
+  as.numeric(car::recode(df_study1$m29,"c(-888,-999)=NA"))
+
+#replace NA of income with new imputed variable
+df_study1$m29_imp <- 
+  ifelse(test = !is.na(df_study1$m29_rec),
+         yes =  df_study1$m29_rec,
+         no =  df_study1$m30_rec)
+summary(df_study1$m29_imp)
+
+df_study1$m29_imp <- 
+  ifelse(test = is.na(df_study1$m29_imp),
+         yes =  df_study1$m30b_rec,
+         no =  df_study1$m29_imp)
+summary(df_study1$m29_imp)
+
+# deflate at each year's prices
+df_study1$deflactor <-
+  with(df_study1, case_when(
+    ola == 2016 ~ 113.88 / 123.82,
+    ola == 2017 ~ 116.46 / 123.82,
+    ola == 2018 ~ 119.45 / 123.82,
+    ola == 2019 ~ 123.82 / 123.82
+  ))
 
 # Reshape long to wide
 df_study1_wide <- df_study1 %>% 
   tidyr::pivot_wider(id_cols = c("idencuesta","muestra"),
                      names_from = "ola",
                      # names_prefix = c("educ","educyear","ing_pc","quintil","quintil1"),
-                     values_from = names(select(df_study1,comuna,comunacod,ponderador_long_total,segmento, estrato, just_educ:edad,sexo))
+                     values_from = names(select(df_study1,comuna,comunacod,ponderador_long_total,segmento, estrato, just_educ:edad,sexo, nhogar1, m46_nhogar, m54, m30, m30b, m29_imp))
+                     )
+
+df_study1_wide$m54_6 <- df_study1_wide$m54_7
+
+# reshape from long to wide
+pacman::p_load(datasets,data.table)
+df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
+              id.vars = c("idencuesta","muestra"),
+              variable.name = c("ola"),
+              measure = patterns("^comuna_","^comunacod_","^ponderador_long_total", "^segmento", "^estrato",
+                                 "^just_educ_", "^just_pension_", "^just_salud_", "^des_perc_",
+                                 "^merit_effort_","^merit_talent_",
+                                 "^ahead_family_", "^ahead_educ_", "^ahead_ambition_", "^ahead_hardwork_",
+                                 "^covid_conocidos_", "^covid_economia_", "^covid_cuarentena_", "^covid_propio_",
+                                 "^covid_alimentos_", "^covid_beneficios_", "^covid_retirouno_", "^covid_retirodos_",
+                                 "^educ_","^educyear_","^ess_",
+                                 "^pos_id_",
+                                 "^edad_","^sexo_", "^m54_", "^nhogar1_", "^m46_nhogar_", "^m30_", "^m30b_", "^m29_imp_"
+                                 ),
+              value.name = c("comuna","comunacod","ponderador_long_total","segmento","estrato",
+                             "just_educ", "just_pension","just_salud", "des_perc",
+                             "merit_effort","merit_talent",
+                             "ahead_family","ahead_educ","ahead_ambition","ahead_hardwork",
+                             "covid_conocidos", "covid_economia", "covid_cuarentena", "covid_propio",
+                             "covid_alimentos", "covid_beneficios", "covid_retirouno", "covid_retirodos",
+                             "educ","educyear","ess",
+                             "pos_id",
+                             "edad","sexo", "m54", "nhogar1", "m46_nhogar", "m30", "m30b", "m29_imp"),
+              na.rm = F,value.factor = TRUE
+              )
+
+
+
+df_study1_long <-
+  df_study1_long %>%
+  mutate(n_hogar =
+           dplyr::case_when(ola == 1 ~ nhogar1,
+                            ola == 2 ~ m46_nhogar,
+                            ola == 3 ~ m54,
+                            ola == 4 ~ m54,
+                            ola == 5 ~ m54,
+                            ola == 6 ~ m54,
+                            ola == 7 ~ m54))
+sjmisc::frq(df_study1_long$n_hogar)
+
+#Recode DK/DA to NA
+df_study1_long$n_hogar_r<-
+  car::recode(df_study1_long$n_hogar,"c(-888,-999)=NA")
+
+# Per capita household income:
+df_study1_long$ing_pc <- 
+  (df_study1_long$m29_imp/df_study1_long$n_hogar_r)
+
+df_study1_long$ing_pc <-
+sjlabelled::set_label(x = df_study1_long$ing_pc,
+                      label = "Household income per capita")  
+
+sjmisc::descr(df_study1_long$ing_pc)
+
+# Compute income quintiles
+df_study1_long <- df_study1_long %>% 
+  group_by(ola) %>% 
+  mutate(quintil = ntile(-desc(ing_pc), 5)) %>% 
+  ungroup()
+
+df_study1_long$quintil <- 
+  factor(df_study1_long$quintil,
+         levels = c(1, 2, 3, 4, 5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5')) # Quintiles as factors
+
+#reverse quintile, reference level is the highest quintile
+#elsoc_long_2016_2023$quintil <- forcats::fct_rev(elsoc_long_2016_2023$quintil)
+
+df_study1_long$quintil <- 
+sjlabelled::set_label(x = df_study1_long$quintil,
+                      label = "Household income quintile per capita")  
+
+sjmisc::frq(df_study1_long$quintil)
+
+#include new quintile category with missing cases
+df_study1_long$quintil1<-
+  car::recode(df_study1_long$quintil, 
+              "'Q1'='Q1';'Q2'= 'Q2';'Q3'='Q3';'Q4'='Q4';'Q5'='Q5'; NA='QNA'")
+
+#elsoc_long_2016_2023$quintil1 <- factor(elsoc_long_2016_2023$quintil1, c("Q1","Q2","Q3","Q4","Q5","QNA"))
+
+df_study1_long$quintil1 <- 
+sjlabelled::set_label(x = df_study1_long$quintil1,
+                      label = "Household income quintile per capita (NA)") 
+sjmisc::frq(df_study1_long$quintil1)
+```
+
+# Alternative operationalization
+_Income_
+```{r}
+df_study1_long <-
+df_study1_long %>%
+  # group_by(ola) %>%
+  mutate(percentile_wave=ntile(ing_pc,100),
+         bot_mid_top_wave=car::recode(percentile_wave,"1:20=1;21:79=2;80:100=3"))
+
+elsoc_wide <- panelr::widen_panel(panelr::panel_data(df_study1_long %>% select(idencuesta,ola,percentile_wave,bot_mid_top_wave), id = idencuesta, wave = ola), separator = "_")
+elsoc_wide$income_prof <- paste0(elsoc_wide$bot_mid_top_wave_1,elsoc_wide$bot_mid_top_wave_5)
+frq(elsoc_wide$income_prof)
+# a. Stable low income: In the lowest tertile in all three periods
+# b. Stable middle income: In the middle tertile in all three periods
+# c. Stable high income: In the highest tertile in all three periods
+# d. Upward mobility: In the lowest tertile in the first period and either in tertile 2 or 3 in the last period
+# e. Downward mobility: In the highest tertile in the first period and either in tertile 1 or 2 in the last period
+# f. Other: All other trajectories
+elsoc_wide$ind_inc_prof <- car::recode(elsoc_wide$income_prof,"'11'='1stablelow';'33'='2stablemid';'22'='3stablehig';c('12','13')='4upwardmob';c('31','21')='5downwardmob';else = '99other'")
+frq(elsoc_wide$ind_inc_prof)
+# • Stable low income: Start and end at the 20th percentile in income (P20).
+# • Stable middle income: Start and end at the 50th percentile in income (P50).
+# • Stable high income: Start and end at the 80th percentile in income (P80).
+# • Upward mobility: Start at 20th percentile, end at 80th percentile (P20 → P80).
+# • Downward mobility: Start at 80th percentile, end at 20th percentile (P80 → P20).
+df_profiles<- select(elsoc_wide,"idencuesta","ind_inc_prof",percentile_wave_1,percentile_wave_5)
+df_profiles$idencuesta <- as.numeric(as.character(df_profiles$idencuesta))
+df_study1_long <-
+  df_study1_long %>%
+  left_join(select(df_profiles,"idencuesta","ind_inc_prof",percentile_wave_1,percentile_wave_5),by="idencuesta")
+```
+
+```{r}
+# Income group as percentage of median
+# poverty (<50 per cent of median income), below average (>¼50 per cent and <100 per cent), above average (>¼100 per cent and <200 per cent), and affluence (>¼200 per cent).
+df_study1_long<-
+  df_study1_long %>%
+  group_by(ola) %>%
+  #compute median household pc income
+  mutate(inc_pcmed=weighted.median(ing_pc,ponderador_long_total,na.rm = T)) %>%
+  mutate(ratioincome=(ing_pc/inc_pcmed)*100) %>%
+  ungroup()
+# elsoc_long_2016_2022.2[,c('idencuesta',"ola", 'm29_imp',"n_hogar","ing_pc","inc_pcmed")] %>% View()
+df_study1_long$incomegrp=
+  car::recode(df_study1_long$ratioincome,
+              "0:49.9='Low';50:99.9='Below average';100:200='Above average';200.1:999999999999='Affluence'",
+              levels =c("Low","Below average","Above average","Affluence"),as.factor = T)
+frq(df_study1_long$incomegrp)
+```
+
+```{r}
+# Reshape long to wide
+df_study1_wide <- df_study1_long %>% 
+  tidyr::pivot_wider(id_cols = c("idencuesta","muestra"),
+                     names_from = "ola",
+                     # names_prefix = c("educ","educyear","ing_pc","quintil","quintil1"),
+                     values_from = names(select(df_study1_long,comuna,comunacod,ponderador_long_total,segmento, estrato, just_educ:edad,sexo, quintil1, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp))
                      )
 
 # fix data to w01 values
@@ -558,8 +646,10 @@ dim(df_study1_wide)
 
 sjPlot::view_df(df_study1_wide,
                 show.frq = T,show.values = T,show.na = T,show.prc = T, show.type = T)
+```
 
 
+```{r}
 # reshape from long to wide
 pacman::p_load(datasets,data.table)
 df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
@@ -573,7 +663,8 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                                  "^covid_alimentos_", "^covid_beneficios_", "^covid_retirouno_", "^covid_retirodos_",
                                  "^educ_","^educyear_","^quintil1_","^ess_",
                                  "^pos_id_",
-                                 "^edad_","^sexo_"
+                                 "^edad_","^sexo_",
+                                 "^percentile_wave_", "^bot_mid_top_wave_", "^inc_pcmed_", "^ratioincome_", "^incomegrp_"
                                  ),
               value.name = c("comuna","comunacod","ponderador_long_total","segmento","estrato",
                              "just_educ", "just_pension","just_salud", "des_perc",
@@ -583,10 +674,14 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                              "covid_alimentos", "covid_beneficios", "covid_retirouno", "covid_retirodos",
                              "educ","educyear","quintil1","ess",
                              "pos_id",
-                             "edad","sexo"),
+                             "edad","sexo",
+                             "percentile_wave", "bot_mid_top_wave", "inc_pcmed", "ratioincome", "incomegrp"),
               na.rm = F,value.factor = TRUE
               )
+```
 
+
+```{r}
 names(df_study1_long) #check names of long dataset
 dim(df_study1_long) #check dimensions of the dataframe
 # Original dataset with 6 waves
@@ -599,9 +694,9 @@ df_study1_long %>%
   mutate(ola=factor(ola,levels = 1:7,labels = 1:7))
 dim(df_study1_long) #check, now is OK
 
-df_study1_long <- 
-set_label(x = df_study1_long,
-          label = get_label(select(df_study1,names(df_study1_long))))
+# df_study1_long <- 
+# set_label(x = df_study1_long,
+#           label = get_label(select(df_study1,names(df_study1_long))))
   
 
 sjPlot::view_df(df_study1_long,
@@ -624,7 +719,9 @@ df_study1_long_t7 <-
 names(df_study1_long_t7)
 dim(df_study1_long_t7)
 sjmisc::frq(df_study1_long_t7$ola)
+```
 
+```{r}
 # SAVE DATA____________________________________________________________________
 save(df_study1_long,file = here::here("input/data-proc/df_study1_long.RData"))
 save(df_study1_long_t7,file = here::here("input/data-proc/df_study1_long_t7.RData"))

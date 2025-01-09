@@ -73,7 +73,7 @@ df_study1_long_comunas <-
  dplyr::left_join(x = df_study1_long,
                   y = df_study1_comunas, 
                   by = "comunacod") %>% 
- dplyr::select(idencuesta:edad,sexo,
+ dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp,
                esc_cit17) %>% 
  dplyr::rename(comuna=comuna.x)
 
@@ -101,7 +101,7 @@ df_study2_long_comunas <-
  dplyr::left_join(x = df_study2_long,
                   y = df_study1_comunas, 
                   by = "comunacod") %>% 
- dplyr::select(idencuesta:edad,sexo,
+ dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp, 
                esc_cit17) %>% 
  dplyr::rename(comuna=comuna.x) 
 
@@ -126,7 +126,7 @@ df_study_long_t7_comunas <-
  dplyr::left_join(x = df_study1_long_t7,
                   y = df_study1_comunas, 
                   by = "comunacod") %>% 
- dplyr::select(idencuesta:edad,sexo,
+ dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp,
                esc_cit17) %>% 
  dplyr::rename(comuna=comuna.x) 
 
@@ -249,6 +249,9 @@ df_study_long_t7_comunas$var_simce_comuna_rescaled <- df_study_long_t7_comunas$v
 # Verificar el rescalado
 summary(df_study1_long_comunas$prom_simce_comuna_rescaled)
 summary(df_study1_long_comunas$var_simce_comuna_rescaled)
+```
+
+```{r}
 # save data____________________________________________________________________
 save(df_study1_long_comunas,
      file = here::here("input/data-proc/df_study1_long_comunas.RData"))

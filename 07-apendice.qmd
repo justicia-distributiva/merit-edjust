@@ -2,24 +2,50 @@
 
 `r if (knitr::is_latex_output()){ '\\appendix'}` `r if (knitr::is_latex_output()){ '\\section{Appendix}'}`
 
-```{r multilevel-full, echo=FALSE, results='asis'}
+```{r echo=FALSE, results='asis'}
+#| label: tbl-multilevel-full
+#| tbl-cap: "Complete multilevel longitudinal models for the justification of inequality in education"
+
+pacman::p_load(dplyr,       # Manipulacion de datos
+               knitr,
+               kableExtra,
+               summarytools,
+               lme4,
+               texreg
+               )
+load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
+
+# generate analytical sample
 df_study1 <- 
   df_study_long_t7_comunas %>%
-  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo) %>% 
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo, covid_economia, covid_beneficios, inc_pcmed) %>% 
   na.omit() %>% 
   mutate(ola = as.factor(ola),
          ola_num = as.numeric(ola),
          ola_2=as.numeric(ola)^2,
          sexo=as.factor(sexo)
          )
+
+df_study1 <- df_study1 %>%
+  group_by(idencuesta) %>%             # Agrupar por el identificador del participante
+  mutate(n_participaciones = n()) %>%  # Contar el número de filas (participaciones) por participante
+  ungroup()
+#sjmisc::frq(df_study1$n_participaciones)
+df_study1 <- df_study1 %>% filter(n_participaciones>1)
+
+#, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp
+df_study1$covid_beneficios<- car::recode(df_study1$covid_beneficios, c("1=2; 2=1"))
+
 # Hipotesis
 h0 <- "ola"
 h1 <- "ola_num+ola_2"
-h2 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo"
-h3 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id"
-h4 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc"
-h5 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent"
-h6 <- "ola_num+ola_2+education+quintil1+ess+edad+sexo+pos_id+des_perc+merit_talent+merit_effort"
+h2 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo"
+h3 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id"
+h4 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia"
+h5 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios"
+h6 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc"
+h7 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent"
+h8 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
 
 # A. Education distributive justice
 educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
@@ -30,57 +56,63 @@ educ3 <- lmer(formula(paste0("just_educ~",h3,"+(1|idencuesta)")),data = df_study
 educ4 <- lmer(formula(paste0("just_educ~",h4,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 educ5 <- lmer(formula(paste0("just_educ~",h5,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ7 <- lmer(formula(paste0("just_educ~",h7,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ8 <- lmer(formula(paste0("just_educ~",h8,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 # Table 1: individual
 
-omit <- "(education)|(ess)"
-texreg::htmlreg(list(educ0, educ1, educ3, educ4, educ5, educ6),
+#omit <- "(edad)|(ess)|(sexo)|(pos_id)"
+texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6,educ7,educ8),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05.", 
-#                omit.coef = omit,
+ #               omit.coef = omit,
                 custom.coef.names = c("Intercept",
                                       "Wave 2017",
                                       "Wave 2018",
                                       "Wave 2019",
                                       "Wave 2022",
-                                      "wave 2023",
+                                      "Wave 2023",
                                       "Wave",
                                       "Wave^2",
-                                      "High School",
-                                      "Technical",
-                                      "Universitary",
-                                      "Quintile 2",
-                                      "Quintile 3",
-                                      "Quintile 4",
-                                      "Quintile 5",
-                                      "Quintile (No information)",
+                                      "Universitary (Ref.= Less than universitary)",
+                                      "Income",
+                                      # "High School",
+                                      # "Technical",
+                                      # "Universitary",
+                                      # "Quintile 2",
+                                      # "Quintile 3",
+                                      # "Quintile 4",
+                                      # "Quintile 5",
+                                      # "Quintile (No information)",
                                       "Subjective Social Status",
-                                      "Age 30-49",
-                                      "Age 50-64",
-                                      "Age 65 or more",
-                                      "Gender (Ref. Male)",
-                                      "Center",
-                                      "Right",
-                                      "Does not identify",
+                                       "Age 30-49",
+                                       "Age 50-64",
+                                       "Age 65 or more",
+                                       "Gender (Ref. Male)",
+                                       "Center",
+                                       "Right",
+                                       "Does not identify",
+                                      "Covid: economy more important than health",
+                                      "Covid: receive state benefits",
                                       "Inequality perception",
                                       "Merit: Talent",
-                                      "Merit: Effort" ),
+                                      "Merit: Effort"),
                 groups = list("Wave (Ref.= Wave 2016)" = 2:6,
-                              "Education (Ref.=Primary)"= 9:11,
-                  "Household Income (Ref.= Quintile 1)" = 12:16,
-                  "Age (Ref.= 18-29)" = 18:20,
-                  "Pol. pos (Ref.= Left)" = 22:24
+                          #    "Education (Ref.= Primary)" = 9:11,
+                  #"Household Income (Ref.= Quintile 1)" = 12:16
+                  "Age (Ref.= 18-29)" = 12:14,
+                  "Pol. pos (Ref.= Left)" = 16:18
                   ),
                 include.loglik = FALSE,
                 include.aic = FALSE,
+ #               custom.gof.rows = list("Controls"= c("No", "No", rep("Yes", 6))),
                 custom.gof.names = c("BIC",
                                      "Num. obs.",
                                      "Num. groups: Individuals",
                                      "Var: Individuals (Intercept)",
                                      "Var: Residual"),
-               caption = paste("(\\#tab:multilevel-full)","Multilevel model for the justification of economic inequality"),
                center = TRUE,
                caption.above = TRUE,
-               scalebox = 0.60,
+               scalebox = 0.765,
                float.pos = "!ht", 
                booktabs = FALSE, 
                use.packages = FALSE, 
