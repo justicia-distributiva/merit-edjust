@@ -514,12 +514,57 @@ frq(df_study1_long$incomegrp)
 ```
 
 ```{r}
+## Cambio entre primera ola con información y última ola con información
+df_study1_long <- df_study1_long %>%
+  group_by(idencuesta) %>% 
+  mutate(
+    ingreso_primera_ola = ing_pc[which.min(ola)],  # Ingreso en la primera ola
+    ingreso_ultima_ola = ing_pc[which.max(ola)]   # Ingreso en la última ola
+  ) %>%
+  mutate(
+    cambio_ingreso = case_when(
+      is.na(ingreso_primera_ola) | is.na(ingreso_ultima_ola) ~ "NA",  # Si alguno es NA, categoría NA
+      ingreso_ultima_ola > ingreso_primera_ola ~ "Mayor",
+      ingreso_ultima_ola < ingreso_primera_ola ~ "Menor",
+      ingreso_ultima_ola == ingreso_primera_ola ~ "Igual"
+    )
+  ) %>%
+  ungroup()
+
+df_study1_long$cambio_ingreso <- factor(df_study1_long$cambio_ingreso, levels = c("Menor", "Igual", "Mayor", "NA"))
+df_study1_long$cambio_ingreso <- as.numeric(df_study1_long$cambio_ingreso)
+sjmisc::frq(df_study1_long$cambio_ingreso)
+```
+
+```{r}
+### Cambio pre y post pandemia
+df_study1_long <- df_study1_long %>%
+  group_by(idencuesta) %>%
+  mutate(
+    promedio_prepandemia = mean(ing_pc[ola %in% 1:4], na.rm = TRUE),  # Promedio de las olas 1 a 4
+    promedio_postpandemia = mean(ing_pc[ola %in% 6:7], na.rm = TRUE)       # Promedio de las olas 6 y 7
+  ) %>%
+  mutate(
+    cambio_ingreso_pandemia = case_when(
+      is.na(promedio_prepandemia) | is.na(promedio_postpandemia) ~ NA_character_,  # Si faltan datos, NA
+      promedio_postpandemia > promedio_prepandemia ~ "Mayor",
+      promedio_postpandemia < promedio_prepandemia ~ "Menor",
+      promedio_postpandemia == promedio_prepandemia ~ "Igual"
+    )
+  ) %>%
+  ungroup()
+
+df_study1_long$cambio_ingreso_pandemia <- factor(df_study1_long$cambio_ingreso_pandemia, levels = c("Menor", "Igual", "Mayor"))
+sjmisc::frq(df_study1_long$cambio_ingreso_pandemia)
+```
+
+```{r}
 # Reshape long to wide
 df_study1_wide <- df_study1_long %>% 
   tidyr::pivot_wider(id_cols = c("idencuesta","muestra"),
                      names_from = "ola",
                      # names_prefix = c("educ","educyear","ing_pc","quintil","quintil1"),
-                     values_from = names(select(df_study1_long,comuna,comunacod,ponderador_long_total,segmento, estrato, just_educ:edad,sexo, quintil1, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp))
+                     values_from = names(select(df_study1_long,comuna,comunacod,ponderador_long_total,segmento, estrato, just_educ:edad,sexo, quintil1, ing_pc, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp, cambio_ingreso, cambio_ingreso_pandemia))
                      )
 
 # fix data to w01 values
@@ -557,6 +602,53 @@ df_study1_wide$quintil1_4 <-df_study1_wide$quintil1_1
 df_study1_wide$quintil1_5 <-df_study1_wide$quintil1_1
 df_study1_wide$quintil1_6 <-df_study1_wide$quintil1_1
 df_study1_wide$quintil1_7 <-df_study1_wide$quintil1_1
+
+df_study1_wide$ing_pc_2 <-df_study1_wide$ing_pc_1 #income per capita
+df_study1_wide$ing_pc_3 <-df_study1_wide$ing_pc_1
+df_study1_wide$ing_pc_4 <-df_study1_wide$ing_pc_1
+df_study1_wide$ing_pc_5 <-df_study1_wide$ing_pc_1
+df_study1_wide$ing_pc_6 <-df_study1_wide$ing_pc_1
+df_study1_wide$ing_pc_7 <-df_study1_wide$ing_pc_1
+
+## Alternative incomes
+df_study1_wide$percentile_wave_2 <- df_study1_wide$percentile_wave_1
+df_study1_wide$percentile_wave_3 <- df_study1_wide$percentile_wave_1
+df_study1_wide$percentile_wave_4 <- df_study1_wide$percentile_wave_1
+df_study1_wide$percentile_wave_5 <- df_study1_wide$percentile_wave_1
+df_study1_wide$percentile_wave_6 <- df_study1_wide$percentile_wave_1
+df_study1_wide$percentile_wave_7 <- df_study1_wide$percentile_wave_1
+  
+
+df_study1_wide$bot_mid_top_wave_2 <- df_study1_wide$bot_mid_top_wave_1
+df_study1_wide$bot_mid_top_wave_3 <- df_study1_wide$bot_mid_top_wave_1
+df_study1_wide$bot_mid_top_wave_4 <- df_study1_wide$bot_mid_top_wave_1
+df_study1_wide$bot_mid_top_wave_5 <- df_study1_wide$bot_mid_top_wave_1
+df_study1_wide$bot_mid_top_wave_6 <- df_study1_wide$bot_mid_top_wave_1
+df_study1_wide$bot_mid_top_wave_7 <- df_study1_wide$bot_mid_top_wave_1
+  
+  
+df_study1_wide$inc_pcmed_2 <- df_study1_wide$inc_pcmed_1
+df_study1_wide$inc_pcmed_3 <- df_study1_wide$inc_pcmed_1
+df_study1_wide$inc_pcmed_4 <- df_study1_wide$inc_pcmed_1
+df_study1_wide$inc_pcmed_5 <- df_study1_wide$inc_pcmed_1
+df_study1_wide$inc_pcmed_6 <- df_study1_wide$inc_pcmed_1
+df_study1_wide$inc_pcmed_7 <- df_study1_wide$inc_pcmed_1
+  
+  
+df_study1_wide$ratioincome_2 <- df_study1_wide$ratioincome_1
+df_study1_wide$ratioincome_3 <- df_study1_wide$ratioincome_1
+df_study1_wide$ratioincome_4 <- df_study1_wide$ratioincome_1
+df_study1_wide$ratioincome_5 <- df_study1_wide$ratioincome_1
+df_study1_wide$ratioincome_6 <- df_study1_wide$ratioincome_1
+df_study1_wide$ratioincome_7 <- df_study1_wide$ratioincome_1
+  
+  
+df_study1_wide$incomegrp_2 <- df_study1_wide$incomegrp_1
+df_study1_wide$incomegrp_3 <- df_study1_wide$incomegrp_1
+df_study1_wide$incomegrp_4 <- df_study1_wide$incomegrp_1
+df_study1_wide$incomegrp_5 <- df_study1_wide$incomegrp_1
+df_study1_wide$incomegrp_6 <- df_study1_wide$incomegrp_1
+df_study1_wide$incomegrp_7 <- df_study1_wide$incomegrp_1
 
 df_study1_wide$ess_2 <-df_study1_wide$ess_1 # subjective status
 df_study1_wide$ess_3 <-df_study1_wide$ess_1
@@ -662,9 +754,9 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                                  "^covid_conocidos_", "^covid_economia_", "^covid_cuarentena_", "^covid_propio_",
                                  "^covid_alimentos_", "^covid_beneficios_", "^covid_retirouno_", "^covid_retirodos_",
                                  "^educ_","^educyear_","^quintil1_","^ess_",
-                                 "^pos_id_",
-                                 "^edad_","^sexo_",
-                                 "^percentile_wave_", "^bot_mid_top_wave_", "^inc_pcmed_", "^ratioincome_", "^incomegrp_"
+                                 "^pos_id_", "^edad_","^sexo_",
+                                 "^percentile_wave_", "^bot_mid_top_wave_", "^inc_pcmed_", "^ratioincome_", "^incomegrp_",
+                                 "^ing_pc_", "^cambio_ingreso_pandemia_"
                                  ),
               value.name = c("comuna","comunacod","ponderador_long_total","segmento","estrato",
                              "just_educ", "just_pension","just_salud", "des_perc",
@@ -673,9 +765,9 @@ df_study1_long <- data.table::melt.data.table(data.table::setDT(df_study1_wide),
                              "covid_conocidos", "covid_economia", "covid_cuarentena", "covid_propio",
                              "covid_alimentos", "covid_beneficios", "covid_retirouno", "covid_retirodos",
                              "educ","educyear","quintil1","ess",
-                             "pos_id",
-                             "edad","sexo",
-                             "percentile_wave", "bot_mid_top_wave", "inc_pcmed", "ratioincome", "incomegrp"),
+                             "pos_id", "edad","sexo",
+                             "percentile_wave", "bot_mid_top_wave", "inc_pcmed", "ratioincome", "incomegrp",
+                             "ing_pc", "cambio_ingreso_pandemia"),
               na.rm = F,value.factor = TRUE
               )
 ```

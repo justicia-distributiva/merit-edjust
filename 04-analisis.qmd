@@ -54,12 +54,13 @@ load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 # generate analytical sample
 df_study1 <- 
   df_study_long_t7_comunas %>%
-  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo, covid_economia, covid_beneficios, inc_pcmed) %>% 
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo, covid_economia, covid_beneficios, ing_pc) %>% 
   na.omit() %>% 
   mutate(ola = as.factor(ola),
          ola_num = as.numeric(ola),
          ola_2=as.numeric(ola)^2,
-         sexo=as.factor(sexo)
+         sexo=as.factor(sexo),
+         ing_pc_rec = (ing_pc/100000)
          )
 
 df_study1 <- df_study1 %>%
@@ -75,13 +76,13 @@ df_study1$covid_beneficios<- car::recode(df_study1$covid_beneficios, c("1=2; 2=1
 # Hipotesis
 h0 <- "ola"
 h1 <- "ola_num+ola_2"
-h2 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo"
-h3 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id"
-h4 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia"
-h5 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios"
-h6 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc"
-h7 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent"
-h8 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
+h2 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo"
+h3 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id"
+h4 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia"
+h5 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios"
+h6 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc"
+h7 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent"
+h8 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
 
 # A. Education distributive justice
 educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
@@ -111,7 +112,7 @@ Note: Model 3 to 8 are controlled by age, gender, political position, and subjec
                                       "Wave",
                                       "Wave^2",
                                       "Universitary (Ref.= Less than universitary)",
-                                      "Income",
+                                      "Income per capita",
                                       # "High School",
                                       # "Technical",
                                       # "Universitary",
@@ -156,8 +157,8 @@ Note: Model 3 to 8 are controlled by age, gender, political position, and subjec
                include.rs = FALSE, 
                include.rmse = FALSE,
                include.ci = FALSE)
-
 ```
+
 
 ```{r interact, echo=FALSE, results='asis', warning=FALSE}
 #| label: tbl-interact
@@ -179,16 +180,16 @@ df_study1$ola <- as.factor(df_study1$ola)
 #df_study1$covid_beneficios<- car::recode(df_study1$covid_beneficios, c("1=2; 2=1"))
 # Hipotesis
 
-h6 <- "ola+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
-h1b <- "ola+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort+merit_effort*inc_pcmed"
-h3b <- "ola+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort+merit_talent*inc_pcmed"
-h4b <- "ola+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort+des_perc*inc_pcmed"
-h5b <- "ola+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort+inc_pcmed*ola"
+h6 <- "ola+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
+h1b <- "ola+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort+merit_effort*ola"
+h3b <- "ola+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort+merit_talent*ola"
+h4b <- "ola+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort+des_perc*ola"
+h5b <- "ola+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort+ing_pc_rec*ola"
 # A. justification educational inequality
-educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(inc_pcmed+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(inc_pcmed+merit_talent|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(inc_pcmed+des_perc|idencuesta)")),data = df_study1, weights = ponderador_long_total)
-educ5 <- lmer(formula(paste0("just_educ~",h5b,"+(ola+inc_pcmed|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ1 <- lmer(formula(paste0("just_educ~",h1b,"+(ola+merit_effort|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ3 <- lmer(formula(paste0("just_educ~",h3b,"+(ola+merit_talent|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ4 <- lmer(formula(paste0("just_educ~",h4b,"+(ola+des_perc|idencuesta)")),data = df_study1, weights = ponderador_long_total)
+educ5 <- lmer(formula(paste0("just_educ~",h5b,"+(ola+ing_pc_rec|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 educ6 <- lmer(formula(paste0("just_educ~",h6,"+(1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
 
 # table 3: interacciones
@@ -201,34 +202,33 @@ texreg::knitreg(list(educ6,educ3,educ1, educ4, educ5),
                 custom.model.names = c("Model 8", "Model 9", "Model 10", "Model 11", "Model 12"),
                 custom.coef.names = c("Intercept",
                                       "Wave",
-                                      "Wave^2",
                                       "Income",
                                       "Inequality perception",
                                       "Merit: Talent",
                                       "Merit: Effort",
-                                      "Income * Merit: Talent",
-                                      "Income * Merit: Effort",
-                                      "Income * Inequality perception",
-                                      "Income * Wave"
+                                      "Wave * Merit: Talent",
+                                      "Wave * Merit: Effort",
+                                      "Wave * Inequality perception",
+                                      "Wave * Income"
                                       ),
                 custom.gof.names = c("BIC",
                                      "Num. obs.",
                                      "Num. groups: Individuals",
                                      "Var: Individuals (Intercept)",
                                      "Var: Residual",
-                                     "Var: Individuals Income",
+                                     "Var: Individuals Wave",
                                      "Var: Individuals Merit: Talent",
-                                     "Cov: Individuals (Intercept) Income",
+                                     "Cov: Individuals (Intercept) Wave",
                                      "Cov: Individuals (Intercept) Merit: Talent",
-                                     "Cov: Individuals Income Merit: Talent",
+                                     "Cov: Individuals Wave Merit: Talent",
                                      "Var: Individuals Merit: Effort",
                                      "Cov: Individuals (Intercept) Merit: Effort",
-                                     "Cov: Individuals Income Merit: Effort",
+                                     "Cov: Individuals Wave Merit: Effort",
                                      "Var: Individuals Inequality perception",
                                      "Cov: Individuals (Intercept) Inequality perception",
-                                     "Cov: Individuals Income Inequality perception",
-                                     "Var: Individuals Wave",
-                                     "Cov: Individuals (Intercept) Wave",
+                                     "Cov: Individuals Wave Inequality perception",
+                                     "Var: Individuals Income",
+                                     "Cov: Individuals (Intercept) Income",
                                      "Cov: Individuals Wave Income"),  
                center = TRUE,
                caption.above = TRUE,

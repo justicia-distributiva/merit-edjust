@@ -1566,7 +1566,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">prod_prep_mergedata</h1>
-<h4 class="date">jueves 09 enero 2025 2:18:40</h4>
+<h4 class="date">viernes 10 enero 2025 11:55:10</h4>
 
 </div>
 
@@ -1623,7 +1623,7 @@ df_study1_long_comunas &lt;-
  dplyr::left_join(x = df_study1_long,
                   y = df_study1_comunas, 
                   by = &quot;comunacod&quot;) %&gt;% 
- dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp,
+ dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp, cambio_ingreso_pandemia, ing_pc,
                esc_cit17) %&gt;% 
  dplyr::rename(comuna=comuna.x)
 
@@ -1651,7 +1651,7 @@ df_study2_long_comunas &lt;-
  dplyr::left_join(x = df_study2_long,
                   y = df_study1_comunas, 
                   by = &quot;comunacod&quot;) %&gt;% 
- dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp, 
+ dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp, cambio_ingreso_pandemia, ing_pc,
                esc_cit17) %&gt;% 
  dplyr::rename(comuna=comuna.x) 
 
@@ -1676,7 +1676,7 @@ df_study_long_t7_comunas &lt;-
  dplyr::left_join(x = df_study1_long_t7,
                   y = df_study1_comunas, 
                   by = &quot;comunacod&quot;) %&gt;% 
- dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp,
+ dplyr::select(idencuesta:edad,sexo, percentile_wave, bot_mid_top_wave, inc_pcmed, ratioincome, incomegrp,cambio_ingreso_pandemia, ing_pc, 
                esc_cit17) %&gt;% 
  dplyr::rename(comuna=comuna.x) 
 
@@ -1791,10 +1791,10 @@ df_study_long_t7_comunas &lt;-
 ## Rescale simce
 summary(df_study1_long_comunas$prom_simce_comuna)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   217.8   243.5   249.5   249.3   253.7   300.8    3152</code></pre>
+##   217.8   244.6   248.7   248.9   253.1   300.8   10747</code></pre>
 <pre class="r"><code>summary(df_study1_long_comunas$var_simce_comuna)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   60.25  521.88  632.29  630.85  716.13 3748.34    3152</code></pre>
+##   60.25  539.09  642.91  668.02  757.42 3748.34   10747</code></pre>
 <pre class="r"><code>df_study1_long_comunas$prom_simce_comuna_rescaled &lt;- df_study1_long_comunas$prom_simce_comuna / 10
 df_study1_long_comunas$var_simce_comuna_rescaled &lt;- df_study1_long_comunas$var_simce_comuna / 100
 df_study_long_t7_comunas$prom_simce_comuna_rescaled &lt;- df_study_long_t7_comunas$prom_simce_comuna / 10
@@ -1802,10 +1802,10 @@ df_study_long_t7_comunas$var_simce_comuna_rescaled &lt;- df_study_long_t7_comuna
 # Verificar el rescalado
 summary(df_study1_long_comunas$prom_simce_comuna_rescaled)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   21.78   24.35   24.95   24.93   25.37   30.08    3152</code></pre>
+##   21.78   24.46   24.87   24.89   25.32   30.08   10747</code></pre>
 <pre class="r"><code>summary(df_study1_long_comunas$var_simce_comuna_rescaled)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##  0.6025  5.2188  6.3229  6.3085  7.1613 37.4834    3152</code></pre>
+##   0.603   5.391   6.429   6.680   7.574  37.483   10747</code></pre>
 <pre class="r"><code># save data____________________________________________________________________
 save(df_study1_long_comunas,
      file = here::here(&quot;input/data-proc/df_study1_long_comunas.RData&quot;))
@@ -1864,7 +1864,7 @@ Folio identificador de participante
 0 (0.00%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 1101011-131230214</em>
+<em>range: 1101011-NA</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -1891,10 +1891,10 @@ Identificador de muestra de encuesta
 Muestra Original<br>Muestra Refresco
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-17568<br>0
+17568<br>9114
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-100.00<br>0.00
+65.84<br>34.16
 </td>
 </tr>
 <tr>
@@ -1915,7 +1915,7 @@ ola
 1<br>2<br>3<br>4<br>5<br>6<br>7
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2928<br>2928<br>2928<br>2928<br>0<br>2928<br>2928
+4447<br>4447<br>4447<br>4447<br>0<br>4447<br>4447
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 16.67<br>16.67<br>16.67<br>16.67<br>0.00<br>16.67<br>16.67
@@ -1932,7 +1932,7 @@ comuna
 Comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -1959,7 +1959,7 @@ comunacod
 Comuna (Codigo)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1101<br>1107<br>1401<br>1402<br>1403<br>1404<br>1405<br>2101<br>2102<br>2103<br>2104<br>2201<br>2202<br>2203<br>2301<br><span style="omit">&lt;…&gt;</span>
@@ -1988,7 +1988,7 @@ ponderador_long_total
 Ponderador longitudinal (2016-2022). Muestra<br>completa
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4321 (24.60%)
+8661 (32.46%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.0-16.4</em>
@@ -2009,7 +2009,7 @@ segmento
 Segmento
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4321 (24.60%)
+8661 (32.46%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 110101-1420411</em>
@@ -2030,7 +2030,7 @@ estrato
 Estrato muestral
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4321 (24.60%)
+8661 (32.46%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5<br>6
@@ -2040,10 +2040,10 @@ Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
 Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3123<br>1670<br>1832<br>1915<br>2468<br>2239
+4437<br>2127<br>2435<br>2852<br>3160<br>3010
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-23.58<br>12.61<br>13.83<br>14.46<br>18.63<br>16.90
+24.62<br>11.80<br>13.51<br>15.83<br>17.54<br>16.70
 </td>
 </tr>
 <tr>
@@ -2057,7 +2057,7 @@ just_educ
 Education distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4347 (24.74%)
+8700 (32.61%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -2067,10 +2067,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4584<br>6588<br>769<br>1111<br>169
+6299<br>8909<br>1104<br>1444<br>226
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-34.67<br>49.83<br>5.82<br>8.40<br>1.28
+35.03<br>49.54<br>6.14<br>8.03<br>1.26
 </td>
 </tr>
 <tr>
@@ -2084,7 +2084,7 @@ just_pension
 Pension distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4360 (24.82%)
+8716 (32.67%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -2094,10 +2094,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3586<br>5756<br>1238<br>2304<br>324
+4889<br>7802<br>1740<br>3087<br>448
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-27.15<br>43.58<br>9.37<br>17.44<br>2.45
+27.21<br>43.43<br>9.68<br>17.18<br>2.49
 </td>
 </tr>
 <tr>
@@ -2111,7 +2111,7 @@ just_salud
 Health distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4343 (24.72%)
+8696 (32.59%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -2121,10 +2121,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4953<br>6361<br>682<br>1045<br>184
+6820<br>8630<br>949<br>1355<br>232
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-37.45<br>48.10<br>5.16<br>7.90<br>1.39
+37.92<br>47.98<br>5.28<br>7.53<br>1.29
 </td>
 </tr>
 <tr>
@@ -2138,7 +2138,7 @@ des_perc
 Income differences are too large
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4379 (24.93%)
+8735 (32.74%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -2148,10 +2148,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-224<br>590<br>533<br>5445<br>6397
+298<br>795<br>728<br>7400<br>8726
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1.70<br>4.47<br>4.04<br>41.28<br>48.50
+1.66<br>4.43<br>4.06<br>41.23<br>48.62
 </td>
 </tr>
 <tr>
@@ -2165,7 +2165,7 @@ merit_effort
 People are rewarded for their efforts
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4392 (25.00%)
+8765 (32.85%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -2175,10 +2175,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1462<br>5938<br>2575<br>2835<br>366
+1936<br>8027<br>3615<br>3812<br>527
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-11.10<br>45.07<br>19.54<br>21.52<br>2.78
+10.81<br>44.80<br>20.18<br>21.28<br>2.94
 </td>
 </tr>
 <tr>
@@ -2192,7 +2192,7 @@ merit_talent
 People are rewarded for their intelligence
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4391 (24.99%)
+8765 (32.85%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -2202,10 +2202,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1174<br>5089<br>2923<br>3595<br>396
+1598<br>6818<br>4076<br>4883<br>542
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-8.91<br>38.62<br>22.18<br>27.28<br>3.01
+8.92<br>38.05<br>22.75<br>27.25<br>3.03
 </td>
 </tr>
 <tr>
@@ -2219,7 +2219,7 @@ ahead_family
 Coming from a wealthy family
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6218 (35.39%)
+11191 (41.94%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -2229,10 +2229,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-592<br>1109<br>5139<br>3902<br>608
+821<br>1472<br>6959<br>5379<br>860
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5.22<br>9.77<br>45.28<br>34.38<br>5.36
+5.30<br>9.50<br>44.92<br>34.72<br>5.55
 </td>
 </tr>
 <tr>
@@ -2246,7 +2246,7 @@ ahead_educ
 Having a good level of education
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4563 (25.97%)
+8993 (33.70%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -2256,10 +2256,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1170<br>4649<br>1936<br>4248<br>1002
+1630<br>6276<br>2665<br>5743<br>1375
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-9.00<br>35.75<br>14.89<br>32.66<br>7.70
+9.21<br>35.48<br>15.07<br>32.47<br>7.77
 </td>
 </tr>
 <tr>
@@ -2273,7 +2273,7 @@ ahead_ambition
 Having ambition
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4533 (25.80%)
+8935 (33.49%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -2283,10 +2283,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-819<br>3580<br>1668<br>5408<br>1560
+1190<br>4944<br>2275<br>7225<br>2113
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6.28<br>27.46<br>12.80<br>41.49<br>11.97
+6.71<br>27.86<br>12.82<br>40.71<br>11.91
 </td>
 </tr>
 <tr>
@@ -2300,7 +2300,7 @@ ahead_hardwork
 Hard work
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4488 (25.55%)
+8889 (33.31%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -2310,10 +2310,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-262<br>1092<br>1837<br>8005<br>1884
+365<br>1613<br>2547<br>10727<br>2541
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2.00<br>8.35<br>14.04<br>61.20<br>14.40
+2.05<br>9.07<br>14.31<br>60.29<br>14.28
 </td>
 </tr>
 <tr>
@@ -2327,7 +2327,7 @@ covid_conocidos
 Num. Conocidos: Diagnosticado con Coronavirus
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-7218 (41.09%)
+16332 (61.21%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5<br>6<br>7
@@ -2354,7 +2354,7 @@ covid_economia
 Grado de acuerdo: actividad economia y salud<br>publica
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-7224 (41.12%)
+16338 (61.23%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -2381,7 +2381,7 @@ covid_cuarentena
 Grado de acuerdo: cuarentenas
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-7230 (41.15%)
+16344 (61.25%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -2408,7 +2408,7 @@ covid_propio
 Diagnostico de enfermedad: Coronavirus (COVID-19)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-7152 (40.71%)
+10272 (38.50%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2
@@ -2417,10 +2417,10 @@ Diagnostico de enfermedad: Coronavirus (COVID-19)
 Si<br>No
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-864<br>9552
+1272<br>15138
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-8.29<br>91.71
+7.75<br>92.25
 </td>
 </tr>
 <tr>
@@ -2434,7 +2434,7 @@ covid_alimentos
 Acceso a alimentos y suministros basicos en<br>pandemia
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-7200 (40.98%)
+10356 (38.81%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -2443,10 +2443,10 @@ Acceso a alimentos y suministros basicos en<br>pandemia
 Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6084<br>2076<br>1482<br>534<br>120
+9324<br>3378<br>2298<br>918<br>306
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-58.68<br>20.02<br>14.29<br>5.15<br>1.16
+57.11<br>20.69<br>14.08<br>5.62<br>1.87
 </td>
 </tr>
 <tr>
@@ -2460,7 +2460,7 @@ covid_beneficios
 Accedio a beneficios del Estado
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-7158 (40.74%)
+10290 (38.57%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2
@@ -2469,10 +2469,10 @@ Accedio a beneficios del Estado
 Si<br>No
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6924<br>3486
+10890<br>5502
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-66.51<br>33.49
+66.43<br>33.57
 </td>
 </tr>
 <tr>
@@ -2486,7 +2486,7 @@ covid_retirouno
 Accedio a primer retiro 10% AFP
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-7152 (40.71%)
+10260 (38.45%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2
@@ -2495,10 +2495,10 @@ Accedio a primer retiro 10% AFP
 Si<br>No
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-7314<br>3102
+11580<br>4842
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-70.22<br>29.78
+70.52<br>29.48
 </td>
 </tr>
 <tr>
@@ -2512,7 +2512,7 @@ covid_retirodos
 Accedio a segundo retiro 10% AFP
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-10260 (58.40%)
+15108 (56.62%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2
@@ -2521,10 +2521,10 @@ Accedio a segundo retiro 10% AFP
 Si<br>No
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5550<br>1758
+8724<br>2850
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-75.94<br>24.06
+75.38<br>24.62
 </td>
 </tr>
 <tr>
@@ -2537,7 +2537,7 @@ educ
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-18 (0.10%)
+9132 (34.23%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2562,7 +2562,7 @@ educyear
 Education in years
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-18 (0.10%)
+9132 (34.23%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.0-19.1</em>
@@ -2590,10 +2590,10 @@ quintil1
 Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3348<br>3348<br>3348<br>3342<br>3342<br>840
+3348<br>3348<br>3348<br>3342<br>3342<br>9954
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-19.06<br>19.06<br>19.06<br>19.02<br>19.02<br>4.78
+12.55<br>12.55<br>12.55<br>12.53<br>12.53<br>37.31
 </td>
 </tr>
 <tr>
@@ -2607,7 +2607,7 @@ ess
 Subjective Social Status: individual
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-78 (0.44%)
+9192 (34.45%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0-10</em>
@@ -2627,7 +2627,7 @@ pos_id
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-402 (2.29%)
+9516 (35.66%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2651,7 +2651,7 @@ edad
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2676,7 +2676,7 @@ sexo
 Sexo del entrevistado
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2
@@ -2701,7 +2701,7 @@ percentile_wave
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5323 (30.30%)
+9954 (37.31%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 1-100</em>
@@ -2721,7 +2721,7 @@ bot_mid_top_wave
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5323 (30.30%)
+9954 (37.31%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 1-3</em>
@@ -2744,7 +2744,7 @@ inc_pcmed
 0 (0.00%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 166666.7-266666.7</em>
+<em>range: 171428.6-171428.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2761,7 +2761,7 @@ ratioincome
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5323 (30.30%)
+9954 (37.31%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 0.0-1166666.7</em>
@@ -2781,7 +2781,7 @@ incomegrp
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5324 (30.31%)
+9960 (37.33%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2789,15 +2789,60 @@ incomegrp
 Low<br>Below average<br>Above average<br>Affluence
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2654<br>4129<br>3434<br>2027
+3582<br>5634<br>4398<br>3108
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-21.68<br>33.72<br>28.05<br>16.56
+21.42<br>33.69<br>26.30<br>18.59
 </td>
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 39
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+cambio_ingreso_pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+10638 (39.87%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Menor<br>Igual<br>Mayor
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5286<br>90<br>10668
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+32.95<br>0.56<br>66.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+40
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+ing_pc
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Household income per capita
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+9954 (37.31%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-2000000000.0</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+41
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 esc_cit17
@@ -2806,7 +2851,7 @@ esc_cit17
 Escolarity average - CIT 2017 - Municipality<br>(using census tract)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 7.8-12.6</em>
@@ -2818,7 +2863,7 @@ Escolarity average - CIT 2017 - Municipality<br>(using census tract)
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-40
+42
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 year
@@ -2838,7 +2883,7 @@ year
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-41
+43
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 gini_ypch
@@ -2846,50 +2891,10 @@ gini_ypch
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2933 (16.70%)
+12047 (45.15%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 0.3-0.6</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-42
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-gini_gc
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2933 (16.70%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.1-0.1</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-43
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_univ
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2933 (16.70%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2901,15 +2906,15 @@ prop_univ
 44
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-inc_mean
+gini_gc
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2933 (16.70%)
+12047 (45.15%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 164801.3-2057423.4</em>
+<em>range: -0.1-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2921,15 +2926,15 @@ inc_mean
 45
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-loginc_mean
+prop_univ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2933 (16.70%)
+12047 (45.15%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 164801.3-2057423.4</em>
+<em>range: 0.0-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2941,15 +2946,15 @@ loginc_mean
 46
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-gini_ypch_2015
+inc_mean
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2592 (14.75%)
+12047 (45.15%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.3-0.5</em>
+<em>range: 164801.3-2057423.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -2961,15 +2966,15 @@ gini_ypch_2015
 47
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-gini_ypch_2017
+loginc_mean
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+12047 (45.15%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.3-0.6</em>
+<em>range: 164801.3-2057423.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -2981,12 +2986,12 @@ gini_ypch_2017
 48
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-gini_ypch_2022
+gini_ypch_2015
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+11706 (43.87%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.3-0.5</em>
@@ -3001,15 +3006,15 @@ gini_ypch_2022
 49
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ginilag22_15
+gini_ypch_2017
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2592 (14.75%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.1</em>
+<em>range: 0.3-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3021,15 +3026,15 @@ ginilag22_15
 50
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ginilag22_17
+gini_ypch_2022
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.3-0.2</em>
+<em>range: 0.3-0.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3041,132 +3046,12 @@ ginilag22_17
 51
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ginilag17_15
+ginilag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2592 (14.75%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.2</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-52
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_univ_2015
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2592 (14.75%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.5</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-53
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_univ_2017
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.5</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-54
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_univ_2022
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.6</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-55
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-univlag22_15
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2592 (14.75%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.0-0.2</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-56
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-univlag22_17
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.1-0.2</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-57
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-univlag17_15
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2592 (14.75%)
+11706 (43.87%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: -0.1-0.1</em>
@@ -3178,18 +3063,138 @@ univlag17_15
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+52
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+ginilag22_17
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+9120 (34.18%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: -0.3-0.2</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+53
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+ginilag17_15
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+11706 (43.87%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: -0.1-0.2</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+54
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prop_univ_2015
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+11706 (43.87%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-0.5</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+55
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+prop_univ_2017
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+9120 (34.18%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 0.0-0.5</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+56
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prop_univ_2022
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+9120 (34.18%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-0.6</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+57
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+univlag22_15
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+11706 (43.87%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: -0.0-0.2</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 58
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-inc_mean_2015
+univlag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 161005.0-1190740.6</em>
+<em>range: -0.1-0.2</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3201,15 +3206,15 @@ inc_mean_2015
 59
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-inc_mean_2017
+univlag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+11706 (43.87%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 164801.3-1570949.3</em>
+<em>range: -0.1-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3221,15 +3226,15 @@ inc_mean_2017
 60
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-inc_mean_2022
+inc_mean_2015
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 265373.7-2057423.4</em>
+<em>range: 161005.0-1190740.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3241,15 +3246,15 @@ inc_mean_2022
 61
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-incomelag22_15
+inc_mean_2017
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 60548.7-866682.8</em>
+<em>range: 164801.3-1570949.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3261,15 +3266,15 @@ incomelag22_15
 62
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-incomelag22_17
+inc_mean_2022
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -21397.6-547309.7</em>
+<em>range: 265373.7-2057423.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3281,15 +3286,15 @@ incomelag22_17
 63
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-incomelag17_15
+incomelag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -302241.0-380208.7</em>
+<em>range: 60548.7-866682.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3301,15 +3306,15 @@ incomelag17_15
 64
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-logincomelag22_15
+incomelag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.2-0.9</em>
+<em>range: -21397.6-547309.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3321,15 +3326,15 @@ logincomelag22_15
 65
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-logincomelag22_17
+incomelag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.7</em>
+<em>range: -302241.0-380208.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3341,15 +3346,15 @@ logincomelag22_17
 66
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-logincomelag17_15
+logincomelag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.4-0.6</em>
+<em>range: 0.2-0.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3361,15 +3366,15 @@ logincomelag17_15
 67
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado
+logincomelag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3153 (17.95%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-30201</em>
+<em>range: -0.1-0.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3381,15 +3386,15 @@ total_mat_pagado
 68
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado
+logincomelag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3153 (17.95%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.9</em>
+<em>range: -0.4-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3401,15 +3406,15 @@ prop_pagado
 69
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado_16
+total_mat_pagado
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+12267 (45.97%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-29821</em>
+<em>range: 0-30201</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3421,15 +3426,15 @@ total_mat_pagado_16
 70
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-total_mat_pagado_17
+prop_pagado
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+12267 (45.97%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-29801</em>
+<em>range: 0.0-0.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3441,15 +3446,15 @@ total_mat_pagado_17
 71
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado_18
+total_mat_pagado_16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-29699</em>
+<em>range: 0-29821</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3461,15 +3466,15 @@ total_mat_pagado_18
 72
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-total_mat_pagado_19
+total_mat_pagado_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-30201</em>
+<em>range: 0-29801</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3481,15 +3486,15 @@ total_mat_pagado_19
 73
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado_22
+total_mat_pagado_18
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-30053</em>
+<em>range: 0-29699</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3501,15 +3506,15 @@ total_mat_pagado_22
 74
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado_16
+total_mat_pagado_19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.8</em>
+<em>range: 0-30201</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3521,15 +3526,15 @@ prop_pagado_16
 75
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_pagado_17
+total_mat_pagado_22
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.8</em>
+<em>range: 0-30053</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3541,12 +3546,12 @@ prop_pagado_17
 76
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado_18
+prop_pagado_16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.0-0.8</em>
@@ -3561,15 +3566,15 @@ prop_pagado_18
 77
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_pagado_19
+prop_pagado_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.9</em>
+<em>range: 0.0-0.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3581,12 +3586,12 @@ prop_pagado_19
 78
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado_22
+prop_pagado_18
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.0-0.8</em>
@@ -3601,15 +3606,15 @@ prop_pagado_22
 79
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-pagadolag22_16
+prop_pagado_19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.0-0.1</em>
+<em>range: 0.0-0.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3621,15 +3626,15 @@ pagadolag22_16
 80
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_comuna
+prop_pagado_22
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3152 (17.94%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 217.8-300.8</em>
+<em>range: 0.0-0.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3641,15 +3646,15 @@ prom_simce_comuna
 81
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_comuna
+pagadolag22_16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3152 (17.94%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 60.2-3748.3</em>
+<em>range: -0.0-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3661,15 +3666,15 @@ var_simce_comuna
 82
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_2016_comuna
+prom_simce_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+10747 (40.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 227.1-300.0</em>
+<em>range: 217.8-300.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3681,15 +3686,15 @@ prom_simce_2016_comuna
 83
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_2017_comuna
+var_simce_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+10747 (40.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 217.8-300.8</em>
+<em>range: 60.2-3748.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3701,15 +3706,15 @@ prom_simce_2017_comuna
 84
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_2018_comuna
+prom_simce_2016_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 228.4-297.7</em>
+<em>range: 227.1-300.0</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3721,15 +3726,15 @@ prom_simce_2018_comuna
 85
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_2019_comuna
+prom_simce_2017_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 228.0-290.4</em>
+<em>range: 217.8-300.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3741,15 +3746,15 @@ prom_simce_2019_comuna
 86
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_2022_comuna
+prom_simce_2018_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 233.1-299.5</em>
+<em>range: 228.4-297.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3761,15 +3766,15 @@ prom_simce_2022_comuna
 87
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_2016_comuna
+prom_simce_2019_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 253.7-2469.5</em>
+<em>range: 228.0-290.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3781,15 +3786,15 @@ var_simce_2016_comuna
 88
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_2017_comuna
+prom_simce_2022_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 130.0-3748.3</em>
+<em>range: 233.1-299.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3801,15 +3806,15 @@ var_simce_2017_comuna
 89
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_2018_comuna
+var_simce_2016_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 220.8-1144.5</em>
+<em>range: 253.7-2469.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3821,15 +3826,15 @@ var_simce_2018_comuna
 90
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_2019_comuna
+var_simce_2017_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 169.7-1292.3</em>
+<em>range: 130.0-3748.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3841,15 +3846,15 @@ var_simce_2019_comuna
 91
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_2022_comuna
+var_simce_2018_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.03%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 60.2-1140.3</em>
+<em>range: 220.8-1144.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3861,15 +3866,15 @@ var_simce_2022_comuna
 92
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_comuna_rescaled
+var_simce_2019_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-3152 (17.94%)
+9120 (34.18%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 21.8-30.1</em>
+<em>range: 169.7-1292.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -3881,12 +3886,52 @@ prom_simce_comuna_rescaled
 93
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+var_simce_2022_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+9120 (34.18%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 60.2-1140.3</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+94
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prom_simce_comuna_rescaled
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+10747 (40.28%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 21.8-30.1</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+95
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 var_simce_comuna_rescaled
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3152 (17.94%)
+10747 (40.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 0.6-37.5</em>
@@ -3946,7 +3991,7 @@ Folio identificador de participante
 0 (0.00%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 1101011-131230213</em>
+<em>range: 1101011-NA</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -3973,10 +4018,10 @@ Identificador de muestra de encuesta
 Muestra Original<br>Muestra Refresco
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-10422<br>0
+10422<br>5934
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-100.00<br>0.00
+63.72<br>36.28
 </td>
 </tr>
 <tr>
@@ -3997,7 +4042,7 @@ ola
 1<br>2<br>3<br>4<br>5<br>6<br>7
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1737<br>1737<br>1737<br>1737<br>0<br>1737<br>1737
+2726<br>2726<br>2726<br>2726<br>0<br>2726<br>2726
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 16.67<br>16.67<br>16.67<br>16.67<br>0.00<br>16.67<br>16.67
@@ -4014,7 +4059,7 @@ comuna
 Comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -4041,7 +4086,7 @@ comunacod
 Comuna (Codigo)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1101<br>1107<br>1401<br>1402<br>1403<br>1404<br>1405<br>2101<br>2102<br>2103<br>2104<br>2201<br>2202<br>2203<br>2301<br><span style="omit">&lt;…&gt;</span>
@@ -4070,7 +4115,7 @@ ponderador_long_total
 Ponderador longitudinal (2016-2022). Muestra<br>completa
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-594 (5.70%)
+2825 (17.27%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.0-16.4</em>
@@ -4091,7 +4136,7 @@ segmento
 Segmento
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-594 (5.70%)
+2825 (17.27%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 110101-1420411</em>
@@ -4112,7 +4157,7 @@ estrato
 Estrato muestral
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-594 (5.70%)
+2825 (17.27%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5<br>6
@@ -4122,10 +4167,10 @@ Gran Santiago<br>Gran Valparaiso<br>Gran Concepcion<br>Ciudades
 Grandes<br>Ciudades Medianas<br>Ciudades Pequennias
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2209<br>1241<br>1338<br>1412<br>1832<br>1796
+3224<br>1584<br>1804<br>2132<br>2357<br>2430
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22.48<br>12.63<br>13.61<br>14.37<br>18.64<br>18.27
+23.83<br>11.71<br>13.33<br>15.76<br>17.42<br>17.96
 </td>
 </tr>
 <tr>
@@ -4139,7 +4184,7 @@ just_educ
 Education distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-615 (5.90%)
+2854 (17.45%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -4149,10 +4194,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3341<br>4901<br>574<br>863<br>128
+4647<br>6715<br>844<br>1122<br>174
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-34.07<br>49.97<br>5.85<br>8.80<br>1.31
+34.42<br>49.73<br>6.25<br>8.31<br>1.29
 </td>
 </tr>
 <tr>
@@ -4166,7 +4211,7 @@ just_pension
 Pension distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-624 (5.99%)
+2863 (17.50%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -4176,10 +4221,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2588<br>4289<br>918<br>1759<br>244
+3586<br>5888<br>1312<br>2362<br>345
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-26.41<br>43.77<br>9.37<br>17.95<br>2.49
+26.58<br>43.64<br>9.72<br>17.51<br>2.56
 </td>
 </tr>
 <tr>
@@ -4193,7 +4238,7 @@ just_salud
 Health distributive justice
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-610 (5.85%)
+2848 (17.41%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -4203,10 +4248,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-3620<br>4746<br>513<br>802<br>131
+5045<br>6511<br>737<br>1043<br>172
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-36.89<br>48.37<br>5.23<br>8.17<br>1.34
+37.35<br>48.20<br>5.46<br>7.72<br>1.27
 </td>
 </tr>
 <tr>
@@ -4220,7 +4265,7 @@ des_perc
 Income differences are too large
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-636 (6.10%)
+2876 (17.58%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -4230,10 +4275,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-163<br>433<br>397<br>4064<br>4729
+214<br>613<br>545<br>5585<br>6523
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1.67<br>4.42<br>4.06<br>41.53<br>48.32
+1.59<br>4.55<br>4.04<br>41.43<br>48.39
 </td>
 </tr>
 <tr>
@@ -4247,7 +4292,7 @@ merit_effort
 People are rewarded for their efforts
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-643 (6.17%)
+2891 (17.68%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -4257,10 +4302,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1064<br>4448<br>1928<br>2077<br>262
+1433<br>6088<br>2752<br>2817<br>375
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-10.88<br>45.49<br>19.72<br>21.24<br>2.68
+10.64<br>45.21<br>20.44<br>20.92<br>2.78
 </td>
 </tr>
 <tr>
@@ -4274,7 +4319,7 @@ merit_talent
 People are rewarded for their intelligence
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-642 (6.16%)
+2893 (17.69%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -4284,10 +4329,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-852<br>3838<br>2180<br>2618<br>292
+1175<br>5199<br>3081<br>3608<br>400
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-8.71<br>39.24<br>22.29<br>26.77<br>2.99
+8.73<br>38.62<br>22.88<br>26.80<br>2.97
 </td>
 </tr>
 <tr>
@@ -4301,7 +4346,7 @@ ahead_family
 Coming from a wealthy family
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1961 (18.82%)
+4709 (28.79%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -4311,10 +4356,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-441<br>840<br>3866<br>2877<br>437
+634<br>1133<br>5263<br>3991<br>626
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5.21<br>9.93<br>45.69<br>34.00<br>5.16
+5.44<br>9.73<br>45.19<br>34.27<br>5.37
 </td>
 </tr>
 <tr>
@@ -4328,7 +4373,7 @@ ahead_educ
 Having a good level of education
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-762 (7.31%)
+3065 (18.74%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -4338,10 +4383,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-845<br>3368<br>1414<br>3264<br>769
+1211<br>4619<br>1971<br>4426<br>1064
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-8.75<br>34.87<br>14.64<br>33.79<br>7.96
+9.11<br>34.75<br>14.83<br>33.30<br>8.01
 </td>
 </tr>
 <tr>
@@ -4355,7 +4400,7 @@ ahead_ambition
 Having ambition
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-737 (7.07%)
+3019 (18.46%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -4365,10 +4410,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-605<br>2600<br>1217<br>4104<br>1159
+903<br>3670<br>1705<br>5472<br>1587
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6.25<br>26.85<br>12.57<br>42.37<br>11.97
+6.77<br>27.52<br>12.78<br>41.03<br>11.90
 </td>
 </tr>
 <tr>
@@ -4382,7 +4427,7 @@ ahead_hardwork
 Hard work
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-716 (6.87%)
+2992 (18.29%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -4392,10 +4437,10 @@ Strongly disagree<br>Disagree<br>Neither disagree nor
 agree<br>Agree<br>Strongly agree
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-200<br>831<br>1360<br>5957<br>1358
+283<br>1229<br>1924<br>8061<br>1867
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2.06<br>8.56<br>14.01<br>61.37<br>13.99
+2.12<br>9.20<br>14.40<br>60.32<br>13.97
 </td>
 </tr>
 <tr>
@@ -4409,7 +4454,7 @@ covid_conocidos
 Num. Conocidos: Diagnosticado con Coronavirus
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1980 (19.00%)
+7914 (48.39%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5<br>6<br>7
@@ -4436,7 +4481,7 @@ covid_economia
 Grado de acuerdo: actividad economia y salud<br>publica
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1968 (18.88%)
+7902 (48.31%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2<br>3<br>4<br>5
@@ -4463,7 +4508,7 @@ covid_cuarentena
 Grado de acuerdo: cuarentenas
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1980 (19.00%)
+7914 (48.39%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -4490,7 +4535,7 @@ covid_propio
 Diagnostico de enfermedad: Coronavirus (COVID-19)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1956 (18.77%)
+3228 (19.74%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2
@@ -4499,10 +4544,10 @@ Diagnostico de enfermedad: Coronavirus (COVID-19)
 Si<br>No
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-708<br>7758
+1062<br>12066
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-8.36<br>91.64
+8.09<br>91.91
 </td>
 </tr>
 <tr>
@@ -4516,7 +4561,7 @@ covid_alimentos
 Acceso a alimentos y suministros basicos en<br>pandemia
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1962 (18.83%)
+3246 (19.85%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2<br>3<br>4<br>5
@@ -4525,10 +4570,10 @@ Acceso a alimentos y suministros basicos en<br>pandemia
 Nada<br>Poco<br>Algo<br>Bastante<br>Mucho
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-4878<br>1770<br>1260<br>396<br>96
+7416<br>2796<br>1884<br>696<br>228
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-57.66<br>20.92<br>14.89<br>4.68<br>1.13
+56.57<br>21.33<br>14.37<br>5.31<br>1.74
 </td>
 </tr>
 <tr>
@@ -4542,7 +4587,7 @@ covid_beneficios
 Accedio a beneficios del Estado
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1962 (18.83%)
+3240 (19.81%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2
@@ -4551,10 +4596,10 @@ Accedio a beneficios del Estado
 Si<br>No
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-5868<br>2592
+9042<br>4074
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-69.36<br>30.64
+68.94<br>31.06
 </td>
 </tr>
 <tr>
@@ -4568,7 +4613,7 @@ covid_retirouno
 Accedio a primer retiro 10% AFP
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1962 (18.83%)
+3222 (19.70%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2
@@ -4577,10 +4622,10 @@ Accedio a primer retiro 10% AFP
 Si<br>No
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-5916<br>2544
+9198<br>3936
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-69.93<br>30.07
+70.03<br>29.97
 </td>
 </tr>
 <tr>
@@ -4594,7 +4639,7 @@ covid_retirodos
 Accedio a segundo retiro 10% AFP
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4506 (43.24%)
+7158 (43.76%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 1<br>2
@@ -4603,10 +4648,10 @@ Accedio a segundo retiro 10% AFP
 Si<br>No
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-4470<br>1446
+6936<br>2262
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-75.56<br>24.44
+75.41<br>24.59
 </td>
 </tr>
 <tr>
@@ -4619,7 +4664,7 @@ educ
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-6 (0.06%)
+5940 (36.32%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -4644,7 +4689,7 @@ educyear
 Education in years
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-6 (0.06%)
+5940 (36.32%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.0-19.1</em>
@@ -4672,10 +4717,10 @@ quintil1
 Q1<br>Q2<br>Q3<br>Q4<br>Q5<br>QNA
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-2244<br>2004<br>2082<br>1950<br>1716<br>426
+2244<br>2004<br>2082<br>1950<br>1716<br>6360
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-21.53<br>19.23<br>19.98<br>18.71<br>16.47<br>4.09
+13.72<br>12.25<br>12.73<br>11.92<br>10.49<br>38.88
 </td>
 </tr>
 <tr>
@@ -4689,7 +4734,7 @@ ess
 Subjective Social Status: individual
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-24 (0.23%)
+5958 (36.43%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0-10</em>
@@ -4709,7 +4754,7 @@ pos_id
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-186 (1.78%)
+6120 (37.42%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -4733,7 +4778,7 @@ edad
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -4758,7 +4803,7 @@ sexo
 Sexo del entrevistado
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 1<br>2
@@ -4783,7 +4828,7 @@ percentile_wave
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1116 (10.71%)
+6360 (38.88%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 1-100</em>
@@ -4803,7 +4848,7 @@ bot_mid_top_wave
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1116 (10.71%)
+6360 (38.88%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 1-3</em>
@@ -4826,7 +4871,7 @@ inc_pcmed
 0 (0.00%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 166666.7-266666.7</em>
+<em>range: 171428.6-171428.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -4843,7 +4888,7 @@ ratioincome
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1116 (10.71%)
+6360 (38.88%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 0.0-72916.7</em>
@@ -4863,7 +4908,7 @@ incomegrp
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1116 (10.71%)
+6360 (38.88%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -4871,15 +4916,60 @@ incomegrp
 Low<br>Below average<br>Above average<br>Affluence
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-2130<br>3174<br>2582<br>1420
+2394<br>3426<br>2574<br>1602
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-22.89<br>34.11<br>27.75<br>15.26
+23.95<br>34.27<br>25.75<br>16.03
 </td>
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 39
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+cambio_ingreso_pandemia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+312 (1.91%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Menor<br>Igual<br>Mayor
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5286<br>90<br>10668
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+32.95<br>0.56<br>66.49
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+40
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+ing_pc
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Household income per capita
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+6360 (38.88%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 0.0-125000000.0</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+41
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 esc_cit17
@@ -4888,7 +4978,7 @@ esc_cit17
 Escolarity average - CIT 2017 - Municipality<br>(using census tract)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 7.8-12.6</em>
@@ -4900,7 +4990,7 @@ Escolarity average - CIT 2017 - Municipality<br>(using census tract)
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-40
+42
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 year
@@ -4920,7 +5010,7 @@ year
 </tr>
 <tr>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-41
+43
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 gini_ypch
@@ -4928,50 +5018,10 @@ gini_ypch
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1737 (16.67%)
+7671 (46.90%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 0.3-0.6</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-42
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-gini_gc
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1737 (16.67%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.1-0.1</em>
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-</td>
-</tr>
-<tr>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-43
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_univ
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1737 (16.67%)
-</td>
-<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -4983,15 +5033,15 @@ prop_univ
 44
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-inc_mean
+gini_gc
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1737 (16.67%)
+7671 (46.90%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 164801.3-2057423.4</em>
+<em>range: -0.1-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5003,15 +5053,15 @@ inc_mean
 45
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-loginc_mean
+prop_univ
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1737 (16.67%)
+7671 (46.90%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 164801.3-2057423.4</em>
+<em>range: 0.0-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5023,15 +5073,15 @@ loginc_mean
 46
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-gini_ypch_2015
+inc_mean
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1644 (15.77%)
+7671 (46.90%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.3-0.5</em>
+<em>range: 164801.3-2057423.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5043,15 +5093,15 @@ gini_ypch_2015
 47
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-gini_ypch_2017
+loginc_mean
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+7671 (46.90%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.3-0.6</em>
+<em>range: 164801.3-2057423.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5063,12 +5113,12 @@ gini_ypch_2017
 48
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-gini_ypch_2022
+gini_ypch_2015
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+7578 (46.33%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.3-0.5</em>
@@ -5083,15 +5133,15 @@ gini_ypch_2022
 49
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ginilag22_15
+gini_ypch_2017
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1644 (15.77%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.1</em>
+<em>range: 0.3-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5103,15 +5153,15 @@ ginilag22_15
 50
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-ginilag22_17
+gini_ypch_2022
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.3-0.2</em>
+<em>range: 0.3-0.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5123,15 +5173,15 @@ ginilag22_17
 51
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-ginilag17_15
+ginilag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1644 (15.77%)
+7578 (46.33%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.2</em>
+<em>range: -0.1-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5143,15 +5193,15 @@ ginilag17_15
 52
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_univ_2015
+ginilag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1644 (15.77%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.5</em>
+<em>range: -0.3-0.2</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5163,15 +5213,15 @@ prop_univ_2015
 53
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_univ_2017
+ginilag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+7578 (46.33%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.5</em>
+<em>range: -0.1-0.2</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5183,15 +5233,15 @@ prop_univ_2017
 54
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_univ_2022
+prop_univ_2015
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+7578 (46.33%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.6</em>
+<em>range: 0.0-0.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5203,15 +5253,15 @@ prop_univ_2022
 55
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-univlag22_15
+prop_univ_2017
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1644 (15.77%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.0-0.2</em>
+<em>range: 0.0-0.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5223,15 +5273,15 @@ univlag22_15
 56
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-univlag22_17
+prop_univ_2022
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.1-0.1</em>
+<em>range: 0.0-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5243,15 +5293,15 @@ univlag22_17
 57
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-univlag17_15
+univlag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1644 (15.77%)
+7578 (46.33%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.1</em>
+<em>range: -0.0-0.2</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5263,15 +5313,15 @@ univlag17_15
 58
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-inc_mean_2015
+univlag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 161005.0-1190740.6</em>
+<em>range: -0.1-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5283,15 +5333,15 @@ inc_mean_2015
 59
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-inc_mean_2017
+univlag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+7578 (46.33%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 164801.3-1570949.3</em>
+<em>range: -0.1-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5303,15 +5353,15 @@ inc_mean_2017
 60
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-inc_mean_2022
+inc_mean_2015
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 265373.7-2057423.4</em>
+<em>range: 161005.0-1190740.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5323,15 +5373,15 @@ inc_mean_2022
 61
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-incomelag22_15
+inc_mean_2017
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 60548.7-866682.8</em>
+<em>range: 164801.3-1570949.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5343,15 +5393,15 @@ incomelag22_15
 62
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-incomelag22_17
+inc_mean_2022
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -21397.6-486474.0</em>
+<em>range: 265373.7-2057423.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5363,15 +5413,15 @@ incomelag22_17
 63
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-incomelag17_15
+incomelag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -25927.4-380208.7</em>
+<em>range: 60548.7-866682.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5383,15 +5433,15 @@ incomelag17_15
 64
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-logincomelag22_15
+incomelag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.2-0.9</em>
+<em>range: -21397.6-486474.0</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5403,15 +5453,15 @@ logincomelag22_15
 65
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-logincomelag22_17
+incomelag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.1-0.7</em>
+<em>range: -25927.4-380208.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5423,15 +5473,15 @@ logincomelag22_17
 66
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-logincomelag17_15
+logincomelag22_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: -0.1-0.6</em>
+<em>range: 0.2-0.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5443,15 +5493,15 @@ logincomelag17_15
 67
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado
+logincomelag22_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1922 (18.44%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-30201</em>
+<em>range: -0.1-0.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5463,15 +5513,15 @@ total_mat_pagado
 68
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado
+logincomelag17_15
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1922 (18.44%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.9</em>
+<em>range: -0.1-0.6</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5483,15 +5533,15 @@ prop_pagado
 69
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado_16
+total_mat_pagado
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+7856 (48.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-29821</em>
+<em>range: 0-30201</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5503,15 +5553,15 @@ total_mat_pagado_16
 70
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-total_mat_pagado_17
+prop_pagado
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+7856 (48.03%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-29801</em>
+<em>range: 0.0-0.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5523,15 +5573,15 @@ total_mat_pagado_17
 71
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado_18
+total_mat_pagado_16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-29699</em>
+<em>range: 0-29821</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5543,15 +5593,15 @@ total_mat_pagado_18
 72
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-total_mat_pagado_19
+total_mat_pagado_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0-30201</em>
+<em>range: 0-29801</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5563,15 +5613,15 @@ total_mat_pagado_19
 73
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-total_mat_pagado_22
+total_mat_pagado_18
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0-30053</em>
+<em>range: 0-29699</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5583,15 +5633,15 @@ total_mat_pagado_22
 74
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado_16
+total_mat_pagado_19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 0.0-0.8</em>
+<em>range: 0-30201</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5603,15 +5653,15 @@ prop_pagado_16
 75
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_pagado_17
+total_mat_pagado_22
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.8</em>
+<em>range: 0-30053</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5623,12 +5673,12 @@ prop_pagado_17
 76
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado_18
+prop_pagado_16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.0-0.8</em>
@@ -5643,15 +5693,15 @@ prop_pagado_18
 77
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prop_pagado_19
+prop_pagado_17
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 0.0-0.9</em>
+<em>range: 0.0-0.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5663,12 +5713,12 @@ prop_pagado_19
 78
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prop_pagado_22
+prop_pagado_18
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
 <em>range: 0.0-0.8</em>
@@ -5683,15 +5733,15 @@ prop_pagado_22
 79
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-pagadolag22_16
+prop_pagado_19
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: -0.0-0.1</em>
+<em>range: 0.0-0.9</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5703,15 +5753,15 @@ pagadolag22_16
 80
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_comuna
+prop_pagado_22
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1922 (18.44%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 217.8-300.8</em>
+<em>range: 0.0-0.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5723,15 +5773,15 @@ prom_simce_comuna
 81
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_comuna
+pagadolag22_16
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1922 (18.44%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 60.2-3748.3</em>
+<em>range: -0.0-0.1</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5743,15 +5793,15 @@ var_simce_comuna
 82
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_2016_comuna
+prom_simce_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+6867 (41.98%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 227.1-300.0</em>
+<em>range: 217.8-300.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5763,15 +5813,15 @@ prom_simce_2016_comuna
 83
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_2017_comuna
+var_simce_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+6867 (41.98%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 217.8-300.8</em>
+<em>range: 60.2-3748.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5783,15 +5833,15 @@ prom_simce_2017_comuna
 84
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_2018_comuna
+prom_simce_2016_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 228.4-297.7</em>
+<em>range: 227.1-300.0</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5803,15 +5853,15 @@ prom_simce_2018_comuna
 85
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-prom_simce_2019_comuna
+prom_simce_2017_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 228.0-290.4</em>
+<em>range: 217.8-300.8</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5823,15 +5873,15 @@ prom_simce_2019_comuna
 86
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_2022_comuna
+prom_simce_2018_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 233.1-299.5</em>
+<em>range: 228.4-297.7</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5843,15 +5893,15 @@ prom_simce_2022_comuna
 87
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_2016_comuna
+prom_simce_2019_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 253.7-2469.5</em>
+<em>range: 228.0-290.4</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5863,15 +5913,15 @@ var_simce_2016_comuna
 88
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_2017_comuna
+prom_simce_2022_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 130.0-3748.3</em>
+<em>range: 233.1-299.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5883,15 +5933,15 @@ var_simce_2017_comuna
 89
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_2018_comuna
+var_simce_2016_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 220.8-1136.2</em>
+<em>range: 253.7-2469.5</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5903,15 +5953,15 @@ var_simce_2018_comuna
 90
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-var_simce_2019_comuna
+var_simce_2017_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 169.7-1292.3</em>
+<em>range: 130.0-3748.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5923,15 +5973,15 @@ var_simce_2019_comuna
 91
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-var_simce_2022_comuna
+var_simce_2018_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-0 (0.00%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
-<em>range: 60.2-1140.3</em>
+<em>range: 220.8-1136.2</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
@@ -5943,15 +5993,15 @@ var_simce_2022_comuna
 92
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-prom_simce_comuna_rescaled
+var_simce_2019_comuna
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
-1922 (18.44%)
+5934 (36.28%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
-<em>range: 21.8-30.1</em>
+<em>range: 169.7-1292.3</em>
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
 </td>
@@ -5963,12 +6013,52 @@ prom_simce_comuna_rescaled
 93
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
+var_simce_2022_comuna
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5934 (36.28%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 60.2-1140.3</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+94
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+prom_simce_comuna_rescaled
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+6867 (41.98%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 21.8-30.1</em>
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+95
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
 var_simce_comuna_rescaled
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;">
-1922 (18.44%)
+6867 (41.98%)
 </td>
 <td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
 <em>range: 0.6-37.5</em>
