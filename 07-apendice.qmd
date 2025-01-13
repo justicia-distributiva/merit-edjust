@@ -18,12 +18,13 @@ load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 # generate analytical sample
 df_study1 <- 
   df_study_long_t7_comunas %>%
-  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo, covid_economia, covid_beneficios, inc_pcmed) %>% 
+  select(idencuesta,ola,comuna, ponderador_long_total,just_educ, des_perc, merit_effort, merit_talent, education=educ,quintil1:sexo, covid_economia, covid_beneficios, ing_pc) %>% 
   na.omit() %>% 
   mutate(ola = as.factor(ola),
          ola_num = as.numeric(ola),
          ola_2=as.numeric(ola)^2,
-         sexo=as.factor(sexo)
+         sexo=as.factor(sexo),
+         ing_pc_rec = (ing_pc/100000)
          )
 
 df_study1 <- df_study1 %>%
@@ -39,13 +40,13 @@ df_study1$covid_beneficios<- car::recode(df_study1$covid_beneficios, c("1=2; 2=1
 # Hipotesis
 h0 <- "ola"
 h1 <- "ola_num+ola_2"
-h2 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo"
-h3 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id"
-h4 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia"
-h5 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios"
-h6 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc"
-h7 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent"
-h8 <- "ola_num+ola_2+education+inc_pcmed+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
+h2 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo"
+h3 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id"
+h4 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia"
+h5 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios"
+h6 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc"
+h7 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent"
+h8 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
 
 # A. Education distributive justice
 educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
@@ -74,7 +75,7 @@ texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6,educ7,educ8),
                                       "Wave",
                                       "Wave^2",
                                       "Universitary (Ref.= Less than universitary)",
-                                      "Income",
+                                      "Household Income",
                                       # "High School",
                                       # "Technical",
                                       # "Universitary",
