@@ -98,14 +98,22 @@ st_options(lang = "en",
 # Df variables nivel 1 _________________________________________________________
 df_study1 <- df_study_long_t7_comunas %>% dplyr::select(ola, idencuesta,
                                                just_educ, covid_economia, covid_beneficios, des_perc, merit_talent, merit_effort,
-                                               educ, quintil1:sexo)
+                                               educ, ing_pc, ess:sexo)
+colSums(is.na(df_study1))
+
+df_study1 <- df_study1[complete.cases(df_study1$covid_economia), ]
+df_study1 <- df_study1[complete.cases(df_study1$ing_pc), ]
+df_study1 <- df_study1[complete.cases(df_study1$pos_id), ]
+df_study1 <- df_study1[complete.cases(df_study1$covid_beneficios), ]
+df_study1 <- df_study1[complete.cases(df_study1$ess), ]
+
+sjmisc::frq(df_study1$ola)
 
 ids <- 
   df_study1 %>% 
   select(idencuesta,ola) %>% 
   filter(ola==1) %>% 
   sjmisc::frq(idencuesta,show.na = F) %>% as.data.frame()
-
 
 # filter data by the idencuesta of t7
 df_study1 <- 
@@ -144,7 +152,7 @@ sjlabelled::set_label(x = df_study1$just_educ,
 
 df_study1$covid_economia <- 
 sjlabelled::set_label(x = df_study1$covid_economia, 
-                      label = "It is more important to give priority to economic activity than to the health of the population")
+                      label = "In the context of the coronavirus pandemic, it is more important to give priority to economic activity than to the health of the population")
 
 df_study1$covid_beneficios <- 
 sjlabelled::set_label(x = df_study1$covid_beneficios, 
@@ -164,11 +172,26 @@ df_study1$merit_talent <-
 sjlabelled::set_label(x = df_study1$merit_talent, 
                       label = "People are rewarded for their intelligence and skills")
 
+#
+df_study1$educ <- 
+sjlabelled::set_label(x = df_study1$educ, 
+                      label = "Educational level")
+
+#
+df_study1$edad <- 
+sjlabelled::set_label(x = df_study1$edad, 
+                      label = "Age groups")
+
+#
+df_study1$pos_id <- 
+sjlabelled::set_label(x = df_study1$pos_id, 
+                      label = "Political identification")
+
 
 lab_study1 <- sjlabelled::get_label(df_study1) 
 df_study1 <- df_study1 %>% sjlabelled::set_label(lab_study1)
 
-df<- dfSummary(x = dplyr::select(df_study1, ola, covid_economia, covid_beneficios, merit_talent, merit_effort, des_perc, educ, quintil1, ess, edad, sexo, pos_id),
+df<- dfSummary(x = dplyr::select(df_study1, ola, covid_economia, covid_beneficios, merit_talent, merit_effort, des_perc, educ, ing_pc, ess, edad, sexo, pos_id),
                plain.ascii = FALSE,
                style = "grid",
                tmp.img.dir = "/tmp",
@@ -193,8 +216,7 @@ webshot::webshot(url =here::here("output/tables/desc02.html"),
 ```{r}
 load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 df_study1 <- df_study_long_t7_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
-                                               just_educ, des_perc, merit_effort, merit_talent,covid_economia, covid_beneficios,
-                                               educ, quintil1:sexo) %>% na.omit()
+                                               just_educ, covid_economia, covid_beneficios, merit_talent, merit_effort, des_perc, educ, ing_pc, ess, edad, sexo, pos_id) %>% na.omit()
 df_study1 <- df_study1[complete.cases(df_study1$segmento), ]
 
 df_study1$just_educ <- factor(df_study1$just_educ,
@@ -241,7 +263,7 @@ alluvial_justeduc <- ggplot(datos.justeduc, aes(x = ola, fill = just_educ, strat
               color = rep('white'),
               bg.colour='grey30')+
   scale_x_discrete(labels = c(2016, 2017, 2018, 2019, 2022, 2023)) +
-  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2023 (n = 7894)")
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2023 (n = 7576)")
 
 alluvial_justeduc
 
@@ -252,8 +274,8 @@ ggsave(alluvial_justeduc, file="output/graphs/alluvial_dep.png", height = 8, wid
 
 ```{r bivariate-plots}
 df_study1 <- df_study_long_t7_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
-                                               just_educ, des_perc, merit_effort, merit_talent, covid_economia, covid_beneficios,
-                                               educ, quintil1:sexo) %>% na.omit()
+                                               just_educ, covid_economia, covid_beneficios, merit_talent, merit_effort, des_perc, 
+                                               educ, ing_pc, ess, edad, sexo, pos_id) %>% na.omit()
 merit_plot <- df_study1 %>% 
   select(merit_effort, merit_talent, des_perc, just_educ) %>% 
   sjPlot::plot_stackfrq(weight.by = df_study1$ponderador_long_total,
@@ -271,12 +293,11 @@ educational inequality")
   theme_light(base_size = 16) +
   theme(legend.position="bottom", text = element_text(size = 14),
         plot.caption = element_text(hjust = 1)) +
-  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2023 (n = 7894)")
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2023 (n = 7576)")
 merit_plot
 
 ggsave(merit_plot, file="output/graphs/merit_plot.png", height = 6, width = 10)
 ```
-
 
 
 Bivariate descriptive by year
@@ -286,8 +307,8 @@ probar ponderadores longitudinales
 ```{r}
 load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 df_study1 <- df_study_long_t7_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
-                                               just_educ, des_perc, merit_effort, merit_talent, covid_economia, covid_beneficios,
-                                               educ, quintil1:sexo) %>% na.omit()
+                                               just_educ, covid_economia, covid_beneficios, merit_talent, merit_effort, des_perc, 
+                                               educ, ing_pc, ess, edad, sexo, pos_id) %>% na.omit()
 df_study1 <- df_study1[complete.cases(df_study1$segmento), ]
 
 elsoc_diseno <- as_survey_design(df_study1,
@@ -403,7 +424,7 @@ label_data <- vars_years %>%
 years_plot <- years_plot +
   geom_point(data = label_data, aes(label_x + 1, label_y, color = variable, shape = variable), size = 4) +  # Capa de puntos para los símbolos de forma
   geom_text(data = label_data, aes(label_x, label_y, label = variable), color = "black", hjust = 0, nudge_x = 1.1, nudge_y = 0, size = 4)  +
-  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2023 (n = 7894)")
+  labs(caption = "Source: own elaboration with pooled data from ELSOC 2016-2023 (n = 7576)")
 
 
 years_plot
@@ -413,7 +434,7 @@ ggsave("output/graphs/years_plot.png", plot = years_plot, height = 6, width = 7,
 
 ## Correlation
 
-```{r cor-plot, fig.dim=c(10,6)}
+```{r cor-plot, fig.dim=c(12,7)}
 rm(list=ls())
 if (!require("pacman")) install.packages("pacman") # instalar pacman
                             # cargar librerias
@@ -427,8 +448,8 @@ pacman::p_load(dplyr,       # Manipulacion de datos
                )
 load(file = here::here("input/data-proc/df_study_t6_ind_comunas.RData"))
 df_study1 <- df_study_long_t7_comunas %>% dplyr::select(idencuesta, ola, ponderador_long_total, segmento, estrato,
-                                               just_educ, des_perc, merit_effort, merit_talent, covid_economia, covid_beneficios,
-                                               educ, quintil1:sexo) %>% na.omit()
+                                               just_educ, covid_economia, covid_beneficios, merit_talent, merit_effort, des_perc, 
+                                               educ, ing_pc, ess, edad, sexo, pos_id) %>% na.omit()
 # Full sample_______________________________________________________________________
 mat_full<- 
 df_study1 %>%
@@ -449,7 +470,7 @@ rownames(cor_full) <- c("A. Justification of educational inequality",
 #set Column names of the matrix
 colnames(cor_full) <-c("(A)", "(B)","(C)","(D)")
 #Plot the matrix using corrplot
-png("output/graphs/corr.png",width=600,height=300, pointsize = 10)
+png("output/graphs/corr.png",width=700,height=600, pointsize = 10)
 corrplot::corrplot(cor_full,
   method = "color", # Cambia los círculos por color completo de cada cuadrante
   addCoef.col = "#000390", # Color de los coeficientes
@@ -458,9 +479,8 @@ corrplot::corrplot(cor_full,
   na.label = "-")
 # Agregar caption
 grid::grid.text("Source: own elaboration with pooled data 
-from ELSOC 2016-2023 (n = 7894)", x = 0.01, y = 0.05, just = "left", gp = grid::gpar(fontsize = 10, col = "black"))
+from ELSOC 2016-2023 (n = 7576)", x = 0.01, y = 0.05, just = "left", gp = grid::gpar(fontsize = 10, col = "black"))
 dev.off()
-# Wave 1_______________________________________________________________________
 # mat_1<- 
 # df_study1_long_comunas %>%
 #   filter(ola==1) %>%
