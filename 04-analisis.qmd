@@ -20,11 +20,11 @@ Beginning with a descriptive analysis of changes in the justification of educati
  knitr::include_graphics("output/graphs/years_plot.png")
 ```
 
-@fig-correlation presents a correlation matrix of the main variables analyzed, using data from the first wave. In this matrix, the correlations vary between low and moderate values. The correlations between justification of educational inequality with the two covid variables are positive, but low. In addition, justification of education inequality depicts a moderate and negative association with the perception of inequality (_r_=-0.3, p<.01) and a moderate and positive association with both meritocracy perception variables (_r_=0.19, p<.01; _r_=0.16, p<.01). Regarding the perception of inequality, it presents a moderate and negative association with both meritocracy perception variables (_r_=-0.16, p<.01; _r_=-0.11, p<.01). Finally, the two meritocracy variables present a high and positive association with each other (_r_=0.75, p<.01).
+@fig-correlation presents a correlation matrix of the main variables analyzed, using data from the first wave. In this matrix, the correlations vary between low and moderate values. The correlations between justification of educational inequality with the two covid variables are positive, but low. In addition, justification of education inequality depicts a moderate and negative association with the perception of inequality (_r_=-0.34, p<.01) and a moderate and positive association with both meritocracy perception variables (_r_=0.29, p<.01; _r_=0.24, p<.01). Regarding the perception of inequality, it presents a moderate and negative association with both meritocracy perception variables (_r_=-0.18, p<.01; _r_=-0.08, p<.01). Finally, the two meritocracy variables present a high and positive association with each other (_r_=0.76, p<.01).
 
 ```{r echo=FALSE, fig.align='center'}
 #| label: fig-correlation
-#| fig-cap: "Correlation matrix of justification of educational inequality, perception of inequality, and perception of meritocracy for all the years analyzed"
+#| fig-cap: "Correlation matrix of the main variables for the first wave (2016)"
 
  knitr::include_graphics("output/graphs/corr.png")
 ```
@@ -110,7 +110,7 @@ texreg::knitreg(list(educ0, educ1, educ2, educ3, educ4, educ5, educ6, educ7)
                      ,
                 digits = 3,
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05.
-Note: Model 6 is controlled by age, gender, political position, and subjective social status.", 
+Note: Model 8 is controlled by age, gender, political position, and subjective social status.", 
                 omit.coef = omit,
                 custom.coef.names = c("Intercept",
                                       "Wave 2017",
@@ -160,6 +160,7 @@ Note: Model 6 is controlled by age, gender, political position, and subjective s
                                      "Var: Residual"),
                center = TRUE,
                caption.above = TRUE,
+               caption = "", 
                scalebox = 0.765,
                float.pos = "!ht", 
                booktabs = FALSE, 
@@ -230,6 +231,7 @@ texreg::knitreg(list(educ0,educ6, educ5),
                                      "Var: Residual"),  
                center = TRUE,
                caption.above = TRUE,
+               caption = "",
                scalebox = 0.765,
                float.pos = "!ht", 
                booktabs = TRUE, 
