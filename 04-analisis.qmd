@@ -20,7 +20,7 @@ Beginning with a descriptive analysis of changes in the justification of educati
  knitr::include_graphics("output/graphs/years_plot.png")
 ```
 
-@fig-correlation presents a correlation matrix of the main variables analyzed, using data from all survey waves. In this matrix, the correlations vary between low and moderate values. Justification of education inequality depicts a moderate and negative association with the perception of inequality (_r_=-0.3, p<.01) and a moderate and positive association with both meritocracy perception variables (_r_=0.19, p<.01; _r_=0.16, p<.01). Regarding the perception of inequality, it presents a moderate and negative association with both meritocracy perception variables (_r_=-0.16, p<.01; _r_=-0.11, p<.01). Finally, the two meritocracy variables present a high and positive association with each other (_r_=0.75, p<.01).
+@fig-correlation presents a correlation matrix of the main variables analyzed, using data from the first wave. In this matrix, the correlations vary between low and moderate values. The correlations between justification of educational inequality with the two covid variables are positive, but low. In addition, justification of education inequality depicts a moderate and negative association with the perception of inequality (_r_=-0.3, p<.01) and a moderate and positive association with both meritocracy perception variables (_r_=0.19, p<.01; _r_=0.16, p<.01). Regarding the perception of inequality, it presents a moderate and negative association with both meritocracy perception variables (_r_=-0.16, p<.01; _r_=-0.11, p<.01). Finally, the two meritocracy variables present a high and positive association with each other (_r_=0.75, p<.01).
 
 ```{r echo=FALSE, fig.align='center'}
 #| label: fig-correlation
@@ -34,11 +34,12 @@ _Multilevel models_
 
 @tbl-multilevel shows the multilevel estimation results for the justification of educational inequality. Model 1 includes the survey waves to estimate intertemporal changes in the dependent variable. Taking 2016 as a reference point, we can observe a staggered decrease in 2017 ($\beta$=-0.167, p<.001), 2018 ($\beta$=-0.059, p<.05), and 2019 ($\beta$=-0.03, p>.05). Nevertheless, in the last waves of 2022 and 2023 there is a clear increase in level of justification of educational inequality ($\beta$=0.204, p<.001 and $\beta$=0.233, p<.001), suggesting a non-linear change in this variable. Attempting to model this path of change over time, Model 2 incorporates time (survey waves) as a continuous variable as well as its quadratic term, representing the nonlinear association initially observed in Model 1. On the one hand, the survey wave depicts a negative association, expressing an average decrease in inequality justification over time. On the other hand, the quadratic wave term is positive, indicating the reversion of this path in the last measurements point.
 
-Model 3 adds the socioeconomic variables to test hypothesis 2. Educational level and household per capita income were added, but none of them had a significant effect. However, in the next models, controlling for all variables, household per capita income had a positive significant effect ($\beta$=0.001, p<.05). In addition, from this model onwards the demographic control variables were added, where being right-wing (compared to being left-wing) had a positive and significant effect ($\beta$=0.27, p<.001), and being women (compared to men) had a negative and significant effect ($\beta$=-0.08, p<.001). Subjective social status and age had no significant effect when controlling for all the variables analysed. The full models can be seen in the appendix (see @tbl-multilevel-full).
+Models 3 and 4 adds the two variables about the Covid context, where we can see that those who received state benefits during the pandemic justify less inequality in education compared to those who did not receive them, an effect that also remains significant when controlling for the rest of the variables in model 8 ($\beta$=-0.093, p<.01). On the other hand, those who believe that in this context the economy is more important than the health of the population justify more inequality in education, an effect that is maintained when controlling for all the variables in model 8 ($\beta$=0.038, p<.05).
 
-Models 4 and 5 add the two variables about the Covid context, where we can see that those who believe that in this context the economy is more important than the health of the population justify more inequality in education, an effect that is maintained when controlling for all the variables in model 8 ($\beta$=0.038, p<.05). On the other hand, those who received state benefits during the pandemic justify less inequality in education compared to those who did not receive them, an effect that also remains significant when controlling for the rest of the variables in model 8 ($\beta$=-0.093, p<.01).
+Models 5 and 6 introduce the meritocratic variables: talent (if intelligence and abilities are rewarded in society) and effort (if efforts are rewarded in society). In line with our hypotheses, the perception that talent is rewarded has a positive influence on the justification of educational inequality in Model 5 ($\beta$=0.055, p<.001). However, when controlling for the perception that effort is rewarded, this effect is no longer significant. In this sense, Model 6 shows that the perception that effort is rewarded in society is not only positively associated with the justification of educational inequality ($\beta$=0.083, p<.001), but it has a larger weight than the perception of talent. Inequality perception is added in Model 7, showing a negative association with the justification of educational inequality as hypothesized, remaining stable when controlling for the rest of the variables. 
 
-Inequality perception is added in Model 6, showing a negative association with the justification of educational inequality as hypothesized, remaining stable when controlling for the rest of the variables. Model 7 and 8 introduce the meritocratic variables: talent (if intelligence and abilities are rewarded in society) and effort (if efforts are rewarded in society). In line with our hypotheses, the perception that talent is rewarded has a positive influence on the justification of educational inequality in Model 7 ($\beta$=0.044, p<.001). However, when controlling for the perception that effort is rewarded, this effect is no longer significant. In this sense, Model 8 shows that the perception that effort is rewarded in society is not only positively associated with the justification of educational inequality ($\beta$=0.083, p<.001), but it has a larger weight than the perception of talent. 
+Model 8 adds the socioeconomic variables to test hypothesis 7. Educational level and household per capita income were added, but none of them had a significant effect. However, in the next models, controlling for all variables, household per capita income had a positive significant effect ($\beta$=0.001, p<.05). In addition, in this model the demographic control variables were added, where being right-wing (compared to being left-wing) had a positive and significant effect ($\beta$=0.27, p<.001), and being women (compared to men) had a negative and significant effect ($\beta$=-0.08, p<.001). Subjective social status and age had no significant effect when controlling for all the variables analysed. The full models can be seen in the appendix (see @tbl-multilevel-full).
+
 
 ```{r echo=FALSE, results='asis'}
 #| label: tbl-multilevel
@@ -81,12 +82,13 @@ df_study1$covid_beneficios<- factor(df_study1$covid_beneficios)
 # Hipotesis
 h0 <- "ola"
 h1 <- "ola_num+ola_2"
-h2 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo"
-h3 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id"
-h4 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia"
-h5 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios"
-h6 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc"
-h7 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent"
+h2 <- "ola_num+ola_2+covid_beneficios"
+h3 <- "ola_num+ola_2+covid_beneficios+covid_economia"
+h4 <- "ola_num+ola_2+covid_beneficios+covid_economia+merit_talent"
+h5 <- "ola_num+ola_2+covid_beneficios+covid_economia+merit_talent+merit_effort"
+h6 <- "ola_num+ola_2+covid_beneficios+covid_economia+merit_talent+merit_effort+des_perc"
+h7 <- "ola_num+ola_2+covid_beneficios+covid_economia+merit_talent+merit_effort+des_perc+education+ing_pc_rec+ess+edad+sexo+pos_id"
+
 h8 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
 
 # A. Education distributive justice
@@ -104,10 +106,11 @@ educ8 <- lmer(formula(paste0("just_educ~",h8,"+(1|idencuesta)")),data = df_study
 # Table 1: individual
 
 omit <- "(edad)|(ess)|(sexo)|(pos_id)"
-texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6,educ7,educ8),
+texreg::knitreg(list(educ0, educ1, educ2, educ3, educ4, educ5, educ6, educ7)
+                     ,
                 digits = 3,
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05.
-Note: Model 3 to 8 are controlled by age, gender, political position, and subjective social status.", 
+Note: Model 6 is controlled by age, gender, political position, and subjective social status.", 
                 omit.coef = omit,
                 custom.coef.names = c("Intercept",
                                       "Wave 2017",
@@ -117,8 +120,13 @@ Note: Model 3 to 8 are controlled by age, gender, political position, and subjec
                                       "Wave 2023",
                                       "Wave",
                                       "Wave^2",
+                                      "Covid: receive state benefits",
+                                      "Covid: economy more important than health",
+                                      "Merit: Talent",
+                                      "Merit: Effort",
+                                      "Inequality perception",
                                       "Universitary (Ref.= Less than universitary)",
-                                      "Household income",
+                                      "Household income"
                                       # "High School",
                                       # "Technical",
                                       # "Universitary",
@@ -135,11 +143,7 @@ Note: Model 3 to 8 are controlled by age, gender, political position, and subjec
                                       # "Center",
                                       # "Right",
                                       # "Does not identify",
-                                      "Covid: economy more important than health",
-                                      "Covid: receive state benefits",
-                                      "Inequality perception",
-                                      "Merit: Talent",
-                                      "Merit: Effort"),
+                                      ),
                 groups = list("Wave (Ref.= Wave 2016)" = 2:6
                           #    "Education (Ref.= Primary)" = 9:11,
                   #"Household Income (Ref.= Quintile 1)" = 12:16
@@ -148,7 +152,7 @@ Note: Model 3 to 8 are controlled by age, gender, political position, and subjec
                   ),
                 include.loglik = FALSE,
                 include.aic = FALSE,
-                custom.gof.rows = list("Controls"= c("No", "No", rep("Yes", 6))),
+                custom.gof.rows = list("Controls"= c(rep("No", 7), "Yes")),
                 custom.gof.names = c("BIC",
                                      "Num. obs.",
                                      "Num. groups: Individuals",
@@ -246,8 +250,9 @@ ggeffects::ggpredict(educ6, terms = c("merit_talent", "covid_beneficios")) %>%
   ggplot(aes(x=x, y=predicted, shape = group, color = group)) +
   geom_line(aes(group=group,linetype = group),position = position_dodge(.1)) + 
   geom_point(size = 2.5,position = position_dodge(.1))+
+  scale_y_continuous(limits=c(1,5),  breaks=c(1,2,3,4,5))+
   scale_x_continuous(name = "Merit: talent", breaks=c(1,2,3,4,5), labels = c("Strongly
-disagree", "Disagree", "Nor agree
+disagree", "Disagree", "Neither agree
 nor disagree", "Agree", "Strongly
 agree")) + 
   scale_shape_discrete(name = "Receive state

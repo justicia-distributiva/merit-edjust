@@ -40,13 +40,12 @@ df_study1$covid_beneficios<- car::recode(df_study1$covid_beneficios, c("1=2; 2=1
 # Hipotesis
 h0 <- "ola"
 h1 <- "ola_num+ola_2"
-h2 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo"
-h3 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id"
-h4 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia"
-h5 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios"
-h6 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc"
-h7 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent"
-h8 <- "ola_num+ola_2+education+ing_pc_rec+ess+edad+sexo+pos_id+covid_economia+covid_beneficios+des_perc+merit_talent+merit_effort"
+h2 <- "ola_num+ola_2+covid_beneficios"
+h3 <- "ola_num+ola_2+covid_beneficios+covid_economia"
+h4 <- "ola_num+ola_2+covid_beneficios+covid_economia+merit_talent"
+h5 <- "ola_num+ola_2+covid_beneficios+covid_economia+merit_talent+merit_effort"
+h6 <- "ola_num+ola_2+covid_beneficios+covid_economia+merit_talent+merit_effort+des_perc"
+h7 <- "ola_num+ola_2+covid_beneficios+covid_economia+merit_talent+merit_effort+des_perc+education+ing_pc_rec+ess+edad+sexo+pos_id"
 
 # A. Education distributive justice
 educ.null <- lmer(formula(paste0("just_educ~","1 + (1|idencuesta)")),data = df_study1, weights = ponderador_long_total)
@@ -63,7 +62,7 @@ educ8 <- lmer(formula(paste0("just_educ~",h8,"+(1|idencuesta)")),data = df_study
 # Table 1: individual
 
 #omit <- "(edad)|(ess)|(sexo)|(pos_id)"
-texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6,educ7,educ8),
+texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6,educ7),
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05.", 
  #               omit.coef = omit,
                 custom.coef.names = c("Intercept",
@@ -74,6 +73,11 @@ texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6,educ7,educ8),
                                       "Wave 2023",
                                       "Wave",
                                       "Wave^2",
+                                      "Covid: receive state benefits",
+                                      "Covid: economy more important than health",
+                                      "Merit: Talent",
+                                      "Merit: Effort",
+                                      "Inequality perception",
                                       "Universitary (Ref.= Less than universitary)",
                                       "Household Income",
                                       # "High School",
@@ -91,12 +95,8 @@ texreg::knitreg(list(educ0, educ1, educ3, educ4, educ5, educ6,educ7,educ8),
                                        "Gender (Ref. Male)",
                                        "Center",
                                        "Right",
-                                       "Does not identify",
-                                      "Covid: economy more important than health",
-                                      "Covid: receive state benefits",
-                                      "Inequality perception",
-                                      "Merit: Talent",
-                                      "Merit: Effort"),
+                                       "Does not identify"
+                                      ),
                 groups = list("Wave (Ref.= Wave 2016)" = 2:6,
                           #    "Education (Ref.= Primary)" = 9:11,
                   #"Household Income (Ref.= Quintile 1)" = 12:16
