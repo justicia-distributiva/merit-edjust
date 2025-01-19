@@ -464,7 +464,7 @@ df_study1 <- df_study_long_t7_comunas %>% dplyr::select(idencuesta, ola, pondera
 # Full sample______________________________________________________________________
 mat_full<- 
 df_study1 %>%
-   filter(ola==1) %>%
+   filter(ola==7) %>%
   select(just_educ, # distributive justice
          covid_economia,
          covid_beneficios,
@@ -494,7 +494,7 @@ corrplot::corrplot(cor_full,
   na.label = "-")
 # Agregar caption
 grid::grid.text("Source: own elaboration with data 
-from ELSOC 2016 (n = 1322)", x = 0.01, y = 0.05, just = "left", gp = grid::gpar(fontsize = 12, col = "black"))
+from ELSOC 2023 (n = 1322)", x = 0.01, y = 0.05, just = "left", gp = grid::gpar(fontsize = 12, col = "black"))
 dev.off()
 # mat_1<- 
 # df_study1_long_comunas %>%
