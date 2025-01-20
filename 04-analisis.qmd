@@ -24,7 +24,7 @@ Beginning with a descriptive analysis of changes in the justification of educati
 
 ```{r echo=FALSE, fig.align='center'}
 #| label: fig-correlation
-#| fig-cap: "Correlation matrix of the main variables for the first wave (2016)"
+#| fig-cap: "Correlation matrix of the main variables for the last wave (2023)"
 
  knitr::include_graphics("output/graphs/corr.png")
 ```
