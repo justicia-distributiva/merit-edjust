@@ -106,7 +106,7 @@ educ8 <- lmer(formula(paste0("just_educ~",h8,"+(1|idencuesta)")),data = df_study
 # Table 1: individual
 
 omit <- "(edad)|(ess)|(sexo)|(pos_id)"
-texreg::knitreg(list(educ0, educ1, educ2, educ3, educ4, educ5, educ6, educ7)
+texreg::texreg(list(educ0, educ1, educ2, educ3, educ4, educ5, educ6, educ7)
                      ,
                 digits = 3,
                 custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05.
@@ -162,7 +162,7 @@ Note: Model 8 is controlled by age, gender, political position, and subjective s
                caption.above = TRUE,
                caption = "", 
                scalebox = 0.765,
-               float.pos = "!ht", 
+#               float.pos = "!ht", 
                booktabs = FALSE, 
                use.packages = FALSE, 
                include.rs = FALSE, 
@@ -210,8 +210,9 @@ educ7 <- lmer(formula(paste0("just_educ~",h7b,"+(1|idencuesta)")),data = df_stud
 
 # table 3: interacciones
 omit <- "(education)|(ing_pc_rec)|(ess)|(edad)|(sexo)|(pos_id)|(covid_economia)|(des_perc)"
-texreg::knitreg(list(educ0,educ6, educ5),
-                custom.note = "\\item *** p < 0.001; ** p < 0.01; * p < 0.05. Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, political position, and inequality perception",
+texreg::texreg(list(educ0,educ6, educ5),
+                custom.note = "*** p < 0.001; ** p < 0.01; * p < 0.05. 
+Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, political position, and inequality perception",
                 omit.coef = omit,
                 include.loglik = FALSE,
                 include.aic = FALSE,
@@ -234,7 +235,7 @@ texreg::knitreg(list(educ0,educ6, educ5),
                caption.above = TRUE,
                caption = "",
                scalebox = 0.765,
-               float.pos = "!ht", 
+#               float.pos = "!ht", 
                booktabs = TRUE, 
                use.packages = FALSE, 
                include.rs = FALSE, 

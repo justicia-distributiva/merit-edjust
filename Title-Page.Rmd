@@ -1,11 +1,11 @@
 ---
-title: "Changes in the justification of educational inequalities: The role of perceptions of inequality and meritocracy during the COVID pandemic [^*]"
+title: "Changes in the justification of educational inequalities. The role of perceptions of inequality and meritocracy during the COVID pandemic. [^*]"
 linestretch: '1.5'
 output:
-  bookdown::pdf_document2:
-    template: null
+  pdf_document:
     toc: false
     number_sections: false
+    keep-tex: true
 geometry: margin=0.78in
 header-includes:
   - \usepackage{times}           # Times New Roman
@@ -41,10 +41,9 @@ Kevin Carrasco, Center for Social Conflict and Cohesion Studies
 
 ORCID: 0000-0002-9348-8361
 
-Word count: 7663
 
 
-## Conflict of interest
+# Conflict of interest
 
 The authors report there are no competing interests to declare.
 

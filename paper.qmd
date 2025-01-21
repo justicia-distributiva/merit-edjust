@@ -13,6 +13,7 @@ format:
       - left=20mm
     template-partials: 
       - title.tex
+    keep-tex: true
     include-in-header:
       text: |
         \usepackage[noblocks]{authblk}
@@ -71,9 +72,12 @@ abstract: |
  Sys.setlocale("LC_ALL", "ES_ES.UTF-8")
 ```
 
-This document was last modified at {{< modified >}}
+```{r}
+# This document was last modified at {{< modified >}}
+# 
+# and it was last rendered at {{< now >}}
 
-and it was last rendered at {{< now >}}
+```
 
 
 {{< include 01-introduction.qmd >}}
