@@ -4,7 +4,7 @@
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
-]{article}
+  10pt]{article}
 
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
@@ -124,25 +124,13 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 \usepackage[noblocks]{authblk}
 \renewcommand*{\Authsep}{, }
 \renewcommand*{\Authand}{, }
 \renewcommand*{\Authands}{, }
 \renewcommand\Affilfont{\small}
+\renewcommand\Affilfont{\small}
+\usepackage{mathptmx} % Times
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -846,6 +834,7 @@ justification of inequality in education}
 
 \centering{
 
+\caption{}
 \begin{center}
 \scalebox{0.765}{
 \begin{tabular}{l c c c c c c c c}
@@ -892,8 +881,7 @@ Num. groups: Individuals                    & $1322$         & $1322$         & 
 Var: Individuals (Intercept)                & $0.185$        & $0.184$        & $0.183$        & $0.179$        & $0.174$        & $0.170$        & $0.164$        & $0.159$        \\
 Var: Residual                               & $0.497$        & $0.500$        & $0.500$        & $0.500$        & $0.499$        & $0.496$        & $0.488$        & $0.488$        \\
 \hline
-\multicolumn{9}{l}{\scriptsize{*** p < 0.001; ** p < 0.01; * p < 0.05. 
-
+\multicolumn{9}{l}{\scriptsize{*** p < 0.001; ** p < 0.01; * p < 0.05.
 Note: Model 8 is controlled by age, gender, political position, and subjective social status.}}
 \end{tabular}
 }
@@ -937,12 +925,13 @@ of economic inequality}
 
 \centering{
 
+\caption{}
 \begin{center}
 \scalebox{0.765}{
 \begin{tabular}{l c c c}
-\hline
+\toprule
  & Model 8 & Model 9 & Model 10 \\
-\hline
+\midrule
 Intercept                              & $2.18^{***}$ & $2.03^{***}$ & $2.09^{***}$ \\
                                        & $(0.12)$     & $(0.13)$     & $(0.13)$     \\
 Wave                                   & $-0.05^{**}$ & $-0.05^{*}$  & $-0.05^{**}$ \\
@@ -959,16 +948,15 @@ Receive state benefits * Merit: Talent &              & $-0.07^{**}$ &          
                                        &              & $(0.02)$     &              \\
 Receive state benefits * Merit: Effort &              &              & $-0.05^{*}$  \\
                                        &              &              & $(0.02)$     \\
-\hline
+\midrule
 BIC                                    & $29626.31$   & $29630.35$   & $29636.59$   \\
 Num. obs.                              & $7576$       & $7576$       & $7576$       \\
 Num. groups: Individuals               & $1322$       & $1322$       & $1322$       \\
 Var: Individuals (Intercept)           & $0.16$       & $0.16$       & $0.16$       \\
 Var: Residual                          & $0.49$       & $0.49$       & $0.49$       \\
-\hline
-\multicolumn{4}{l}{\scriptsize{\parbox[t]{\linewidth}{%
-*** p < 0.001; ** p < 0.01; * p < 0.05. Note: All the models are controlled by educational level, income quintile,\\
-subjective social status, age, gender, political position, and inequality perception.}}}
+\bottomrule
+\multicolumn{4}{l}{\scriptsize{*** p < 0.001; ** p < 0.01; * p < 0.05. 
+Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, political position, and inequality perception}}
 \end{tabular}
 }
 \label{table:coefficients}
@@ -1405,9 +1393,10 @@ Books.
 
 \end{CSLReferences}
 
-\section*{Appendix}\label{appendix-appendix}
+\section*{(APPENDIX) Appendix}\label{appendix-appendix}
 \addcontentsline{toc}{section}{(APPENDIX) Appendix}
 
+\appendix \section{Appendix}
 
 \begin{table}
 
@@ -1416,6 +1405,7 @@ models for the justification of inequality in education}
 
 \centering{
 
+\caption{}
 \begin{center}
 \scalebox{0.765}{
 \begin{tabular}{l c c c c c c c}

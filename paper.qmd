@@ -7,13 +7,15 @@ format:
     code-fold: true
     html-math-method: katex
     number-sections: true
-  pdf: 
+  pdf:
+    classoption: 10pt
     geometry: 
       - top=30mm
       - left=20mm
     template-partials: 
       - title.tex
     keep-tex: true
+    number-sections: true
     include-in-header:
       text: |
         \usepackage[noblocks]{authblk}
@@ -21,7 +23,8 @@ format:
         \renewcommand*{\Authand}{, }
         \renewcommand*{\Authands}{, }
         \renewcommand\Affilfont{\small}
-    number-sections: true
+        \renewcommand\Affilfont{\small}
+        \usepackage{mathptmx} % Times
 editor: source
 bibliography: "input/bib/merit-edjust.bib"
 author:
