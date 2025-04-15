@@ -4,9 +4,11 @@
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
-]{article}
+  12pt,
+  10pt]{article}
 
 \usepackage{amsmath,amssymb}
+\usepackage{setspace}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -38,7 +40,7 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\usepackage[top=30mm,left=20mm]{geometry}
+\usepackage[margin=0.78in]{geometry}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
@@ -124,6 +126,12 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{times}
+\usepackage{caption}
+\captionsetup[figure, table]{labelfont={bf},labelformat={default},labelsep=period}
+\usepackage[figurename=Fig.]{caption}
+\usepackage{graphicx}
+\usepackage{float}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -134,15 +142,28 @@
 \usepackage{pdflscape}
 \usepackage{tabu}
 \usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 \usepackage[noblocks]{authblk}
 \renewcommand*{\Authsep}{, }
 \renewcommand*{\Authand}{, }
 \renewcommand*{\Authands}{, }
 \renewcommand\Affilfont{\small}
+\renewcommand\Affilfont{\small}
+\usepackage{mathptmx} % Times
+\usepackage{times}
+\usepackage{caption}
+\captionsetup[figure, table]{labelfont={bf},labelformat={default},labelsep=period}
+\usepackage[figurename=Fig.]{caption}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -193,7 +214,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Changes in the justification of educational inequalities. The role of perceptions of inequality and meritocracy during the COVID pandemic.},
+  pdftitle={Changes in the justification of educational inequalities. The role of perceptions of inequality and meritocracy during the COVID pandemic. },
   pdfauthor={Juan Carlos Castillo; Julio Iturra; Kevin Carrasco},
   colorlinks=true,
   linkcolor={blue},
@@ -205,7 +226,16 @@
 
 \title{Changes in the justification of educational inequalities. The
 role of perceptions of inequality and meritocracy during the COVID
-pandemic.}
+pandemic. \footnote{Corresponding author (juancastillov@uchile.cl -
+  \href{https://juancarloscastillo.github.io/jc-castillo/}{jc-castillo.com}
+  - Ignacio Carrera Pinto 1045 Ñuñoa, Santiago de Chile). The authors
+  recognize the support of the National Research and Development Agency
+  (ANID) through the grant from the National Fund for Scientific and
+  Technological Development (FONDECYT) N° 1210847 and N° 1250518; from
+  the Center for Conflict and Social Cohesion Studies (COES) grant
+  Financing Fund for Research Centers in Priority Areas (FONDAP) N°
+  1523A0005; and Millenium Nucleus on Digital Inequalities and
+  Opportunities (NUDOS) NCS2022\_046}}
 
 
   \author{Juan Carlos Castillo}
@@ -234,7 +264,31 @@ pandemic.}
 \date{}
 \begin{document}
 \maketitle
-\begin{abstract}
+
+
+\setstretch{1.5}
+Juan Carlos Castillo, Department of Sociology, Universidad de Chile,
+Santiago de Chile. *
+
+ORCID: 0000-0003-1265-7854
+
+Julio Iturra, Bremen International Graduate School of Social Sciences,
+Bremen, Germany.
+
+ORCID: 0000-0003-1993-3479
+
+Kevin Carrasco, Center for Social Conflict and Cohesion Studies
+
+ORCID: 0000-0002-9348-8361
+
+\section{Conflict of interest}\label{conflict-of-interest}
+
+The authors report there are no competing interests to declare.
+
+\newpage
+
+\section{Abstract}\label{abstract}
+
 Education is considered a key tool for social mobility and equality of
 opportunities. However, despite the widespread value of education,
 disparities in educational outcomes persist over time. This paper is
@@ -263,8 +317,6 @@ justifying inequality in a sensitive area as education, as well as the
 persistence of meritocratic ideals despite challenging events.\newline
 \textbf{Keywords}: meritocracy, social inequality, inequality
 justification, COVID-19
-\end{abstract}
-
 
 \section{Introduction}\label{introduction}
 
@@ -639,7 +691,7 @@ people are rewarded for their talent (47.6\%) and for their efforts
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{output/graphs/merit_plot.png}
+\includegraphics[width=0.85\textwidth,height=\textheight]{merit_plot-rr.png}
 
 }
 
@@ -684,7 +736,7 @@ response categories, and frequencies.
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-\includegraphics{output/tables/desc02.png} \\
+\includegraphics{desc02-rr.png} \\
 \end{longtable}
 
 \subsection{Methods}\label{methods}
@@ -718,7 +770,7 @@ compared to previous years (from 5.4\% in 2016 to 11\% in 2023).
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{output/graphs/alluvial_dep.png}
+\includegraphics[width=0.85\textwidth,height=\textheight]{alluvial_dep-rr.png}
 
 }
 
@@ -743,7 +795,7 @@ the one associated with talent.
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{output/graphs/years_plot.png}
+\includegraphics[width=0.85\textwidth,height=\textheight]{years_plot-rr.png}
 
 }
 
@@ -772,7 +824,7 @@ with each other (\emph{r}=0.79, p\textless.01).
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{output/graphs/corr.png}
+\includegraphics[width=0.85\textwidth,height=\textheight]{corr-rr.png}
 
 }
 
@@ -846,6 +898,7 @@ justification of inequality in education}
 
 \centering{
 
+\caption{}
 \begin{center}
 \scalebox{0.765}{
 \begin{tabular}{l c c c c c c c c}
@@ -872,16 +925,16 @@ Wave$^2$                                    &                & $0.016^{***}$  & 
                                             &                & $(0.002)$      & $(0.002)$      & $(0.002)$      & $(0.002)$      & $(0.002)$      & $(0.002)$      & $(0.002)$      \\
 Covid: receive state benefits               &                &                & $-0.095^{*}$   & $-0.097^{*}$   & $-0.100^{*}$   & $-0.102^{*}$   & $-0.102^{**}$  & $-0.093^{*}$   \\
                                             &                &                & $(0.041)$      & $(0.041)$      & $(0.040)$      & $(0.040)$      & $(0.039)$      & $(0.041)$      \\
-Covid: economy more important than health   &                &                &                & $0.065^{***}$  & $0.060^{**}$   & $0.055^{**}$   & $0.049^{**}$   & $0.038^{*}$    \\
-                                            &                &                &                & $(0.019)$      & $(0.019)$      & $(0.019)$      & $(0.019)$      & $(0.019)$      \\
+Covid: economy more important               &                &                &                & $0.065^{***}$  & $0.060^{**}$   & $0.055^{**}$   & $0.049^{**}$   & $0.038^{*}$    \\
+than health                                 &                &                &                & $(0.019)$      & $(0.019)$      & $(0.019)$      & $(0.019)$      & $(0.019)$      \\
 Merit: Talent                               &                &                &                &                & $0.055^{***}$  & $-0.002$       & $-0.003$       & $-0.005$       \\
                                             &                &                &                &                & $(0.010)$      & $(0.012)$      & $(0.012)$      & $(0.012)$      \\
 Merit: Effort                               &                &                &                &                &                & $0.096^{***}$  & $0.084^{***}$  & $0.083^{***}$  \\
                                             &                &                &                &                &                & $(0.013)$      & $(0.013)$      & $(0.013)$      \\
 Inequality perception                       &                &                &                &                &                &                & $-0.135^{***}$ & $-0.134^{***}$ \\
                                             &                &                &                &                &                &                & $(0.012)$      & $(0.012)$      \\
-Universitary (Ref.= Less than universitary) &                &                &                &                &                &                &                & $-0.048$       \\
-                                            &                &                &                &                &                &                &                & $(0.046)$      \\
+Universitary                                &                &                &                &                &                &                &                & $-0.048$       \\
+(Ref.= Less than universitary)              &                &                &                &                &                &                &                & $(0.046)$      \\
 Household income                            &                &                &                &                &                &                &                & $0.001^{*}$    \\
                                             &                &                &                &                &                &                &                & $(0.000)$      \\
 \hline
@@ -892,8 +945,7 @@ Num. groups: Individuals                    & $1322$         & $1322$         & 
 Var: Individuals (Intercept)                & $0.185$        & $0.184$        & $0.183$        & $0.179$        & $0.174$        & $0.170$        & $0.164$        & $0.159$        \\
 Var: Residual                               & $0.497$        & $0.500$        & $0.500$        & $0.500$        & $0.499$        & $0.496$        & $0.488$        & $0.488$        \\
 \hline
-\multicolumn{9}{l}{\scriptsize{*** p < 0.001; ** p < 0.01; * p < 0.05. 
-
+\multicolumn{9}{l}{\scriptsize{*** p < 0.001; ** p < 0.01; * p < 0.05.
 Note: Model 8 is controlled by age, gender, political position, and subjective social status.}}
 \end{tabular}
 }
@@ -937,12 +989,13 @@ of economic inequality}
 
 \centering{
 
+\caption{}
 \begin{center}
 \scalebox{0.765}{
 \begin{tabular}{l c c c}
-\hline
+\toprule
  & Model 8 & Model 9 & Model 10 \\
-\hline
+\midrule
 Intercept                              & $2.18^{***}$ & $2.03^{***}$ & $2.09^{***}$ \\
                                        & $(0.12)$     & $(0.13)$     & $(0.13)$     \\
 Wave                                   & $-0.05^{**}$ & $-0.05^{*}$  & $-0.05^{**}$ \\
@@ -959,16 +1012,15 @@ Receive state benefits * Merit: Talent &              & $-0.07^{**}$ &          
                                        &              & $(0.02)$     &              \\
 Receive state benefits * Merit: Effort &              &              & $-0.05^{*}$  \\
                                        &              &              & $(0.02)$     \\
-\hline
+\midrule
 BIC                                    & $29626.31$   & $29630.35$   & $29636.59$   \\
 Num. obs.                              & $7576$       & $7576$       & $7576$       \\
 Num. groups: Individuals               & $1322$       & $1322$       & $1322$       \\
 Var: Individuals (Intercept)           & $0.16$       & $0.16$       & $0.16$       \\
 Var: Residual                          & $0.49$       & $0.49$       & $0.49$       \\
-\hline
-\multicolumn{4}{l}{\scriptsize{\parbox[t]{\linewidth}{%
-*** p < 0.001; ** p < 0.01; * p < 0.05. Note: All the models are controlled by educational level, income quintile,\\
-subjective social status, age, gender, political position, and inequality perception.}}}
+\bottomrule
+\multicolumn{4}{l}{\scriptsize{*** p < 0.001; ** p < 0.01; * p < 0.05. 
+Note: All the models are controlled by educational level, income quintile, subjective social status, age, gender, political position, and inequality perception}}
 \end{tabular}
 }
 \label{table:coefficients}
@@ -982,7 +1034,7 @@ subjective social status, age, gender, political position, and inequality percep
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{paper_files/figure-pdf/fig-interact-talent-1.pdf}
+\includegraphics[width=0.85\textwidth,height=\textheight]{fig-interact-talent-1.pdf}
 
 }
 
@@ -1405,9 +1457,10 @@ Books.
 
 \end{CSLReferences}
 
-\section*{Appendix}\label{appendix-appendix}
+\section*{(APPENDIX) Appendix}\label{appendix-appendix}
 \addcontentsline{toc}{section}{(APPENDIX) Appendix}
 
+\appendix \section{Appendix}
 
 \begin{table}
 
@@ -1416,6 +1469,7 @@ models for the justification of inequality in education}
 
 \centering{
 
+\caption{}
 \begin{center}
 \scalebox{0.765}{
 \begin{tabular}{l c c c c c c c}
