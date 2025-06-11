@@ -485,7 +485,7 @@ rownames(cor_full) <- c("A. Justification of educational inequality",
 #set Column names of the matrix
 colnames(cor_full) <-c("(A)", "(B)","(C)","(D)", "(E)", "(F)")
 #Plot the matrix using corrplot
-png("output/graphs/corr.png",width=700,height=600, pointsize = 12)
+png("output/graphs/corrplot.png",width=700,height=600, pointsize = 12)
 corrplot::corrplot(cor_full,
   method = "color", # Cambia los círculos por color completo de cada cuadrante
   addCoef.col = "#000390", # Color de los coeficientes
