@@ -491,10 +491,11 @@ corrplot::corrplot(cor_full,
   addCoef.col = "#000390", # Color de los coeficientes
   type = "upper", # Deja solo las correlaciones de arriba
   tl.col = "black", # COlor letras, rojo por defecto
+  col=colorRampPalette(c("white","#0068DC"))(12),
+  bg = "white",
   na.label = "-")
 # Agregar caption
-grid::grid.text("Source: own elaboration with data 
-from ELSOC 2023 (n = 1322)", x = 0.01, y = 0.05, just = "left", gp = grid::gpar(fontsize = 12, col = "black"))
+grid::grid.text("Source: own elaboration with data from ELSOC 2023 (n = 1322)", x = 0.99, y = 0.1, just = "right", gp = grid::gpar(fontsize = 12, col = "black"))
 dev.off()
 # mat_1<- 
 # df_study1_long_comunas %>%
